@@ -1,0 +1,5 @@
+php/src/*
+err.log
+up.log
+php/deps/*
+.vagrant/*
