@@ -49,19 +49,19 @@ cd /vagrant/php/src
 
 ./buildconf --force 
 ./custom_conf
-make -j1 2>/dev/null
-make install 2>/dev/null
+make -j1 
+make install 
 
 cp /vagrant/php/src/php.ini-production /usr/local/lib/php.ini
 
-pear config-set php_ini /usr/local/lib/php.ini 2>/dev/null
-pecl config-set php_ini /usr/local/lib/php.ini 2>/dev/null
+pear config-set php_ini /usr/local/lib/php.ini
+pecl config-set php_ini /usr/local/lib/php.ini 
 
 # install php xdebug
 
-pecl install xdebug 2>/dev/null
+pecl install xdebug
 
 # install php imagick
 
 apt-get install -y libmagickwand-dev
-printf "\n" | pecl install imagick 2>/dev/null
+printf "\n" | pecl install imagick
