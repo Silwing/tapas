@@ -1,0 +1,5 @@
+array_write	6	/home/silwing/Programming/php-tests/arrayWeirdness.php	0	1	0x7f7be6e22fb0	long	1	
+array_append	7	/home/silwing/Programming/php-tests/arrayWeirdness.php	2	1	0x7f7be6e22fb0	success
+array_write	8	/home/silwing/Programming/php-tests/arrayWeirdness.php	2	1	0x7f7be6e22fb0	long	9223372036854775807	
+array_write	9	/home/silwing/Programming/php-tests/arrayWeirdness.php	2	1	0x7f7be6e22fb0	long	0	
+array_append	10	/home/silwing/Programming/php-tests/arrayWeirdness.php	2	1	0x7f7be6e22fb0	failure

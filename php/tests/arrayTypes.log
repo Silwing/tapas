@@ -1,0 +1,5 @@
+array_read	9	/home/silwing/Programming/php-tests/arrayTypes.php	1	1	0x7fce707e9b18	long	0	
+array_read	9	/home/silwing/Programming/php-tests/arrayTypes.php	2	1	0x7fce707e9400	long	0	
+array_read	9	/home/silwing/Programming/php-tests/arrayTypes.php	1	1	0x7fce707e96c8	long	0	
+array_read	9	/home/silwing/Programming/php-tests/arrayTypes.php	3	1	0x7fce707ea5b8	string	ord1	4
+array_read	9	/home/silwing/Programming/php-tests/arrayTypes.php	3	1	0x7fce707ea908	long	0	

@@ -1,0 +1,11 @@
+array_read	4	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7e4d8	1	long	0	
+array_read	6	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7e4d8	1	long	1	
+assign_var	6	/home/silwing/Programming/php-tests/test1.php	long	2	
+array_read	9	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7e6a0	1	long	1	
+assign_var	9	/home/silwing/Programming/php-tests/test1.php	long	3	
+array_write	11	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7e6a0	double	1	
+array_read	13	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7e6a0	1	bool	1	
+assign_var	13	/home/silwing/Programming/php-tests/test1.php	string	hej	
+array_read	16	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7fae8	1	string	test	4
+array_read	18	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7fae8	1	long	5	
+array_read	18	/home/silwing/Programming/php-tests/test1.php	0x7fd2f7c7fae8	1	long	6	
