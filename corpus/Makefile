@@ -1,4 +1,4 @@
-+install: install-dependencies
+install: install-dependencies
 	mkdir git
 	cd git;\
 	 git clone https://github.com/budde377/Part.git;\
@@ -15,8 +15,10 @@
 	 svn co https://develop.svn.wordpress.org/trunk/
 
 install-dependencies: 
-	sudo apt-get install git subversion lamp-server^ curl php5-xdebug php5-imagick php5-curl php5-sqlite \
-	 php5-gd php5-mcrypt php-pear php5-dev ant gawk xvfb
+	DEBIAN_FRONTEND=noninteractive sudo apt-get -y install git subversion curl mysql-server ant gawk xvfb
+
+install-php: php5-xdebug php5-imagick php5-curl php5-sqlite \
+	 php5-gd php5-mcrypt php-pear php5-dev
 
 install-phpunit:
 	wget https://phar.phpunit.de/phpunit.phar

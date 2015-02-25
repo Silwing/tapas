@@ -3,3 +3,5 @@ err.log
 up.log
 php/deps/
 .vagrant/
+corpus/git
+corpus/svn
