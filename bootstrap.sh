@@ -45,6 +45,8 @@ DEBIAN_FRONTEND=noninteractive apt-get -y build-dep php5
 
 # install php
 
+apt-get install libmcrypt4 libmcrypt-dev
+
 cd /vagrant/php/src
 
 ./buildconf --force 
