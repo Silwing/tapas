@@ -1,5 +1,5 @@
 <?php 
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
 $max_int = PHP_INT_MAX; // Max value for integer on a 32-bit system 
 $arr = array(); 
 
