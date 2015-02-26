@@ -1,5 +1,7 @@
-php/src/*
+php/src/
 err.log
 up.log
-php/deps/*
-.vagrant/*
+php/deps/
+.vagrant/
+corpus/git
+corpus/svn

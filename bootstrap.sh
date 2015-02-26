@@ -4,11 +4,18 @@ apt-get update
 
 # setup git and clone php-src
 apt-get install -y git
-mkdir -p /vagrant/php/src
-mkdir /vagrant/php/tests
-cd /vagrant/php/src
-git clone https://github.com/Silwing/php-src .
-git checkout PHP-5.6.6
+
+if [ -d "/vagrant/php/src" ]; then 
+    echo "Folder exists, will not clone from git"
+    cd /vagrant/php/src
+else     
+    mkdir -p /vagrant/php/src
+    cd /vagrant/php/src
+    git clone https://github.com/Silwing/php-src .
+    git checkout PHP-5.6.6
+
+fi
+
 git config merge.NEWS.name "Keep the NEWS file"
 git config merge.NEWS.driver 'touch %A'
 git config merge.log true
@@ -32,4 +39,29 @@ apt-mark hold bison
 apt-get install -f -y
 
 # install php dependencies
-apt-get build-dep -y php5
+
+DEBIAN_FRONTEND=noninteractive apt-get -y build-dep php5
+
+
+# install php
+
+cd /vagrant/php/src
+
+./buildconf --force 
+./custom_conf
+make -j1 
+make install 
+
+cp /vagrant/php/src/php.ini-production /usr/local/lib/php.ini
+
+pear config-set php_ini /usr/local/lib/php.ini
+pecl config-set php_ini /usr/local/lib/php.ini 
+
+# install php xdebug
+
+pecl install xdebug
+
+# install php imagick
+
+apt-get install -y libmagickwand-dev
+printf "\n" | pecl install imagick
