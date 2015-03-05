@@ -45,25 +45,40 @@ DEBIAN_FRONTEND=noninteractive apt-get -y build-dep php5
 
 # install php
 
-apt-get install libmcrypt4 libmcrypt-dev
-
-cd /vagrant/php/src
-
-./buildconf --force 
-./custom_conf
-make -j1 
-make install 
+apt-get -y install libmcrypt4 libmcrypt-dev libreadline-dev mcrypt
 
 cp /vagrant/php/src/php.ini-production /usr/local/lib/php.ini
+
+cd /vagrant/php/src
+make clean
+./buildconf --force 
+./custom_conf
+make 
+make install 
+
 
 pear config-set php_ini /usr/local/lib/php.ini
 pecl config-set php_ini /usr/local/lib/php.ini 
 
 # install php xdebug
+# pecl install xdebug 
 
-pecl install xdebug
+# pecl install xdebug
 
 # install php imagick
 
 apt-get install -y libmagickwand-dev
 printf "\n" | pecl install imagick
+
+
+
+#install json 
+cd /tmp/
+wget http://pecl.php.net/get/jsonc-1.3.6.tgz
+tar xf jsonc-1.3.6.tgz 
+cd jsonc-1.3.6/
+phpize
+./configure
+make
+make install
+echo "extension=\"json.so\"" >> /usr/local/lib/php.ini

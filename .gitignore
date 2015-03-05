@@ -5,3 +5,4 @@ php/deps/
 .vagrant/
 corpus/git
 corpus/svn
+.idea

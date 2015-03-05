@@ -15,7 +15,7 @@ install: install-dependencies
 	 svn co https://develop.svn.wordpress.org/trunk/
 
 install-dependencies: 
-	DEBIAN_FRONTEND=noninteractive sudo apt-get -y install git subversion curl mysql-server ant gawk xvfb
+	DEBIAN_FRONTEND=noninteractive sudo apt-get -y install git subversion curl mysql-server ant gawk xvfb firefox
 
 install-php: php5-xdebug php5-imagick php5-curl php5-sqlite \
 	 php5-gd php5-mcrypt php-pear php5-dev
@@ -131,7 +131,7 @@ setup-wordpress:
 	svn checkout https://plugins.svn.wordpress.org/wordpress-importer/trunk tests/phpunit/data/plugins/wordpress-importer
 
 
-test-wordpress: 
+test-wordpress: setup-wordpress-db
 	cd svn/trunk/; phpunit
 
 setup-symfony:
