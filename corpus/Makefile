@@ -34,7 +34,7 @@ run-phpunit:  test-code-igniter test-joomla test-mediawiki test-part test-phpbb 
 
 run-skip-selenium: run-phpunit test-phpmyadmin-no-selenium
 
-run: run test-phpmyadmin
+run: run-phpunit test-phpmyadmin
 
 setup: install-phpunit install-dependencies install-composer setup-code-igniter setup-joomla setup-mediawiki setup-part setup-magento2 setup-phpmyadmin setup-zf2 setup-symfony setup-phpbb
 
