@@ -26,14 +26,27 @@ git config --global push.default current
 
 # install build tools for php
 apt-get install -y build-essential autoconf automake libtool re2c
+
+rm -rf /vagrant/php/deps
 mkdir /vagrant/php/deps
 cd /vagrant/php/deps
-wget http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb
-wget http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb
-dpkg -i libbison-dev_2.7.1.dfsg-1_amd64.deb
-dpkg -i bison_2.7.1.dfsg-1_amd64.deb
-#rm libbison-dev_2.7.1.dfsg-1_amd64.deb
-#rm bison_2.7.1.dfsg-1_amd64.deb
+
+archs=`uname -m`
+
+if [ "$archs" ==  "x86_64" ] 
+then
+    wget http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb
+    wget http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb
+
+else 
+    wget http://launchpadlibrarian.net/140087287/libbison-dev_2.7.1.dfsg-1_i386.deb
+    wget http://launchpadlibrarian.net/140087286/bison_2.7.1.dfsg-1_i386.deb
+fi
+
+dpkg -i libbison-dev_2.7.1.dfsg-1*.deb
+dpkg -i bison_2.7.1.dfsg-1*.deb
+
+
 apt-mark hold libbison-dev
 apt-mark hold bison
 apt-get install -f -y
