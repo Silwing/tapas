@@ -30,7 +30,11 @@ install-composer:
 	sudo mv composer.phar /usr/local/bin/composer
 
 
-run:  test-code-igniter test-joomla test-mediawiki test-part test-phpbb test-phpmyadmin test-magento2 test-symfony
+run:  test-code-igniter test-joomla test-mediawiki test-part test-phpbb test-magento2 test-symfony
+
+run-skip-selenium: run test-phpmyadmin-no-selenium
+
+run-selenium: run test-phpmyadmin
 
 setup: install-phpunit install-dependencies install-composer setup-code-igniter setup-joomla setup-mediawiki setup-part setup-magento2 setup-phpmyadmin setup-zf2 setup-symfony setup-phpbb
 
@@ -107,6 +111,21 @@ test-phpmyadmin: setup-phpmyadmin-db
 	ant clean;\
 	ant locales;\
 	ant phpunit-nocoverage 
+
+test-phpmyadmin-no-selenium: setup-phpmyadmin-db
+	- pkill php	
+	cd git/phpmyadmin; php --server 127.0.0.1:8000 >php.log 2>php2.log &
+	export TESTSUITE_SERVER=localhost;\
+	export TESTSUITE_USER=phpmyadmin;\
+	export TESTSUITE_PASSWORD=password;\
+	export TESTSUITE_DATABASE=test;\
+	export TESTSUITE_URL=http://localhost:8000;\
+	cd git/phpmyadmin;\
+	ant clean;\
+	ant locales;\
+	ant phpunit-nocoverage 
+
+
 
 setup-phpmyadmin:
 	cd git/phpmyadmin; composer install --no-interaction
