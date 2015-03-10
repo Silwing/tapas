@@ -1,17 +1,17 @@
 install: install-dependencies
-	mkdir git
-	cd git;\
-	 git clone https://github.com/budde377/Part.git;\
-	 git clone https://github.com/phpmyadmin/phpmyadmin.git;\
-	 git clone https://github.com/mediawiki/mediawiki.git;\
-	 git clone https://github.com/joomla/joomla-cms.git;\
-	 git clone https://github.com/bcit-ci/CodeIgniter.git;\
-	 git clone https://github.com/phpbb/phpbb.git;\
-	 git clone https://github.com/symfony/symfony.git;\
-	 git clone https://github.com/magento/magento2.git;\
+	- mkdir git &&\
+	 cd git &&\
+	 git clone https://github.com/budde377/Part.git &&\
+	 git clone https://github.com/phpmyadmin/phpmyadmin.git &&\
+	 git clone https://github.com/mediawiki/mediawiki.git &&\
+	 git clone https://github.com/joomla/joomla-cms.git &&\
+	 git clone https://github.com/bcit-ci/CodeIgniter.git &&\
+	 git clone https://github.com/phpbb/phpbb.git &&\
+	 git clone https://github.com/symfony/symfony.git &&\
+	 git clone https://github.com/magento/magento2.git &&\
 	 git clone https://github.com/zendframework/zf2.git
-	mkdir svn
-	cd svn;\
+	- mkdir svn &&\
+	 cd svn &&\
 	 svn co https://develop.svn.wordpress.org/trunk/
 
 install-dependencies: 
@@ -30,11 +30,11 @@ install-composer:
 	sudo mv composer.phar /usr/local/bin/composer
 
 
-run:  test-code-igniter test-joomla test-mediawiki test-part test-phpbb test-magento2 test-symfony
+run-phpunit:  test-code-igniter test-joomla test-mediawiki test-part test-phpbb test-magento2 test-symfony
 
-run-skip-selenium: run test-phpmyadmin-no-selenium
+run-skip-selenium: run-phpunit test-phpmyadmin-no-selenium
 
-run-selenium: run test-phpmyadmin
+run: run-phpunit test-phpmyadmin
 
 setup: install-phpunit install-dependencies install-composer setup-code-igniter setup-joomla setup-mediawiki setup-part setup-magento2 setup-phpmyadmin setup-zf2 setup-symfony setup-phpbb
 

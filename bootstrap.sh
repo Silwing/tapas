@@ -86,12 +86,12 @@ printf "\n" | pecl install imagick
 
 
 #install json 
-cd /tmp/
-wget http://pecl.php.net/get/jsonc-1.3.6.tgz
-tar xf jsonc-1.3.6.tgz 
-cd jsonc-1.3.6/
-phpize
-./configure
-make
-make install
-echo "extension=\"json.so\"" >> /usr/local/lib/php.ini
+#cd /tmp/
+#wget http://pecl.php.net/get/jsonc-1.3.6.tgz
+#tar xf jsonc-1.3.6.tgz 
+#cd jsonc-1.3.6/
+#phpize
+#./configure
+#make
+#make install
+#echo "extension=\"json.so\"" >> /usr/local/lib/php.ini
