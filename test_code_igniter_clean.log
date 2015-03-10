@@ -1,31 +1,6 @@
-array_read	3	/usr/local/bin/phpunit	3	3	0x13b3ac8	string	_SERVER	7
-array_read	3	/usr/local/bin/phpunit	3	2	0x2b779e6450a8	string	SCRIPT_NAME	11
-array_read	4	/usr/local/bin/phpunit	3	3	0x13b3ac8	string	_SERVER	7
-array_read	4	/usr/local/bin/phpunit	3	2	0x2b779e6450a8	string	SCRIPT_NAME	11
-assign_var	4	/usr/local/bin/phpunit	string	/usr/local/bin/phpunit	
-assign_const	5	/usr/local/bin/phpunit	bool	1	
-array_read	717	/usr/local/bin/phpunit	3	2	0x2b779e6450a8	string	argv	4
-assign_ref	18	/usr/local/bin/phpunit	NULL		
-array_init	22	/usr/local/bin/phpunit	0	1	0x2b77a896dac0	assign_tmp	703	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_textui_command	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_textui_command	22
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_getopt	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_getopt	19
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_configuration	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_configuration	26
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_xml	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_xml	16
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_fileloader	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_fileloader	23
 assign_var	12	/vagrant/corpus/git/CodeIgniter/tests/Bootstrap.php	string	/vagrant/corpus/git/CodeIgniter/tests	
 assign_var	19	/vagrant/corpus/git/CodeIgniter/tests/Bootstrap.php	string	.	
 assign_var	19	/vagrant/corpus/git/CodeIgniter/tests/Bootstrap.php	string	/usr/local/lib/php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	vfsstream	
 array_write	43	/vagrant/corpus/git/CodeIgniter/tests/Bootstrap.php	3	2	0x2b77a89b4e30	string	REMOTE_ADDR	11
 assign_const	43	/vagrant/corpus/git/CodeIgniter/tests/Bootstrap.php	string	127.0.0.1	
 assign_ref	64	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	NULL		
@@ -45,27 +20,7 @@ assign_ref	64	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	array	3	1	0
 assign_tmp	65	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	string	5.5	
 array_read	72	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	3	1	0x2b77a8aac9e0	string	5.5	3
 array_diff
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_testsuite	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_testsuite	27
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_test	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_test	22
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_selfdescribing	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_selfdescribing	32
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	file_iterator_facade	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	file_iterator_facade	20
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	file_iterator_factory	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	file_iterator_factory	21
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	file_iterator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	file_iterator	13
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_testcase	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b77a8b07fb8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b77a8b07fb8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b77a8b0c188	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b77a8b0c188	
@@ -78,21 +33,9 @@ assign_var	84	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	
 in_array	string	TestCase	84	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	1	1	0x2b77a8b0ef50	0
 assign_var	107	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	ci_testcase	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_testcase	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_testcase	26
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_assert	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_assert	24
 array_diff
 array_diff
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_runner_basetestrunner	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_runner_basetestrunner	29
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_test	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_test	17
 array_diff
 array_diff
 array_merge
@@ -229,8 +172,6 @@ array_merge
 array_diff
 array_diff
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_db_result	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x27c0e00	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x27c0e00	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x27f6500	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x27f6500	
@@ -256,57 +197,7 @@ array_merge
 array_diff
 array_diff
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_textui_testrunner	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_textui_testrunner	25
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	php_codecoverage_filter	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	php_codecoverage_filter	23
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\environment\\runtime	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\environment\runtime	37
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_testresult	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_testresult	28
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_textui_resultprinter	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_textui_resultprinter	28
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_printer	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_printer	20
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_testlistener	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_testlistener	30
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\environment\\console	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\environment\console	37
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_runner_version	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_runner_version	22
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_testsuiteiterator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_testsuiteiterator	30
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_util_errorhandler	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_util_errorhandler	25
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_exception	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_exception	27
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_exception	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_exception	17
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	php_timer	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	php_timer	9
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\globalstate\\blacklist	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\globalstate\blacklist	39
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\globalstate\\snapshot	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\globalstate\snapshot	38
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_benchmark	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x291f738	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x291f738	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2926708	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2926708	
@@ -317,27 +208,9 @@ assign_tmp	71	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	
 assign_var	72	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	Benchmark	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/system/core/Benchmark.php	
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_isempty	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_isempty	36
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint	28
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\exporter\\exporter	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\exporter\exporter	35
 array_write	72	/vagrant/corpus/git/CodeIgniter/system/core/Benchmark.php	0	1	0x293e0d8	string	code_start	10
 assign_var	72	/vagrant/corpus/git/CodeIgniter/system/core/Benchmark.php	double	0	
 count	18	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Benchmark_test.php	3	1	0x293e0d8	0
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_isequal	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_isequal	36
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_arrayhaskey	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_arrayhaskey	40
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\globalstate\\restorer	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\globalstate\restorer	38
 array_merge
 array_merge
 array_merge
@@ -429,48 +302,6 @@ assign_const	769	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	NULL
 assign_tmp	781	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	array	0	1	0x29b0230	
 assign_const	769	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	NULL		
 array_init	27	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Common_test.php	0	1	0x29b0230	assign_const	769	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	NULL		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\factory	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\factory	36
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\typecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\typecomparator	43
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\comparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\comparator	39
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\scalarcomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\scalarcomparator	45
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\numericcomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\numericcomparator	46
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\doublecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\doublecomparator	45
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\arraycomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\arraycomparator	44
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\resourcecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\resourcecomparator	47
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\objectcomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\objectcomparator	45
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\exceptioncomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\exceptioncomparator	48
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\splobjectstoragecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\splobjectstoragecomparator	55
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\domnodecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\domnodecomparator	46
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\mockobjectcomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\mockobjectcomparator	49
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\datetimecomparator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\datetimecomparator	47
 array_merge
 array_merge
 array_merge
@@ -515,8 +346,6 @@ in_array	string	cfg	143	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.
 array_search	string	cfg	145	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2b77a8b132d8	1
 assign_var	145	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	Config	
 assign_var	146	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	cfg	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_config	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a001e8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a001e8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x29fe7b8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x29fe7b8	
@@ -530,8 +359,6 @@ array_write	158	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	3	
 assign_tmp	158	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	CI_Config	
 array_write	159	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	3	0x13b3ac8	string	CFG	3
 assign_ref	7	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	CI_Config	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_testconfig	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x29fe7b8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x29fe7b8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x29fddb8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x29fddb8	
@@ -550,9 +377,6 @@ assign_ref	86	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	array	3	1	0
 array_merge
 array_read	24	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	3	1	0x29fa458	string	base_url	8
 array_read	196	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	3	1	0x29f8fd0	string	base_url	8
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_isnull	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_isnull	35
 array_merge
 array_merge
 array_merge
@@ -653,9 +477,7 @@ array_read	221	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	3	1	0x29eb
 assign_var	294	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	http://localhost/	
 assign_var	78	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	NULL		
 array_read	79	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	3	2	0x2b77a89b4e30	string	SCRIPT_NAME	11
-assign_var	79	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	/usr/local/bin/phpunit	
 array_read	80	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	3	2	0x2b77a89b4e30	string	SCRIPT_FILENAME	15
-assign_var	80	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	/usr/local/bin/phpunit	
 assign_var	81	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	NULL		
 assign_const	84	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	test.com	
 assign_const	85	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	/	
@@ -717,9 +539,7 @@ array_read	216	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	3	1	0x29f5
 array_read	221	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	3	1	0x29f5d30	string	base_url	8
 assign_var	294	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	https://test.com/path/	
 array_write	117	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	3	2	0x2b77a89b4e30	string	SCRIPT_NAME	11
-assign_var	117	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	/usr/local/bin/phpunit	
 array_write	121	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	3	2	0x2b77a89b4e30	string	SCRIPT_FILENAME	15
-assign_var	121	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	/usr/local/bin/phpunit	
 array_merge
 array_merge
 array_merge
@@ -909,9 +729,6 @@ assign_const	165	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	bool	1
 assign_var	126	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	development/test	
 assign_tmp	128	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	vfs://application/config/development/test.php	
 in_array	string	vfs://application/config/development/test.php	130	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	1	1	0x2a1ebb0	0
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_istrue	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_istrue	35
 array_read	196	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	3	1	0x2a37da0	string	testconfig	10
 assign_const	185	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	string	new_value	
 array_init	186	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	0	1	0x2a37e40	assign_tmp	186	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Config_test.php	array	3	1	0x2a37e40	
@@ -1024,9 +841,6 @@ in_array	string	vfs://application/config/badfile.php	130	/vagrant/corpus/git/Cod
 array_merge
 array_merge
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_isfalse	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_isfalse	36
 assign_tmp	321	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	vfs://application/config/badfile.php	
 assign_var	121	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	badfile	
 assign_const	122	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	bool	0	
@@ -1036,12 +850,6 @@ assign_tmp	128	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	string	vfs
 in_array	string	vfs://application/config/badfile.php	130	/vagrant/corpus/git/CodeIgniter/system/core/Config.php	1	1	0x2a1ebb0	0
 array_merge
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_exception	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_exception	38
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_exceptionmessage	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_exceptionmessage	45
 array_merge
 array_merge
 array_merge
@@ -1096,16 +904,12 @@ array_write	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0
 assign_var	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	bool	0	
 array_write	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2a5ded0	string	csrf_protection	15
 assign_var	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	bool	0	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_core_security	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5d868	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5d868	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5c2b0	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5c2b0	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5a388	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5a388	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a59fc8	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a59b90	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	core/security	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/security.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_security	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a59090	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a59090	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a579d0	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a579d0	
@@ -1125,16 +929,12 @@ assign_ref	31	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	
 assign_var	15	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	not_implemented		
 array_write	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2a5ded0	string	charset	7
 assign_var	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	UTF-8	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_core_utf8	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5a388	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5a388	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5b378	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5b378	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5d110	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5d110	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5d548	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a59fc8	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	core/utf8	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/utf8.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_utf8	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a58170	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a58170	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a4c658	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a4c658	
@@ -1149,16 +949,12 @@ assign_var	22	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	
 assign_ref	31	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	1	0x2a59528	
 array_read	38	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	3	1	0x2a59528	string	charset	7
 assign_var	18	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_core_input	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5d3b8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5d3b8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5c3c8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5c3c8	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5a7c0	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a5a7c0	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5c2b0	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a5a0e0	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	core/input	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/input.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_input	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a4c658	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a4c658	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2a4bf60	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2a4bf60	
@@ -1185,7 +981,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 assign_var	159	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	bool	0	
 array_keys	162	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2a5b0d0	0	
@@ -1236,7 +1031,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	35	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	35	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	GET	
@@ -1297,7 +1091,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	46	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	46	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	GET	
@@ -1497,7 +1290,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 assign_var	159	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	bool	0	
 array_keys	162	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2ab16e0	0	
@@ -1548,7 +1340,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	66	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	66	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	POST	
@@ -1609,7 +1400,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	77	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	77	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	POST	
@@ -1809,7 +1599,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	89	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	89	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	POST	
@@ -1861,7 +1650,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	99	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	99	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	GET	
@@ -1913,7 +1701,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	109	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	0	1	0x2b77a89b4ed0	string	foo	3
 assign_const	109	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	bar	
@@ -1965,7 +1752,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 assign_var	159	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	bool	0	
 array_read	178	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
@@ -2013,7 +1799,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_init	126	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	0	1	0x2ada188	assign_tmp	128	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	array	3	1	0x2ada188	
 array_read	178	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	1	0x2ada638	string	foo	3
@@ -2205,7 +1990,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 assign_const	549	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	NULL		
 assign_const	543	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	long	1048576	
@@ -2265,7 +2049,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	168	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	168	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	GET	
@@ -2326,7 +2109,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_write	181	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	HTTP_X_REQUESTED_WITH	21
 assign_const	181	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	test	
@@ -2377,26 +2159,13 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
-array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_skippedtesterror	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_skippedtesterror	34
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_assertionfailederror	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_assertionfailederror	38
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_skippedtest	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_skippedtest	29
 array_merge
 array_merge
 array_merge
 array_merge
 array_merge
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_testfailure	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_testfailure	29
+array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 array_write	8	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	3	2	0x2b77a89b4e30	string	REQUEST_METHOD	14
 assign_const	8	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Input_test.php	string	GET	
@@ -2434,7 +2203,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 array_merge
 array_merge
@@ -2479,7 +2247,6 @@ count	597	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b53
 count	606	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	0	1	0x2b77a89b4ed0	0
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 array_merge
 assign_var	21	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
 assign_var	22	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	1	0x2b20808	
@@ -2513,8 +2280,6 @@ in_array	string	load	143	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase
 array_search	string	load	145	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2b77a8b132d8	1
 assign_var	145	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	Loader	
 assign_var	146	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	load	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_loader	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b36d00	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b36d00	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b34d88	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b34d88	
@@ -2535,8 +2300,6 @@ assign_var	136	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	strin
 assign_var	140	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	Lang	
 array_read	141	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2b77a8b132d8	string	lang	4
 assign_var	141	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	lang	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_lang	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b32c90	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b32c90	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2b349a0	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2b349a0	
@@ -3092,9 +2855,6 @@ assign_var	10	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_im
 assign_ref	1202	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	not_implemented		
 array_write	1215	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	0	1	0x2b98a88	string	unit_test_lib	13
 assign_var	1215	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	string	Unit_test_lib	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_isinstanceof	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_isinstanceof	41
 assign_const	215	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	NULL		
 assign_var	967	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	string	unit_test_lib	
 assign_var	971	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	bool	0	
@@ -3252,15 +3012,6 @@ assign_var	22	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	
 assign_ref	31	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	1	0x2b8bd50	
 array_read	38	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	3	1	0x2b8bd50	string	subclass_prefix	15
 assign_var	1064	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	string	MY_	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_not	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_not	32
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_objecthasattribute	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_objecthasattribute	47
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_classhasattribute	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_classhasattribute	46
 assign_const	84	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	string	ext_baseless_lib	
 assign_var	85	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	string	Ext_baseless_lib	
 assign_tmp	86	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	string	MY_Ext_baseless_lib	
@@ -3437,8 +3188,6 @@ assign_ref	139	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	array	0	1	
 array_write	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	0	1	0x2bb18b8	string	subclass_prefix	15
 assign_var	88	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	MY_	
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_driver_library	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2ba63c8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2ba63c8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2bad450	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2bad450	
@@ -3563,8 +3312,6 @@ assign_var	136	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	strin
 assign_var	140	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	Model	
 array_read	141	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	3	1	0x2b77a8b132d8	string	model	5
 assign_var	141	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	model	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_model	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2bcbb28	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2bcbb28	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2bccbb8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2bccbb8	
@@ -3770,14 +3517,6 @@ array_merge
 array_merge
 assign_var	922	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	string	This is my test page.  World!	
 assign_var	259	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	string	This is my test page.  World!	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_generator	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_generator	38
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	text_template	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	text_template	13
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_output	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2bfeee0	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2bfeee0	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2bea198	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2bea198	
@@ -3787,9 +3526,6 @@ in_array	string	Output	69	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader
 assign_tmp	71	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/system/core/	
 assign_var	72	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	Output	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/system/core/Output.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_mockobject	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_mockobject	39
 assign_var	21	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
 assign_var	22	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	1	0x2be29a8	
 assign_ref	31	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	1	0x2c282a0	
@@ -3798,60 +3534,6 @@ assign_var	55	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	string
 array_init	14	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2bea418	array_init	14	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2bf9088	array_init	16	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c334f0	array_init	17	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c342a0	array_init	21	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c34a48	array_init	23	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c350b8	array_init	28	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c35900	array_init	29	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c35fb0	array_init	35	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3ce58	array_init	36	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3dcb0	array_init	37	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3e340	array_init	47	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3a568	array_init	52	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3b1d8	array_init	56	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3ba18	array_init	60	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3c1b8	array_init	61	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3c9f8	array_init	66	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c844f0	array_init	67	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c84d20	array_init	68	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c85200	array_init	75	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c85c30	array_init	76	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c862e8	array_init	78	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c873f0	array_init	79	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c3a310	array_init	80	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c87f80	array_init	81	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c884c0	array_init	84	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c88b90	array_init	85	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c89070	array_init	86	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c894f0	array_init	87	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c89970	array_init	90	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c89f80	array_init	93	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8a6f0	array_init	94	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8ace8	array_init	100	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8b938	array_init	102	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8c0c0	array_init	103	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8c540	array_init	104	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8cbf0	array_init	105	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8d070	array_init	106	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8d608	array_init	107	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8ddc8	array_init	110	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8e478	array_init	111	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8e958	array_init	112	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8ef68	array_init	115	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8f690	array_init	116	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c8fb10	array_init	119	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c90238	array_init	120	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c90848	array_init	128	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c91470	array_init	140	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c92658	array_init	145	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c879e8	array_init	146	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c93a08	array_init	150	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c942a8	array_init	151	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c94930	array_init	152	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c95460	array_init	153	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c958e0	array_init	154	/vagrant/corpus/git/CodeIgniter/application/config/mimes.php	0	1	0x2c96008	assign_var	58	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	array	3	2	0x2bf9088	
 assign_ref	142	/vagrant/corpus/git/CodeIgniter/system/core/Output.php	array	3	2	0x2be4a88	
 assign_var	263	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_invokedcount	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_invokedcount	49
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_invokedrecorder	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_invokedrecorder	52
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_invocation	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_invocation	47
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_verifiable	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_verifiable	39
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_invocationmocker	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_invocationmocker	45
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_stub_matchercollection	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_stub_matchercollection	51
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_invokable	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_invokable	38
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_namespace	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_namespace	46
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_invocationmocker	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_invocationmocker	53
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_methodnamematch	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_methodnamematch	52
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_parametersmatch	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_parametersmatch	52
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_match	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_match	42
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_stub	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_stub	41
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_builder_identity	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_builder_identity	45
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher	36
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_methodname	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_methodname	47
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_statelessinvocation	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_statelessinvocation	56
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_parameters	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_parameters	47
 assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 array_init	268	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/core/Loader_test.php	0	1	0x2cc68f8	array_init	445	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	0	1	0x2c8b2a0	array_init	828	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	0	1	0x2c888a0	assign_var	828	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	string	_ci_view	
 array_read	830	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	3	2	0x2c8b2a0	string	_ci_view	8
@@ -3890,15 +3572,6 @@ assign_tmp	65	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	string	5.4
 array_read	72	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	3	1	0x2b77a8aac9e0	string	5.4	3
 array_merge
 array_merge
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_invocation_object	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_invocation_object	46
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_invocation_static	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_invocation_static	46
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_invocation	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_invocation	39
 array_merge
 array_merge
 array_merge
@@ -4409,9 +4082,6 @@ assign_var	9	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_imp
 assign_var	10	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
 array_append	16	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testconfig.php	0	1	0x2d0f1a8	success
 assign_var	16	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testconfig.php	string	someconfig	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_traversablecontains	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_traversablecontains	48
 array_merge
 array_merge
 array_merge
@@ -5741,16 +5411,12 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_core_uri	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1f3b0	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2e1f3b0	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1dda8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2e1dda8	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1bd58	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2e1bd58	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1b8f0	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1b488	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	core/uri	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/uri.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_uri	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2e1b198	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2e1b198	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x2d79b08	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x2d79b08	
@@ -6432,7 +6098,6 @@ array_write	623	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	1	0x2b77
 assign_var	623	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	bar	
 array_read	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
 array_write	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	3	2	0x2b77a89b4e30	string	PHP_SELF	8
-assign_var	633	/vagrant/corpus/git/CodeIgniter/system/core/Input.php	string	/usr/local/bin/phpunit	
 assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 assign_var	91	/vagrant/corpus/git/CodeIgniter/system/helpers/cookie_helper.php	string		
 assign_var	9	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
@@ -8876,15 +8541,6 @@ array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 array_merge
 assign_var	8	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/helpers/language_helper_test.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_anyinvokedcount	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_anyinvokedcount	52
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_stub_return	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_stub_return	40
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_stub	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_stub	33
 assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 assign_var	9	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
 assign_var	10	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
@@ -8897,9 +8553,6 @@ assign_tmp	781	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	array	3	1	
 assign_var	783	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	string	bar	
 assign_tmp	783	/vagrant/corpus/git/CodeIgniter/system/core/Common.php	string	class	
 assign_tmp	70	/vagrant/corpus/git/CodeIgniter/system/helpers/language_helper.php	string	<label for=\"foo\" class=\"bar\"></label>	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_mockobject_matcher_anyparameters	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_mockobject_matcher_anyparameters	50
 array_merge
 array_merge
 array_merge
@@ -9996,9 +9649,6 @@ assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_i
 array_merge
 assign_const	222	/vagrant/corpus/git/CodeIgniter/system/helpers/string_helper.php	string	0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ	
 assign_const	225	/vagrant/corpus/git/CodeIgniter/system/helpers/string_helper.php	string	0123456789	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	phpunit_framework_constraint_istype	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	phpunit_framework_constraint_istype	35
 array_merge
 array_merge
 array_merge
@@ -11073,8 +10723,6 @@ assign_ref	139	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	array	0	1	
 assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 assign_var	10	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Calendar_test.php	not_implemented		
 assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_calendar	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x31eddb8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x31eddb8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32493d8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32493d8	
@@ -11089,9 +10737,6 @@ assign_var	9	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_imp
 assign_var	10	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	not_implemented		
 assign_ref	132	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	not_implemented		
 in_array	string	calendar_lang.php	134	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	0	1	0x2b2c600	0
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\comparator\\comparisonfailure	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\comparator\comparisonfailure	46
 array_merge
 array_init	22	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Calendar_test.php	0	1	0x324d018	assign_var	156	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	string	short	
 assign_tmp	156	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	string	month_type	
@@ -11770,9 +11415,6 @@ array_read	445	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	3	1
 array_read	447	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	3	1	0x2b40418	string	month	5
 array_write	447	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	3	1	0x2b40418	string	month	5
 assign_tmp	447	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	string	08	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	sebastianbergmann\\recursioncontext\\context	
-array_read	709	/usr/local/bin/phpunit	3	1	0x2b77a896dac0	string	sebastianbergmann\recursioncontext\context	42
 array_init	164	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Calendar_test.php	0	1	0x2b402d8	array_init	428	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	0	1	0x2b40418	assign_tmp	428	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	array	0	1	0x2b40418	
 array_write	430	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	0	1	0x2b40418	string	month	5
 assign_var	430	/vagrant/corpus/git/CodeIgniter/system/libraries/Calendar.php	long	13	
@@ -11836,8 +11478,6 @@ array_init	125	/vagrant/corpus/git/CodeIgniter/tests/mocks/core/common.php	0	1	0
 assign_ref	139	/vagrant/corpus/git/CodeIgniter/system/core/Loader.php	array	0	1	0x329cb10	
 assign_var	18	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Driver_test.php	not_implemented		
 array_init	19	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Driver_test.php	0	1	0x329d728	assign_ref	120	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_libraries_driver	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x327fd18	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x327fd18	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x327e7d8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x327e7d8	
@@ -12159,16 +11799,12 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_libraries_encrypt	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d6a58	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32d6a58	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d4f80	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32d4f80	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d2f68	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32d2f68	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d2ba8	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d2770	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	libraries/encrypt	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/libraries/encrypt.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_encrypt	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d23b0	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32d23b0	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x32d0e10	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x32d0e10	
@@ -12451,16 +12087,12 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_libraries_encryption	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x330e9b0	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x330e9b0	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x330d3f8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x330d3f8	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x330af98	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x330af98	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x330abd8	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x330a728	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	libraries/encryption	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/libraries/encryption.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_encryption	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x3309c88	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x3309c88	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33086e8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33086e8	
@@ -21719,8 +21351,6 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_parser	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x337bd58	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x337bd58	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x337abd8	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x337abd8	
@@ -21954,16 +21584,12 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	mock_libraries_table	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b9bd0	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33b9bd0	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b8630	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33b8630	
 array_init	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b67e0	assign_tmp	59	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33b67e0	
 array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b63a8	array_init	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b5fe8	assign_var	63	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	libraries/table	
 assign_var	111	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/libraries/table.php	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_table	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b5a98	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33b5a98	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x33b4558	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x33b4558	
@@ -22747,8 +22373,6 @@ array_merge
 array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_typography	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x3414540	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x3414540	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x3412fa0	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x3412fa0	
@@ -23121,8 +22745,6 @@ array_merge
 array_merge
 assign_var	350	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	not_implemented		
 assign_var	7	/vagrant/corpus/git/CodeIgniter/tests/codeigniter/libraries/Upload_test.php	not_implemented		
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_upload	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x3432f30	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x3432f30	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x3430080	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x3430080	
@@ -24183,8 +23805,6 @@ array_unshift	250	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	0	
 array_reverse	258	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	1	1	0x34ef5b8	0
 assign_var	258	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	string	config	
 array_init	261	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	0	1	0x34ef118	assign_tmp	261	/vagrant/corpus/git/CodeIgniter/tests/mocks/ci_testcase.php	array	3	2	0x34ef118	
-assign_ref	18	/usr/local/bin/phpunit	array	3	1	0x2b77a896dac0	
-assign_var	706	/usr/local/bin/phpunit	string	ci_user_agent	
 assign_tmp	14	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	string	/vagrant/corpus/git/CodeIgniter/tests/mocks/	
 array_init	17	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x34ef2a8	assign_tmp	32	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x34ef2a8	
 array_init	35	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	0	1	0x34edd48	assign_tmp	57	/vagrant/corpus/git/CodeIgniter/tests/mocks/autoloader.php	array	1	1	0x34edd48	
