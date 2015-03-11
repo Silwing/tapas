@@ -6,7 +6,6 @@ __license__ = "Apache 2.0"
 __version__ = "1.0.1"
 __email__ = "cchris42@uwo.ca"
 
-
 import sys
 import os.path
 
@@ -20,9 +19,11 @@ class ArrayLibrary:
 
 
 class Handler:
-    def __init__(self):
-        pass
     __metaclass__ = ABCMeta
+
+    def __init__(self, library):
+        self.library = library
+
 
     @abstractmethod
     def handle_line(self, line):
@@ -32,19 +33,28 @@ class Handler:
     def generate_result(self):
         pass
 
-def run_maker():
+
+class DummyHandler(Handler):
+    def generate_result(self):
+        return []
+
+    def handle_line(self, line):
+        pass
+
+
+def run_maker(handlers):
     if len(sys.argv) < 2:
         print("Missing file arguments")
         return
 
     file_argument_orig = sys.argv[1]
     base_name, extension = os.path.splitext(file_argument_orig)
-    clean_file = base_name+"_clean"+extension
+    clean_file = base_name + "_clean" + extension
     for line in open(clean_file):
-        print(line)
-
+        for handler in handlers:
+            handler.handle_line(line)
 
 
 if __name__ == "__main__":
-
-    run_maker()
+    library = ArrayLibrary()
+    run_maker([DummyHandler(library)])
