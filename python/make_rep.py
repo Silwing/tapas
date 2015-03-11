@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from IPython.lib.pretty import pprint
 from core import ArrayLibrary, DummyHandler
 
 __author__ = 'Christian Budde Christensen'
@@ -27,3 +28,5 @@ def run_maker(handlers):
 if __name__ == "__main__":
     library = ArrayLibrary()
     run_maker([DummyHandler(library)])
+    pprint(library.lookup_loc)
+    pprint(library.address_lookup)
