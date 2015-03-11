@@ -6,3 +6,4 @@ php/deps/
 corpus/git
 corpus/svn
 .idea
+*~
