@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from IPython.lib.pretty import pprint
+from pprint import pprint
 from core import ArrayLibrary, DummyHandler
 from type_handler import TypeHandler
 
