@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-from IPython.lib.pretty import pprint
+from pprint import pprint
 from core import ArrayLibrary, DummyHandler
 from type_handler import TypeHandler
+from value_handler import ValueHandler
 
 __author__ = 'Christian Budde Christensen'
 __license__ = "Apache 2.0"
@@ -33,5 +34,5 @@ def run_maker(handlers):
 
 if __name__ == "__main__":
     library = ArrayLibrary()
-    run_maker([TypeHandler(library)])
+    run_maker([ValueHandler(library)])
 

@@ -1,0 +1,6 @@
+array_init	2	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	0	1	0	0x7f6a89893af0	
+assign_tmp	2	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	NULL					array	1	1	6	0x7f6a89893af0	
+min	4	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	array	1	1	6	0x7f6a89893af0	long	-6				
+max	5	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	array	1	1	6	0x7f6a89893af0	long	5				
+min	6	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	long	4				long	5				long	2				long	3				long	0				long	-6				long	-6				
+max	7	/home/silwing/Programming/tapas-survey/php/tests/minmax.php	long	4				long	5				long	2				long	3				long	0				long	-6				long	5				
