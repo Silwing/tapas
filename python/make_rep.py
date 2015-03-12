@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from IPython.lib.pretty import pprint
 from core import ArrayLibrary, DummyHandler
+from type_handler import TypeHandler
 
 __author__ = 'Christian Budde Christensen'
 __license__ = "Apache 2.0"
@@ -19,14 +20,18 @@ def run_maker(handlers):
     file_argument_orig = sys.argv[1]
     base_name, extension = os.path.splitext(file_argument_orig)
     clean_file = base_name + "_clean" + extension
-    for line in open(clean_file):
+    clean_file_object = open(clean_file)
+    for line in clean_file_object:
+
         line_object = line.split("\t")
         for handler in handlers:
             handler.handle_line(line_object)
 
+    for handler in handlers:
+        pprint(handler.generate_result())
+
 
 if __name__ == "__main__":
     library = ArrayLibrary()
-    run_maker([DummyHandler(library)])
-    pprint(library.lookup_loc)
-    pprint(library.address_lookup)
+    run_maker([TypeHandler(library)])
+
