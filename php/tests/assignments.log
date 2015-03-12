@@ -1,0 +1,17 @@
+array_init	3	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	0	1	0	0x7fbb04c177f8	
+assign_tmp	3	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					array	0	1	0	0x7fbb04c177f8	
+array_write	4	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	0	1	0	0x7fbb04c177f8	long	0	
+assign_const	4	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					long	1				
+array_write	5	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	1	0x7fbb04c177f8	long	1	
+assign_var	5	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					object	stdClass				
+array_write	6	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	2	0x7fbb04c177f8	long	2	
+assign_const	6	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					string	Hej				
+array_read	7	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	3	0x7fbb04c177f8	long	0	
+array_write	7	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	3	0x7fbb04c177f8	long	3	
+assign_var	7	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					long	1				
+array_write	8	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	4	0x7fbb04c177f8	long	4	
+assign_const	8	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	NULL					bool	1				
+array_push	9	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	5	0x7fbb04c177f8	0x7fbb04c17070	success
+array_push	10	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	6	0x7fbb04c177f8	0x7fbb04c17070	success
+array_read	11	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	7	0x7fbb04c177f8	long	4	
+array_push	11	/home/silwing/Programming/tapas-survey/php/tests/assignments.php	1	1	7	0x7fbb04c177f8	0x7fbb04c17070	success

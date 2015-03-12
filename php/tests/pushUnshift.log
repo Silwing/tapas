@@ -1,0 +1,4 @@
+array_init	3	/home/silwing/Programming/tapas-survey/php/tests/pushUnshift.php	0	1	0	0x7fbe18a607f8	
+assign_tmp	3	/home/silwing/Programming/tapas-survey/php/tests/pushUnshift.php	NULL					array	1	1	4	0x7fbe18a607f8	
+array_push	5	/home/silwing/Programming/tapas-survey/php/tests/pushUnshift.php	1	1	4	0x7fbe18a607f8	long	5				long	6				long	7				long	8				
+array_unshift	6	/home/silwing/Programming/tapas-survey/php/tests/pushUnshift.php	1	1	8	0x7fbe18a607f8	long	-2				long	-1				long	0				
