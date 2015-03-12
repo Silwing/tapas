@@ -11,10 +11,15 @@ class ArrayLibrary:
         self.lookup_loc = {}
 
     def generate_id(self, line_no, file_path, address):
-        if address in self.address_lookup:
-            return self.address_lookup[address]
 
-        loc = "%s:%d" % (file_path, line_no)
+        loc = "%s:%s" % (file_path, str(line_no))
+        if address in self.address_lookup:
+            array_id = self.address_lookup[address]
+            if loc in self.loc_lookup:
+                return array_id
+            self.loc_lookup[loc] = address
+            return array_id
+
         if loc in self.loc_lookup:
             return self.generate_id(line_no, file_path, self.loc_lookup[loc])
 
@@ -58,6 +63,9 @@ class DummyHandler(Handler):
 
         if line_type.startswith("array_") and len(line_object) > 6:
             array_ref = line_object[6]
-            self.library.generate_id(int(line_number), line_file, array_ref)
+            try:
+                self.library.generate_id(int(line_number), line_file, array_ref)
+            except ValueError:
+                pass
 
 
