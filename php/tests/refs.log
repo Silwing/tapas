@@ -1,0 +1,3 @@
+assign_tmp	2	/home/silwing/Programming/tapas-survey/php/tests/refs.php	array	1	1	0x7f1487c08f30	
+assign_ref	3	/home/silwing/Programming/tapas-survey/php/tests/refs.php	array	1	1	0x7f1487c08f30	
+array_write	4	/home/silwing/Programming/tapas-survey/php/tests/refs.php	1	1	0x7f1487c08f30	long	2	
