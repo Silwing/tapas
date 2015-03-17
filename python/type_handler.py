@@ -65,6 +65,8 @@ class TypeHandler(core.Handler):
 
 
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
+        if id == 4:
+            pass
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)
@@ -76,10 +78,6 @@ class TypeHandler(core.Handler):
             type_int -= 8
 
         if id in self.array_types:
-            current_type = self.array_types[id]
             self.array_types[id] |= type_int
-            if current_type != self.array_types[id]:
-                self.changers_lines.append(current_line)
-
         else:
             self.array_types[id] = type_int
