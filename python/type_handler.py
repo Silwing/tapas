@@ -16,7 +16,6 @@ class TypeHandler(core.Handler):
         self.changers_lines = []
         self.init_arrays = []
         self.suspicious_ids = []
-        self.handle_counter = 0
 
     def generate_result(self):
         changing_locations = {}
@@ -38,11 +37,10 @@ class TypeHandler(core.Handler):
         return changing_locations, float(len(changing_locations)) / len(self.array_types), float(
             len(changing_locations) - suspicious_counter) / len(self.array_types)
 
-    def handle_line(self, line):
+    def handle_line(self, line, current_line):
         if len(line) < 3:
             return
 
-        self.handle_counter += 1
         line_type = line[0]
         try:
             line_number = int(line[1])
@@ -74,12 +72,14 @@ class TypeHandler(core.Handler):
                 self.init_arrays.append(array_ref)
         if type_int == 0:
             return
+        if type_int & 8:
+            type_int -= 8
 
         if id in self.array_types:
             current_type = self.array_types[id]
             self.array_types[id] |= type_int
             if current_type != self.array_types[id]:
-                self.changers_lines.append(self.handle_counter)
+                self.changers_lines.append(current_line)
 
         else:
             self.array_types[id] = type_int

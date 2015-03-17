@@ -38,7 +38,7 @@ class ValueHandler(core.Handler):
             else:
                 self.multiples[array_id] = [[line_number, line_file, line_type]]
 
-    def handle_line(self, line):
+    def handle_line(self, line, current_line):
         if len(line) < 3:
             return
 
