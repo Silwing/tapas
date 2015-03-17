@@ -17,12 +17,19 @@ class ArrayLibrary:
     def generate_id(self, line_no, file_path, op_type, address):
 
         loc = location_string(file_path, line_no, op_type)
+        if op_type == "array_init":
+            self.clear_address(address, loc)
+        return self.generate_id_from_loc(loc, address)
+
+    def generate_id_from_loc(self, loc, address):
         if address in self.address_lookup:
             array_id = self.address_lookup[address]
             return array_id
 
         if loc in self.loc_lookup:
-            return self.generate_id(line_no, file_path, op_type, self.loc_lookup[loc])
+            array_id = self.generate_id_from_loc(loc, self.loc_lookup[loc])
+            self.address_lookup[address] = array_id
+            return array_id
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
@@ -33,6 +40,14 @@ class ArrayLibrary:
     def find_define(self, array_id):
         return self.lookup_loc[array_id]
 
+    def clear_address(self, address, loc=None):
+        if address not in self.address_lookup or (loc in self.loc_lookup and address == self.loc_lookup[loc]):
+            return
+        del self.address_lookup[address]
+        for loc in self.loc_lookup.keys():
+            if self.loc_lookup[loc] == address:
+                del self.loc_lookup[loc]
+
 
 class Handler:
     __metaclass__ = ABCMeta
@@ -42,7 +57,7 @@ class Handler:
 
 
     @abstractmethod
-    def handle_line(self, line):
+    def handle_line(self, line, current_line):
         pass
 
     @abstractmethod
@@ -54,7 +69,7 @@ class DummyHandler(Handler):
     def generate_result(self):
         return []
 
-    def handle_line(self, line_object):
+    def handle_line(self, line_object, current_line):
         if len(line_object) < 3:
             return
 
