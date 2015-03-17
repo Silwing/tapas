@@ -28,7 +28,7 @@ def run_maker(handlers):
         counter += 1
         line_object = line.split("\t")
         for handler in handlers:
-            handler.handle_line(line_object, lambda: counter)
+            handler.handle_line(line_object, counter)
 
     for handler in handlers:
         pprint(handler.generate_result())
