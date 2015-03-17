@@ -3,6 +3,10 @@ __author__ = 'budde'
 from abc import ABCMeta, abstractmethod
 
 
+def location_string(file_path, line_no, op_type):
+    return "%s:%s:%s" % (file_path, str(line_no), op_type)
+
+
 class ArrayLibrary:
     def __init__(self):
         self.current_id = -1
@@ -12,7 +16,7 @@ class ArrayLibrary:
 
     def generate_id(self, line_no, file_path, op_type, address):
 
-        loc = "%s:%s:%s" % (file_path, str(line_no), op_type)
+        loc = location_string(file_path, line_no, op_type)
         if address in self.address_lookup:
             array_id = self.address_lookup[address]
             return array_id

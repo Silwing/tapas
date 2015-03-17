@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import csv
 
 __author__ = 'Randi Katrine Hilleroee'
 __license__ = "Apache 2.0"
@@ -12,30 +13,44 @@ class TypeHandler(core.Handler):
     def __init__(self, library):
         super(TypeHandler, self).__init__(library)
         self.array_types = {}
-        self.changers = {}
+        self.changers_lines = []
+        self.init_arrays = []
+        self.suspicious_ids = []
+        self.handle_counter = 0
 
     def generate_result(self):
         changing_locations = {}
+        suspicious_counter = 0
         for id in self.array_types:
             type = self.array_types[id]
             if bin(type).count('1') > 1:
-                changing_locations[id] = "%s - %d" % (self.library.find_define(id), type)
+                suspicious_string = ""
+                if id in self.suspicious_ids:
+                    suspicious_counter += 1
+                    suspicious_string = " - SUSPICIOUS"
 
-        return changing_locations, float(len(changing_locations)) / len(self.array_types), self.changers
+                changing_locations[id] = "%s - %d%s" % (self.library.find_define(id), type, suspicious_string)
+
+        result_file = open("result.csv", "wb")
+        wr = csv.writer(result_file)
+        wr.writerow(self.changers_lines)
+
+        return changing_locations, float(len(changing_locations)) / len(self.array_types), float(
+            len(changing_locations) - suspicious_counter) / len(self.array_types)
 
     def handle_line(self, line):
         if len(line) < 3:
             return
 
+        self.handle_counter += 1
         line_type = line[0]
-        line_number = int(line[1])
-
+        try:
+            line_number = int(line[1])
+        except ValueError:
+            return
         line_file = line[2]
         array_ref = None
         type_int = 0
-
-        if line_number == 401:
-            pass
 
         if line_type == "array_mr_part":
             return
@@ -52,18 +67,20 @@ class TypeHandler(core.Handler):
 
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
+        if line_type == "array_init" and id not in self.suspicious_ids:
+            if array_ref in self.init_arrays:
+                self.suspicious_ids.append(id)
+            else:
+                self.init_arrays.append(array_ref)
+
         if type_int == 0:
             return
 
         if id in self.array_types:
-            current_types = self.array_types[id]
+            current_type = self.array_types[id]
             self.array_types[id] |= 1 << type_int
-            if current_types != self.array_types[id]:
-                if id in self.changers:
-                    self.changers[id].append([line_file, line_number, line_type])
-                else:
-                    self.changers[id] = [[line_file, line_number, line_type]]
-
+            if current_type != self.array_types[id]:
+                self.changers_lines.append(self.handle_counter)
 
         else:
             self.array_types[id] = 1 << type_int

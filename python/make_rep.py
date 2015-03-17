@@ -18,7 +18,7 @@ def run_maker(handlers):
         print("Missing file arguments")
         return
 
-    file_argument_orig = sys.argv[1]
+    file_argument_orig = sys.argv[len(sys.argv)-1]
     base_name, extension = os.path.splitext(file_argument_orig)
     clean_file = base_name + "_clean" + extension
     clean_file_object = open(clean_file)
@@ -34,5 +34,17 @@ def run_maker(handlers):
 
 if __name__ == "__main__":
     library = ArrayLibrary()
-    run_maker([ValueHandler(library)])
+
+    handlers = []
+    if len(sys.argv) >= 3:
+        for arg in sys.argv[:-1]:
+            if arg == "value":
+                handlers.append(ValueHandler(library))
+            if arg == "type":
+                handlers.append(TypeHandler(library))
+
+    else:
+        handlers = [ValueHandler(library), TypeHandler(library)]
+
+    run_maker(handlers)
 
