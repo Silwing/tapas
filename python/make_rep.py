@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from pprint import pprint
 from core import ArrayLibrary, DummyHandler
+from cyclic_handler import CyclicHandler
 from type_handler import TypeHandler
 from value_handler import ValueHandler
 
@@ -18,16 +19,16 @@ def run_maker(handlers):
         print("Missing file arguments")
         return
 
-    file_argument_orig = sys.argv[len(sys.argv)-1]
+    file_argument_orig = sys.argv[len(sys.argv) - 1]
     base_name, extension = os.path.splitext(file_argument_orig)
     clean_file = base_name + "_clean" + extension
     clean_file_object = open(clean_file)
-
+    counter = 0
     for line in clean_file_object:
-
+        counter += 1
         line_object = line.split("\t")
         for handler in handlers:
-            handler.handle_line(line_object)
+            handler.handle_line(line_object, lambda: counter)
 
     for handler in handlers:
         pprint(handler.generate_result())
@@ -43,9 +44,11 @@ if __name__ == "__main__":
                 handlers.append(ValueHandler(library))
             if arg == "type":
                 handlers.append(TypeHandler(library))
+            if arg == "cyclic":
+                handlers.append(CyclicHandler(library))
 
     else:
-        handlers = [ValueHandler(library), TypeHandler(library)]
+        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library)]
 
     run_maker(handlers)
 
