@@ -22,6 +22,7 @@ def run_maker(handlers):
     base_name, extension = os.path.splitext(file_argument_orig)
     clean_file = base_name + "_clean" + extension
     clean_file_object = open(clean_file)
+
     for line in clean_file_object:
 
         line_object = line.split("\t")
