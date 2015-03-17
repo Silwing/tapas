@@ -34,5 +34,17 @@ def run_maker(handlers):
 
 if __name__ == "__main__":
     library = ArrayLibrary()
-    run_maker([ValueHandler(library)])
+
+    handlers = []
+    if len(sys.argv[:-1]) >= 3:
+        for arg in sys.argv:
+            if arg == "value":
+                handlers.append(ValueHandler(library))
+            if arg == "type":
+                handlers.append(TypeHandler(library))
+
+    else:
+        handlers = [ValueHandler(library), TypeHandler(library)]
+
+    run_maker(handlers)
 
