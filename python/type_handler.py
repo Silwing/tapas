@@ -65,22 +65,21 @@ class TypeHandler(core.Handler):
         if array_ref is None:
             return
 
-        id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
+        id = self.library.generate_id(line_number, line_file, line_type, array_ref)
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)
             else:
                 self.init_arrays.append(array_ref)
-
         if type_int == 0:
             return
 
         if id in self.array_types:
             current_type = self.array_types[id]
-            self.array_types[id] |= 1 << type_int
+            self.array_types[id] |= type_int
             if current_type != self.array_types[id]:
                 self.changers_lines.append(self.handle_counter)
 
         else:
-            self.array_types[id] = 1 << type_int
+            self.array_types[id] = type_int
