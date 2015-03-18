@@ -8,32 +8,38 @@ def location_string(file_path, line_no, op_type):
 
 
 class ArrayLibrary:
-    def __init__(self):
+    def __init__(self, blacklist=None):
+        if not blacklist: blacklist = {}
         self.current_id = -1
         self.address_lookup = {}
         self.loc_lookup = {}
+        self.loc_to_id = {}
         self.lookup_loc = {}
+        self.blacklist = blacklist
+
+    def set_blacklist(self, blacklist):
+        self.blacklist = blacklist
 
     def generate_id(self, line_no, file_path, op_type, address):
 
         loc = location_string(file_path, line_no, op_type)
-        if op_type == "array_init":
-            self.clear_address(address, loc)
+        """if op_type == "array_init":
+            self.clear_address(address, loc)"""
         return self.generate_id_from_loc(loc, address)
 
     def generate_id_from_loc(self, loc, address):
-        if address in self.address_lookup:
-            array_id = self.address_lookup[address]
-            return array_id
+        if loc in self.loc_to_id:
+            self.address_lookup[address] = self.loc_to_id[loc]
+            return self.loc_to_id[loc]
 
-        if loc in self.loc_lookup:
-            array_id = self.generate_id_from_loc(loc, self.loc_lookup[loc])
-            self.address_lookup[address] = array_id
-            return array_id
+        if address in self.address_lookup:
+            self.loc_to_id[loc] = self.address_lookup[address]
+            return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
-        self.loc_lookup[loc] = address
+        self.loc_to_id[loc] = self.current_id
+        """self.loc_lookup[loc] = address"""
         self.lookup_loc[self.current_id] = loc
         return self.current_id
 
@@ -55,6 +61,9 @@ class Handler:
     def __init__(self, library):
         self.library = library
 
+    @abstractmethod
+    def get_blacklist(self):
+        pass
 
     @abstractmethod
     def handle_line(self, line, current_line):
@@ -66,6 +75,9 @@ class Handler:
 
 
 class DummyHandler(Handler):
+    def get_blacklist(self):
+        return {}
+
     def generate_result(self):
         return []
 

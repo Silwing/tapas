@@ -7,12 +7,15 @@ import core
 
 
 class CyclicHandler(core.Handler):
+    def get_blacklist(self):
+        return {}
+
     def __init__(self, library):
         super(CyclicHandler, self).__init__(library)
         self.cyclic_id = {}
 
     def generate_result(self):
-       return self.cyclic_id
+        return self.cyclic_id
 
     def handle_line(self, line, current_line):
         if len(line) < 3:

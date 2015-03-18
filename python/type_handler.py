@@ -10,12 +10,22 @@ import core
 
 
 class TypeHandler(core.Handler):
+    def get_blacklist(self):
+        return {
+            "/vagrant/corpus/git/Part/lib/ConfigImpl.php:46:assign_var": [
+                '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var'
+            ]
+
+        }
+
     def __init__(self, library):
         super(TypeHandler, self).__init__(library)
         self.array_types = {}
+        self.array_types_sum = {}
         self.changers_lines = []
         self.init_arrays = []
         self.suspicious_ids = []
+        self.delta = 0.05
 
     def generate_result(self):
         changing_locations = {}
@@ -24,15 +34,18 @@ class TypeHandler(core.Handler):
             type = self.array_types[id]
             if bin(type).count('1') > 1:
                 suspicious_string = ""
-                if id in self.suspicious_ids:
-                    suspicious_counter += 1
-                    suspicious_string = " - SUSPICIOUS"
+                id_sum = sum(self.array_types_sum[id].values())
+                percent_map = map(lambda x: (
+                    x, round(float(self.array_types_sum[id][x]) / id_sum, 4)),
+                                  self.array_types_sum[id])
+                if all(map(lambda (_, percent): percent <= 1-self.delta, percent_map)):
+                    if id in self.suspicious_ids:
+                        suspicious_counter += 1
+                        suspicious_string = "*"
 
-                changing_locations[id] = "%s - %d%s" % (self.library.find_define(id), type, suspicious_string)
-
-        result_file = open("result.csv", "wb")
-        wr = csv.writer(result_file)
-        wr.writerow(self.changers_lines)
+                    changing_locations[id] = "%s - %d%s - %d %s" % (
+                        self.library.find_define(id), type, suspicious_string, id_sum,
+                        str(percent_map))
 
         return changing_locations, float(len(changing_locations)) / len(self.array_types), float(
             len(changing_locations) - suspicious_counter) / len(self.array_types)
@@ -62,22 +75,28 @@ class TypeHandler(core.Handler):
 
         if array_ref is None:
             return
-
-
-        id = self.library.generate_id(line_number, line_file, line_type, array_ref)
-        if id == 4:
+        if line_file == '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php' and line_number == 28:
             pass
+        id = self.library.generate_id(line_number, line_file, line_type, array_ref)
+
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)
             else:
                 self.init_arrays.append(array_ref)
+
         if type_int == 0:
             return
+
         if type_int & 8:
             type_int -= 8
 
         if id in self.array_types:
             self.array_types[id] |= type_int
+            if type_int in self.array_types_sum[id]:
+                self.array_types_sum[id][type_int] += 1
+            else:
+                self.array_types_sum[id][type_int] = 1
         else:
             self.array_types[id] = type_int
+            self.array_types_sum[id] = {type_int: 1}
