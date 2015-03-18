@@ -12,7 +12,6 @@ class ArrayLibrary:
         if not blacklist: blacklist = {}
         self.current_id = -1
         self.address_lookup = {}
-        self.loc_lookup = {}
         self.loc_to_id = {}
         self.id_to_loc = {}
         self.blacklist = blacklist
@@ -36,13 +35,11 @@ class ArrayLibrary:
                 id_location = self.id_to_loc[address_id]
                 if id_location not in self.blacklist or loc not in self.blacklist[id_location]:
                     self.loc_to_id[loc] = address_id
-                    self.id_to_loc[address_id] = loc
                     return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
         self.loc_to_id[loc] = self.current_id
-        """self.loc_lookup[loc] = address"""
         self.id_to_loc[self.current_id] = loc
         return self.current_id
 
