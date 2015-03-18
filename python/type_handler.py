@@ -15,6 +15,10 @@ class TypeHandler(core.Handler):
             '/vagrant/corpus/git/Part/lib/controller/json/ObjectImpl.php:34:array_init': [
                 '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:61:array_init',
                 '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:49:assign_var'
+            ],
+            '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var': [
+                '/vagrant/corpus/git/Part/lib/log/LoggerImpl.php:185:assign_var',
+                '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read'
             ]
 
         }
@@ -26,7 +30,7 @@ class TypeHandler(core.Handler):
         self.changers_lines = []
         self.init_arrays = []
         self.suspicious_ids = []
-        self.delta = 0.05
+        self.delta = 0.01
 
     def generate_result(self):
         changing_locations = {}
@@ -76,8 +80,14 @@ class TypeHandler(core.Handler):
 
         if array_ref is None:
             return
-
+        l = core.location_string(line_file, line_number, line_type)
+        if l == '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read':
+            loc = self.library.find_define(6)
+            pass
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
+        if id == 6 and "FilePathTrait" not in line_file:
+            l = core.location_string(line_file, line_number, line_type)
+            pass
 
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
