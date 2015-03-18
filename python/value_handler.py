@@ -9,6 +9,9 @@ import core
 
 
 class ValueHandler(core.Handler):
+    def get_blacklist(self):
+        return {}
+
     def __init__(self, library):
         super(ValueHandler, self).__init__(library)
         self.array_value_types = {}
