@@ -12,8 +12,9 @@ import core
 class TypeHandler(core.Handler):
     def get_blacklist(self):
         return {
-            "/vagrant/corpus/git/Part/lib/ConfigImpl.php:46:assign_var": [
-                '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var'
+            '/vagrant/corpus/git/Part/lib/controller/json/ObjectImpl.php:34:array_init': [
+                '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:61:array_init',
+                '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:49:assign_var'
             ]
 
         }
@@ -38,7 +39,7 @@ class TypeHandler(core.Handler):
                 percent_map = map(lambda x: (
                     x, round(float(self.array_types_sum[id][x]) / id_sum, 4)),
                                   self.array_types_sum[id])
-                if all(map(lambda (_, percent): percent <= 1-self.delta, percent_map)):
+                if all(map(lambda (_, percent): percent <= 1 - self.delta, percent_map)):
                     if id in self.suspicious_ids:
                         suspicious_counter += 1
                         suspicious_string = "*"
@@ -75,8 +76,7 @@ class TypeHandler(core.Handler):
 
         if array_ref is None:
             return
-        if line_file == '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php' and line_number == 28:
-            pass
+
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
         if line_type == "array_init" and id not in self.suspicious_ids:

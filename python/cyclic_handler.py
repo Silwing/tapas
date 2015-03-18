@@ -46,4 +46,4 @@ class CyclicHandler(core.Handler):
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
         if type_int & 8:
-            self.cyclic_id[id] = core.location_string(line_type, line_file, line_type)
+            self.cyclic_id[id] = core.location_string(line_file, line_number, line_type)

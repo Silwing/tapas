@@ -14,7 +14,7 @@ class ArrayLibrary:
         self.address_lookup = {}
         self.loc_lookup = {}
         self.loc_to_id = {}
-        self.lookup_loc = {}
+        self.id_to_loc = {}
         self.blacklist = blacklist
 
     def set_blacklist(self, blacklist):
@@ -23,36 +23,31 @@ class ArrayLibrary:
     def generate_id(self, line_no, file_path, op_type, address):
 
         loc = location_string(file_path, line_no, op_type)
-        """if op_type == "array_init":
-            self.clear_address(address, loc)"""
-        return self.generate_id_from_loc(loc, address)
 
-    def generate_id_from_loc(self, loc, address):
         if loc in self.loc_to_id:
             self.address_lookup[address] = self.loc_to_id[loc]
             return self.loc_to_id[loc]
 
         if address in self.address_lookup:
-            self.loc_to_id[loc] = self.address_lookup[address]
-            return self.address_lookup[address]
+            if op_type == "array_init":
+                del self.address_lookup[address]
+            else:
+                address_id = self.address_lookup[address]
+                id_location = self.id_to_loc[address_id]
+                if id_location not in self.blacklist or loc not in self.blacklist[id_location]:
+                    self.loc_to_id[loc] = address_id
+                    self.id_to_loc[address_id] = loc
+                    return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
         self.loc_to_id[loc] = self.current_id
         """self.loc_lookup[loc] = address"""
-        self.lookup_loc[self.current_id] = loc
+        self.id_to_loc[self.current_id] = loc
         return self.current_id
 
     def find_define(self, array_id):
-        return self.lookup_loc[array_id]
-
-    def clear_address(self, address, loc=None):
-        if address not in self.address_lookup or (loc in self.loc_lookup and address == self.loc_lookup[loc]):
-            return
-        del self.address_lookup[address]
-        for loc in self.loc_lookup.keys():
-            if self.loc_lookup[loc] == address:
-                del self.loc_lookup[loc]
+        return self.id_to_loc[array_id]
 
 
 class Handler:
