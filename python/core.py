@@ -23,22 +23,21 @@ class ArrayLibrary:
     def generate_id(self, line_no, file_path, op_type, address):
 
         loc = location_string(file_path, line_no, op_type)
-        """if op_type == "array_init":
-            self.clear_address(address, loc)"""
-        return self.generate_id_from_loc(loc, address)
 
-    def generate_id_from_loc(self, loc, address):
         if loc in self.loc_to_id:
             self.address_lookup[address] = self.loc_to_id[loc]
             return self.loc_to_id[loc]
 
         if address in self.address_lookup:
-            id = self.address_lookup[address]
-            address1 = self.id_to_loc[id]
-            if address1 not in self.blacklist or loc not in self.blacklist[address1]:
-                self.loc_to_id[loc] = id
-                self.id_to_loc[id] = loc
-                return self.address_lookup[address]
+            if op_type == "array_init":
+                del self.address_lookup[address]
+            else:
+                address_id = self.address_lookup[address]
+                id_location = self.id_to_loc[address_id]
+                if id_location not in self.blacklist or loc not in self.blacklist[id_location]:
+                    self.loc_to_id[loc] = address_id
+                    self.id_to_loc[address_id] = loc
+                    return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
@@ -49,14 +48,6 @@ class ArrayLibrary:
 
     def find_define(self, array_id):
         return self.id_to_loc[array_id]
-
-    def clear_address(self, address, loc=None):
-        if address not in self.address_lookup or (loc in self.loc_lookup and address == self.loc_lookup[loc]):
-            return
-        del self.address_lookup[address]
-        for loc in self.loc_lookup.keys():
-            if self.loc_lookup[loc] == address:
-                del self.loc_lookup[loc]
 
 
 class Handler:

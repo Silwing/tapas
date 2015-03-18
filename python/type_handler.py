@@ -78,9 +78,7 @@ class TypeHandler(core.Handler):
             return
 
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
-        if id == 12:
-            l = core.location_string(line_file, line_number, line_type)
-            l = l
+
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)
