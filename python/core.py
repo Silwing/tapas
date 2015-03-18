@@ -14,7 +14,7 @@ class ArrayLibrary:
         self.address_lookup = {}
         self.loc_lookup = {}
         self.loc_to_id = {}
-        self.lookup_loc = {}
+        self.id_to_loc = {}
         self.blacklist = blacklist
 
     def set_blacklist(self, blacklist):
@@ -33,18 +33,22 @@ class ArrayLibrary:
             return self.loc_to_id[loc]
 
         if address in self.address_lookup:
-            self.loc_to_id[loc] = self.address_lookup[address]
-            return self.address_lookup[address]
+            id = self.address_lookup[address]
+            address1 = self.id_to_loc[id]
+            if address1 not in self.blacklist or loc not in self.blacklist[address1]:
+                self.loc_to_id[loc] = id
+                self.id_to_loc[id] = loc
+                return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id
         self.loc_to_id[loc] = self.current_id
         """self.loc_lookup[loc] = address"""
-        self.lookup_loc[self.current_id] = loc
+        self.id_to_loc[self.current_id] = loc
         return self.current_id
 
     def find_define(self, array_id):
-        return self.lookup_loc[array_id]
+        return self.id_to_loc[array_id]
 
     def clear_address(self, address, loc=None):
         if address not in self.address_lookup or (loc in self.loc_lookup and address == self.loc_lookup[loc]):
