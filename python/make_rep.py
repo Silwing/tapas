@@ -14,6 +14,16 @@ import sys
 import os.path
 
 
+def reduce_blacklist(list1, list2):
+    for key in list2:
+        if key in list1:
+            list1[key] = list1[key] + list(set(list2[key]) - set(list1[key]))
+        else:
+            list1[key] = list2[key]
+
+    return list1
+
+
 def run_maker(handlers):
     if len(sys.argv) < 2:
         print("Missing file arguments")
@@ -24,6 +34,7 @@ def run_maker(handlers):
     clean_file = base_name + "_clean" + extension
     clean_file_object = open(clean_file)
     counter = 0
+
     for line in clean_file_object:
         counter += 1
         line_object = line.split("\t")
@@ -35,6 +46,7 @@ def run_maker(handlers):
 
 
 if __name__ == "__main__":
+
     library = ArrayLibrary()
 
     handlers = []
@@ -49,6 +61,10 @@ if __name__ == "__main__":
 
     else:
         handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library)]
+
+    blacklists = map(lambda h: h.get_blacklist(), handlers)
+    blacklist = reduce(reduce_blacklist, blacklists[1:], blacklists[0])
+    library.set_blacklist(blacklist)
 
     run_maker(handlers)
 
