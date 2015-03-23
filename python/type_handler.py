@@ -15,6 +15,13 @@ class TypeHandler(core.Handler):
             '/vagrant/corpus/git/Part/lib/controller/json/ObjectImpl.php:34:array_init': [
                 '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:61:array_init',
                 '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:49:assign_var'
+            ],
+            '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var': [
+                '/vagrant/corpus/git/Part/lib/log/LoggerImpl.php:185:assign_var',
+                '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read'
+            ],
+            '/vagrant/corpus/git/Part/lib/controller/ajax/ServerImpl.php:259:array_init': [
+                '/vagrant/corpus/git/Part/lib/controller/json/ElementImpl.php:41:array_write'
             ]
 
         }
@@ -26,7 +33,7 @@ class TypeHandler(core.Handler):
         self.changers_lines = []
         self.init_arrays = []
         self.suspicious_ids = []
-        self.delta = 0.05
+        self.delta = 0.01
 
     def generate_result(self):
         changing_locations = {}
@@ -76,11 +83,13 @@ class TypeHandler(core.Handler):
 
         if array_ref is None:
             return
-
+        l = core.location_string(line_file, line_number, line_type)
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
-        if id == 12:
-            l = core.location_string(line_file, line_number, line_type)
-            l = l
+        define = self.library.find_define(id)
+
+        if id == 31 and type_int == 4:
+            pass
+
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)
