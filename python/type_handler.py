@@ -19,6 +19,9 @@ class TypeHandler(core.Handler):
             '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var': [
                 '/vagrant/corpus/git/Part/lib/log/LoggerImpl.php:185:assign_var',
                 '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read'
+            ],
+            '/vagrant/corpus/git/Part/lib/controller/ajax/ServerImpl.php:259:array_init': [
+                '/vagrant/corpus/git/Part/lib/controller/json/ElementImpl.php:41:array_write'
             ]
 
         }
@@ -81,12 +84,10 @@ class TypeHandler(core.Handler):
         if array_ref is None:
             return
         l = core.location_string(line_file, line_number, line_type)
-        if l == '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read':
-            loc = self.library.find_define(6)
-            pass
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
-        if id == 6 and "FilePathTrait" not in line_file:
-            l = core.location_string(line_file, line_number, line_type)
+        define = self.library.find_define(id)
+
+        if id == 31 and type_int == 4:
             pass
 
         if line_type == "array_init" and id not in self.suspicious_ids:
