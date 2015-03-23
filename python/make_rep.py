@@ -39,7 +39,7 @@ def run_maker(library, handlers):
         counter += 1
         line_object = line.split("\t")
         if "hash_init" == line_object[0]:
-            library.clear_address(line_object[1])
+            library.clear_address(line_object[1].replace("\n", ""))
         for handler in handlers:
             handler.handle_line(line_object, counter)
 
