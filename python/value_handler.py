@@ -36,7 +36,7 @@ class ValueHandler(core.Handler):
                     multiple_lists += 1
 
         '''return multiple_locations, self.change_locations, len(self.array_types), len(multiple_locations), float(len(multiple_locations)) / len(self.array_value_types), float(multiple_maps) / len(self.array_value_types), float(multiple_lists) / len(self.array_value_types)'''
-        return [len(self.array_types), len(multiple_locations), float(len(multiple_locations)) / len(self.array_value_types), float(multiple_maps) / len(self.array_value_types), float(multiple_lists) / len(self.array_value_types)]
+        return [len(multiple_locations), float(multiple_maps), float(multiple_lists)]
 
     def add_type_to_array(self, array_id, vtype, class_name, line_number, line_file, line_type, current_line):
         if vtype == "object":
