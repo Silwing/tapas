@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import csv
+from categorize_handler import CategorizeHandler
 from core import ArrayLibrary
 from cyclic_handler import CyclicHandler
 from type_handler import TypeHandler
@@ -60,11 +61,13 @@ def run_maker(library_builder, file_builder, handler_builder):
                 for handler in handlers:
                     handler.handle_line(line_object, counter)
 
+
             sys.stdout.write("\r100.000%\n")
             for handler in handlers:
                 result = handler.generate_result()
-                result[:0] = [handler.__class__.__name__, filename, library.number_of_arrays()]
-                writer.writerow(result)
+                if result is not None:
+                    result[:0] = [handler.__class__.__name__, filename, library.number_of_arrays()]
+                    writer.writerow(result)
 
 
 def build_handlers(library, args):
@@ -81,11 +84,11 @@ def build_handlers(library, args):
             handlers.append(OperationNamesHandler(library))
         if "operation" in arg:
             handlers.append(OperationHandler(library))
-        files = sys.argv[2:]
-
+        if "categorize" in arg:
+            handlers.append(CategorizeHandler(library))
     if len(handlers) == 0:
         handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library), OperationNamesHandler(library),
-                    OperationHandler(library)]
+                    OperationHandler(library), CategorizeHandler(library)]
 
     blacklists = map(lambda h: h.get_blacklist(), handlers)
     blacklist = reduce(reduce_blacklist, blacklists[1:], blacklists[0])
