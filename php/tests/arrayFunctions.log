@@ -1,16 +1,35 @@
-assign_tmp	3	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	1	1	0x7fdb7496a7f8	
-array_push	4	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496a7f8	0x7fdb7496be08	success
-rsort	5	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496a7f8	0
-assign_tmp	6	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	1	1	0x7fdb7496b3d0	
-assign_tmp	7	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	3	1	0x7fdb7496b7a0	
-array_merge
-array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496a7f8	
-array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496b3d0	
-array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	0x7fdb7496b7a0	
-array_mr_result	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	0x7fdb7496c718	
-assign_var	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	3	1	0x7fdb7496c718	
-assign_tmp	9	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	1	1	0x7fdb7496cbe0	
-assign_tmp	10	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	array	1	1	0x7fdb7496ce58	
-array_combine_keys	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496cbe0	
-array_combine_values	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	0x7fdb7496ce58	
-array_combine_result	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	0x7fdb7496d150	
+hash_init	0x7f6a6fdc3080
+hash_init	0x7f6a6fdf3380
+hash_init	0x7f6a6fdf3460
+hash_init	0x7f6a6fdf3540
+hash_init	0x7f6a6fdf3620
+hash_init	0x7f6a6fdf38c8
+hash_init	0x7f6a6fdf70a0
+hash_init	0x7f6a6fdf8810
+array_init	3	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	0	1	0	0x7f6a6fdf8810	
+assign_tmp	3	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	1	1	3	0x7f6a6fdf8810	
+array_push	4	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	3	0x7f6a6fdf8810	long	4				
+rsort	5	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	4	0x7f6a6fdf8810	0
+hash_init	0x7f6a6fdf93e8
+array_init	6	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	0	1	0	0x7f6a6fdf93e8	
+assign_tmp	6	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	1	1	6	0x7f6a6fdf93e8	
+hash_init	0x7f6a6fdf97b8
+array_init	7	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	0	1	0	0x7f6a6fdf97b8	
+assign_tmp	7	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	3	1	1	0x7f6a6fdf97b8	
+array_merge	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	
+hash_init	0x7f6a6fdfa730
+array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	4	0x7f6a6fdf8810	
+array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	6	0x7f6a6fdf93e8	
+array_mr_part	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	1	0x7f6a6fdf97b8	
+array_mr_result	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	11	0x7f6a6fdfa730	
+assign_var	8	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	3	1	11	0x7f6a6fdfa730	
+hash_init	0x7f6a6fdfabf8
+array_init	9	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	0	1	0	0x7f6a6fdfabf8	
+assign_tmp	9	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	1	1	3	0x7f6a6fdfabf8	
+hash_init	0x7f6a6fdfae70
+array_init	10	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	0	1	0	0x7f6a6fdfae70	
+assign_tmp	10	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	NULL					array	1	1	3	0x7f6a6fdfae70	
+array_combine_keys	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	3	0x7f6a6fdfabf8	
+array_combine_values	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	1	1	3	0x7f6a6fdfae70	
+hash_init	0x7f6a6fdfb168
+array_combine_result	11	/home/silwing/Programming/tapas-survey/php/tests/arrayFunctions.php	3	1	3	0x7f6a6fdfb168	
