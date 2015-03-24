@@ -18,32 +18,15 @@ class TypeHandler(core.Handler):
         self.array_types = {}
         self.array_types_sum = {}
         self.changers_lines = []
-        self.init_arrays = []
-        self.suspicious_ids = []
-        self.delta = 0.01
+        self.delta = 0.0
 
     def generate_result(self):
-        changing_locations = {}
-        suspicious_counter = 0
+        result_list = [0, 0, 0, 0, 0, 0, 0]
         for id in self.array_types:
-            type = self.array_types[id]
-            if bin(type).count('1') > 1:
-                suspicious_string = ""
-                id_sum = sum(self.array_types_sum[id].values())
-                percent_map = map(lambda x: (
-                    x, round(float(self.array_types_sum[id][x]) / id_sum, 4)),
-                                  self.array_types_sum[id])
-                if all(map(lambda (_, percent): percent <= 1 - self.delta, percent_map)):
-                    if id in self.suspicious_ids:
-                        suspicious_counter += 1
-                        suspicious_string = "*"
+            t = self.array_types[id] - 1
+            result_list[t] += 1
 
-                    changing_locations[id] = "%s - %d%s - %d %s" % (
-                        self.library.find_define(id), type, suspicious_string, id_sum,
-                        str(percent_map))
-
-        num_arrays = self.library.number_of_arrays()
-        return [len(changing_locations), len(changing_locations) - suspicious_counter,  num_arrays]
+        return result_list
 
     def handle_line(self, line, current_line):
         if len(line) < 3:
@@ -55,8 +38,7 @@ class TypeHandler(core.Handler):
         except ValueError:
             return
         line_file = line[2]
-        array_ref = None
-        type_int = 0
+
 
         if line_type == "array_mr_part":
             return
@@ -73,15 +55,7 @@ class TypeHandler(core.Handler):
             type_int = int(line[3])
         else:
             return
-        l = core.location_string(line_file, line_number, line_type)
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
-        define = self.library.find_define(id)
-
-        if line_type == "array_init" and id not in self.suspicious_ids:
-            if array_ref in self.init_arrays:
-                self.suspicious_ids.append(id)
-            else:
-                self.init_arrays.append(array_ref)
 
         if type_int == 0:
             return
