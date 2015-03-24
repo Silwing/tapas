@@ -25,7 +25,9 @@ def reduce_blacklist(list1, list2):
     return list1
 
 
-def run_maker(library, handlers, files):
+def run_maker(library_builder, file_builder, handler_builder):
+    files = file_builder()
+
     if len(files) < 1:
         print("Missing file arguments")
         return
@@ -42,11 +44,13 @@ def run_maker(library, handlers, files):
             counter = 0
             size_counter = 0
             file_size = os.stat(clean_file).st_size
+            library = library_builder()
+            handlers = handler_builder(library)
             for line in clean_file_object:
                 counter += 1
                 size_counter += len(line)
                 if counter % 10000 == 0:
-                    sys.stdout.write("\r%2.3f%%" % (float(size_counter) / file_size*100))
+                    sys.stdout.write("\r%2.3f%%" % (float(size_counter) / file_size * 100))
                     sys.stdout.flush()
                 line = line.replace("\n", "")
                 line_object = line.split("\t")
@@ -63,14 +67,10 @@ def run_maker(library, handlers, files):
                 writer.writerow(result)
 
 
-if __name__ == "__main__":
-
-    library = ArrayLibrary()
-
+def build_handlers(library, args):
     handlers = []
-    files = []
-    if len(sys.argv) >= 3 and ".csv" not in sys.argv[1]:
-        arg = sys.argv[1]
+    if len(args) >= 3 and ".csv" not in args[1]:
+        arg = args[1]
         if "value" in arg:
             handlers.append(ValueHandler(library))
         if "type" in arg:
@@ -84,12 +84,24 @@ if __name__ == "__main__":
         files = sys.argv[2:]
 
     if len(handlers) == 0:
-        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library), OperationNamesHandler(library), OperationHandler(library)]
-        files = sys.argv[1:]
+        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library), OperationNamesHandler(library),
+                    OperationHandler(library)]
 
     blacklists = map(lambda h: h.get_blacklist(), handlers)
     blacklist = reduce(reduce_blacklist, blacklists[1:], blacklists[0])
     library.set_blacklist(blacklist)
 
-    run_maker(library, handlers, files)
+    return handlers
+
+
+def build_files(args):
+    result_files = []
+    for arg in args:
+        if ".csv" in arg:
+            result_files.append(arg)
+    return result_files
+
+
+if __name__ == "__main__":
+    run_maker(ArrayLibrary, lambda: build_files(sys.argv), lambda lib: build_handlers(lib, sys.argv))
 
