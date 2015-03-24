@@ -19,6 +19,10 @@ class ArrayLibrary:
     def set_blacklist(self, blacklist):
         self.blacklist = blacklist
 
+    def clear_address(self, address):
+        if address in self.address_lookup:
+            del self.address_lookup[address]
+
     def generate_id(self, line_no, file_path, op_type, address):
 
         loc = location_string(file_path, line_no, op_type)
@@ -28,14 +32,11 @@ class ArrayLibrary:
             return self.loc_to_id[loc]
 
         if address in self.address_lookup:
-            if op_type == "array_init":
-                del self.address_lookup[address]
-            else:
-                address_id = self.address_lookup[address]
-                id_location = self.id_to_loc[address_id]
-                if id_location not in self.blacklist or loc not in self.blacklist[id_location]:
-                    self.loc_to_id[loc] = address_id
-                    return self.address_lookup[address]
+            address_id = self.address_lookup[address]
+            id_location = self.id_to_loc[address_id]
+            if id_location not in self.blacklist or loc not in self.blacklist[id_location]:
+                self.loc_to_id[loc] = address_id
+                return self.address_lookup[address]
 
         self.current_id += 1
         self.address_lookup[address] = self.current_id

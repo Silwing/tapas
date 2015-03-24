@@ -24,7 +24,7 @@ def reduce_blacklist(list1, list2):
     return list1
 
 
-def run_maker(handlers):
+def run_maker(library, handlers):
     if len(sys.argv) < 2:
         print("Missing file arguments")
         return
@@ -37,7 +37,11 @@ def run_maker(handlers):
 
     for line in clean_file_object:
         counter += 1
+        line = line.replace("\n", "")
         line_object = line.split("\t")
+        if "hash_init" == line_object[0]:
+            library.clear_address(line_object[1])
+            continue
         for handler in handlers:
             handler.handle_line(line_object, counter)
 
@@ -66,5 +70,5 @@ if __name__ == "__main__":
     blacklist = reduce(reduce_blacklist, blacklists[1:], blacklists[0])
     library.set_blacklist(blacklist)
 
-    run_maker(handlers)
+    run_maker(library, handlers)
 

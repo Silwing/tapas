@@ -66,7 +66,7 @@ cd /vagrant/php/src
 make clean
 ./buildconf --force 
 ./custom_conf
-make 
+make -j4
 make install 
 
 
