@@ -57,7 +57,7 @@ class TypeHandler(core.Handler):
             return
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
-        if type_int <= 0 or type_int > 8:
+        if type_int <= 0 or type_int > 15:
             return
 
         if type_int & 8:
