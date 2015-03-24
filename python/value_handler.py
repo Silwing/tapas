@@ -59,6 +59,8 @@ class ValueHandler(core.Handler):
             return
 
         line_type = line[0]
+        if not line[1].isdigit():
+            return
         line_number = int(line[1])
         array_ref = None
         line_file = line[2]
