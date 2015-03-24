@@ -39,7 +39,6 @@ class TypeHandler(core.Handler):
             return
         line_file = line[2]
 
-
         if line_type == "array_mr_part":
             return
 
