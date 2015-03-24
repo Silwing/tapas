@@ -73,7 +73,7 @@ class ValueHandler(core.Handler):
 
         if self.last_write_id is not None:
 
-            if line_type.startswith("assign_"):
+            if line_type.startswith("assign_") and len(line) > 9:
                 self.add_type_to_array(self.last_write_id, line[8], line[9], line_number, line_file, line_type, current_line)
             self.last_write_id = None
 
