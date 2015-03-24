@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     handlers = []
     files = []
-    if len(sys.argv) >= 3:
+    if len(sys.argv) >= 3 and ".csv" not in sys.argv[1]:
         arg = sys.argv[1]
         if "value" in arg:
             handlers.append(ValueHandler(library))
