@@ -11,20 +11,7 @@ import core
 
 class TypeHandler(core.Handler):
     def get_blacklist(self):
-        return {
-            '/vagrant/corpus/git/Part/lib/controller/json/ObjectImpl.php:34:array_init': [
-                '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:61:array_init',
-                '/vagrant/corpus/git/Part/lib/controller/json/ParserImpl.php:49:assign_var'
-            ],
-            '/vagrant/corpus/git/Part/lib/util/traits/FilePathTrait.php:28:assign_var': [
-                '/vagrant/corpus/git/Part/lib/log/LoggerImpl.php:185:assign_var',
-                '/vagrant/corpus/git/Part/lib/util/file/FileLibraryImpl.php:295:array_read'
-            ],
-            '/vagrant/corpus/git/Part/lib/controller/ajax/ServerImpl.php:259:array_init': [
-                '/vagrant/corpus/git/Part/lib/controller/json/ElementImpl.php:41:array_write'
-            ]
-
-        }
+        return {}
 
     def __init__(self, library):
         super(TypeHandler, self).__init__(library)
@@ -80,8 +67,11 @@ class TypeHandler(core.Handler):
         elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
             array_ref = line[12]
             type_int = int(line[9])
-
-        if array_ref is None:
+        elif line_type == "count" or line_type.endswith("sort") or line_type == "in_array" and len(line) > 6 and \
+                line[6].startswith("0x"):
+            array_ref = line[6]
+            type_int = int(line[3])
+        else:
             return
         l = core.location_string(line_file, line_number, line_type)
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
