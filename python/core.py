@@ -47,6 +47,9 @@ class ArrayLibrary:
     def find_define(self, array_id):
         return self.id_to_loc[array_id]
 
+    def number_of_arrays(self):
+        return self.current_id+1
+
 
 class Handler:
     __metaclass__ = ABCMeta

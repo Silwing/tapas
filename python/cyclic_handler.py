@@ -15,7 +15,7 @@ class CyclicHandler(core.Handler):
         self.cyclic_id = {}
 
     def generate_result(self):
-        return self.cyclic_id
+        return [len(self.cyclic_id), self.library.number_of_arrays()]
 
     def handle_line(self, line, current_line):
         if len(line) < 3:
