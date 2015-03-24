@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import csv
-from pprint import pprint
-from core import ArrayLibrary, DummyHandler
+from core import ArrayLibrary
 from cyclic_handler import CyclicHandler
 from type_handler import TypeHandler
 from value_handler import ValueHandler
@@ -35,7 +34,7 @@ def run_maker(library, handlers, files):
         file_counter = 0
         for filename in files:
             file_counter += 1
-            sys.stdout.write("Running file: %s (%d of %d)\n" % (filename,  file_counter, len(files)))
+            sys.stdout.write("Running file: %s (%d of %d)\n" % (filename, file_counter, len(files)))
             sys.stdout.flush()
             base_name, extension = os.path.splitext(filename)
             clean_file = base_name + "_clean" + extension
@@ -47,7 +46,7 @@ def run_maker(library, handlers, files):
                 counter += 1
                 size_counter += len(line)
                 if counter % 10000 == 0:
-                    sys.stdout.write("\r%d %d" % (size_counter, file_size))
+                    sys.stdout.write("\r%2.3f%%" % (float(size_counter) / file_size*100))
                     sys.stdout.flush()
                 line = line.replace("\n", "")
                 line_object = line.split("\t")
@@ -57,7 +56,7 @@ def run_maker(library, handlers, files):
                 for handler in handlers:
                     handler.handle_line(line_object, counter)
 
-            sys.stdout.write("\n")
+            sys.stdout.write("\r100.000%\n")
             for handler in handlers:
                 result = handler.generate_result()
                 result[:0] = [handler.__class__.__name__, filename, library.number_of_arrays()]
@@ -70,7 +69,7 @@ if __name__ == "__main__":
 
     handlers = []
     files = []
-    if len(sys.argv) >= 3:
+    if len(sys.argv) >= 3 and ".csv" not in sys.argv[1]:
         arg = sys.argv[1]
         if "value" in arg:
             handlers.append(ValueHandler(library))
