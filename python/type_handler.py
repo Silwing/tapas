@@ -21,7 +21,7 @@ class TypeHandler(core.Handler):
         self.delta = 0.0
 
     def generate_result(self):
-        result_list = [0, 0, 0, 0, 0, 0, 0]
+        result_list = [0, 0, 0, 0, 0, 0, 0, 0]
         for id in self.array_types:
             t = self.array_types[id] - 1
             result_list[t] += 1
