@@ -25,7 +25,6 @@ class TypeHandler(core.Handler):
         for id in self.array_types:
             t = self.array_types[id] - 1
             result_list[t] += 1
-
         return result_list
 
     def handle_line(self, line, current_line):
@@ -58,7 +57,7 @@ class TypeHandler(core.Handler):
             return
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
-        if type_int == 0:
+        if type_int <= 0 or type_int > 8:
             return
 
         if type_int & 8:
