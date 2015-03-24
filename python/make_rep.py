@@ -30,15 +30,24 @@ def run_maker(library, handlers, files):
         print("Missing file arguments")
         return
     with open('results.csv', 'wb') as csvfile:
-        writer = csv.writer(csvfile)
+        writer = csv.writer(csvfile, delimiter="\t")
+        file_counter = 0
         for filename in files:
+            file_counter += 1
+            sys.stdout.write("Running file: %s (%d of %d)\n" % (filename,  file_counter, len(files)))
+            sys.stdout.flush()
             base_name, extension = os.path.splitext(filename)
             clean_file = base_name + "_clean" + extension
             clean_file_object = open(clean_file)
             counter = 0
-
+            size_counter = 0
+            file_size = os.stat(clean_file).st_size
             for line in clean_file_object:
                 counter += 1
+                size_counter += len(line)
+                if counter % 10000 == 0:
+                    sys.stdout.write("\r%d %d" % (size_counter, file_size))
+                    sys.stdout.flush()
                 line = line.replace("\n", "")
                 line_object = line.split("\t")
                 if "hash_init" == line_object[0]:
@@ -47,9 +56,10 @@ def run_maker(library, handlers, files):
                 for handler in handlers:
                     handler.handle_line(line_object, counter)
 
+            sys.stdout.write("\n")
             for handler in handlers:
                 result = handler.generate_result()
-                result[:0] = [handler.__class__.__name__, filename]
+                result[:0] = [handler.__class__.__name__, filename, library.number_of_arrays()]
                 writer.writerow(result)
 
 
@@ -61,11 +71,11 @@ if __name__ == "__main__":
     files = []
     if len(sys.argv) >= 3:
         arg = sys.argv[1]
-        if arg == "value":
+        if "value" in arg:
             handlers.append(ValueHandler(library))
-        if arg == "type":
+        if "type" in arg:
             handlers.append(TypeHandler(library))
-        if arg == "cyclic":
+        if "cyclic" in arg:
             handlers.append(CyclicHandler(library))
         files = sys.argv[2:]
 
