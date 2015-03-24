@@ -42,8 +42,8 @@ class TypeHandler(core.Handler):
                         self.library.find_define(id), type, suspicious_string, id_sum,
                         str(percent_map))
 
-        return changing_locations, float(len(changing_locations)) / len(self.array_types), float(
-            len(changing_locations) - suspicious_counter) / len(self.array_types)
+        num_arrays = self.library.number_of_arrays()
+        return [len(changing_locations), len(changing_locations) - suspicious_counter,  num_arrays]
 
     def handle_line(self, line, current_line):
         if len(line) < 3:
