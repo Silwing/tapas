@@ -87,9 +87,6 @@ class TypeHandler(core.Handler):
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
         define = self.library.find_define(id)
 
-        if id == 31 and type_int == 4:
-            pass
-
         if line_type == "array_init" and id not in self.suspicious_ids:
             if array_ref in self.init_arrays:
                 self.suspicious_ids.append(id)

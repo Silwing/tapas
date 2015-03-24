@@ -37,9 +37,11 @@ def run_maker(library, handlers):
 
     for line in clean_file_object:
         counter += 1
+        line = line.replace("\n", "")
         line_object = line.split("\t")
         if "hash_init" == line_object[0]:
             library.clear_address(line_object[1])
+            continue
         for handler in handlers:
             handler.handle_line(line_object, counter)
 
