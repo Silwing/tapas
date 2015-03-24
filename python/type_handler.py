@@ -49,7 +49,7 @@ class TypeHandler(core.Handler):
         elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
             array_ref = line[12]
             type_int = int(line[9])
-        elif line_type == "count" or line_type.endswith("sort") or line_type == "in_array" and len(line) > 6 and \
+        elif (line_type == "count" or line_type.endswith("sort") or line_type == "in_array") and len(line) > 6 and \
                 line[6].startswith("0x"):
             array_ref = line[6]
             type_int = int(line[3])
