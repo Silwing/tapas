@@ -81,9 +81,9 @@ class ValueHandler(core.Handler):
 
             id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
-            if line_type.startswith("array") and (id not in self.array_types or int(line[3]) != 0):
+            if line_type.startswith("array") and (id not in self.array_types or (line[3].isdigit() and int(line[3]) != 0)):
                 self.array_types[id] = int(line[3])
-            elif line_type.startswith("assign_") and (id not in self.array_types or int(line[9]) != 0):
+            elif line_type.startswith("assign_") and (id not in self.array_types or (line[9].isdigit() and int(line[9]) != 0)):
                 self.array_types[id] = int(line[9])
 
             if line_type in ["array_write", "array_append"]:
