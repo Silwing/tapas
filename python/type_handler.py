@@ -41,18 +41,20 @@ class TypeHandler(core.Handler):
 
         if line_type == "array_mr_part":
             return
-
-        if line_type.startswith("array") and len(line) > 6:
-            array_ref = line[6]
-            type_int = int(line[3])
-        elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
-            array_ref = line[12]
-            type_int = int(line[9])
-        elif (line_type == "count" or line_type.endswith("sort") or line_type == "in_array") and len(line) > 6 and \
-                line[6].startswith("0x"):
-            array_ref = line[6]
-            type_int = int(line[3])
-        else:
+        try:
+            if line_type.startswith("array") and len(line) > 6:
+                array_ref = line[6]
+                type_int = int(line[3])
+            elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
+                array_ref = line[12]
+                type_int = int(line[9])
+            elif (line_type == "count" or line_type.endswith("sort") or line_type == "in_array") and len(line) > 6 and \
+                    line[6].startswith("0x"):
+                array_ref = line[6]
+                type_int = int(line[3])
+            else:
+                return
+        except ValueError:
             return
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
 
