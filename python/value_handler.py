@@ -96,3 +96,10 @@ class ValueHandler(core.Handler):
                 for i in range(7, len(line)-1, 5):
                     self.add_type_to_array(id, line[i], line[i+1], line_number, line_file, line_type, current_line)
                 return
+
+            if line_type in ["array_read"]:
+                self.add_type_to_array(id, line[10], line[11], line_number, line_file, line_type, current_line)
+                return
+
+            if line_type in ["array_pop", "array_shift"]:
+                self.add_type_to_array(id, line[11], line[12], line_number, line_file, line_type, current_line)
