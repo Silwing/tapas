@@ -5,7 +5,7 @@ from core import ArrayLibrary
 from cyclic_handler import CyclicHandler
 from type_handler import TypeHandler
 from value_handler import ValueHandler
-from operation_handler import OperationHandler, OperationNamesHandler
+from operation_handler import OperationHandler
 
 __author__ = 'Christian Budde Christensen'
 __license__ = "Apache 2.0"
@@ -80,14 +80,12 @@ def build_handlers(library, args):
             handlers.append(TypeHandler(library))
         if "cyclic" in arg:
             handlers.append(CyclicHandler(library))
-        if "names" in arg:
-            handlers.append(OperationNamesHandler(library))
         if "operation" in arg:
             handlers.append(OperationHandler(library))
         if "categorize" in arg:
             handlers.append(CategorizeHandler(library))
     if len(handlers) == 0:
-        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library), OperationNamesHandler(library),
+        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library),
                     OperationHandler(library), CategorizeHandler(library)]
 
     blacklists = map(lambda h: h.get_blacklist(), handlers)
