@@ -32,14 +32,15 @@ class CyclicHandler(core.Handler):
 
         if line_type == "array_mr_part":
             return
-
-        if line_type.startswith("array") and len(line) > 6:
-            array_ref = line[6]
-            type_int = int(line[3])
-        elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
-            array_ref = line[12]
-            type_int = int(line[9])
-
+        try:
+            if line_type.startswith("array") and len(line) > 6:
+                array_ref = line[6]
+                type_int = int(line[3])
+            elif line_type.startswith("assign_") and len(line) >= 14 and line[8] == "array":
+                array_ref = line[12]
+                type_int = int(line[9])
+        except ValueError:
+            return
         if array_ref is None:
             return
 
