@@ -3,6 +3,7 @@ import csv
 from categorize_handler import CategorizeHandler
 from core import ArrayLibrary
 from cyclic_handler import CyclicHandler
+from operation_id_handler import OperationIDHandler
 from type_handler import TypeHandler
 from value_handler import ValueHandler
 from operation_handler import OperationHandler
@@ -84,8 +85,10 @@ def build_handlers(library, args):
             handlers.append(OperationHandler(library))
         if "categorize" in arg:
             handlers.append(CategorizeHandler(library))
+        if "opid" in arg:
+            handlers.append(OperationIDHandler(library))
     if len(handlers) == 0:
-        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library),
+        handlers = [TypeHandler(library),ValueHandler(library) , CyclicHandler(library),
                     OperationHandler(library), CategorizeHandler(library)]
 
     blacklists = map(lambda h: h.get_blacklist(), handlers)

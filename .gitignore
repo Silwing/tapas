@@ -7,3 +7,5 @@ corpus/git
 corpus/svn
 .idea
 *~
+
+*.csv
