@@ -25,7 +25,8 @@ class TypeHandler(core.Handler):
         for id in self.array_types:
             t = self.array_types[id] - 1
             result_list[t] += 1
-        return result_list
+        print(len(set(self.array_types.keys()) & set(range(0, self.library.number_of_arrays()))))
+        return [result_list]
 
     def handle_line(self, line, current_line):
         if len(line) < 3:

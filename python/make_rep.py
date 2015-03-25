@@ -64,8 +64,8 @@ def run_maker(library_builder, file_builder, handler_builder):
 
             sys.stdout.write("\r100.000%\n")
             for handler in handlers:
-                result = handler.generate_result()
-                if result is not None:
+                result_lists = handler.generate_result()
+                for result in result_lists:
                     result[:0] = [handler.__class__.__name__, filename, library.number_of_arrays()]
                     writer.writerow(result)
 

@@ -22,7 +22,7 @@ class CategorizeHandler(core.Handler):
         maps_and_lists = [0, 0, 0, 0, 0, 0, 0, 0]
 
         for id in range(0, self.library.number_of_arrays()):
-
+            print(self.library.number_of_arrays()-len(set(self.type_handler.array_types.keys()) & set(range(0, self.library.number_of_arrays()))))
             if id not in self.type_handler.array_types and id not in self.value_handler.array_value_types:
                 not_type_value += 1
                 continue
@@ -40,7 +40,7 @@ class CategorizeHandler(core.Handler):
                 maps_and_lists[0] += 1
                 maps_and_lists[self.type_handler.array_types[id]] += 1
 
-        return [not_type_value, not_type, not_value] + objects + maps_and_lists
+        return [[not_type_value, not_type, not_value] + objects + maps_and_lists]
 
 
     def handle_line(self, line, current_line):
