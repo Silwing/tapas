@@ -172,3 +172,29 @@ clean:
 
 db-clean: 
 	- mysql -uroot  -e "show databases" | grep -v Database | grep -v mysql| grep -v information_schema | gawk '{print "drop database " $$1 "; "}' | mysql -uroot
+
+
+clean_run_php:
+	- rm ~/run_php.csv
+
+test-all: clean_run_php
+	- make test-code-igniter
+	mv ~/run_php.csv ../run_code_igniter.csv
+	- make test-joomla
+	mv ~/run_php.csv ../run_joomla.csv
+	- make test-magento2
+	mv ~/run_php.csv ../run_magento2.csv
+	- make test-mediawiki
+	mv ~/run_php.csv ../run_mediawiki.csv
+	- make test-part
+	mv ~/run_php.csv ../run_part.csv
+	- make test-phpbb
+	mv ~/run_php.csv ../run_phpbb.csv
+	- make test-phpmyadmin
+	mv ~/run_php.csv ../run_phpmyadmin.csv
+	- make test-symfony
+	mv ~/run_php.csv ../run_symfony.csv
+	- make test-wordpress
+	mv ~/run_php.csv ../run_wordpress.csv
+	- make test-zf2
+	mv ~/run_php.csv ../run_zf2.csv
