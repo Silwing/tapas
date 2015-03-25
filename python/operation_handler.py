@@ -19,19 +19,4 @@ class OperationHandler(core.Handler):
             self.operations[line[0]] = 1
 
     def generate_result(self):
-        return self.operations.values()
-
-class OperationNamesHandler(core.Handler):
-    def __init__(self, library):
-        self.library = library
-        self.names = []
-
-    def get_blacklist(self):
-        return {}
-
-    def handle_line(self, line, current_line):
-        if line[0] not in self.names:
-            self.names.append(line[0])
-
-    def generate_result(self):
-        return self.names
+        return [self.operations.keys(), self.operations.values()]
