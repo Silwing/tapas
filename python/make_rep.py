@@ -88,7 +88,7 @@ def build_handlers(library, args):
         if "opid" in arg:
             handlers.append(OperationIDHandler(library))
     if len(handlers) == 0:
-        handlers = [ValueHandler(library), TypeHandler(library), CyclicHandler(library),
+        handlers = [TypeHandler(library),ValueHandler(library) , CyclicHandler(library),
                     OperationHandler(library), CategorizeHandler(library)]
 
     blacklists = map(lambda h: h.get_blacklist(), handlers)
