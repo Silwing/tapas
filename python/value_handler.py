@@ -97,7 +97,7 @@ class ValueHandler(core.Handler):
                     self.add_type_to_array(id, line[i], line[i+1], line_number, line_file, line_type, current_line)
                 return
 
-            if line_type in ["array_read"]:
+            if line_type in ["array_read"] and len(line) > 11:
                 self.add_type_to_array(id, line[10], line[11], line_number, line_file, line_type, current_line)
                 return
 
