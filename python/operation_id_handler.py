@@ -43,6 +43,9 @@ class OperationIDHandler(core.Handler):
             return
         id = self.library.generate_id(line_number, line_file, line_type, array_ref)
         if id in self.operations:
-            self.operations[id].add(line_type)
+            if line_type not in self.operations[id]:
+                self.operations[id][line_type] = 0
+
+            self.operations[id][line_type] += 1
         else:
-            self.operations[id] = {line_type}
+            self.operations[id] = {line_type: 1}

@@ -101,5 +101,5 @@ class ValueHandler(core.Handler):
                 self.add_type_to_array(id, line[10], line[11], line_number, line_file, line_type, current_line)
                 return
 
-            if line_type in ["array_pop", "array_shift"]:
+            if line_type in ["array_pop", "array_shift"] and len(line) > 12:
                 self.add_type_to_array(id, line[11], line[12], line_number, line_file, line_type, current_line)
