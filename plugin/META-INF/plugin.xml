@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-  <id>dk.au.cs.ArraysInPHP</id>
+  <id>dk.au.cs.tapas</id>
   <name>Arrays in php</name>
   <version>1.0</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
@@ -35,14 +35,14 @@
     <!-- Add your project components here -->
   </project-components>
 
-  <actions>
-    <!-- Add your actions here -->
-      <group id="ArraysInPHP.Menu" text="_Arrays" description="Arrays in PHP">
-          <add-to-group group-id="MainMenu" anchor="last"/>
-          <action id="testAction" class="dk.au.cs.ArraysInPHP.TestAction" text="TestAction"
-                  description="This is a test action">
-          </action>
-      </group>
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+        <group id="ArraysInPHP.Menu" text="_Arrays" description="Arrays in PHP">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="testAction" class="dk.au.cs.tapas.plugin.TestAction" text="TestAction"
+                    description="This is a test action">
+            </action>
+        </group>
+    </actions>
 
 </idea-plugin>
