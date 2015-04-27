@@ -11,6 +11,9 @@ import dk.au.cs.tapas.lattice.HeapLocationImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by budde on 4/22/15.
  *
@@ -24,11 +27,11 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
 
     public AssignmentExpressionGraphImpl(PsiParser psiParser, AssignmentExpression element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
-        HeapLocation location = new HeapLocationImpl();
+        Set<HeapLocation> locations = new HashSet<>();
         TemporaryVariableName valueName = new TemporaryVariableNameImpl();
-        this.assignmentNode = new AssignmentNodeImpl(graph.getEntryNode(), name, location, valueName);
+        this.assignmentNode = new AssignmentNodeImpl(graph.getEntryNode(), name, locations, valueName);
         Graph valueGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
-        this.variableGraph = psiParser.parseVariableExpression((PhpExpression) element.getVariable(), g -> g, location).generate(valueGraph);
+        this.variableGraph = psiParser.parseVariableExpression((PhpExpression) element.getVariable(), g -> g, locations).generate(valueGraph);
     }
 
 

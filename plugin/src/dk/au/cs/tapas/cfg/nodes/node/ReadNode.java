@@ -6,6 +6,6 @@ package dk.au.cs.tapas.cfg.nodes.node;
 public interface ReadNode extends ExpressionNode{
 
 
-    String getVariable();
+    String getVariableName();
 
 }

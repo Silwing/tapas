@@ -18,7 +18,7 @@ public class ReadNodeImpl extends NodeImpl implements ReadNode {
 
 
     @Override
-    public String getVariable() {
+    public String getVariableName() {
         return variable;
     }
 

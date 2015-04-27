@@ -8,7 +8,9 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by budde on 4/22/15.
@@ -16,7 +18,7 @@ import java.util.Map;
  */
 public class PsiParserImpl implements PsiParser {
 
-    Map<String, Function> functions = new HashMap<>();
+    Map<String, FunctionGraph> functionGraphs = new HashMap<>();
 
 
     public GraphGenerator parseElementNeighbourhood(PhpPsiElement element, GraphGenerator generator) {
@@ -60,8 +62,12 @@ public class PsiParserImpl implements PsiParser {
     }
 
     public GraphGenerator parseFunction(Function element, GraphGenerator generator) {
-        functions.put(element.getFQN(), element);
+        functionGraphs.put(element.getFQN(), createFunctionGraph(element));
         return generator;
+    }
+
+    private FunctionGraph createFunctionGraph(Function element) {
+        return new FunctionGraphImpl(this, element);
     }
 
     public GraphGenerator parseExpression(PhpExpression element, GraphGenerator generator) {
@@ -103,8 +109,30 @@ public class PsiParserImpl implements PsiParser {
         return (Graph g) -> generator.generate(stmGenerator.generate(this, statement, g));
     }
 
-    public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator, HeapLocation location) {
+    private GraphGenerator buildVariableExpressionGenerator(VariableExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, Set<HeapLocation> locations) {
+        return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
+    }
+
+    public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator) {
+        return parseVariableExpression(target, generator, new HashSet<>());
+    }
+
+    public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator, Set<HeapLocation> locations) {
+        if(target instanceof ArrayAccessExpression){
+            return buildVariableExpressionGenerator(ArrayAccessVariableExpressionGraphImpl.generator, generator, target, locations);
+        }
+
+        if(target instanceof Variable){
+            return buildVariableExpressionGenerator(VariableVariableExpressionGraphImpl.generator, generator, target, locations);
+        }
+
         return generator;
+
+    }
+
+    @Override
+    public Map<String, FunctionGraph> getFunctions() {
+        return functionGraphs;
     }
 
     @Override

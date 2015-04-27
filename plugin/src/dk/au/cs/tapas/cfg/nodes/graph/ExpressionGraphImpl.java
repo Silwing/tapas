@@ -8,7 +8,7 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
  * Created by budde on 4/22/15.
  *
  */
-public class ExpressionGraphImpl<T extends PhpExpression> extends SkipGraphImpl {
+public abstract class ExpressionGraphImpl<T extends PhpExpression> extends SkipGraphImpl {
     
     protected final PsiParser parser;
     protected final T element;

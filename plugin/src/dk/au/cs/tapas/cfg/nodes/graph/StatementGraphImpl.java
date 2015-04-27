@@ -7,7 +7,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
  * Created by budde on 4/22/15.
  *
  */
-public class StatementGraphImpl<T extends Statement> extends SkipGraphImpl{
+public abstract class StatementGraphImpl<T extends Statement> extends SkipGraphImpl{
 
 
     protected final Graph graph;
