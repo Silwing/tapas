@@ -34,6 +34,10 @@ public interface PsiParser {
 
     GraphGenerator parseVariableExpression(PhpExpression element, GraphGenerator generator, Set<HeapLocation> locations);
 
+    GraphGenerator parseReferenceExpression(PhpExpression target, GraphGenerator generator);
+
+    GraphGenerator parseReferenceExpression(PhpExpression element, GraphGenerator generator, Set<HeapLocation> locations);
+
     Map<String, FunctionGraph> getFunctions();
 
     interface GraphGenerator {
@@ -50,6 +54,9 @@ public interface PsiParser {
     }
 
     interface VariableExpressionGraphGenerator<T extends PhpExpression> {
+        Graph generate(PsiParser parser, T expression, Graph graph, Set<HeapLocation> locations);
+    }
+    interface ReferenceExpressionGraphGenerator<T extends PhpExpression> {
         Graph generate(PsiParser parser, T expression, Graph graph, Set<HeapLocation> locations);
     }
 

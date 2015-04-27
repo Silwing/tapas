@@ -20,6 +20,10 @@ public class PsiParserImpl implements PsiParser {
 
     Map<String, FunctionGraph> functionGraphs = new HashMap<>();
 
+    public PsiParserImpl() {
+        functionGraphs.put("\\array_pop", new LibraryFunctionGraphImpl(new boolean[]{true}));
+    }
+
 
     public GraphGenerator parseElementNeighbourhood(PhpPsiElement element, GraphGenerator generator) {
         if (element == null) {
@@ -94,6 +98,10 @@ public class PsiParserImpl implements PsiParser {
         if(element instanceof ArrayCreationExpression){
             return buildExpressionGenerator(ArrayInitExpressionGraphImpl.generator, generator, element, name);
         }
+        if(element instanceof ArrayAccessExpression){
+            return buildExpressionGenerator(ArrayAccessExpressionGraphImpl.generator, generator, element, name);
+        }
+
         if(ConstExpressionGraphImpl.isConst(element)){
             return buildExpressionGenerator(ConstExpressionGraphImpl.generator, generator, element, name);
         }
@@ -113,6 +121,10 @@ public class PsiParserImpl implements PsiParser {
         return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
     }
 
+    private GraphGenerator buildReferenceExpressionGenerator(ReferenceExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, Set<HeapLocation> locations) {
+        return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
+    }
+
     public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator) {
         return parseVariableExpression(target, generator, new HashSet<>());
     }
@@ -128,6 +140,28 @@ public class PsiParserImpl implements PsiParser {
 
         return generator;
 
+    }
+
+    @Override
+    public GraphGenerator parseReferenceExpression(PhpExpression target, GraphGenerator generator) {
+        return parseReferenceExpression(target, generator, new HashSet<>());
+    }
+
+    @Override
+    public GraphGenerator parseReferenceExpression(PhpExpression element, GraphGenerator generator, Set<HeapLocation> locations) {
+        if(element instanceof FunctionReference){
+            return buildReferenceExpressionGenerator(FunctionReferenceExpressionGraphImpl.generator, generator, element, locations);
+        }
+
+        if(element instanceof ArrayAccessExpression){
+            return buildReferenceExpressionGenerator(ArrayAccessReferenceExpressionGraphImpl.generator, generator, element, locations);
+        }
+
+        if(element instanceof Variable){
+            return buildReferenceExpressionGenerator(VariableReferenceExpressionGraphImpl.generator, generator, element, locations);
+        }
+
+        return  parseVariableExpression(element, generator, locations);
     }
 
     @Override

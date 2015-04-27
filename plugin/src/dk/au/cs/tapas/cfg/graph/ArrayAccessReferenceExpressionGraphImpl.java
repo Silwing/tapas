@@ -10,14 +10,16 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class ArrayAccessVariableExpressionGraphImpl extends VariableExpressionGraphImpl<ArrayAccessExpression>{
+public class ArrayAccessReferenceExpressionGraphImpl extends ReferenceExpressionGraphImpl<ArrayAccessExpression> {
 
-    public static PsiParser.VariableExpressionGraphGenerator<ArrayAccessExpression> generator = ArrayAccessVariableExpressionGraphImpl::new;
+
+    public static PsiParser.ReferenceExpressionGraphGenerator<ArrayAccessExpression> generator = ArrayAccessReferenceExpressionGraphImpl::new;
+
     private final Graph subGraph;
 
-    public ArrayAccessVariableExpressionGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, Set<HeapLocation> locations) {
+    public ArrayAccessReferenceExpressionGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, Set<HeapLocation> locations) {
         super(parser, element, graph, locations);
-        subGraph = new ArrayAccessExpressionSubGraphImpl(parser, element, graph, locations, (exp, loc) -> parser.parseVariableExpression(exp, g -> g, loc));
+        subGraph = new ArrayAccessExpressionSubGraphImpl(parser, element, graph, locations, (exp, loc) -> parser.parseReferenceExpression(exp, g -> g, loc));
 
     }
 

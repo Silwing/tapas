@@ -1,28 +1,28 @@
 package dk.au.cs.tapas.cfg.node;
 
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
+import dk.au.cs.tapas.cfg.CallArgument;
 
 /**
  * Created by budde on 4/27/15.
  */
 public class ResultNodeImpl extends NodeImpl implements ResultNode{
     private CallNode callNode;
-    private TemporaryVariableName targetName;
+    private CallArgument targetName;
 
 
 
-    public ResultNodeImpl(Node successor, TemporaryVariableName targetName) {
+    public ResultNodeImpl(Node successor, CallArgument targetName) {
         this(successor, targetName, null);
     }
 
-    public ResultNodeImpl(Node successor, TemporaryVariableName targetName, CallNode callNode) {
+    public ResultNodeImpl(Node successor, CallArgument targetName, CallNode callNode) {
         super(successor);
         this.callNode = callNode;
         this.targetName = targetName;
     }
 
     @Override
-    public TemporaryVariableName getTargetName() {
+    public CallArgument getTargetName() {
 
         return targetName;
     }

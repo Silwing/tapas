@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.CallArgument;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -7,7 +8,7 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
  */
 public interface ResultNode extends Node{
 
-    TemporaryVariableName getTargetName();
+    CallArgument getTargetName();
 
     CallNode getCallNode();
 
