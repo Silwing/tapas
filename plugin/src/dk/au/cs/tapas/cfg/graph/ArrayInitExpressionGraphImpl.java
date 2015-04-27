@@ -19,11 +19,10 @@ public class ArrayInitExpressionGraphImpl extends ExpressionGraphImpl<ArrayCreat
 
     public ArrayInitExpressionGraphImpl(PsiParser psiParser, ArrayCreationExpression element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
-        TemporaryVariableName target = new TemporaryVariableNameImpl();
 
-        childGraph = buildGraphFromSiblings(element.getFirstPsiChild(), target, graph);
+        childGraph = buildGraphFromSiblings(element.getFirstPsiChild(), name, graph);
 
-        entryNode = new ArrayInitExpressionNodeImpl(childGraph.getEntryNode(), target);
+        entryNode = new ArrayInitExpressionNodeImpl(childGraph.getEntryNode(), name);
 
     }
 
