@@ -2,8 +2,8 @@ package dk.au.cs.tapas.cfg;
 
 import com.jetbrains.php.lang.psi.PhpFile;
 import com.jetbrains.php.lang.psi.elements.*;
-import dk.au.cs.tapas.cfg.nodes.graph.FunctionGraph;
-import dk.au.cs.tapas.cfg.nodes.graph.Graph;
+import dk.au.cs.tapas.cfg.graph.FunctionGraph;
+import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
