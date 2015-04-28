@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-class ArrayAccessExpressionSubGraphImpl implements Graph{
+class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
 
     private final Node endNode;
     private final Graph variableGraph;

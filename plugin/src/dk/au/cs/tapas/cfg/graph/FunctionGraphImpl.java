@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by budde on 4/27/15.
  */
-public class FunctionGraphImpl implements FunctionGraph {
+public class FunctionGraphImpl extends GraphImpl implements FunctionGraph {
     private final boolean[] arguments;
     private final ExitNode exitNode;
     private final StartNode entryNode;

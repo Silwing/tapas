@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by budde on 4/27/15.
  */
-class FunctionReferenceSubGraphImpl implements Graph{
+class FunctionReferenceSubGraphImpl extends GraphImpl{
 
     private final Graph entryGraph;
     private final PsiParser parser;

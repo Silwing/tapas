@@ -4,16 +4,19 @@ import dk.au.cs.tapas.cfg.node.Node;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by budde on 4/28/15.
  */
-public class FinalGraphImpl implements Graph {
+public class FinalGraphImpl implements Graph{
     private final Node exitNode, entryNode;
+    private final Map<String, FunctionGraph> functionGraphMap;
 
-    public FinalGraphImpl(Graph graph) {
+    public FinalGraphImpl(Graph graph, Map<String, FunctionGraph> functionGraphMap) {
+
+        this.functionGraphMap = functionGraphMap;
 
         entryNode = graph.getEntryNode();
 
@@ -55,5 +58,15 @@ public class FinalGraphImpl implements Graph {
     @Override
     public Node getEntryNode() {
         return entryNode;
+    }
+
+    @Override
+    public Set<Node> getFlow(Node n) {
+        return null;
+    }
+
+    @Override
+    public Set<Node> getNodes() {
+        return null;
     }
 }

@@ -193,7 +193,7 @@ public class PsiParserImpl implements PsiParser {
         GraphGenerator generator = StartGraphImpl::new;
         generator = parseElementNeighbourhood(element, generator);
         Graph g = generator.generate(new EndGraphImpl());
-        return new FinalGraphImpl(g);
+        return new FinalGraphImpl(g, getFunctions());
     }
 
 

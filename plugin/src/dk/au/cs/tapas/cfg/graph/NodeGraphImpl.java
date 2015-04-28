@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Created by budde on 4/22/15.
  *
  */
-public class NodeGraphImpl implements Graph {
+public class NodeGraphImpl extends GraphImpl {
 
     final private Node node;
 

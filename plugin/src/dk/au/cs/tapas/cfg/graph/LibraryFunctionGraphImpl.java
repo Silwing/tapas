@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Created by budde on 4/27/15.
  */
-public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
+public class LibraryFunctionGraphImpl extends GraphImpl implements LibraryFunctionGraph {
     private final boolean aliasReturn;
     private StartNode entryNode;
     private ExitNode exitNode;
