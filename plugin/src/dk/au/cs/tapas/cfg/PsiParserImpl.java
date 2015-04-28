@@ -19,9 +19,10 @@ import java.util.Set;
 public class PsiParserImpl implements PsiParser {
 
     Map<String, FunctionGraph> functionGraphs = new HashMap<>();
+    private FunctionGraphImpl currentFunctionGraph;
 
     public PsiParserImpl() {
-        functionGraphs.put("\\array_pop", new LibraryFunctionGraphImpl(new boolean[]{true}));
+        functionGraphs.put("\\array_pop", new LibraryFunctionGraphImpl(new boolean[]{true}, false));
     }
 
 
@@ -45,12 +46,18 @@ public class PsiParserImpl implements PsiParser {
             generator = parseIf((If) element, generator);
         } else if (element instanceof While) {
             generator = parseWhile((While) element, generator);
-        } else if (element instanceof For){
+        } else if (element instanceof For) {
             generator = parseFor((For) element, generator);
-        } else {
+        } else if(element instanceof PhpReturn){
+            generator = parseReturn((PhpReturn) element, generator);
+        }   else {
             generator = parseElementNeighbourhood(element.getFirstPsiChild(), generator);
         }
         return generator;
+    }
+
+    private GraphGenerator parseReturn(PhpReturn element, GraphGenerator generator) {
+        return buildStatementGenerator(ReturnStatementGraphImpl.generator, generator, element);
     }
 
     private GraphGenerator parseFor(For element, GraphGenerator generator) {
@@ -101,6 +108,7 @@ public class PsiParserImpl implements PsiParser {
         if(element instanceof ArrayAccessExpression){
             return buildExpressionGenerator(ArrayAccessExpressionGraphImpl.generator, generator, element, name);
         }
+
 
         if(ConstExpressionGraphImpl.isConst(element)){
             return buildExpressionGenerator(ConstExpressionGraphImpl.generator, generator, element, name);
@@ -170,13 +178,22 @@ public class PsiParserImpl implements PsiParser {
     }
 
     @Override
+    public void setCurrentFunctionGraph(FunctionGraphImpl functionGraph) {
+        this.currentFunctionGraph = functionGraph;
+    }
+
+    @Override
+    public FunctionGraph getCurrentFunctionGraph() {
+        return this.currentFunctionGraph;
+    }
+
+
+    @Override
     public Graph parseFile(PhpFile element) {
         GraphGenerator generator = StartGraphImpl::new;
         generator = parseElementNeighbourhood(element, generator);
         Graph g = generator.generate(new EndGraphImpl());
-
-        String dot = g.getExitNode().toDot().stream().reduce("", (s1, s2) -> s1 + s2);
-        return g;
+        return new FinalGraphImpl(g);
     }
 
 

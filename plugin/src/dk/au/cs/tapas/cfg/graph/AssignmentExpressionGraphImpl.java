@@ -11,6 +11,7 @@ import dk.au.cs.tapas.cfg.node.ReferenceAssignmentNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -51,11 +52,13 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
     }
 
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return assignmentNode;
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return variableGraph.getEntryNode();

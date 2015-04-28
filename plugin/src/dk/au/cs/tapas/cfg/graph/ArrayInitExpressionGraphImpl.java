@@ -8,6 +8,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/26/15.
@@ -26,11 +27,13 @@ public class ArrayInitExpressionGraphImpl extends ExpressionGraphImpl<ArrayCreat
 
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return childGraph.getExitNode();
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryNode;

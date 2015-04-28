@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg;
 import com.jetbrains.php.lang.psi.PhpFile;
 import com.jetbrains.php.lang.psi.elements.*;
 import dk.au.cs.tapas.cfg.graph.FunctionGraph;
+import dk.au.cs.tapas.cfg.graph.FunctionGraphImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
@@ -39,6 +40,10 @@ public interface PsiParser {
     GraphGenerator parseReferenceExpression(PhpExpression element, GraphGenerator generator, Set<HeapLocation> locations);
 
     Map<String, FunctionGraph> getFunctions();
+
+    void setCurrentFunctionGraph(FunctionGraphImpl functionGraph);
+
+    FunctionGraph getCurrentFunctionGraph();
 
     interface GraphGenerator {
         Graph generate(Graph graph);

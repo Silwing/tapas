@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.LocationVariableExpressionNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -23,11 +24,13 @@ public class VariableVariableExpressionGraphImpl extends VariableExpressionGraph
 
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return node;
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return node;

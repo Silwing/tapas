@@ -15,6 +15,8 @@ public interface Node {
 
     Set<String> toDot(Set<Node> visited);
 
+    String toDotString();
+
 
     String toString();
 

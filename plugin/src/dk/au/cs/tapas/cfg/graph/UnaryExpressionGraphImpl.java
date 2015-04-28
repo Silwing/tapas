@@ -9,6 +9,7 @@ import dk.au.cs.tapas.cfg.node.UnaryOperationNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,11 +54,13 @@ public class UnaryExpressionGraphImpl extends ExpressionGraphImpl<UnaryExpressio
     }
 
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return operationNode;
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return operandGraph.getEntryNode();

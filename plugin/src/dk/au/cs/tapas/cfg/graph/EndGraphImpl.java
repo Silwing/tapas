@@ -13,10 +13,5 @@ public class EndGraphImpl extends NodeGraphImpl {
         super(new EndNodeImpl());
     }
 
-    @Override
-    public Node getExitNode() {
-        return null;
-    }
-
 
 }

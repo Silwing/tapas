@@ -33,6 +33,10 @@ public abstract class NodeImpl implements Node {
 
     }
 
+    @Override
+    public String toDotString() {
+        return toDot().stream().reduce("", (s1, s2) -> s1 +s2);
+    }
 
     @Override
     public Set<String> toDot(Set<Node> visited) {

@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadNodeImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -23,11 +24,13 @@ public class VariableReadExpressionGraphImpl extends ExpressionGraphImpl<Variabl
 
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryNode;
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return entryNode;

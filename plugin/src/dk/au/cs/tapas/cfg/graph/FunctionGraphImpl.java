@@ -5,6 +5,7 @@ import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -12,19 +13,25 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FunctionGraphImpl implements FunctionGraph {
     private final boolean[] arguments;
-    private final Node exitNode;
-    private final Node entryNode;
+    private final ExitNode exitNode;
+    private final StartNode entryNode;
+    private final Function element;
 
     public FunctionGraphImpl(PsiParser parser, Function element) {
         Parameter[] parameters = element.getParameters();
+        this.element = element;
         arguments = new boolean[parameters.length];
 
         for(int i = 0; i < parameters.length; i ++){
             arguments[i] = parameters[i].isPassByRef();
         }
-        exitNode = new EndNodeImpl();
+        exitNode = new ExitNodeImpl();
+
+        parser.setCurrentFunctionGraph(this);
 
         Graph body = parser.parseElement((PhpPsiElement) element.getLastChild(), g -> g).generate(new NodeGraphImpl(exitNode));
+
+        parser.setCurrentFunctionGraph(null);
 
         entryNode = new StartNodeImpl(body.getEntryNode());
 
@@ -37,15 +44,20 @@ public class FunctionGraphImpl implements FunctionGraph {
         return arguments;
     }
 
-    @Nullable
     @Override
-    public Node getExitNode() {
+    public boolean isAliasReturn() {
+        return element.getText().replaceAll("\\s", "").startsWith("function&");
+    }
+
+    @NotNull
+    @Override
+    public ExitNode getExitNode() {
         return exitNode;
     }
 
-    @Nullable
+    @NotNull
     @Override
-    public Node getEntryNode() {
+    public StartNode getEntryNode() {
         return entryNode;
     }
 

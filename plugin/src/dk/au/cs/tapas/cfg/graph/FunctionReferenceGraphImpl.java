@@ -8,6 +8,7 @@ import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -28,11 +29,13 @@ public class FunctionReferenceGraphImpl extends ExpressionGraphImpl<FunctionRefe
 
 
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return subGraph.getEntryNode();
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return subGraph.getExitNode();

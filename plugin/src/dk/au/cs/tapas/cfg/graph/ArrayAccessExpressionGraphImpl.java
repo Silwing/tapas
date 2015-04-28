@@ -7,6 +7,7 @@ import dk.au.cs.tapas.cfg.node.ArrayReadExpressionNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/27/15.
@@ -27,11 +28,13 @@ public class ArrayAccessExpressionGraphImpl extends ExpressionGraphImpl<ArrayAcc
 
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryGraph.getEntryNode();
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return endNode;

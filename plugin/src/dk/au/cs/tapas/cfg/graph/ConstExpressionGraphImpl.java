@@ -11,6 +11,7 @@ import dk.au.cs.tapas.cfg.StringConstantImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadConstNodeImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/26/15.
@@ -30,11 +31,13 @@ public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>
 
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return entryNode;
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryNode;

@@ -9,6 +9,7 @@ import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.SkipNodeImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/22/15.
@@ -41,11 +42,13 @@ public class IfGraphImpl extends StatementGraphImpl<If> {
     }
 
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return exitNode;
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryNode;

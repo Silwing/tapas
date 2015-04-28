@@ -5,6 +5,7 @@ import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.node.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -64,13 +65,13 @@ class FunctionReferenceSubGraphImpl implements Graph{
         return g -> g;
     }
 
-    @Nullable
+    @NotNull
     @Override
     public Node getExitNode() {
         return endNode;
     }
 
-    @Nullable
+    @NotNull
     @Override
     public Node getEntryNode() {
         return entryGraph.getEntryNode();

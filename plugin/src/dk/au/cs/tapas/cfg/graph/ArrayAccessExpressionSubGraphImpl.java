@@ -10,6 +10,7 @@ import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -44,11 +45,13 @@ class ArrayAccessExpressionSubGraphImpl implements Graph{
         PsiParser.GraphGenerator generate(PhpExpression expression, Set<HeapLocation> locations);
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return variableGraph.getEntryNode();
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return endNode;

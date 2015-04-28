@@ -9,6 +9,7 @@ import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ShortCircuitBinaryOperationNodeImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/22/15.
@@ -40,11 +41,13 @@ public class BinaryExpressionGraphImpl extends ExpressionGraphImpl<BinaryExpress
 
     }
 
+    @NotNull
     @Override
     public Node getExitNode() {
         return endNode;
     }
 
+    @NotNull
     @Override
     public Node getEntryNode() {
         return leftGraph.getEntryNode();

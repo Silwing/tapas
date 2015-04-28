@@ -14,8 +14,4 @@ public class StartGraphImpl extends NodeGraphImpl {
         super(new StartNodeImpl(target.getEntryNode()));
     }
 
-    @Override
-    public Node getEntryNode() {
-        return null;
-    }
 }

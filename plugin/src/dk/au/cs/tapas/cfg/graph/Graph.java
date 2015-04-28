@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.cfg.node.Node;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -9,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Graph {
 
-    @Nullable
+    @NotNull
     Node getExitNode();
 
-    @Nullable
+    @NotNull
     Node getEntryNode();
 
 }
