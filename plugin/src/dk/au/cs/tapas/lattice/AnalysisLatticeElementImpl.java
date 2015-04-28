@@ -9,4 +9,8 @@ public class AnalysisLatticeElementImpl extends MapLatticeElementImpl<Context, S
     public AnalysisLatticeElementImpl() {
         super((Context context) -> new StateLatticeElementImpl());
     }
+
+    public AnalysisLatticeElementImpl join(AnalysisLatticeElementImpl other) {
+        return (AnalysisLatticeElementImpl) super.join(other);
+    }
 }
