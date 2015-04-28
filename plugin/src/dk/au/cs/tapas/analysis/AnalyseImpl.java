@@ -59,11 +59,7 @@ public class AnalyseImpl implements Analyse {
                     createWorklist(n);
             }
         }
-        for(Node n : entry.getSuccessors()) {
-            worklist.add(new Pair<>(entry, n));
-            inLatticeMap.put(n, analysis.getEmptyLattice());
-            createWorklist(n);
-        }
+
     }
 
     private void iterateWorklist() {
