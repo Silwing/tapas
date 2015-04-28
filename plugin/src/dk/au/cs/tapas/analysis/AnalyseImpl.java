@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.analysis;
 
+import dk.au.cs.tapas.cfg.graph.FunctionGraph;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
@@ -9,16 +10,19 @@ import java.util.*;
 
 /**
  * Created by Silwing on 28-04-2015.
+ *
  */
 public class AnalyseImpl implements Analyse {
     private Graph graph;
+    private Map<String, FunctionGraph> functions;
     private Map<Node, AnalysisLatticeElementImpl> inLatticeMap;
     private Map<Node, AnalysisLatticeElementImpl> outLatticeMap;
     private Analysis analysis;
     private Queue<Pair<Node, Node>> worklist;
 
-    public AnalyseImpl(Graph g, Analysis a) {
+    public AnalyseImpl(Graph g, Map<String, FunctionGraph> f, Analysis a) {
         graph = g;
+        functions = f;
         analysis = a;
         inLatticeMap = new HashMap<>();
         outLatticeMap = new HashMap<>();
@@ -31,12 +35,19 @@ public class AnalyseImpl implements Analyse {
 
     private void createWorklist(Node entry) {
         if(entry instanceof CallNode) {
-
-        }
-        for(Node n : entry.getSuccessors()) {
-            worklist.offer(new Pair(entry, n));
-            inLatticeMap.put(n, analysis.getEmptyLattice());
-            createWorklist(n);
+            CallNode c = (CallNode)entry;
+            Graph func = functions.get(c.getFunctionName());
+            worklist.offer(new Pair<>(entry, func.getEntryNode()));
+            inLatticeMap.put(entry, analysis.getEmptyLattice());
+            createWorklist(func.getEntryNode());
+            inLatticeMap.put(c.getResultNode(), analysis.getEmptyLattice());
+            worklist.offer(new Pair<>(func.getExitNode(), c.getResultNode()));
+        } else {
+            for (Node n : entry.getSuccessors()) {
+                worklist.offer(new Pair<>(entry, n));
+                inLatticeMap.put(n, analysis.getEmptyLattice());
+                createWorklist(n);
+            }
         }
     }
 
@@ -48,7 +59,7 @@ public class AnalyseImpl implements Analyse {
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
                 for(Node n : flow.getRight().getSuccessors()) {
-                    worklist.offer(new Pair(flow.getRight(), n));
+                    worklist.offer(new Pair<>(flow.getRight(), n));
                 }
             }
         }
