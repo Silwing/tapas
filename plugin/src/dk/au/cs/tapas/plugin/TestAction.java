@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.jetbrains.php.lang.psi.PhpFile;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
+import dk.au.cs.tapas.cfg.graph.Graph;
 
 /**
  * Created by budde on 2/4/15.
@@ -20,7 +21,12 @@ public class TestAction extends AnAction {
         }
 
         PsiParser parser = new PsiParserImpl();
-        parser.parseFile(psi);
+        Graph g = parser.parseFile(psi);
+        String dotString = g.getEntryNode().toDotString();
+        dotString = parser.getFunctions().values().stream()
+                .map((graph) -> graph.getEntryNode().toDotString())
+                .reduce(dotString, (s1, s2) -> s1 + s2);
+        System.out.println(g);
     }
 
 

@@ -3,6 +3,7 @@ package dk.au.cs.tapas.analysis;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
 
 import java.util.*;
@@ -11,22 +12,20 @@ import java.util.*;
  * Created by Silwing on 28-04-2015.
  */
 public class AnalyseImpl implements Analyse {
-    private Graph graph;
-    private Map<Node, AnalysisLatticeElementImpl> inLatticeMap;
-    private Map<Node, AnalysisLatticeElementImpl> outLatticeMap;
-    private Analysis analysis;
-    private Queue<Pair<Node, Node>> worklist;
+    private final Map<Node, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
+    private final Map<Node, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
+    private final Queue<Pair<Node, Node>> worklist = new LinkedList<>();
 
-    public AnalyseImpl(Graph g, Analysis a) {
-        graph = g;
-        analysis = a;
-        inLatticeMap = new HashMap<>();
-        outLatticeMap = new HashMap<>();
-        worklist = new LinkedList<>();
-        inLatticeMap.put(g.getEntryNode(), a.getStartLattice());
-        createWorklist(g.getEntryNode());
+    private final Graph graph;
+    private final Analysis analysis;
+
+    public AnalyseImpl(Graph graph, Analysis analysis) {
+        this.graph = graph;
+        this.analysis = analysis;
+        inLatticeMap.put(graph.getEntryNode(), analysis.getStartLattice());
+        createWorklist(graph.getEntryNode());
         iterateWorklist();
-        calculateResult(g.getEntryNode());
+        calculateResult(graph.getEntryNode());
     }
 
     private void createWorklist(Node entry) {
@@ -34,7 +33,7 @@ public class AnalyseImpl implements Analyse {
 
         }
         for(Node n : entry.getSuccessors()) {
-            worklist.offer(new Pair(entry, n));
+            worklist.offer(new Pair<>(entry, n));
             inLatticeMap.put(n, analysis.getEmptyLattice());
             createWorklist(n);
         }
@@ -43,12 +42,12 @@ public class AnalyseImpl implements Analyse {
     private void iterateWorklist() {
         Pair<Node, Node> flow;
         while((flow = worklist.poll()) != null) {
-            AnalysisLatticeElementImpl fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
-            AnalysisLatticeElementImpl l = inLatticeMap.get(flow.getRight());
-            if(!fl.containedIn(l)) {
-                inLatticeMap.put(flow.getRight(), l.join(fl));
-                for(Node n : flow.getRight().getSuccessors()) {
-                    worklist.offer(new Pair(flow.getRight(), n));
+            AnalysisLatticeElement newTargetLattice = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
+            AnalysisLatticeElement targetLattice = inLatticeMap.get(flow.getRight());
+            if(!newTargetLattice.containedIn(targetLattice)) {
+                inLatticeMap.put(flow.getRight(), targetLattice.join(newTargetLattice));
+                for(Node successor : flow.getRight().getSuccessors()) {
+                    worklist.offer(new Pair<>(flow.getRight(), successor));
                 }
             }
         }
@@ -62,17 +61,17 @@ public class AnalyseImpl implements Analyse {
     }
 
     @Override
-    public AnalysisLatticeElementImpl getEntryLattice() {
+    public AnalysisLatticeElement getEntryLattice() {
         return outLatticeMap.get(graph.getEntryNode());
     }
 
     @Override
-    public AnalysisLatticeElementImpl getExitLattice() {
+    public AnalysisLatticeElement getExitLattice() {
         return outLatticeMap.get(graph.getExitNode());
     }
 
     @Override
-    public AnalysisLatticeElementImpl getLattice(Node n) {
+    public AnalysisLatticeElement getLattice(Node n) {
         return outLatticeMap.get(n);
     }
 }

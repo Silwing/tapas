@@ -38,7 +38,7 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="ArraysInPHP.Menu" text="_Arrays" description="Arrays in PHP">
+        <group id="TAPAS.Menu" text="_Arrays" description="Arrays in PHP">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="testAction" class="dk.au.cs.tapas.plugin.TestAction" text="TestAction"
                     description="This is a test action">

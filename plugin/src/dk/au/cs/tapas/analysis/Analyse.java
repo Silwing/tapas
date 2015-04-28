@@ -1,13 +1,13 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 
 /**
  * Created by Silwing on 28-04-2015.
  */
 public interface Analyse {
-    AnalysisLatticeElementImpl getEntryLattice();
-    AnalysisLatticeElementImpl getExitLattice();
-    AnalysisLatticeElementImpl getLattice(Node n);
+    AnalysisLatticeElement getEntryLattice();
+    AnalysisLatticeElement getExitLattice();
+    AnalysisLatticeElement getLattice(Node n);
 }

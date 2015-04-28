@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
 
 /**
@@ -8,7 +9,7 @@ import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
  */
 public interface Analysis {
 
-    AnalysisLatticeElementImpl getEmptyLattice();
-    AnalysisLatticeElementImpl getStartLattice();
-    AnalysisLatticeElementImpl analyse(Node n, AnalysisLatticeElementImpl l);
+    AnalysisLatticeElement getEmptyLattice();
+    AnalysisLatticeElement getStartLattice();
+    AnalysisLatticeElement analyse(Node n, AnalysisLatticeElement l);
 }
