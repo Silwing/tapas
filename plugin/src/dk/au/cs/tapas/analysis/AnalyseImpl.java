@@ -19,6 +19,7 @@ public class AnalyseImpl implements Analyse {
     private Map<Node, AnalysisLatticeElementImpl> outLatticeMap;
     private Analysis analysis;
     private Queue<Pair<Node, Node>> worklist;
+    private Set<Pair<Node, Node>> worklistSet;
 
     public AnalyseImpl(Graph g, Map<String, FunctionGraph> f, Analysis a) {
         graph = g;
@@ -27,26 +28,37 @@ public class AnalyseImpl implements Analyse {
         inLatticeMap = new HashMap<>();
         outLatticeMap = new HashMap<>();
         worklist = new LinkedList<>();
+        worklistSet = new HashSet<>();
         inLatticeMap.put(g.getEntryNode(), a.getStartLattice());
         createWorklist(g.getEntryNode());
         iterateWorklist();
         calculateResult(g.getEntryNode());
     }
 
+    private boolean addToWorklist(Pair<Node, Node> toAdd) {
+        if(!worklistSet.contains(toAdd)) {
+            worklistSet.add(toAdd);
+            worklist.offer(toAdd);
+            return true;
+        }
+        return false;
+    }
+
     private void createWorklist(Node entry) {
         if(entry instanceof CallNode) {
             CallNode c = (CallNode)entry;
             Graph func = functions.get(c.getFunctionName());
-            worklist.offer(new Pair<>(entry, func.getEntryNode()));
             inLatticeMap.put(entry, analysis.getEmptyLattice());
-            createWorklist(func.getEntryNode());
+            if(addToWorklist(new Pair<>(entry, func.getEntryNode())))
+                createWorklist(func.getEntryNode());
             inLatticeMap.put(c.getResultNode(), analysis.getEmptyLattice());
-            worklist.offer(new Pair<>(func.getExitNode(), c.getResultNode()));
+            if(addToWorklist(new Pair<>(func.getExitNode(), c.getResultNode())))
+                createWorklist(c.getResultNode());
         } else {
             for (Node n : entry.getSuccessors()) {
-                worklist.offer(new Pair<>(entry, n));
                 inLatticeMap.put(n, analysis.getEmptyLattice());
-                createWorklist(n);
+                if(addToWorklist(new Pair<>(entry, n)))
+                    createWorklist(n);
             }
         }
     }
@@ -54,12 +66,13 @@ public class AnalyseImpl implements Analyse {
     private void iterateWorklist() {
         Pair<Node, Node> flow;
         while((flow = worklist.poll()) != null) {
+            worklistSet.remove(flow);
             AnalysisLatticeElementImpl fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
             AnalysisLatticeElementImpl l = inLatticeMap.get(flow.getRight());
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
                 for(Node n : flow.getRight().getSuccessors()) {
-                    worklist.offer(new Pair<>(flow.getRight(), n));
+                    addToWorklist(new Pair<>(flow.getRight(), n));
                 }
             }
         }
