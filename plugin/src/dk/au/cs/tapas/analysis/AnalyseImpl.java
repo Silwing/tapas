@@ -4,6 +4,7 @@ import dk.au.cs.tapas.cfg.graph.FunctionGraph;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
 
 import java.util.*;
@@ -69,8 +70,8 @@ public class AnalyseImpl implements Analyse {
         Pair<Node, Node> flow;
         while((flow = worklist.poll()) != null) {
             worklistSet.remove(flow);
-            AnalysisLatticeElementImpl fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
-            AnalysisLatticeElementImpl l = inLatticeMap.get(flow.getRight());
+            AnalysisLatticeElement fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
+            AnalysisLatticeElement l = inLatticeMap.get(flow.getRight());
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
                 for(Node n : flow.getRight().getSuccessors()) {
