@@ -19,6 +19,7 @@ public class AnalyseImpl implements Analyse {
     private final Queue<Pair<Node, Node>> worklist = new LinkedList<>();
     private final Set<Pair<Node, Node>> worklistSet = new HashSet<>();
     private final Map<String, FunctionGraph> functions;
+    private final Stack<Node> resultNodes = new Stack<>();
 
     private final Graph graph;
     private final Analysis analysis;
@@ -27,39 +28,19 @@ public class AnalyseImpl implements Analyse {
         this.graph = graph;
         this.analysis = analysis;
         this.functions = functions;
+        createWorklist();
         inLatticeMap.put(graph.getEntryNode(), analysis.getStartLattice());
-        createWorklist(graph.getEntryNode());
         iterateWorklist();
-        calculateResult(graph.getEntryNode());
+        calculateResult();
     }
 
-    private boolean addToWorklist(Pair<Node, Node> toAdd) {
-        if(!worklistSet.contains(toAdd)) {
-            worklistSet.add(toAdd);
-            worklist.add(toAdd);
-            return true;
-        }
-        return false;
-    }
-
-    private void createWorklist(Node entry) {
-        if(entry instanceof CallNode) {
-            CallNode c = (CallNode)entry;
-            Graph func = functions.get(c.getFunctionName());
-            inLatticeMap.put(entry, analysis.getEmptyLattice());
-            if(addToWorklist(new Pair<>(entry, func.getEntryNode())))
-                createWorklist(func.getEntryNode());
-            inLatticeMap.put(c.getResultNode(), analysis.getEmptyLattice());
-            if(addToWorklist(new Pair<>(func.getExitNode(), c.getResultNode())))
-                createWorklist(c.getResultNode());
-        } else {
-            for (Node n : entry.getSuccessors()) {
-                inLatticeMap.put(n, analysis.getEmptyLattice());
-                if(addToWorklist(new Pair<>(entry, n)))
-                    createWorklist(n);
+    private void createWorklist() {
+        for(Node n : graph.getNodes()) {
+            inLatticeMap.put(n, analysis.getEmptyLattice());
+            for(Node m : graph.getFlow(n)) {
+                worklist.offer(new Pair<>(n, m));
             }
         }
-
     }
 
     private void iterateWorklist() {
@@ -70,17 +51,16 @@ public class AnalyseImpl implements Analyse {
             AnalysisLatticeElement l = inLatticeMap.get(flow.getRight());
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
-                for(Node n : flow.getRight().getSuccessors()) {
-                    addToWorklist(new Pair<>(flow.getRight(), n));
+                for(Node n : graph.getFlow(flow.getRight())) {
+                    worklist.offer(new Pair<>(flow.getRight(), n));
                 }
             }
         }
     }
 
-    private void calculateResult(Node entry) {
-        outLatticeMap.put(entry, analysis.analyse(entry, inLatticeMap.get(entry)));
-        for(Node n : entry.getSuccessors()) {
-            calculateResult(n);
+    private void calculateResult() {
+        for(Node n : graph.getNodes()) {
+            outLatticeMap.put(n, analysis.analyse(n, inLatticeMap.get(n)));
         }
     }
 
