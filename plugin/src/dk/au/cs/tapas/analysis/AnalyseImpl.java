@@ -8,6 +8,7 @@ import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Silwing on 28-04-2015.
@@ -17,17 +18,15 @@ public class AnalyseImpl implements Analyse {
     private final Map<Node, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
     private final Map<Node, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
     private final Queue<Pair<Node, Node>> worklist = new LinkedList<>();
-    private final Set<Pair<Node, Node>> worklistSet = new HashSet<>();
-    private final Map<String, FunctionGraph> functions;
+
     private final Stack<Node> resultNodes = new Stack<>();
 
     private final Graph graph;
     private final Analysis analysis;
 
-    public AnalyseImpl(Graph graph, Map<String, FunctionGraph> functions, Analysis analysis) {
+    public AnalyseImpl(Graph graph, Analysis analysis) {
         this.graph = graph;
         this.analysis = analysis;
-        this.functions = functions;
         createWorklist();
         inLatticeMap.put(graph.getEntryNode(), analysis.getStartLattice());
         iterateWorklist();
@@ -37,23 +36,18 @@ public class AnalyseImpl implements Analyse {
     private void createWorklist() {
         for(Node n : graph.getNodes()) {
             inLatticeMap.put(n, analysis.getEmptyLattice());
-            for(Node m : graph.getFlow(n)) {
-                worklist.offer(new Pair<>(n, m));
-            }
+            worklist.addAll(graph.getFlow(n).stream().map(m -> new Pair<>(n, m)).collect(Collectors.toList()));
         }
     }
 
     private void iterateWorklist() {
         Pair<Node, Node> flow;
         while((flow = worklist.poll()) != null) {
-            worklistSet.remove(flow);
             AnalysisLatticeElement fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
             AnalysisLatticeElement l = inLatticeMap.get(flow.getRight());
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
-                for(Node n : graph.getFlow(flow.getRight())) {
-                    worklist.offer(new Pair<>(flow.getRight(), n));
-                }
+                worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new Pair<>(flow.getRight(), n)).collect(Collectors.toList()));
             }
         }
     }

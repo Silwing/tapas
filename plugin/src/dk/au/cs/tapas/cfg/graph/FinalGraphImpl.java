@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.graph;
 
+import com.sun.org.apache.xpath.internal.functions.FuncGenerateId;
 import dk.au.cs.tapas.cfg.node.Node;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,13 +14,12 @@ import java.util.Set;
 public class FinalGraphImpl implements Graph{
     private final Node exitNode, entryNode;
     private final Map<String, FunctionGraph> functionGraphMap;
+    private Set<Node> nodes;
 
     public FinalGraphImpl(Graph graph, Map<String, FunctionGraph> functionGraphMap) {
 
         this.functionGraphMap = functionGraphMap;
-
         entryNode = graph.getEntryNode();
-
         exitNode = findExitNode(entryNode);
         assert exitNode != null;
 
@@ -67,6 +67,21 @@ public class FinalGraphImpl implements Graph{
 
     @Override
     public Set<Node> getNodes() {
-        return null;
+        if(nodes != null){
+            return new HashSet<>(nodes);
+        }
+
+        nodes = new HashSet<>();
+        addNodes(entryNode, nodes);
+        functionGraphMap.values().stream().forEach((FunctionGraph graph) -> nodes.addAll(graph.getNodes()));
+        return getNodes();
+    }
+
+    private void addNodes(Node node, Set<Node> nodes) {
+        if(nodes.add(node)){
+            for(Node successor: node.getSuccessors()){
+                addNodes(successor, nodes);
+            }
+        }
     }
 }

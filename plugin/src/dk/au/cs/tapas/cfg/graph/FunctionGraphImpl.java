@@ -6,12 +6,13 @@ import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 /**
  * Created by budde on 4/27/15.
  */
-public class FunctionGraphImpl extends GraphImpl implements FunctionGraph {
+public class FunctionGraphImpl  implements FunctionGraph {
     private final boolean[] arguments;
     private final ExitNode exitNode;
     private final StartNode entryNode;
@@ -59,6 +60,16 @@ public class FunctionGraphImpl extends GraphImpl implements FunctionGraph {
     @Override
     public StartNode getEntryNode() {
         return entryNode;
+    }
+
+    @Override
+    public Set<Node> getFlow(Node n) {
+        return null;
+    }
+
+    @Override
+    public Set<Node> getNodes() {
+        return null;
     }
 
 }

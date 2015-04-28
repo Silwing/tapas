@@ -3,10 +3,13 @@ package dk.au.cs.tapas.cfg.graph;
 import dk.au.cs.tapas.cfg.node.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by budde on 4/27/15.
  */
-public class LibraryFunctionGraphImpl extends GraphImpl implements LibraryFunctionGraph {
+public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     private final boolean aliasReturn;
     private StartNode entryNode;
     private ExitNode exitNode;
@@ -40,5 +43,18 @@ public class LibraryFunctionGraphImpl extends GraphImpl implements LibraryFuncti
     @Override
     public StartNode getEntryNode() {
         return entryNode;
+    }
+
+    @Override
+    public Set<Node> getFlow(Node n) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Node> getNodes() {
+        Set<Node> set = new HashSet<>();
+        set.add(entryNode);
+        set.add(exitNode);
+        return set;
     }
 }
