@@ -36,7 +36,7 @@ public class AnalyseImpl implements Analyse {
     private boolean addToWorklist(Pair<Node, Node> toAdd) {
         if(!worklistSet.contains(toAdd)) {
             worklistSet.add(toAdd);
-            worklist.offer(toAdd);
+            worklist.add(toAdd);
             return true;
         }
         return false;
@@ -60,7 +60,7 @@ public class AnalyseImpl implements Analyse {
             }
         }
         for(Node n : entry.getSuccessors()) {
-            worklist.offer(new Pair<>(entry, n));
+            worklist.add(new Pair<>(entry, n));
             inLatticeMap.put(n, analysis.getEmptyLattice());
             createWorklist(n);
         }
