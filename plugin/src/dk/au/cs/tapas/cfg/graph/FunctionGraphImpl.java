@@ -5,6 +5,7 @@ import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
+import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -63,7 +64,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
     }
 
     @Override
-    public Set<Node> getFlow(Node n) {
+    public Set<Node> getFlow(Node n, Context context) {
         return null;
     }
 

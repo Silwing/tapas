@@ -1,8 +1,8 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public interface Graph {
     Node getEntryNode();
 
 
-    Set<Node> getFlow(Node n);
+    Set<Node> getFlow(Node n, Context context);
 
     Set<Node> getNodes();
 

@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.cfg.node.*;
+import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -46,7 +47,7 @@ public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     }
 
     @Override
-    public Set<Node> getFlow(Node n) {
+    public Set<Node> getFlow(Node n, Context context) {
         throw new UnsupportedOperationException();
     }
 

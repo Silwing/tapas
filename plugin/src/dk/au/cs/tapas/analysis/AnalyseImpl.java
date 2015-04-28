@@ -33,7 +33,7 @@ public class AnalyseImpl implements Analyse {
     private void createWorklist() {
         for(Node n : graph.getNodes()) {
             inLatticeMap.put(n, analysis.getEmptyLattice());
-            worklist.addAll(graph.getFlow(n).stream().map(m -> new Pair<>(n, m)).collect(Collectors.toList()));
+            worklist.addAll(graph.getFlow(n, null).stream().map(m -> new Pair<>(n, m)).collect(Collectors.toList()));
         }
     }
 
@@ -45,7 +45,7 @@ public class AnalyseImpl implements Analyse {
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
                 final Pair<Node, Node> finalFlow = flow;
-                worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new Pair<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
+                worklist.addAll(graph.getFlow(flow.getRight(), null).stream().map(n -> new Pair<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
             }
         }
     }

@@ -1,7 +1,7 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import com.sun.org.apache.xpath.internal.functions.FuncGenerateId;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -61,7 +61,7 @@ public class FinalGraphImpl implements Graph{
     }
 
     @Override
-    public Set<Node> getFlow(Node n) {
+    public Set<Node> getFlow(Node n, Context context) {
         return null;
     }
 
