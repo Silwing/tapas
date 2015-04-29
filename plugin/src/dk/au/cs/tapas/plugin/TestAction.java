@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.jetbrains.php.lang.psi.PhpFile;
 import dk.au.cs.tapas.analysis.Analyse;
 import dk.au.cs.tapas.analysis.AnalyseImpl;
-import dk.au.cs.tapas.analysis.TypeAnalysis;
+import dk.au.cs.tapas.analysis.TypeAnalysisImpl;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
@@ -25,7 +25,7 @@ public class TestAction extends AnAction {
 
         PsiParser parser = new PsiParserImpl();
         Graph g = parser.parseFile(psi);
-        Analyse analyse = new AnalyseImpl(g, new TypeAnalysis());
+        Analyse analyse = new AnalyseImpl(g, new TypeAnalysisImpl());
 
 
         System.out.println(g);

@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by Silwing on 28-04-2015.
  *
  */
-public class TypeAnalysis implements Analysis {
+public class TypeAnalysisImpl implements Analysis {
     @Override
     public AnalysisLatticeElement getEmptyLattice() {
         return null;
@@ -51,7 +51,6 @@ public class TypeAnalysis implements Analysis {
         if(n instanceof AssignmentNode){
             return analyseAssignmentNode((AssignmentNode) n, l, c);
         }
-
         if(n instanceof ShortCircuitBinaryOperationNode){
             return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) n, l, c);
         }
