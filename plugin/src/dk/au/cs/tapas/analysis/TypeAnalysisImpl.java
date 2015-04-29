@@ -170,11 +170,14 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseNodeArrayInitExpressionNode(ArrayInitExpressionNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+        return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl());
     }
 
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        Set<HeapLocation> newLocations = l.getValue(c).getLocals().getValue(new VariableNameImpl(n.getVariableName())).getValues();
+        VariableName name = new VariableNameImpl(n.getVariableName());
+        Set<HeapLocation> newLocations = l.getLocalsValue(c, name).getValues();
+        if(newLocations.isEmpty() && !c.isEmpty())
+            newLocations = l.getGlobalsValue(c, name).getValues();
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
 

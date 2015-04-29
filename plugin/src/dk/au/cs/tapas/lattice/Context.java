@@ -18,6 +18,8 @@ public interface Context {
 
     CallNode getLastCallNode();
 
+    boolean isEmpty();
+
     boolean equals(Context other);
 
 }

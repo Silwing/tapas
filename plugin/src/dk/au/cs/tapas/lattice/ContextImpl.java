@@ -45,6 +45,11 @@ public class ContextImpl implements Context{
     }
 
     @Override
+    public boolean isEmpty() {
+        return nodes.isEmpty();
+    }
+
+    @Override
     public boolean equals(Context other) {
         return other.getNodes().equals(nodes);
     }
