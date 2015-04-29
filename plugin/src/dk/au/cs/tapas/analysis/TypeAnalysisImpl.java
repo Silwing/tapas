@@ -170,7 +170,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseNodeArrayInitExpressionNode(ArrayInitExpressionNode n, AnalysisLatticeElement l, Context c) {
-        return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl());
+        return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl(new EmptyArrayLatticeElementImpl()));
     }
 
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
