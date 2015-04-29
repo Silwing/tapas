@@ -23,15 +23,19 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
             return this;
         }
 
+        if(other instanceof MapArrayLatticeElement){
+            return emptyArray;
+        }
+
         if(!(other instanceof  ListArrayLatticeElement)){
-            return bottom;
+            return other;
         }
         return new ListArrayLatticeElementImpl(((ListArrayLatticeElement) other).getLocations().meet(getLocations()));
     }
 
     @Override
     public ArrayLatticeElement join(ArrayLatticeElement other) {
-        if(other.equals(bottom)){
+        if(other.equals(bottom) || other.equals(emptyArray)){
             return this;
         }
         if(!(other instanceof  ListArrayLatticeElement)){

@@ -7,10 +7,11 @@ package dk.au.cs.tapas.lattice;
 public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement> {
 
     ArrayLatticeElement bottom = new BottomArrayLatticeElementImpl();
+    ArrayLatticeElement emptyArray = new EmptyArrayLatticeElementImpl();
     ArrayLatticeElement top = new TopArrayLatticeElementImpl();
 
     static ListArrayLatticeElement generateList(PowerSetLatticeElement<HeapLocation> locations){
-        return  new ListArrayLatticeElementImpl(locations);
+        return new ListArrayLatticeElementImpl(locations);
     }
 
     static ListArrayLatticeElement generateList(){

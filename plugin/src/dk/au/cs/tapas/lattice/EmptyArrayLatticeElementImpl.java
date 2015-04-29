@@ -6,21 +6,21 @@ package dk.au.cs.tapas.lattice;
 public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     @Override
     public ArrayLatticeElement meet(ArrayLatticeElement other) {
-        return null;
+        return other.equals(bottom)?other:this;
     }
 
     @Override
     public ArrayLatticeElement join(ArrayLatticeElement other) {
-        return null;
+        return other.equals(bottom)?this:other;
     }
 
     @Override
     public boolean containedIn(ArrayLatticeElement other) {
-        return false;
+        return !other.equals(bottom);
     }
 
     @Override
     public boolean equals(ArrayLatticeElement other) {
-        return false;
+        return  other instanceof EmptyArrayLatticeElement;
     }
 }

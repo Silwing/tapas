@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.List;
+
 /**
  * Created by budde on 4/20/15.
  *
@@ -32,15 +34,19 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
             return this;
         }
 
+        if(other instanceof ListArrayLatticeElement){
+            return  emptyArray;
+        }
+
         if(!(other instanceof MapArrayLatticeElement)){
-            return bottom;
+            return other;
         }
         return new MapArrayLatticeElementImpl(((MapArrayLatticeElement) other).getMap().meet(getMap()));
     }
 
     @Override
     public ArrayLatticeElement join(ArrayLatticeElement other) {
-        if(other.equals(bottom)){
+        if(other.equals(bottom) || other.equals(emptyArray)){
             return this;
         }
 
