@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class ReferenceAssignmentNodeImpl extends NodeImpl implements ReferenceAssignemntNode {
+public class ReferenceAssignmentNodeImpl extends NodeImpl implements ReferenceAssignmentNode {
     private final  TemporaryVariableName targetName;
     private final  Set<HeapLocation> valueLocationSet;
     private final  Set<HeapLocation> variableLocationSet;

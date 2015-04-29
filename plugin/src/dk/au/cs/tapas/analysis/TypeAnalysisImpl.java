@@ -78,8 +78,8 @@ public class TypeAnalysisImpl implements Analysis {
         if(n instanceof ReadNode){
             return analyseReadNode((ReadNode) n, l, c);
         }
-        if(n instanceof ReferenceAssignemntNode){
-            return analyseReferenceAssignemntNode((ReferenceAssignemntNode) n, l, c);
+        if(n instanceof ReferenceAssignmentNode){
+            return analyseReferenceAssignmentNode((ReferenceAssignmentNode) n, l, c);
         }
         if(n instanceof ResultNode){
             return analyseResultNode((ResultNode) n, l, c);
@@ -112,7 +112,7 @@ public class TypeAnalysisImpl implements Analysis {
         return null;
     }
 
-    private AnalysisLatticeElement analyseReferenceAssignemntNode(ReferenceAssignemntNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode n, AnalysisLatticeElement l, Context c) {
         return null;
     }
 
