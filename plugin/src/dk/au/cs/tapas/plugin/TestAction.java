@@ -5,6 +5,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKey;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.jetbrains.php.lang.psi.PhpFile;
+import dk.au.cs.tapas.analysis.Analyse;
+import dk.au.cs.tapas.analysis.AnalyseImpl;
+import dk.au.cs.tapas.analysis.TypeAnalysis;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
@@ -22,10 +25,9 @@ public class TestAction extends AnAction {
 
         PsiParser parser = new PsiParserImpl();
         Graph g = parser.parseFile(psi);
-        String dotString = g.getEntryNode().toDotString();
-        dotString = parser.getFunctions().values().stream()
-                .map((graph) -> graph.getEntryNode().toDotString())
-                .reduce(dotString, (s1, s2) -> s1 + s2);
+        Analyse analyse = new AnalyseImpl(g, new TypeAnalysis());
+
+
         System.out.println(g);
     }
 
