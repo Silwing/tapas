@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class ContextImpl implements Context{
     private final LinkedList<CallNode> nodes;
+    private static final int limit = 5;
+
 
     public ContextImpl(List<CallNode> nodes) {
         this.nodes = new LinkedList<>(nodes);
@@ -22,7 +24,10 @@ public class ContextImpl implements Context{
 
     @Override
     public Context addNode(CallNode node) {
-        List<CallNode> newList = new LinkedList<>(nodes);
+        LinkedList<CallNode> newList = new LinkedList<>(nodes);
+        if(newList.size() == limit){
+            newList.removeFirst();
+        }
         newList.add(node);
         return new ContextImpl(newList);
     }

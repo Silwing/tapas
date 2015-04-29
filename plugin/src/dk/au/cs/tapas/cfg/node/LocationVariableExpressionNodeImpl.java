@@ -25,7 +25,7 @@ public class LocationVariableExpressionNodeImpl extends NodeImpl implements Loca
 
     @Override
     public String toString() {
-        return "loc("+ variableName + ", "+ locations + ')';
+        return "loc("+ variableName + ", "+ locations +')';
     }
 
     @Override
