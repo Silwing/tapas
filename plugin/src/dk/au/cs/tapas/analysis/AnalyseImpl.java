@@ -1,7 +1,5 @@
 package dk.au.cs.tapas.analysis;
 
-import com.intellij.javaee.model.xml.converters.ContextParamNameConverter;
-import com.sun.jndi.cosnaming.CNNameParser;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
@@ -31,7 +29,6 @@ public class AnalyseImpl implements Analyse {
         createWorklist(entryNode);
         iterateWorklist();
         calculateResult();
-
     }
 
     private void createWorklist(ContextNodePair entryNode) {
