@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -9,6 +10,6 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 public interface UnaryOperationNode extends ExpressionNode {
 
     TemporaryVariableName getOperandName();
-    String getOperator();
+    UnaryOperator getOperator();
 
 }

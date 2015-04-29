@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.BinaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -11,7 +12,7 @@ public interface BinaryOperationNode extends ExpressionNode{
 
     TemporaryVariableName getLeftOperandName();
 
-    String getOperator();
+    BinaryOperator getOperator();
 
     TemporaryVariableName getRightOperandName();
 

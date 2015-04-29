@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.BinaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -10,11 +11,11 @@ public class BinaryOperationNodeImpl extends NodeImpl implements BinaryOperation
 
 
     protected final TemporaryVariableName leftOperandName;
-    protected final String operator;
+    protected final BinaryOperator operator;
     protected final TemporaryVariableName rightOperandName;
     protected final TemporaryVariableName targetName;
 
-    public BinaryOperationNodeImpl(Node successor, TemporaryVariableName leftOperandName, String operator, TemporaryVariableName rightOperandName, TemporaryVariableName targetName) {
+    public BinaryOperationNodeImpl(Node successor, TemporaryVariableName leftOperandName, BinaryOperator operator, TemporaryVariableName rightOperandName, TemporaryVariableName targetName) {
         super(successor);
         this.leftOperandName = leftOperandName;
         this.operator = operator;
@@ -28,7 +29,7 @@ public class BinaryOperationNodeImpl extends NodeImpl implements BinaryOperation
     }
 
     @Override
-    public String getOperator() {
+    public BinaryOperator getOperator() {
         return operator;
     }
 

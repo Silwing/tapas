@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -9,10 +10,10 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 public class UnaryOperationNodeImpl extends NodeImpl implements UnaryOperationNode {
 
     private final TemporaryVariableName operandName;
-    private final String operator;
+    private final UnaryOperator operator;
     private final TemporaryVariableName targetName;
 
-    public UnaryOperationNodeImpl(Node successor, TemporaryVariableName operandName, String operator, TemporaryVariableName target) {
+    public UnaryOperationNodeImpl(Node successor, TemporaryVariableName operandName, UnaryOperator operator, TemporaryVariableName target) {
         super(successor);
         this.operandName = operandName;
         this.operator = operator;
@@ -26,7 +27,7 @@ public class UnaryOperationNodeImpl extends NodeImpl implements UnaryOperationNo
     }
 
     @Override
-    public String getOperator() {
+    public UnaryOperator getOperator() {
         return operator;
     }
 

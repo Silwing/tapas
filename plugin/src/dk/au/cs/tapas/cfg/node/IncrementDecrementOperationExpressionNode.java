@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.HeapLocation;
 
 import java.util.Set;
@@ -11,6 +12,6 @@ public interface IncrementDecrementOperationExpressionNode extends ExpressionNod
 
     Set<HeapLocation> getHeapLocationSet();
 
-    String getOperation();
+    UnaryOperator getOperation();
 
 }

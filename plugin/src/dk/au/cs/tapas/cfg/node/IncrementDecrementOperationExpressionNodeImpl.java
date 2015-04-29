@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -10,10 +11,10 @@ import java.util.Set;
  */
 public class IncrementDecrementOperationExpressionNodeImpl extends NodeImpl implements IncrementDecrementOperationExpressionNode {
     private Set<HeapLocation> locationSet;
-    private String operation;
+    private UnaryOperator operation;
     private TemporaryVariableName targetName;
 
-    public IncrementDecrementOperationExpressionNodeImpl(Node successor, Set<HeapLocation> locations, String operation, TemporaryVariableName targetName) {
+    public IncrementDecrementOperationExpressionNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName) {
         super(successor);
         locationSet = locations;
         this.operation = operation;
@@ -26,7 +27,7 @@ public class IncrementDecrementOperationExpressionNodeImpl extends NodeImpl impl
     }
 
     @Override
-    public String getOperation() {
+    public UnaryOperator getOperation() {
         return operation;
     }
 
@@ -37,6 +38,6 @@ public class IncrementDecrementOperationExpressionNodeImpl extends NodeImpl impl
 
     @Override
     public String toString() {
-        return "inc_dec_op(" + operation +", " + locationSet + ", " + targetName +')';
+        return "inc_dec_op(" + operation + ", " + locationSet + ", " + targetName + ')';
     }
 }

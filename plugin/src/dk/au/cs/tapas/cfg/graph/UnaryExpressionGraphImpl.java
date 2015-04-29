@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.UnaryExpression;
 import dk.au.cs.tapas.cfg.PsiParser;
+import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.cfg.node.IncrementDecrementOperationExpressionNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.UnaryOperationNodeImpl;
@@ -33,16 +34,17 @@ public class UnaryExpressionGraphImpl extends ExpressionGraphImpl<UnaryExpressio
         } else {
             operationText  = operationText + "_";
         }
+
         if(operationText.contains("++") || operationText.contains("--")){
 
             Set<HeapLocation> operandLocations = new HashSet<>();
-            operationNode = new IncrementDecrementOperationExpressionNodeImpl(graph.getEntryNode(), operandLocations, operationText, name);
+            operationNode = new IncrementDecrementOperationExpressionNodeImpl(graph.getEntryNode(), operandLocations, UnaryOperator.fromString(operationText), name);
             operandGraph = parser.parseVariableExpression((PhpExpression) element.getValue(), g -> g, operandLocations).generate(new NodeGraphImpl(operationNode));
 
 
         } else {
             TemporaryVariableName operandName = new TemporaryVariableNameImpl();
-            operationNode = new UnaryOperationNodeImpl(graph.getEntryNode(), operandName, operationText, name);
+            operationNode = new UnaryOperationNodeImpl(graph.getEntryNode(), operandName, UnaryOperator.fromString(operationText), name);
             operandGraph = parser.parseExpression((PhpExpression) element.getValue(), g -> g, operandName).generate(new NodeGraphImpl(operationNode));
 
         }
