@@ -9,5 +9,5 @@ import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 public interface Analyse {
     AnalysisLatticeElement getEntryLattice();
     AnalysisLatticeElement getExitLattice();
-    AnalysisLatticeElement getLattice(Node n);
+    AnalysisLatticeElement getLattice(ContextNodePair contextNodePair);
 }

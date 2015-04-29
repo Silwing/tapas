@@ -53,23 +53,23 @@ public class AnalyseImpl implements Analyse {
     }
 
     private void calculateResult() {
-        for(Node n : graph.getNodes()) {
-            outLatticeMap.put(n, analysis.analyse(n, inLatticeMap.get(n)));
+        for(ContextNodePair pair : inLatticeMap.keySet()) {
+            outLatticeMap.put(pair, analysis.analyse(pair, inLatticeMap.get(pair)));
         }
     }
 
     @Override
     public AnalysisLatticeElement getEntryLattice() {
-        return outLatticeMap.get(graph.getEntryNode());
+        return outLatticeMap.get(new ContextNodePairImpl(graph.getEntryNode()));
     }
 
     @Override
     public AnalysisLatticeElement getExitLattice() {
-        return outLatticeMap.get(graph.getExitNode());
+        return outLatticeMap.get(new ContextNodePairImpl(graph.getExitNode()));
     }
 
     @Override
-    public AnalysisLatticeElement getLattice(Node n) {
-        return outLatticeMap.get(n);
+    public AnalysisLatticeElement getLattice(ContextNodePair pair) {
+        return outLatticeMap.get(pair);
     }
 }
