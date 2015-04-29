@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Created by Silwing on 28-04-2015.
- * 
+ *
  */
 public class TypeAnalysis implements Analysis {
     @Override
@@ -25,7 +25,9 @@ public class TypeAnalysis implements Analysis {
     }
 
     @Override
-    public AnalysisLatticeElement analyse(Node n, AnalysisLatticeElement l, Context c) {
+    public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
+        Node n = nc.getNode();
+        Context c = nc.getContext();
         if(n instanceof LocationVariableExpressionNode) {
             return analyseNode((LocationVariableExpressionNode)n, l, c);
         }
@@ -36,7 +38,7 @@ public class TypeAnalysis implements Analysis {
 
     private AnalysisLatticeElement analyseNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         Set<HeapLocation> newLocations = l.getValue(c).getLocals().getValue(new VariableNameImpl(n.getVariableName())).getValues();
-        //TODO: Do something if newLocations is empty
+        n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
 
         return l;
