@@ -1,30 +1,12 @@
 package dk.au.cs.tapas.analysis;
 
 /**
- * Created by Silwing on 28-04-2015.
+ * Created by budde on 4/29/15.
  */
-public class Pair<L,R> {
+public interface Pair<L, R> {
 
-    private final L left;
-    private final R right;
+    L getLeft();
 
-    public Pair(L left, R right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    public L getLeft() { return left; }
-    public R getRight() { return right; }
-
-    @Override
-    public int hashCode() { return left.hashCode() ^ right.hashCode(); }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Pair)) return false;
-        Pair pairo = (Pair) o;
-        return this.left.equals(pairo.getLeft()) &&
-                this.right.equals(pairo.getRight());
-    }
+    R getRight();
 
 }

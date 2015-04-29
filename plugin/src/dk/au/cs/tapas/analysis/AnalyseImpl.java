@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.analysis;
 
+import com.intellij.javaee.model.xml.converters.ContextParamNameConverter;
+import com.sun.jndi.cosnaming.CNNameParser;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
@@ -12,9 +14,9 @@ import java.util.stream.Collectors;
  *
  */
 public class AnalyseImpl implements Analyse {
-    private final Map<Node, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
-    private final Map<Node, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
-    private final Queue<Pair<Node, Node>> worklist = new LinkedList<>();
+    private final Map<ContextNodePair, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
+    private final Map<ContextNodePair, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
+    private final Queue<PairImpl<ContextNodePair, ContextNodePair>> worklist = new LinkedList<>();
 
     private final Stack<Node> resultNodes = new Stack<>();
 
@@ -24,28 +26,31 @@ public class AnalyseImpl implements Analyse {
     public AnalyseImpl(Graph graph, Analysis analysis) {
         this.graph = graph;
         this.analysis = analysis;
-        createWorklist();
-        inLatticeMap.put(graph.getEntryNode(), analysis.getStartLattice());
+        ContextNodePair entryNode = new ContextNodePairImpl(graph.getEntryNode());
+        inLatticeMap.put(entryNode, analysis.getStartLattice());
+        createWorklist(entryNode);
         iterateWorklist();
         calculateResult();
+
     }
 
-    private void createWorklist() {
-        for(Node n : graph.getNodes()) {
-            inLatticeMap.put(n, analysis.getEmptyLattice());
-            worklist.addAll(graph.getFlow(n, null).stream().map(m -> new Pair<>(n, m)).collect(Collectors.toList()));
+    private void createWorklist(ContextNodePair entryNode) {
+
+
+        for(ContextNodePair successorPair : graph.getFlow(entryNode)) {
+            worklist.addAll(graph.getFlow(successorPair).stream().map(m -> new PairImpl<>(successorPair, m)).collect(Collectors.toList()));
         }
     }
 
     private void iterateWorklist() {
-        Pair<Node, Node> flow;
+        PairImpl<ContextNodePair, ContextNodePair> flow;
         while((flow = worklist.poll()) != null) {
             AnalysisLatticeElement fl = analysis.analyse(flow.getLeft(), inLatticeMap.get(flow.getLeft()));
             AnalysisLatticeElement l = inLatticeMap.get(flow.getRight());
             if(!fl.containedIn(l)) {
                 inLatticeMap.put(flow.getRight(), l.join(fl));
-                final Pair<Node, Node> finalFlow = flow;
-                worklist.addAll(graph.getFlow(flow.getRight(), null).stream().map(n -> new Pair<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
+                final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;
+                worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
             }
         }
     }

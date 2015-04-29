@@ -35,6 +35,11 @@ public class ContextImpl implements Context{
     }
 
     @Override
+    public CallNode getLastCallNode() {
+        return nodes.getLast();
+    }
+
+    @Override
     public boolean equals(Context other) {
         return other.getNodes().equals(nodes);
     }

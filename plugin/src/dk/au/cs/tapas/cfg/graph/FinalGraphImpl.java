@@ -1,12 +1,14 @@
 package dk.au.cs.tapas.cfg.graph;
 
+import dk.au.cs.tapas.analysis.ContextNodePair;
+import dk.au.cs.tapas.analysis.ContextNodePairImpl;
+import dk.au.cs.tapas.cfg.node.CallNode;
+import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by budde on 4/28/15.
@@ -61,8 +63,24 @@ public class FinalGraphImpl implements Graph{
     }
 
     @Override
-    public Set<Node> getFlow(Node n, Context context) {
-        return null;
+    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+        Node node = contextNodePair.getNode();
+        Context context = contextNodePair.getContext();
+        Set<ContextNodePair> nodes = new HashSet<>();
+        if(node instanceof CallNode){
+            nodes.add(new ContextNodePairImpl(
+                    contextNodePair.getContext().addNode((CallNode) node),
+                    functionGraphMap.get(((CallNode) node).getFunctionName()).getEntryNode()));
+        } else if(node instanceof ExitNode){
+            nodes.add(new ContextNodePairImpl(
+                    contextNodePair.getContext().popNode(),
+                    context.getLastCallNode().getResultNode()));
+        } else {
+            for(Node successor: node.getSuccessors()){
+                nodes.add(new ContextNodePairImpl(contextNodePair.getContext(), successor));
+            }
+        }
+        return nodes;
     }
 
     @Override

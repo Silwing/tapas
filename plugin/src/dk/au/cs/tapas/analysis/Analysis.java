@@ -11,5 +11,5 @@ public interface Analysis {
 
     AnalysisLatticeElement getEmptyLattice();
     AnalysisLatticeElement getStartLattice();
-    AnalysisLatticeElement analyse(Node n, AnalysisLatticeElement l);
+    AnalysisLatticeElement analyse(ContextNodePair n, AnalysisLatticeElement l);
 }

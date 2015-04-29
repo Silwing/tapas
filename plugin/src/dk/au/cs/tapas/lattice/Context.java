@@ -16,6 +16,8 @@ public interface Context {
 
     Context popNode();
 
+    CallNode getLastCallNode();
+
     boolean equals(Context other);
 
 }
