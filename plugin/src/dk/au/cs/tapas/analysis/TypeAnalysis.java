@@ -1,6 +1,5 @@
 package dk.au.cs.tapas.analysis;
 
-import com.jetbrains.php.lang.parser.parsing.expressions.AssignmentExpression;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.Context;
@@ -29,7 +28,7 @@ public class TypeAnalysis implements Analysis {
         Node n = nc.getNode();
         Context c = nc.getContext();
         if(n instanceof LocationVariableExpressionNode) {
-            return analyseNodeLocalVariableExpressioNode((LocationVariableExpressionNode) n, l, c);
+            return analyseNodeLocalVariableExpressionNode((LocationVariableExpressionNode) n, l, c);
         }
         if(n instanceof ArrayInitExpressionNode){
             return analyseNodeArrayInitExpressionNode((ArrayInitExpressionNode) n, l, c);
@@ -178,7 +177,7 @@ public class TypeAnalysis implements Analysis {
         return null;
     }
 
-    private AnalysisLatticeElement analyseNodeLocalVariableExpressioNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         Set<HeapLocation> newLocations = l.getValue(c).getLocals().getValue(new VariableNameImpl(n.getVariableName())).getValues();
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
