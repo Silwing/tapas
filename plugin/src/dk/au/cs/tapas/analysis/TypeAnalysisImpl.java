@@ -1,10 +1,7 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.node.*;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
-import dk.au.cs.tapas.lattice.Context;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.VariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 
 import java.util.Set;
 
@@ -15,12 +12,12 @@ import java.util.Set;
 public class TypeAnalysisImpl implements Analysis {
     @Override
     public AnalysisLatticeElement getEmptyLattice() {
-        return null;
+        return new AnalysisLatticeElementImpl();
     }
 
     @Override
     public AnalysisLatticeElement getStartLattice() {
-        return null;
+        return new AnalysisLatticeElementImpl();
     }
 
     @Override
