@@ -34,6 +34,56 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
         this.nullLatticeElement = nullLatticeElement;
     }
 
+    public ValueLatticeElementImpl(ArrayLatticeElement array) {
+        this(
+                array,
+                StringLatticeElement.bottom,
+                NumberLatticeElement.bottom,
+                BooleanLatticeElement.bottom,
+                NullLatticeElement.bottom
+        );
+    }
+
+    public ValueLatticeElementImpl(StringLatticeElement string) {
+        this(
+                ArrayLatticeElement.bottom,
+                string,
+                NumberLatticeElement.bottom,
+                BooleanLatticeElement.bottom,
+                NullLatticeElement.bottom
+        );
+    }
+
+    public ValueLatticeElementImpl(NumberLatticeElement number) {
+        this(
+                ArrayLatticeElement.bottom,
+                StringLatticeElement.bottom,
+                number,
+                BooleanLatticeElement.bottom,
+                NullLatticeElement.bottom
+        );
+    }
+
+    public ValueLatticeElementImpl(BooleanLatticeElement bool) {
+        this(
+                ArrayLatticeElement.bottom,
+                StringLatticeElement.bottom,
+                NumberLatticeElement.bottom,
+                bool,
+                NullLatticeElement.bottom
+        );
+    }
+
+    public ValueLatticeElementImpl(NullLatticeElement nullElm) {
+        this(
+                ArrayLatticeElement.bottom,
+                StringLatticeElement.bottom,
+                NumberLatticeElement.bottom,
+                BooleanLatticeElement.bottom,
+                nullElm
+        );
+    }
+
     @Override
     public ArrayLatticeElement getArray() {
         return array;
