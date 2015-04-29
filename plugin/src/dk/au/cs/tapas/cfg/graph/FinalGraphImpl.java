@@ -69,15 +69,15 @@ public class FinalGraphImpl implements Graph{
         Set<ContextNodePair> nodes = new HashSet<>();
         if(node instanceof CallNode){
             nodes.add(new ContextNodePairImpl(
-                    contextNodePair.getContext().addNode((CallNode) node),
+                    context.addNode((CallNode) node),
                     functionGraphMap.get(((CallNode) node).getFunctionName()).getEntryNode()));
         } else if(node instanceof ExitNode){
             nodes.add(new ContextNodePairImpl(
-                    contextNodePair.getContext().popNode(),
+                    context.popNode(),
                     context.getLastCallNode().getResultNode()));
         } else {
             for(Node successor: node.getSuccessors()){
-                nodes.add(new ContextNodePairImpl(contextNodePair.getContext(), successor));
+                nodes.add(new ContextNodePairImpl(context, successor));
             }
         }
         return nodes;
