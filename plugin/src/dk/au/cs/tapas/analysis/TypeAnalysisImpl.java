@@ -166,6 +166,8 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
+        // Fetch target array
+        ValueLatticeElement e = l.getStackValue(c, n.getTargetName());
         return l;
     }
 
