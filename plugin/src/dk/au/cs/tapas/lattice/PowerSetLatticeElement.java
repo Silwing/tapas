@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import dk.au.cs.tapas.analysis.Analysis;
+
 import java.util.Set;
 
 /**
@@ -12,6 +14,5 @@ public interface PowerSetLatticeElement<T> extends LatticeElement<PowerSetLattic
     Set<T> getValues();
 
     PowerSetLatticeElement<T> addValue(T value);
-
 
 }
