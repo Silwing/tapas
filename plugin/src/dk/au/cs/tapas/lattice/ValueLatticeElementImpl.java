@@ -140,12 +140,12 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
     }
 
     @Override
-    public boolean equals(ValueLatticeElement other) {
-        return
-                getArray().equals(other.getArray()) &&
-                getString().equals(other.getString()) &&
-                getNumber().equals(other.getNumber()) &&
-                getNull().equals(other.getNull()) &&
-                getBoolean().equals(other.getBoolean());
+    public boolean equals(Object other) {
+        return other instanceof ValueLatticeElement &&
+                getArray().equals(((ValueLatticeElement) other).getArray()) &&
+                getString().equals(((ValueLatticeElement) other).getString()) &&
+                getNumber().equals(((ValueLatticeElement) other).getNumber()) &&
+                getNull().equals(((ValueLatticeElement) other).getNull()) &&
+                getBoolean().equals(((ValueLatticeElement) other).getBoolean());
     }
 }

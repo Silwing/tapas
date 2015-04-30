@@ -22,7 +22,7 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     }
 
     @Override
-    public boolean equals(NullLatticeElement obj) {
+    public boolean equals(Object obj) {
         return obj instanceof BottomNullLatticeElementImpl;
     }
 }

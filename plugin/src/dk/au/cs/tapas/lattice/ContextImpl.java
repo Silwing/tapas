@@ -49,9 +49,18 @@ public class ContextImpl implements Context{
         return nodes.isEmpty();
     }
 
-    @Override
-    public boolean equals(Context other) {
-        return other.getNodes().equals(nodes);
+
+    public boolean equals(Object other) {
+        return other instanceof Context && other.hashCode() == hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "context"+nodes;
+    }
+
+    @Override
+    public int hashCode() {
+        return nodes.hashCode();
+    }
 }

@@ -8,7 +8,7 @@ import java.util.Set;
  * Created by budde on 4/19/15.
  *
  */
-public class MapLatticeElementImpl<K, V extends LatticeElement<V>> extends LatticeElementImpl<MapLatticeElement<K,V>> implements MapLatticeElement<K, V> {
+public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements MapLatticeElement<K, V> {
 
     private final Set<K> domain;
     private final Generator<K, V> generator;
@@ -69,6 +69,19 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>> extends Latti
         return  newDomain;
     }
 
+
+    public boolean equals(Object object){
+        if(!(object instanceof  MapLatticeElement)){
+            return false;
+        }
+        for(K key: jointDomain((MapLatticeElement<K, V>) object, this)){
+            if(!((MapLatticeElement<K, V>) object).getValue(key).equals(getValue(key))){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
 
 }

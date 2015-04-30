@@ -20,7 +20,7 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
         return equals(other);
     }
 
-    public boolean equals(NumberLatticeElement obj){
+    public boolean equals(Object obj){
         return  obj instanceof TopNumberLatticeElementImpl;
     }
 

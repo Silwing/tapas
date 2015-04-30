@@ -2,9 +2,8 @@ package dk.au.cs.tapas.lattice;
 
 /**
  * Created by budde on 4/20/15.
- *
  */
-public class StateLatticeElementImpl extends LatticeElementImpl<StateLatticeElement> implements StateLatticeElement {
+public class StateLatticeElementImpl implements StateLatticeElement {
 
     private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals;
     private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals;
@@ -15,7 +14,7 @@ public class StateLatticeElementImpl extends LatticeElementImpl<StateLatticeElem
         this(
                 new LocalsMapLatticeElementImpl(),
                 new GlobalsMapLatticeElementImpl(),
-                new HeapMapLatticeElement(),
+                new HeapMapLatticeElementImpl(),
                 new StateMapLatticeElementImpl());
     }
 
@@ -92,8 +91,19 @@ public class StateLatticeElementImpl extends LatticeElementImpl<StateLatticeElem
     public boolean containedIn(StateLatticeElement other) {
         return
                 getLocals().containedIn(other.getLocals()) &&
-                getGlobals().containedIn(other.getGlobals()) &&
-                getHeap().containedIn(other.getHeap()) &&
-                getStack().containedIn(other.getStack());
+                        getGlobals().containedIn(other.getGlobals()) &&
+                        getHeap().containedIn(other.getHeap()) &&
+                        getStack().containedIn(other.getStack());
     }
+
+
+    public boolean equals(Object other) {
+        return
+                other instanceof StateLatticeElement &&
+                        ((StateLatticeElement) other).getStack().equals(getStack()) &&
+                        ((StateLatticeElement) other).getHeap().equals(getHeap()) &&
+                        ((StateLatticeElement) other).getGlobals().equals(getGlobals()) &&
+                        ((StateLatticeElement) other).getLocals().equals(getLocals());
+    }
+
 }

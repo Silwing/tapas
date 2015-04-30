@@ -20,7 +20,7 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
         return equals(other);
     }
 
-    public boolean equals(NullLatticeElement obj){
+    public boolean equals(Object obj){
         return  obj instanceof TopNullLatticeElementImpl;
     }
 

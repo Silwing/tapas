@@ -61,7 +61,7 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
         return other instanceof TopArrayLatticeElementImpl || (other  instanceof MapArrayLatticeElement && getMap().containedIn(((MapArrayLatticeElement) other).getMap()));
     }
 
-    public boolean equals(ArrayLatticeElement other){
+    public boolean equals(Object other){
         return other instanceof MapArrayLatticeElement && ((MapArrayLatticeElement) other).getMap().equals(getMap());
     }
 

@@ -22,7 +22,7 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     }
 
     @Override
-    public boolean equals(StringLatticeElement other) {
+    public boolean equals(Object other) {
         return other instanceof BottomStringLatticeElementImpl;
     }
 

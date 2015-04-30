@@ -25,7 +25,7 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         return other.equals(this) || notUIntTop.containedIn(other);
     }
 
-    public boolean equals(NumberLatticeElement object){
+    public boolean equals(Object object){
         return object instanceof NotUIntNumberLatticeElementImpl && ((NotUIntNumberLatticeElementImpl) object).getNumber().equals(getNumber());
     }
 }

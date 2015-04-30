@@ -50,7 +50,7 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
     }
 
     @Override
-    public boolean equals(IndexLatticeElement other) {
+    public boolean equals(Object other) {
         return other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger());
     }
 

@@ -20,7 +20,7 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
         return equals(other);
     }
 
-    public boolean equals(StringLatticeElement obj){
+    public boolean equals(Object obj){
         return  obj instanceof TopStringLatticeElementImpl;
     }
 }

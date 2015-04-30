@@ -25,7 +25,7 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
         return string;
     }
 
-    public boolean equals(StringLatticeElement other){
+    public boolean equals(Object other){
         return other instanceof NotUIntStringLatticeElementImpl && ((NotUIntStringLatticeElementImpl) other).getString().equals(getString());
     }
 }

@@ -22,7 +22,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
 
-    public boolean equals(NumberLatticeElement object){
+    public boolean equals(Object object){
         return object instanceof UIntNumberLatticeElementImpl && ((UIntNumberLatticeElementImpl) object).getNumber().equals(getNumber());
     }
 

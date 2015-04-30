@@ -20,7 +20,7 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
         return equals(other);
     }
 
-    public boolean equals(ArrayLatticeElement obj){
+    public boolean equals(Object obj){
         return  obj instanceof TopArrayLatticeElementImpl;
     }
 

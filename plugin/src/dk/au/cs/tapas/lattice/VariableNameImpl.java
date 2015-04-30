@@ -12,17 +12,17 @@ public class VariableNameImpl implements VariableName {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        VariableNameImpl that = (VariableNameImpl) o;
-
-        return name.equals(that.name);
+       return o instanceof VariableName && ((VariableName) o).getName().equals(getName());
 
     }
 
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

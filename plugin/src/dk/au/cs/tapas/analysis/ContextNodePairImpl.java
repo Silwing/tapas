@@ -28,4 +28,12 @@ public class ContextNodePairImpl extends PairImpl<Context, Node> implements Cont
     public Context getContext() {
         return getLeft();
     }
+
+
+
+
+    @Override
+    public String toString() {
+        return super.toString()+" "+hashCode();
+    }
 }

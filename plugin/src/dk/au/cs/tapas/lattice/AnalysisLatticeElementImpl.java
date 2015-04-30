@@ -140,7 +140,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public boolean equals(MapLatticeElement<Context, StateLatticeElement> other) {
-        return mapLatticeElement.equals(other);
+    public boolean equals(Object other) {
+        return other instanceof  AnalysisLatticeElement && mapLatticeElement.equals(other);
     }
 }

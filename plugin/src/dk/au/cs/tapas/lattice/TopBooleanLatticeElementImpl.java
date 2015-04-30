@@ -20,7 +20,7 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
         return equals(other);
     }
 
-    public boolean equals(BooleanLatticeElement obj){
+    public boolean equals(Object obj){
         return  obj instanceof TopBooleanLatticeElementImpl;
     }
 

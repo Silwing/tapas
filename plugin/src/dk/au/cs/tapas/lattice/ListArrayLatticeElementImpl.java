@@ -59,7 +59,7 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
         return new ListArrayLatticeElementImpl(getLocations().addValue(location));
     }
 
-    public boolean equals(ArrayLatticeElement object) {
+    public boolean equals(Object object) {
         return  object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations());
     }
 

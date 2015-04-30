@@ -5,4 +5,7 @@ package dk.au.cs.tapas.lattice;
  *
  */
 public interface VariableName {
+
+    String getName();
+
 }

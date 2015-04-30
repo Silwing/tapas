@@ -19,7 +19,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
 
-    public boolean equals(NumberLatticeElement object){
+    public boolean equals(Object object){
         return object instanceof UIntTopNumberLatticeElementImpl;
     }
 

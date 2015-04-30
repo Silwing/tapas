@@ -18,7 +18,7 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
     }
 
 
-    public boolean equals(NumberLatticeElement object) {
+    public boolean equals(Object object) {
         return object instanceof NotUIntTopNumberLatticeElementImpl;
     }
 }

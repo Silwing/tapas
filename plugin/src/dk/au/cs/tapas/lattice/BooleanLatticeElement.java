@@ -8,6 +8,6 @@ public interface BooleanLatticeElement extends LatticeElement<BooleanLatticeElem
     BooleanLatticeElement bottom = new BottomBooleanLatticeElementImpl();
     BooleanLatticeElement top = new TopBooleanLatticeElementImpl();
     BooleanLatticeElement boolTrue = new TrueBooleanLatticeElement();
-    BooleanLatticeElement boolFalse = new FalseBooleanLatticeElement();
+    BooleanLatticeElement boolFalse = new FalseBooleanLatticeElementImpl();
 
 }

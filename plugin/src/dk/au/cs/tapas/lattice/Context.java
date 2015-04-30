@@ -20,6 +20,5 @@ public interface Context {
 
     boolean isEmpty();
 
-    boolean equals(Context other);
 
 }

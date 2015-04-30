@@ -21,7 +21,7 @@ public class BottomIndexLatticeElementImpl implements IndexLatticeElement {
     }
 
     @Override
-    public boolean equals(IndexLatticeElement other) {
+    public boolean equals(Object other) {
         return other instanceof BottomIndexLatticeElementImpl;
     }
 }

@@ -20,7 +20,7 @@ public class BottomIntegerLatticeElementImpl implements IntegerLatticeElement {
         return true;
     }
 
-    public boolean equals(IntegerLatticeElement object){
+    public boolean equals(Object object){
         return  object instanceof BottomIntegerLatticeElementImpl;
     }
 }

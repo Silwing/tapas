@@ -19,7 +19,7 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
         return other.equals(this) || other.equals(top);
     }
 
-    public boolean equals(StringLatticeElement other) {
+    public boolean equals(Object other) {
         return other instanceof NotUIntTopStringLatticeElementImpl;
     }
 }

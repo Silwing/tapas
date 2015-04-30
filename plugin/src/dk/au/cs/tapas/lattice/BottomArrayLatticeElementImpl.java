@@ -21,8 +21,7 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
         return true;
     }
 
-    @Override
-    public boolean equals(ArrayLatticeElement obj) {
+    public boolean equals(Object obj) {
         return obj instanceof BottomArrayLatticeElementImpl;
     }
 }

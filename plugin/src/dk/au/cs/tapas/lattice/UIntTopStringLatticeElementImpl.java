@@ -17,7 +17,7 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
         return other.equals(this) || other.equals(top);
     }
 
-    public boolean equals(StringLatticeElement object) {
+    public boolean equals(Object object) {
         return object instanceof UIntTopStringLatticeElementImpl;
     }
 }

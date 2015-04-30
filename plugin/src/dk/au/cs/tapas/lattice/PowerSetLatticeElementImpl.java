@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by budde on 4/19/15.
  *
  */
-public class PowerSetLatticeElementImpl<T> extends LatticeElementImpl<PowerSetLatticeElement<T>> implements PowerSetLatticeElement<T>{
+public class PowerSetLatticeElementImpl<T> implements PowerSetLatticeElement<T>{
 
     private final Set<T> values;
 
@@ -52,6 +52,10 @@ public class PowerSetLatticeElementImpl<T> extends LatticeElementImpl<PowerSetLa
     @Override
     public boolean containedIn(PowerSetLatticeElement<T> other) {
         return other.getValues().containsAll(values);
+    }
+
+    public boolean equals(Object other) {
+        return other instanceof PowerSetLatticeElement && ((PowerSetLatticeElement) other).getValues().equals(getValues());
     }
 
 

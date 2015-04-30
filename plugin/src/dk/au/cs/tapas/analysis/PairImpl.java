@@ -21,10 +21,15 @@ public class PairImpl<L,R> implements Pair<L,R>{
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PairImpl)) return false;
-        PairImpl pairo = (PairImpl) o;
-        return this.left.equals(pairo.getLeft()) &&
+        if (!(o instanceof Pair)) return false;
+        Pair pairo = (Pair) o;
+        boolean b1 = this.left.equals(pairo.getLeft()), b2 =
                 this.right.equals(pairo.getRight());
+        return b1 && b2;
     }
 
+    @Override
+    public String toString() {
+        return "(" + left + ", " + right +')';
+    }
 }

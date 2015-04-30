@@ -3,6 +3,7 @@ package dk.au.cs.tapas.analysis;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import sun.invoke.anon.ConstantPoolParser;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +29,6 @@ public class AnalyseImpl implements Analyse {
         inLatticeMap.put(entryNode, analysis.getStartLattice());
         createWorklist(entryNode);
         iterateWorklist();
-        calculateResult();
     }
 
     private void createWorklist(ContextNodePair entryNode) {
@@ -61,6 +61,7 @@ public class AnalyseImpl implements Analyse {
             AnalysisLatticeElement oldLattice = inLatticeElement(flow.getRight());
             ContextNodePair target = flow.getRight();
             if(!hasContextNodePair(target) || !newLattice.containedIn(oldLattice)) {
+                assert oldLattice != null;
                 inLatticeMap.put(flow.getRight(), oldLattice.join(newLattice));
                 final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;
                 worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
@@ -68,24 +69,36 @@ public class AnalyseImpl implements Analyse {
         }
     }
 
-    private void calculateResult() {
-        for(ContextNodePair pair : inLatticeMap.keySet()) {
-            outLatticeMap.put(pair, analysis.analyse(pair, inLatticeMap.get(pair)));
-        }
-    }
 
     @Override
     public AnalysisLatticeElement getEntryLattice() {
-        return outLatticeMap.get(new ContextNodePairImpl(graph.getEntryNode()));
+        ContextNodePair startPair = new ContextNodePairImpl(graph.getEntryNode());
+        return getLattice(startPair);
     }
 
     @Override
     public AnalysisLatticeElement getExitLattice() {
-        return outLatticeMap.get(new ContextNodePairImpl(graph.getExitNode()));
+        ContextNodePair endPair = new ContextNodePairImpl(graph.getExitNode());
+        return getLattice(endPair);
     }
 
     @Override
     public AnalysisLatticeElement getLattice(ContextNodePair pair) {
-        return outLatticeMap.get(pair);
+        if(outLatticeMap.containsKey(pair)){
+            return outLatticeMap.get(pair);
+        }
+        if(!hasContextNodePair(pair)){
+            for (ContextNodePair p : inLatticeMap.keySet()){
+                assert !p.equals(pair);
+                assert p.hashCode() != pair.hashCode();
+            }
+
+            throw new UnsupportedOperationException();
+        }
+
+
+
+        outLatticeMap.put(pair,analysis.analyse(pair, inLatticeElement(pair)));
+        return getLattice(pair);
     }
 }

@@ -10,7 +10,7 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
     }
 
     @Override
-    public boolean equals(BooleanLatticeElement obj) {
+    public boolean equals(Object obj) {
         return obj instanceof TrueBooleanLatticeElement;
     }
 

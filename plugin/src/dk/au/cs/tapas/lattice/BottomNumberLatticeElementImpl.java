@@ -21,7 +21,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
-    public boolean equals(NumberLatticeElement obj) {
+    public boolean equals(Object obj) {
         return obj instanceof BottomNumberLatticeElementImpl;
     }
 }

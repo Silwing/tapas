@@ -20,7 +20,7 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     }
 
     @Override
-    public boolean equals(ArrayLatticeElement other) {
+    public boolean equals(Object other) {
         return  other instanceof EmptyArrayLatticeElement;
     }
 }
