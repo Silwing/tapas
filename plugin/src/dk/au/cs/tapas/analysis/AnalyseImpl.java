@@ -39,7 +39,7 @@ public class AnalyseImpl implements Analyse {
         }
     }
 
-    private AnalysisLatticeElement inLattice(ContextNodePair pair){
+    private AnalysisLatticeElement inLatticeElement(ContextNodePair pair){
         AnalysisLatticeElement element;
 
         if((element = inLatticeMap.get(pair)) == null){
@@ -48,12 +48,19 @@ public class AnalyseImpl implements Analyse {
         return  element;
     }
 
+    private boolean hasContextNodePair(ContextNodePair pair){
+        return inLatticeMap.containsKey(pair);
+    }
+
+
+
     private void iterateWorklist() {
         PairImpl<ContextNodePair, ContextNodePair> flow;
         while((flow = worklist.poll()) != null) {
-            AnalysisLatticeElement newLattice = analysis.analyse(flow.getLeft(), inLattice(flow.getLeft()));
-            AnalysisLatticeElement oldLattice = inLattice(flow.getRight());
-            if(!newLattice.containedIn(oldLattice)) {
+            AnalysisLatticeElement newLattice = analysis.analyse(flow.getLeft(), inLatticeElement(flow.getLeft()));
+            AnalysisLatticeElement oldLattice = inLatticeElement(flow.getRight());
+            ContextNodePair target = flow.getRight();
+            if(!hasContextNodePair(target) || !newLattice.containedIn(oldLattice)) {
                 inLatticeMap.put(flow.getRight(), oldLattice.join(newLattice));
                 final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;
                 worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
