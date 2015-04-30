@@ -178,7 +178,7 @@ public class TypeAnalysisImpl implements Analysis {
         resultLattice = updateGlobalsLocals(resultLattice.getGlobals(context), latticeElement.getValue(exitNodeContext));
 
 
-        //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope.
+        //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope. This should be done recursive on arrays and the like
 
 
         return resultLattice;
