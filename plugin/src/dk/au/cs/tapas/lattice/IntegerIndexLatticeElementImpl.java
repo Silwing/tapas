@@ -2,7 +2,6 @@ package dk.au.cs.tapas.lattice;
 
 /**
  * Created by budde on 4/20/15.
- *
  */
 public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElement {
     private final IntegerLatticeElement integer;
@@ -22,7 +21,7 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
             return this;
         }
 
-        if(other instanceof IntegerIndexLatticeElement){
+        if (other instanceof IntegerIndexLatticeElement) {
             return IndexLatticeElement.generateIntegerIndex(((IntegerIndexLatticeElement) other).getInteger().meet(getInteger()));
         }
 
@@ -37,7 +36,7 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
             return this;
         }
 
-        if(other instanceof IntegerIndexLatticeElement){
+        if (other instanceof IntegerIndexLatticeElement) {
             return IndexLatticeElement.generateIntegerIndex(((IntegerIndexLatticeElement) other).getInteger().join(getInteger()));
         }
 
@@ -51,7 +50,7 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger());
+        return other == this || (other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger()));
     }
 
 }

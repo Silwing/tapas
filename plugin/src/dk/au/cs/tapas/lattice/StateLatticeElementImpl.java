@@ -98,12 +98,12 @@ public class StateLatticeElementImpl implements StateLatticeElement {
 
 
     public boolean equals(Object other) {
-        return
+        return other == this || (
                 other instanceof StateLatticeElement &&
                         ((StateLatticeElement) other).getStack().equals(getStack()) &&
                         ((StateLatticeElement) other).getHeap().equals(getHeap()) &&
                         ((StateLatticeElement) other).getGlobals().equals(getGlobals()) &&
-                        ((StateLatticeElement) other).getLocals().equals(getLocals());
+                        ((StateLatticeElement) other).getLocals().equals(getLocals()));
     }
 
 }

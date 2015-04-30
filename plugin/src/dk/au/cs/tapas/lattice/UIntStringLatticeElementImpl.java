@@ -26,6 +26,6 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
     }
 
     public boolean equals(Object object) {
-        return object instanceof UIntStringLatticeElementImpl && ((UIntStringLatticeElementImpl) object).getString().equals(getString());
+        return object == this || (object instanceof UIntStringLatticeElementImpl && ((UIntStringLatticeElementImpl) object).getString().equals(getString()));
     }
 }

@@ -60,7 +60,7 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     public boolean equals(Object object) {
-        return  object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations());
+        return  object == this || (object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations()));
     }
 
 }

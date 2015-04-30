@@ -55,7 +55,7 @@ public class PowerSetLatticeElementImpl<T> implements PowerSetLatticeElement<T>{
     }
 
     public boolean equals(Object other) {
-        return other instanceof PowerSetLatticeElement && ((PowerSetLatticeElement) other).getValues().equals(getValues());
+        return other == this || (other instanceof PowerSetLatticeElement && ((PowerSetLatticeElement) other).getValues().equals(getValues()));
     }
 
 

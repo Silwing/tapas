@@ -71,6 +71,10 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
 
 
     public boolean equals(Object object){
+        if(object == this){
+            return true;
+        }
+
         if(!(object instanceof  MapLatticeElement)){
             return false;
         }

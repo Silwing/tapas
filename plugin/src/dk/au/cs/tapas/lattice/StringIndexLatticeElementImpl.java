@@ -40,7 +40,7 @@ public class StringIndexLatticeElementImpl implements StringIndexLatticeElement 
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof StringIndexLatticeElement && ((StringIndexLatticeElement) other).getString().equals(getString());
+        return other == this || (other instanceof StringIndexLatticeElement && ((StringIndexLatticeElement) other).getString().equals(getString()));
     }
 
     @Override

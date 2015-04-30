@@ -12,7 +12,7 @@ public class VariableNameImpl implements VariableName {
 
     @Override
     public boolean equals(Object o) {
-       return o instanceof VariableName && ((VariableName) o).getName().equals(getName());
+       return o == this || (o instanceof VariableName && ((VariableName) o).getName().equals(getName()));
 
     }
 
