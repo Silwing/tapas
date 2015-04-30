@@ -166,12 +166,11 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
-        // Fetch target array
-        ValueLatticeElement currentTarget = l.getStackValue(c, n.getTargetName());
-        ListArrayLatticeElement list = new ListArrayLatticeElementImpl();
-        // TODO: how do we get locations from a temporary variable? They need to be added to the list
+        ValueLatticeElement newValue = l.getStackValue(c, n.getValueName());
+        HeapLocation location = new HeapLocationImpl();
+        ListArrayLatticeElement list = new ListArrayLatticeElementImpl().addLocation(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
-        return l.setStackValue(c, n.getTargetName(), (name) -> currentTarget.join(newTarget));
+        return l.setHeapValue(c, location, (loc) -> newValue).setStackValue(c, n.getTargetName(), (name) -> l.getStackValue(c, n.getTargetName()).join(newTarget));
     }
 
     private AnalysisLatticeElement analyseNodeArrayInitExpressionNode(ArrayInitExpressionNode n, AnalysisLatticeElement l, Context c) {
