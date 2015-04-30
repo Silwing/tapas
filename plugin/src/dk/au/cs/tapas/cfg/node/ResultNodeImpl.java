@@ -1,6 +1,12 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.cfg.CallArgument;
+import dk.au.cs.tapas.cfg.graph.FunctionGraph;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.Context;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by budde on 4/27/15.
@@ -8,7 +14,9 @@ import dk.au.cs.tapas.cfg.CallArgument;
 public class ResultNodeImpl extends NodeImpl implements ResultNode{
     private CallNode callNode;
     private CallArgument targetName;
-
+    private Map<Context, AnalysisLatticeElement> latticeMap = new HashMap<>();
+    private ExitNode exitNode;
+    private FunctionGraph functionGraph;
 
 
     public ResultNodeImpl(Node successor, CallArgument targetName) {
@@ -21,8 +29,12 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
         this.targetName = targetName;
     }
 
+    public void setFunctionGraph(FunctionGraph functionGraph) {
+        this.functionGraph = functionGraph;
+    }
+
     @Override
-    public CallArgument getTargetName() {
+    public CallArgument getCallArgument() {
 
         return targetName;
     }
@@ -32,10 +44,36 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
         return callNode;
     }
 
+    @Override
+    public ExitNode getExitNode() {
+        return exitNode;
+    }
+
+    @Override
+    public FunctionGraph getFunctionGraph() {
+        return functionGraph;
+    }
+
+    @Override
+    public void addCallLattice(Context context, AnalysisLatticeElement lattice) {
+        latticeMap.put(context, lattice);
+
+    }
+
+    @Override
+    public AnalysisLatticeElement getCallLattice(Context context) {
+        return latticeMap.get(context);
+    }
+
+
     public void setCallNode(CallNode callNode) {
         this.callNode = callNode;
     }
 
+
+    public void setExitNode(ExitNode exitNode) {
+        this.exitNode = exitNode;
+    }
 
     @Override
     public String toString() {

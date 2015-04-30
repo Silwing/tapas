@@ -1,13 +1,16 @@
 package dk.au.cs.tapas.analysis;
 
+import dk.au.cs.tapas.cfg.CallArgument;
+import dk.au.cs.tapas.cfg.HeapLocationSetCallArgument;
+import dk.au.cs.tapas.cfg.TemporaryVariableCallArgument;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
 /**
  * Created by Silwing on 28-04-2015.
- *
  */
 public class TypeAnalysisImpl implements Analysis {
     @Override
@@ -24,68 +27,68 @@ public class TypeAnalysisImpl implements Analysis {
     public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
         Node n = nc.getNode();
         Context c = nc.getContext();
-        if(n instanceof LocationVariableExpressionNode) {
+        if (n instanceof LocationVariableExpressionNode) {
             return analyseNodeLocalVariableExpressionNode((LocationVariableExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayInitExpressionNode){
+        if (n instanceof ArrayInitExpressionNode) {
             return analyseNodeArrayInitExpressionNode((ArrayInitExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayAppendExpressionNode){
+        if (n instanceof ArrayAppendExpressionNode) {
             return analyseArrayAppendExpressionNode((ArrayAppendExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayAppendLocationVariableExpressionNode){
+        if (n instanceof ArrayAppendLocationVariableExpressionNode) {
             return analyseArrayAppendLocationVariableExpressionNode((ArrayAppendLocationVariableExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayLocationVariableExpressionNode){
+        if (n instanceof ArrayLocationVariableExpressionNode) {
             return analyseArrayLocationVariableExpressionNode((ArrayLocationVariableExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayReadExpressionNode){
+        if (n instanceof ArrayReadExpressionNode) {
             return analyseArrayReadExpressionNode((ArrayReadExpressionNode) n, l, c);
         }
-        if(n instanceof ArrayWriteExpressionNode){
+        if (n instanceof ArrayWriteExpressionNode) {
             return analyseArrayWriteExpressionNode((ArrayWriteExpressionNode) n, l, c);
         }
-        if(n instanceof AssignmentNode){
+        if (n instanceof AssignmentNode) {
             return analyseAssignmentNode((AssignmentNode) n, l, c);
         }
-        if(n instanceof ShortCircuitBinaryOperationNode){
+        if (n instanceof ShortCircuitBinaryOperationNode) {
             return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) n, l, c);
         }
-        if(n instanceof BinaryOperationNode){
+        if (n instanceof BinaryOperationNode) {
             return analyseBinaryOperationNode((BinaryOperationNode) n, l, c);
         }
-        if(n instanceof CallNode){
+        if (n instanceof CallNode) {
             return analyseCallNode((CallNode) n, l, c);
         }
-        if(n instanceof EndNode){
+        if (n instanceof EndNode) {
             return analyseEndNode((EndNode) n, l, c);
         }
-        if(n instanceof ExitNode){
+        if (n instanceof ExitNode) {
             return analyseExitNode((ExitNode) n, l, c);
         }
-        if(n instanceof IfNode){
+        if (n instanceof IfNode) {
             return analyseIfNode((IfNode) n, l, c);
         }
-        if(n instanceof IncrementDecrementOperationExpressionNode){
-            return  analyseIncrementDecrementOperationExpressionNode((IncrementDecrementOperationExpressionNode) n, l, c);
+        if (n instanceof IncrementDecrementOperationExpressionNode) {
+            return analyseIncrementDecrementOperationExpressionNode((IncrementDecrementOperationExpressionNode) n, l, c);
         }
-        if(n instanceof ReadConstNode){
+        if (n instanceof ReadConstNode) {
             return analyseReadConstNode((ReadConstNode) n, l, c);
         }
-        if(n instanceof ReadNode){
+        if (n instanceof ReadNode) {
             return analyseReadNode((ReadNode) n, l, c);
         }
-        if(n instanceof ReferenceAssignmentNode){
+        if (n instanceof ReferenceAssignmentNode) {
             return analyseReferenceAssignmentNode((ReferenceAssignmentNode) n, l, c);
         }
-        if(n instanceof ResultNode){
+        if (n instanceof ResultNode) {
             return analyseResultNode((ResultNode) n, l, c);
         }
-        if(n instanceof StartNode){
+        if (n instanceof StartNode) {
             return analyseStartNode((StartNode) n, l, c);
         }
-        if(n instanceof UnaryOperationNode){
-            return analyseUnaryOperationNode((UnaryOperationNode) n, l,c);
+        if (n instanceof UnaryOperationNode) {
+            return analyseUnaryOperationNode((UnaryOperationNode) n, l, c);
         }
 
 
@@ -105,9 +108,92 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseResultNode(ResultNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+    private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement latticeElement, Context context) {
+        CallArgument argument = resultNode.getCallArgument();
+
+        AnalysisLatticeElement resultLattice = resultNode.getCallLattice(context);
+
+        Set<HeapLocation> argumentSet = null;
+        if (argument instanceof HeapLocationSetCallArgument) {
+            argumentSet = ((HeapLocationSetCallArgument) argument).getArgument();
+            argumentSet.clear();
+        }
+
+        if (resultNode.getExitNode().getCallArguments().length == 0) {
+            // If void method, it returns null
+            if (argument instanceof TemporaryVariableCallArgument) {
+                resultLattice = resultLattice.setStackValue(
+                        context,
+                        ((TemporaryVariableCallArgument) argument).getArgument(),
+                        (t) -> new ValueLatticeElementImpl(NullLatticeElement.top));
+            }
+
+            return resultLattice;
+        }
+
+        final Context exitNodeContext = context.addNode(resultNode.getCallNode());
+
+        for (CallArgument exitArgument : resultNode.getExitNode().getCallArguments()) {
+            if (argument instanceof HeapLocationSetCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
+                //If alias method and alias return, then parse locations
+                for (HeapLocation location : ((HeapLocationSetCallArgument) exitArgument).getArgument()) {
+                    argumentSet.add(location);
+                    resultLattice = resultLattice.setHeapValue(context, location, h -> latticeElement.getHeapValue(exitNodeContext, h));
+                }
+
+            } else if (argument instanceof HeapLocationSetCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
+                //If alias method and stack variable. return, then create location with stack value.
+                HeapLocation location = new HeapLocationImpl();
+                resultLattice = resultLattice.setHeapValue(
+                        context,
+                        location,
+                        h ->
+                                latticeElement.getStackValue(
+                                        exitNodeContext,
+                                        ((TemporaryVariableCallArgument) exitArgument).getArgument()));
+                argumentSet.add(location);
+
+            } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
+                //If method and location return, then stack variable with location values.
+                final HeapLocationSetCallArgument finalExit = (HeapLocationSetCallArgument) exitArgument;
+                resultLattice = resultLattice.setStackValue(
+                        context,
+                        ((TemporaryVariableCallArgument) argument).getArgument(),
+                        v -> locationSetToValue(latticeElement.getValue(exitNodeContext), finalExit.getArgument()));
+
+
+            } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
+                //If method and stack variable return, then "rename" stack variable.
+                final TemporaryVariableCallArgument finalExit = (TemporaryVariableCallArgument) exitArgument;
+                resultLattice = resultLattice.setStackValue(
+                        context,
+                        ((TemporaryVariableCallArgument) argument).getArgument(),
+                        v -> latticeElement.getStackValue(exitNodeContext, finalExit.getArgument()));
+            }
+
+        }
+
+        //Updating locals
+        resultLattice = updateGlobalsLocals(resultLattice.getLocals(context), latticeElement.getValue(exitNodeContext));
+        resultLattice = updateGlobalsLocals(resultLattice.getGlobals(context), latticeElement.getValue(exitNodeContext));
+
+
+        //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope.
+
+
+        return resultLattice;
     }
+
+    @NotNull
+    private AnalysisLatticeElement updateGlobalsLocals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> mapLatticeElement, StateLatticeElement value) {
+        return new AnalysisLatticeElementImpl();
+    }
+
+    private ValueLatticeElement locationSetToValue(StateLatticeElement latticeElement, Set<HeapLocation> locations) {
+        return null;
+    }
+
+    //TODO by keeping creating heap locations, how are we ensured that the algorithm will stop?
 
     private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode n, AnalysisLatticeElement l, Context c) {
         return l;
@@ -180,7 +266,7 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         VariableName name = new VariableNameImpl(n.getVariableName());
         Set<HeapLocation> newLocations = l.getLocalsValue(c, name).getValues();
-        if(newLocations.isEmpty() && !c.isEmpty())
+        if (newLocations.isEmpty() && !c.isEmpty())
             newLocations = l.getGlobalsValue(c, name).getValues();
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);

@@ -38,7 +38,8 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
         } else {
             entryGraph = callNodeGraph;
         }
-
+        endNode.setExitNode(functionGraph.getExitNode());
+        endNode.setFunctionGraph(functionGraph);
         endNode.setCallNode(callNode);
     }
 

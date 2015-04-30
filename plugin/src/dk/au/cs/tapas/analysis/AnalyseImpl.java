@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.graph.Graph;
+import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import sun.invoke.anon.ConstantPoolParser;
@@ -57,12 +58,17 @@ public class AnalyseImpl implements Analyse {
     private void iterateWorklist() {
         PairImpl<ContextNodePair, ContextNodePair> flow;
         while((flow = worklist.poll()) != null) {
-            AnalysisLatticeElement newLattice = analysis.analyse(flow.getLeft(), inLatticeElement(flow.getLeft()));
-            AnalysisLatticeElement oldLattice = inLatticeElement(flow.getRight());
-            ContextNodePair target = flow.getRight();
-            if(!hasContextNodePair(target) || !newLattice.containedIn(oldLattice)) {
-                assert oldLattice != null;
-                inLatticeMap.put(flow.getRight(), oldLattice.join(newLattice));
+            ContextNodePair left = flow.getLeft(), right = flow.getRight();
+            if(left.getNode() instanceof CallNode){
+                // Adding lattice to return node in order to restore scope
+                ((CallNode) left.getNode()).getResultNode().addCallLattice(left.getContext(), inLatticeElement(left));
+            }
+
+            AnalysisLatticeElement newRightLattice = analysis.analyse(left, inLatticeElement(left));
+            AnalysisLatticeElement oldRightLattice = inLatticeElement(right);
+            if(!hasContextNodePair(right) || !newRightLattice.containedIn(oldRightLattice)) {
+                assert oldRightLattice != null;
+                inLatticeMap.put(flow.getRight(), oldRightLattice.join(newRightLattice));
                 final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;
                 worklist.addAll(graph.getFlow(flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
             }
@@ -87,7 +93,7 @@ public class AnalyseImpl implements Analyse {
         if(outLatticeMap.containsKey(pair)){
             return outLatticeMap.get(pair);
         }
-
+        //TODO this is not right for return nodes. Need to set call lattice first
 
         outLatticeMap.put(pair,analysis.analyse(pair, inLatticeElement(pair)));
         return getLattice(pair);
