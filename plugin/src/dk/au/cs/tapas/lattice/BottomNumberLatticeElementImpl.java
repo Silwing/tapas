@@ -21,6 +21,11 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print("?");
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof BottomNumberLatticeElementImpl;
     }

@@ -22,6 +22,11 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print("?");
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other instanceof BottomStringLatticeElementImpl;
     }

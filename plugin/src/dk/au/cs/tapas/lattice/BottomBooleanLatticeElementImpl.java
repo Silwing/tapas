@@ -20,6 +20,11 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
         return true;
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("?");
+    }
+
     public boolean equals(Object other) {
         return other instanceof BottomBooleanLatticeElementImpl;
     }

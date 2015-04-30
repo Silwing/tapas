@@ -12,4 +12,5 @@ public interface LatticeElement<T extends LatticeElement> {
 
     boolean containedIn(T other);
 
+    void print(LatticePrinter printer);
 }

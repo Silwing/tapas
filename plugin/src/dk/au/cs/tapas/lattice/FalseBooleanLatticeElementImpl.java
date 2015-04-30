@@ -18,4 +18,9 @@ public class FalseBooleanLatticeElementImpl extends MiddleLatticeElementImpl<Boo
     public boolean containedIn(BooleanLatticeElement other) {
         return other.equals(top) || other.equals(this);
     }
+
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("false");
+    }
 }

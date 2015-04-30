@@ -20,6 +20,11 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print("[]");
+    }
+
+    @Override
     public boolean equals(Object other) {
         return  other instanceof EmptyArrayLatticeElement;
     }

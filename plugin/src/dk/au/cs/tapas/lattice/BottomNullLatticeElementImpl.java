@@ -22,6 +22,11 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print("?");
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof BottomNullLatticeElementImpl;
     }

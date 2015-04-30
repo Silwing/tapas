@@ -50,6 +50,17 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        if(locations.getValues().isEmpty())
+            printer.print("[]");
+        else {
+            printer.print("[");
+            locations.print(printer);
+            printer.print("]");
+        }
+    }
+
+    @Override
     public PowerSetLatticeElement<HeapLocation> getLocations() {
         return locations;
     }

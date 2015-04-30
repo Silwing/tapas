@@ -21,6 +21,11 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
         return true;
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("?");
+    }
+
     public boolean equals(Object obj) {
         return obj instanceof BottomArrayLatticeElementImpl;
     }

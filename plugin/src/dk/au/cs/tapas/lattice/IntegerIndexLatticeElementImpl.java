@@ -49,6 +49,11 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        integer.print(printer);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this || (other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger()));
     }
