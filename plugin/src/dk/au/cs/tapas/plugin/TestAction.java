@@ -11,6 +11,7 @@ import dk.au.cs.tapas.analysis.TypeAnalysisImpl;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 
 /**
  * Created by budde on 2/4/15.
@@ -26,6 +27,7 @@ public class TestAction extends AnAction {
         PsiParser parser = new PsiParserImpl();
         Graph g = parser.parseFile(psi);
         Analyse analyse = new AnalyseImpl(g, new TypeAnalysisImpl());
+        AnalysisLatticeElement l = analyse.getExitLattice();
 
 
         System.out.println(g);

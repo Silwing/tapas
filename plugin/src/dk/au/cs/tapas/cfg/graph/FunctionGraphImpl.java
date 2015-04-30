@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
+import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.Context;
@@ -64,7 +65,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
     }
 
     @Override
-    public Set<Node> getFlow(Node n, Context context) {
+    public Set<ContextNodePair> getFlow(ContextNodePair cn) {
         return null;
     }
 
