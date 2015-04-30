@@ -87,15 +87,6 @@ public class AnalyseImpl implements Analyse {
         if(outLatticeMap.containsKey(pair)){
             return outLatticeMap.get(pair);
         }
-        if(!hasContextNodePair(pair)){
-            for (ContextNodePair p : inLatticeMap.keySet()){
-                assert !p.equals(pair);
-                assert p.hashCode() != pair.hashCode();
-            }
-
-            throw new UnsupportedOperationException();
-        }
-
 
 
         outLatticeMap.put(pair,analysis.analyse(pair, inLatticeElement(pair)));
