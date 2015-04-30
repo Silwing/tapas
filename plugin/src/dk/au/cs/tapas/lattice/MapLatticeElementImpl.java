@@ -30,7 +30,8 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>> extends Latti
 
     @Override
     public V getValue(K key) {
-        return cache.containsKey(key) ? cache.get(key) : cache.put(key, generator.generate(key));
+        if(!cache.containsKey(key)) cache.put(key, generator.generate(key));
+        return cache.get(key);
     }
 
     @Override
