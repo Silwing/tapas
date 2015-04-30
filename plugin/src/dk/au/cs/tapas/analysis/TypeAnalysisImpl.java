@@ -162,7 +162,9 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce((ListArrayLatticeElement)new ListArrayLatticeElementImpl(), (acc, h) -> acc.addLocation(h), (l1, l2) -> (ListArrayLatticeElement)l1.join(l2));
+        ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
+        return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, (loc) -> acc.getHeapValue(c, loc).join(newTarget)), (l1, l2) -> l1.join(l2));
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
@@ -179,9 +181,11 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         VariableName name = new VariableNameImpl(n.getVariableName());
-        Set<HeapLocation> newLocations = l.getLocalsValue(c, name).getValues();
-        if(newLocations.isEmpty() && !c.isEmpty())
+        Set<HeapLocation> newLocations;
+        if(c.isEmpty())
             newLocations = l.getGlobalsValue(c, name).getValues();
+        else
+            newLocations = l.getLocalsValue(c, name).getValues();
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
 
