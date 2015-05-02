@@ -2,6 +2,7 @@ package dk.au.cs.tapas.lattice;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -60,6 +61,29 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
         }
 
         return true;
+    }
+
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("{");
+        printer.startSection();
+        printer.linebreak();
+        int i = 0;
+        for(K k : domain) {
+            if(k instanceof LatticeElement){
+                ((LatticeElement)k).print(printer);
+            } else {
+                printer.print(k.toString());
+            }
+            printer.print(" -> ");
+            getValue(k).print(printer);
+            i++;
+            if(i < domain.size())
+                printer.linebreak();
+        }
+        printer.endSection();
+        printer.linebreak();
+        printer.print("}");
     }
 
 

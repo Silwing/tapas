@@ -23,7 +23,7 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("?");
+        printer.print("⊥");
     }
 
     @Override

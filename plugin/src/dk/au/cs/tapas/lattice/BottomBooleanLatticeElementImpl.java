@@ -22,7 +22,7 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("?");
+        printer.print("⊥");
     }
 
     public boolean equals(Object other) {

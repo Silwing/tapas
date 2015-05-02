@@ -12,6 +12,13 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.PrintStreamLatticePrinter;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 /**
  * Created by budde on 2/4/15.
@@ -29,7 +36,12 @@ public class TestAction extends AnAction {
         Analyse analyse = new AnalyseImpl(g, new TypeAnalysisImpl());
         AnalysisLatticeElement l = analyse.getExitLattice();
 
-
+        try {
+            l.print(new PrintStreamLatticePrinter(new PrintStream(Files.newOutputStream(Paths.get("D:\\Randi\\Programmering\\Speciale\\tapas-survey\\plugin\\lattice.log"), StandardOpenOption.CREATE), false, "UTF-8")));
+        } catch(IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
         System.out.println(g);
     }
 

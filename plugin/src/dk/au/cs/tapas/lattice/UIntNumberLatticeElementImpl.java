@@ -21,6 +21,11 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
         return other.equals(this) || uIntTop.containedIn(other);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print(number.toString());
+    }
+
 
     public boolean equals(Object object){
         return object == this || (object instanceof UIntNumberLatticeElementImpl && ((UIntNumberLatticeElementImpl) object).getNumber().equals(getNumber()));

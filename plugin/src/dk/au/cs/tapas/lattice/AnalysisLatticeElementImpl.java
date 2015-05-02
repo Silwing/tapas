@@ -140,6 +140,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        mapLatticeElement.print(printer);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other instanceof  AnalysisLatticeElement && mapLatticeElement.equals(other);
     }

@@ -22,7 +22,7 @@ public class BottomIndexLatticeElementImpl implements IndexLatticeElement {
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("?");
+        printer.print("⊥");
     }
 
     @Override

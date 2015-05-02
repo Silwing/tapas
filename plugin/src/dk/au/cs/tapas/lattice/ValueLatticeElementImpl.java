@@ -140,6 +140,34 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print("{");
+        printer.startSection();
+        printer.linebreak();
+        printer.print("array -> ");
+        array.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("string -> ");
+        string.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("number -> ");
+        number.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("boolean -> ");
+        bool.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("null -> ");
+        nullLatticeElement.print(printer);
+        printer.endSection();
+        printer.linebreak();
+        printer.print("}");
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this || (other instanceof ValueLatticeElement &&
                 getArray().equals(((ValueLatticeElement) other).getArray()) &&

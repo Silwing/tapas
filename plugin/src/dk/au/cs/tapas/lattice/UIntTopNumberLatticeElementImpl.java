@@ -18,6 +18,11 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         return other.equals(this) || other.equals(top);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("UIntNumber");
+    }
+
 
     public boolean equals(Object object){
         return object instanceof UIntTopNumberLatticeElementImpl;

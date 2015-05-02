@@ -19,5 +19,10 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
         return other.equals(top) || other.equals(this);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("true");
+    }
+
 
 }

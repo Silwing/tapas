@@ -23,7 +23,7 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("?");
+        printer.print("⊥");
     }
 
     public boolean equals(Object obj) {

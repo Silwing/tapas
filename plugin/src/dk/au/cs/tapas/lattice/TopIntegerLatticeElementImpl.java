@@ -20,6 +20,11 @@ public class TopIntegerLatticeElementImpl implements IntegerLatticeElement {
         return equals(other);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("⊤");
+    }
+
     public boolean equals(Object object){
         return object instanceof TopIntegerLatticeElementImpl;
     }

@@ -96,6 +96,30 @@ public class StateLatticeElementImpl implements StateLatticeElement {
                         getStack().containedIn(other.getStack());
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("{");
+        printer.startSection();
+        printer.linebreak();
+        printer.print("stack -> ");
+        stack.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("locals -> ");
+        locals.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("globals -> ");
+        globals.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("heap -> ");
+        heap.print(printer);
+        printer.endSection();
+        printer.linebreak();
+        printer.print("}");
+    }
+
 
     public boolean equals(Object other) {
         return other == this || (

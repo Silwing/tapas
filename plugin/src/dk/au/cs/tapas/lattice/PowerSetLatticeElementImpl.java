@@ -2,6 +2,7 @@ package dk.au.cs.tapas.lattice;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/19/15.
@@ -52,6 +53,11 @@ public class PowerSetLatticeElementImpl<T> implements PowerSetLatticeElement<T>{
     @Override
     public boolean containedIn(PowerSetLatticeElement<T> other) {
         return other.getValues().containsAll(values);
+    }
+
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print(getValues().stream().map(T::toString).collect(Collectors.joining(", ")));
     }
 
     public boolean equals(Object other) {

@@ -39,6 +39,11 @@ public class StringIndexLatticeElementImpl implements StringIndexLatticeElement 
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        string.print(printer);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this || (other instanceof StringIndexLatticeElement && ((StringIndexLatticeElement) other).getString().equals(getString()));
     }

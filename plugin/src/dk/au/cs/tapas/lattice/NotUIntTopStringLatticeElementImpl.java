@@ -19,6 +19,11 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
         return other.equals(this) || other.equals(top);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("NotUIntString");
+    }
+
     public boolean equals(Object other) {
         return other instanceof NotUIntTopStringLatticeElementImpl;
     }

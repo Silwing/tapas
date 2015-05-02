@@ -17,6 +17,11 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
         return other.equals(this) || other.equals(top);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("UIntString");
+    }
+
     public boolean equals(Object object) {
         return object instanceof UIntTopStringLatticeElementImpl;
     }

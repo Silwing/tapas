@@ -24,6 +24,11 @@ public class ValueIntegerLatticeElementImpl extends MiddleLatticeElementImpl<Int
         return other.equals(this) || other.equals(top);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print(integer.toString());
+    }
+
     public boolean equals(Object object){
         return object == this || ( object instanceof  ValueIntegerLatticeElement && ((ValueIntegerLatticeElement) object).getInteger().equals(getInteger()));
     }

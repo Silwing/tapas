@@ -23,7 +23,7 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("?");
+        printer.print("⊥");
     }
 
     @Override

@@ -21,6 +21,11 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     }
 
     @Override
+    public void print(LatticePrinter printer) {
+        printer.print(string);
+    }
+
+    @Override
     public String getString() {
         return string;
     }

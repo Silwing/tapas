@@ -20,6 +20,11 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
         return equals(other);
     }
 
+    @Override
+    public void print(LatticePrinter printer) {
+        printer.print("⊤");
+    }
+
     public boolean equals(Object obj){
         return  obj instanceof TopNullLatticeElementImpl;
     }
