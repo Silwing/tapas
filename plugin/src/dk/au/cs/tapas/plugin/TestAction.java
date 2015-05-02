@@ -33,9 +33,9 @@ public class TestAction extends AnAction {
 
         PsiParser parser = new PsiParserImpl();
         Graph g = parser.parseFile(psi);
+        String dotString = g.getEntryNode().toDotString();
         Analyse analyse = new AnalyseImpl(g, new TypeAnalysisImpl());
         AnalysisLatticeElement l = analyse.getExitLattice();
-
         try {
             l.print(new PrintStreamLatticePrinter(new PrintStream(Files.newOutputStream(Paths.get("D:\\Randi\\Programmering\\Speciale\\tapas-survey\\plugin\\lattice.log"), StandardOpenOption.CREATE), false, "UTF-8")));
         } catch(IOException ex) {

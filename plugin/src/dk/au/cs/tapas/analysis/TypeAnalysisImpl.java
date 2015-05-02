@@ -3,6 +3,10 @@ package dk.au.cs.tapas.analysis;
 import dk.au.cs.tapas.cfg.CallArgument;
 import dk.au.cs.tapas.cfg.HeapLocationSetCallArgument;
 import dk.au.cs.tapas.cfg.TemporaryVariableCallArgument;
+import dk.au.cs.tapas.cfg.BooleanConstantImpl;
+import dk.au.cs.tapas.cfg.NullConstantImpl;
+import dk.au.cs.tapas.cfg.StringConstantImpl;
+import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
@@ -204,7 +208,20 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseReadConstNode(ReadConstNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+        ValueLatticeElement newTarget;
+        Object constant = n.getConstant().getValue();
+        if(n.getConstant() instanceof StringConstantImpl)
+            newTarget = new ValueLatticeElementImpl(StringLatticeElement.generateStringLatticeElement((String)constant));
+        else if(n.getConstant() instanceof NumberConstantImpl)
+            newTarget = new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement((Integer)constant));
+        else if(n.getConstant() instanceof BooleanConstantImpl)
+            newTarget = new ValueLatticeElementImpl(BooleanLatticeElement.generateBooleanLatticeElement((Boolean)constant));
+        else if(n.getConstant() instanceof NullConstantImpl)
+            newTarget = new ValueLatticeElementImpl(NullLatticeElement.top);
+        else
+            newTarget = new ValueLatticeElementImpl();
+
+        return l.setStackValue(c, n.getTargetName(), (temp) -> l.getStackValue(c, n.getTargetName()).join(newTarget));
     }
 
     private AnalysisLatticeElement analyseIncrementDecrementOperationExpressionNode(IncrementDecrementOperationExpressionNode n, AnalysisLatticeElement l, Context c) {
@@ -255,6 +272,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newValue = l.getStackValue(c, n.getValueName());
+        newValue.print(new PrintStreamLatticePrinter(System.out));
         HeapLocation location = new HeapLocationImpl();
         ListArrayLatticeElement list = new ListArrayLatticeElementImpl().addLocation(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);

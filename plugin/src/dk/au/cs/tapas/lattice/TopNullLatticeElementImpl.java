@@ -22,7 +22,7 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
 
     @Override
     public void print(LatticePrinter printer) {
-        printer.print("⊤");
+        printer.print("Null");
     }
 
     public boolean equals(Object obj){

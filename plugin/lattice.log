@@ -1,9 +1,86 @@
 {
 	context[] -> {
 		stack -> {
+			t64 -> {
+				array -> ⊥,
+				string -> September,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t62 -> {
+				array -> ⊥,
+				string -> November,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
 			t60 -> {
-				array -> [l19, l21, l17, l20, l24, l23, l22, l14, l13, l15, l18, l16],
+				array -> [l15, l17, l21, l23, l24, l22, l14, l19, l13, l16, l18, l20],
 				string -> ⊥,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t68 -> {
+				array -> ⊥,
+				string -> May,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t72 -> {
+				array -> ⊥,
+				string -> January,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t71 -> {
+				array -> ⊥,
+				string -> February,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t46 -> {
+				array -> ⊥,
+				string ->  is month number ,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t66 -> {
+				array -> ⊥,
+				string -> July,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t65 -> {
+				array -> ⊥,
+				string -> August,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t61 -> {
+				array -> ⊥,
+				string -> December,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t54 -> {
+				array -> ⊥,
+				string -> ⊥,
+				number -> 1,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t63 -> {
+				array -> ⊥,
+				string -> October,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
@@ -11,6 +88,41 @@
 			t59 -> {
 				array -> [],
 				string -> ⊥,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t70 -> {
+				array -> ⊥,
+				string -> March,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t49 -> {
+				array -> ⊥,
+				string -> monthName,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t69 -> {
+				array -> ⊥,
+				string -> April,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t52 -> {
+				array -> ⊥,
+				string -> ⊥,
+				number -> 12,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			t67 -> {
+				array -> ⊥,
+				string -> June,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
@@ -23,86 +135,86 @@
 			
 		},
 		heap -> {
-			l19 -> {
-				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
-			l21 -> {
-				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
-			l17 -> {
-				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
-			l20 -> {
-				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
 			l14 -> {
 				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
-			l24 -> {
-				array -> ⊥,
-				string -> ⊥,
-				number -> ⊥,
-				boolean -> ⊥,
-				null -> ⊥
-			}
-			l13 -> {
-				array -> ⊥,
-				string -> ⊥,
+				string -> February,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
 			}
 			l15 -> {
 				array -> ⊥,
-				string -> ⊥,
+				string -> March,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
 			}
-			l18 -> {
+			l17 -> {
 				array -> ⊥,
-				string -> ⊥,
+				string -> May,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l21 -> {
+				array -> ⊥,
+				string -> September,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l19 -> {
+				array -> ⊥,
+				string -> July,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l13 -> {
+				array -> ⊥,
+				string -> January,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
 			}
 			l23 -> {
 				array -> ⊥,
-				string -> ⊥,
+				string -> November,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l24 -> {
+				array -> ⊥,
+				string -> December,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
 			}
 			l16 -> {
 				array -> ⊥,
-				string -> ⊥,
+				string -> April,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l18 -> {
+				array -> ⊥,
+				string -> June,
+				number -> ⊥,
+				boolean -> ⊥,
+				null -> ⊥
+			}
+			l20 -> {
+				array -> ⊥,
+				string -> August,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥
 			}
 			l22 -> {
 				array -> ⊥,
-				string -> ⊥,
+				string -> October,
 				number -> ⊥,
 				boolean -> ⊥,
 				null -> ⊥

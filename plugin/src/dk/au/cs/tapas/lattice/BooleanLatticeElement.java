@@ -9,5 +9,10 @@ public interface BooleanLatticeElement extends LatticeElement<BooleanLatticeElem
     BooleanLatticeElement top = new TopBooleanLatticeElementImpl();
     BooleanLatticeElement boolTrue = new TrueBooleanLatticeElement();
     BooleanLatticeElement boolFalse = new FalseBooleanLatticeElementImpl();
-
+    static BooleanLatticeElement generateBooleanLatticeElement(Boolean bool) {
+        if(bool.booleanValue())
+            return boolTrue;
+        else
+            return boolFalse;
+    }
 }
