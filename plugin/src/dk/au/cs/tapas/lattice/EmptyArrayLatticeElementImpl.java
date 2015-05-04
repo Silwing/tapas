@@ -15,7 +15,7 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     }
 
     @Override
-    public boolean containedIn(ArrayLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return !other.equals(bottom);
     }
 

@@ -16,8 +16,8 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
-    public boolean containedIn(NumberLatticeElement other) {
-        return true;
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, NumberLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return containedIn(other);
     }
 
     @Override
@@ -28,5 +28,10 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof BottomNumberLatticeElementImpl;
+    }
+
+    @Override
+    public boolean containedIn(NumberLatticeElement other) {
+        return true;
     }
 }

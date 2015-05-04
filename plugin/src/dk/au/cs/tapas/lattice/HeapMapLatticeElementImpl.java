@@ -20,12 +20,6 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement other) {
-        return false;
-    }
-
-
-    @Override
     public Set<HeapLocation> getDomain() {
         return mapLatticeElement.getDomain();
     }
@@ -68,8 +62,8 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
     }
 
     @Override
-    public boolean containedIn(MapLatticeElement<HeapLocation, ValueLatticeElement> other) {
-        return mapLatticeElement.containedIn(other);
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<HeapLocation, ValueLatticeElement> other, HeapMapLatticeElement otherAnalysis) {
+        return mapLatticeElement.containedIn(thisAnalysis, other, otherAnalysis);
     }
 
     @Override

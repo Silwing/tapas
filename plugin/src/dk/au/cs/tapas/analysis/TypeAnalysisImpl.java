@@ -187,7 +187,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     @NotNull
-    private AnalysisLatticeElement updateGlobalsLocals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> mapLatticeElement, StateLatticeElement value) {
+    private AnalysisLatticeElement updateGlobalsLocals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> mapLatticeElement, StateLatticeElement value) {
         return new AnalysisLatticeElementImpl();
     }
 
@@ -285,9 +285,9 @@ public class TypeAnalysisImpl implements Analysis {
         VariableName name = new VariableNameImpl(n.getVariableName());
         Set<HeapLocation> newLocations;
         if(c.isEmpty())
-            newLocations = l.getGlobalsValue(c, name).getValues();
+            newLocations = l.getGlobalsValue(c, name).getLocations();
         else
-            newLocations = l.getLocalsValue(c, name).getValues();
+            newLocations = l.getLocalsValue(c, name).getLocations();
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
 

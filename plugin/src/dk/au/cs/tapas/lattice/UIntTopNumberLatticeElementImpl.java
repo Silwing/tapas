@@ -14,7 +14,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
-    public boolean containedIn(NumberLatticeElement other) {
+    public boolean containedIn( NumberLatticeElement other) {
         return other.equals(this) || other.equals(top);
     }
 

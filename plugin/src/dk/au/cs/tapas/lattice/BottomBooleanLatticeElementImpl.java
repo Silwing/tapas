@@ -16,8 +16,8 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
     @Override
-    public boolean containedIn(BooleanLatticeElement other) {
-        return true;
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, BooleanLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return containedIn(other);
     }
 
     @Override
@@ -30,4 +30,8 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
 
+    @Override
+    public boolean containedIn(BooleanLatticeElement other) {
+        return true;
+    }
 }

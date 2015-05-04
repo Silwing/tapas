@@ -1,9 +1,5 @@
 package dk.au.cs.tapas.lattice;
 
-import dk.au.cs.tapas.analysis.Analysis;
-
-import java.util.Set;
-
 /**
  * Created by budde on 4/28/15.
  */
@@ -18,26 +14,27 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
     @Override
     AnalysisLatticeElement join(MapLatticeElement<Context, StateLatticeElement> other);
 
+    boolean containedIn(AnalysisLatticeElement otherAnalysis);
 
-    MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getLocals(Context context);
+    MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getLocals(Context context);
 
-    PowerSetLatticeElement<HeapLocation> getLocalsValue(Context context, VariableName variableName);
+    HeapLocationPowerSetLatticeElement getLocalsValue(Context context, VariableName variableName);
 
-    AnalysisLatticeElement setLocals(Context context, MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals);
+    AnalysisLatticeElement setLocals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals);
 
-    AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,PowerSetLatticeElement<HeapLocation>> generator);
+    AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,HeapLocationPowerSetLatticeElement> generator);
 
     AnalysisLatticeElement addLocationToLocal(Context context, VariableName variableName, HeapLocation location);
 
-    MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getGlobals(Context context);
+    MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getGlobals(Context context);
 
-    PowerSetLatticeElement<HeapLocation> getGlobalsValue(Context context, VariableName variableName);
+    HeapLocationPowerSetLatticeElement getGlobalsValue(Context context, VariableName variableName);
 
     AnalysisLatticeElement addLocationToGlobal(Context context, VariableName variableName, HeapLocation location);
 
-    AnalysisLatticeElement setGlobals(Context context, MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals);
+    AnalysisLatticeElement setGlobals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals);
 
-    AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,PowerSetLatticeElement<HeapLocation>> generator);
+    AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,HeapLocationPowerSetLatticeElement> generator);
 
     HeapMapLatticeElement getHeap(Context context);
 

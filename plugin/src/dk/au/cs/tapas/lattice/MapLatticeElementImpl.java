@@ -6,7 +6,7 @@ import java.util.*;
  * Created by budde on 4/19/15.
  *
  */
-public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements MapLatticeElement<K, V> {
+public class MapLatticeElementImpl<K, V extends LatticeElement<V, HeapMapLatticeElement>>  implements MapLatticeElement<K, V> {
 
     private final Set<K> domain;
     private final Generator<K, V> generator;
@@ -55,9 +55,12 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
     }
 
     @Override
-    public boolean containedIn(MapLatticeElement<K,V> other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<K, V> other, HeapMapLatticeElement otherAnalysis) {
         for (K key : jointDomain(this, other)) {
-            if (!getValue(key).containedIn(other.getValue(key))) {
+            if (!getValue(key).containedIn(
+                    thisAnalysis,
+                    other.getValue(key),
+                    otherAnalysis)) {
                 return false;
             }
         }

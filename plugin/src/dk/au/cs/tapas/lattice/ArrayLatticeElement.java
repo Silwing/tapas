@@ -4,13 +4,13 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/19/15.
  *
  */
-public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement> {
+public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement, HeapMapLatticeElement> {
 
     ArrayLatticeElement bottom = new BottomArrayLatticeElementImpl();
     ArrayLatticeElement emptyArray = new EmptyArrayLatticeElementImpl();
     ArrayLatticeElement top = new TopArrayLatticeElementImpl();
 
-    static ListArrayLatticeElement generateList(PowerSetLatticeElement<HeapLocation> locations){
+    static ListArrayLatticeElement generateList(HeapLocationPowerSetLatticeElement locations){
         return new ListArrayLatticeElementImpl(locations);
     }
 
@@ -18,7 +18,7 @@ public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement>
         return  new ListArrayLatticeElementImpl();
     }
 
-    static MapArrayLatticeElement generateMap(MapLatticeElement<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> map){
+    static MapArrayLatticeElement generateMap(MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> map){
         return new MapArrayLatticeElementImpl(map);
     }
 

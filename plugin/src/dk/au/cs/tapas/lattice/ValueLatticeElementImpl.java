@@ -130,13 +130,13 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
     }
 
     @Override
-    public boolean containedIn(ValueLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ValueLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return
-                getArray().containedIn(other.getArray()) &&
-                getString().containedIn(other.getString()) &&
-                getNumber().containedIn(other.getNumber()) &&
-                getBoolean().containedIn(other.getBoolean()) &&
-                getNull().containedIn(other.getNull());
+                getArray().containedIn(thisAnalysis, other.getArray(), otherAnalysis) &&
+                getString().containedIn(thisAnalysis, other.getString(), otherAnalysis) &&
+                getNumber().containedIn(thisAnalysis, other.getNumber(), otherAnalysis) &&
+                getBoolean().containedIn(thisAnalysis, other.getBoolean(),otherAnalysis ) &&
+                getNull().containedIn(thisAnalysis, other.getNull(), otherAnalysis);
     }
 
     @Override

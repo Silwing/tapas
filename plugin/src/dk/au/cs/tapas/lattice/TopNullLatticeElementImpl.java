@@ -16,7 +16,7 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
     }
 
     @Override
-    public boolean containedIn(NullLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, NullLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return equals(other);
     }
 

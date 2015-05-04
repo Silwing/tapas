@@ -7,7 +7,7 @@ import java.util.Set;
  * Created by budde on 4/19/15.
  *
  */
-public interface MapLatticeElement<K,V extends LatticeElement<V>> extends LatticeElement<MapLatticeElement<K,V>>{
+public interface MapLatticeElement<K,V extends LatticeElement<V, HeapMapLatticeElement>> extends LatticeElement<MapLatticeElement<K,V>, HeapMapLatticeElement>{
 
     Set<K> getDomain();
 

@@ -7,13 +7,13 @@ package dk.au.cs.tapas.lattice;
  */
 public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
-    final PowerSetLatticeElement<HeapLocation> locations;
+    final HeapLocationPowerSetLatticeElement locations;
 
     public ListArrayLatticeElementImpl() {
-        this(new PowerSetLatticeElementImpl<>());
+        this(new HeapLocationPowerSetLatticeElementImpl());
     }
 
-    public ListArrayLatticeElementImpl(PowerSetLatticeElement<HeapLocation> locations) {
+    public ListArrayLatticeElementImpl(HeapLocationPowerSetLatticeElement locations) {
         this.locations = locations;
     }
 
@@ -45,13 +45,16 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     @Override
-    public boolean containedIn(ArrayLatticeElement other) {
-        return other.equals(top) || (other instanceof ListArrayLatticeElement && getLocations().containedIn(((ListArrayLatticeElement) other).getLocations()));
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return other.equals(top) || (other instanceof ListArrayLatticeElement && getLocations().containedIn(
+                thisAnalysis,
+                ((ListArrayLatticeElement) other).getLocations(),
+                otherAnalysis));
     }
 
     @Override
     public void print(LatticePrinter printer) {
-        if(locations.getValues().isEmpty())
+        if(locations.getLocations().isEmpty())
             printer.print("[]");
         else {
             printer.print("[");
@@ -61,13 +64,13 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     @Override
-    public PowerSetLatticeElement<HeapLocation> getLocations() {
+    public HeapLocationPowerSetLatticeElement getLocations() {
         return locations;
     }
 
     @Override
     public ListArrayLatticeElement addLocation(HeapLocation location) {
-        return new ListArrayLatticeElementImpl(getLocations().addValue(location));
+        return new ListArrayLatticeElementImpl(getLocations().addLocation(location));
     }
 
     public boolean equals(Object object) {

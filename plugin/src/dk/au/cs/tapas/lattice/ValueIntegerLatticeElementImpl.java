@@ -20,7 +20,7 @@ public class ValueIntegerLatticeElementImpl extends MiddleLatticeElementImpl<Int
     }
 
     @Override
-    public boolean containedIn(IntegerLatticeElement other) {
+    public boolean containedIn( IntegerLatticeElement other) {
         return other.equals(this) || other.equals(top);
     }
 

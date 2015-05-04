@@ -16,7 +16,7 @@ public class TopIndexLatticeElementImpl implements IndexLatticeElement {
     }
 
     @Override
-    public boolean containedIn(IndexLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, IndexLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return equals(other);
     }
 

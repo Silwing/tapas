@@ -4,7 +4,6 @@ import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
-import sun.invoke.anon.ConstantPoolParser;
 
 import java.util.*;
 import java.util.stream.Collectors;

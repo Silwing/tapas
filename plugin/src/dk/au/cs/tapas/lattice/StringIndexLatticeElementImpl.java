@@ -34,7 +34,7 @@ public class StringIndexLatticeElementImpl implements StringIndexLatticeElement 
     }
 
     @Override
-    public boolean containedIn(IndexLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, IndexLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return other instanceof TopIndexLatticeElementImpl || other.equals(this);
     }
 

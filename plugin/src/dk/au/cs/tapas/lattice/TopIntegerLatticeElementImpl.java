@@ -16,8 +16,8 @@ public class TopIntegerLatticeElementImpl implements IntegerLatticeElement {
     }
 
     @Override
-    public boolean containedIn(IntegerLatticeElement other) {
-        return equals(other);
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, IntegerLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return containedIn(other);
     }
 
     @Override
@@ -27,5 +27,10 @@ public class TopIntegerLatticeElementImpl implements IntegerLatticeElement {
 
     public boolean equals(Object object){
         return object instanceof TopIntegerLatticeElementImpl;
+    }
+
+    @Override
+    public boolean containedIn(IntegerLatticeElement other) {
+        return equals(other);
     }
 }

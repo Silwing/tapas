@@ -13,11 +13,6 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
     }
 
     @Override
-    public boolean containedIn(NumberLatticeElement other) {
-        return other.equals(top) || other.equals(this);
-    }
-
-    @Override
     public void print(LatticePrinter printer) {
         printer.print("NotUIntNumber");
     }
@@ -25,5 +20,10 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
 
     public boolean equals(Object object) {
         return object instanceof NotUIntTopNumberLatticeElementImpl;
+    }
+
+    @Override
+    public boolean containedIn(NumberLatticeElement other) {
+        return other.equals(top) || other.equals(this);
     }
 }

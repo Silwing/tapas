@@ -15,12 +15,6 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
         this.number = number;
     }
 
-
-    @Override
-    public boolean containedIn(NumberLatticeElement other) {
-        return other.equals(this) || uIntTop.containedIn(other);
-    }
-
     @Override
     public void print(LatticePrinter printer) {
         printer.print(number.toString());
@@ -34,5 +28,10 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     @Override
     public Number getNumber() {
         return number;
+    }
+
+    @Override
+    public boolean containedIn(NumberLatticeElement other) {
+        return other.equals(this) || uIntTop.containedIn(other);
     }
 }

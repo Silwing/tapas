@@ -5,8 +5,8 @@ package dk.au.cs.tapas.lattice;
  */
 public class StateLatticeElementImpl implements StateLatticeElement {
 
-    private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals;
-    private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals;
+    private final MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals;
+    private final MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals;
     private final HeapMapLatticeElement heap;
     private final MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack;
 
@@ -19,8 +19,8 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     }
 
     public StateLatticeElementImpl(
-            MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals,
-            MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals,
+            MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals,
+            MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals,
             HeapMapLatticeElement heap,
             MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
         this.locals = locals;
@@ -30,22 +30,22 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     }
 
     @Override
-    public MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getLocals() {
+    public MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getLocals() {
         return locals;
     }
 
     @Override
-    public StateLatticeElement setLocals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals) {
+    public StateLatticeElement setLocals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals) {
         return new StateLatticeElementImpl(locals, globals, heap, stack);
     }
 
     @Override
-    public MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getGlobals() {
+    public MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getGlobals() {
         return globals;
     }
 
     @Override
-    public StateLatticeElement setGlobals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals) {
+    public StateLatticeElement setGlobals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals) {
         return new StateLatticeElementImpl(locals, globals, heap, stack);
     }
 
@@ -88,12 +88,12 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     }
 
     @Override
-    public boolean containedIn(StateLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, StateLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return
-                getLocals().containedIn(other.getLocals()) &&
-                        getGlobals().containedIn(other.getGlobals()) &&
-                        getHeap().containedIn(other.getHeap()) &&
-                        getStack().containedIn(other.getStack());
+                getLocals().containedIn(thisAnalysis, other.getLocals(), otherAnalysis) &&
+                        getGlobals().containedIn(thisAnalysis, other.getGlobals(), otherAnalysis) &&
+                        getHeap().containedIn(thisAnalysis, other.getHeap(), otherAnalysis) &&
+                        getStack().containedIn(thisAnalysis, other.getStack(), otherAnalysis);
     }
 
     @Override

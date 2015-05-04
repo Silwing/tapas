@@ -14,10 +14,6 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
         return obj instanceof TrueBooleanLatticeElement;
     }
 
-    @Override
-    public boolean containedIn(BooleanLatticeElement other) {
-        return other.equals(top) || other.equals(this);
-    }
 
     @Override
     public void print(LatticePrinter printer) {
@@ -25,4 +21,8 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
     }
 
 
+    @Override
+    public boolean containedIn(BooleanLatticeElement other) {
+        return other.equals(top) || other.equals(this);
+    }
 }

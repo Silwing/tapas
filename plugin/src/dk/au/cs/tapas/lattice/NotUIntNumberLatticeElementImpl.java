@@ -21,16 +21,16 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
-    public boolean containedIn(NumberLatticeElement other) {
-        return other.equals(this) || notUIntTop.containedIn(other);
-    }
-
-    @Override
     public void print(LatticePrinter printer) {
         printer.print(getNumber().toString());
     }
 
     public boolean equals(Object object){
         return object == this || (object instanceof NotUIntNumberLatticeElementImpl && ((NotUIntNumberLatticeElementImpl) object).getNumber().equals(getNumber()));
+    }
+
+    @Override
+    public boolean containedIn(NumberLatticeElement other) {
+        return other.equals(this) || notUIntTop.containedIn( other);
     }
 }

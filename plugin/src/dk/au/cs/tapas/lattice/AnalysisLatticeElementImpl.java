@@ -4,7 +4,6 @@ import java.util.Set;
 
 /**
  * Created by budde on 4/19/15.
- *
  */
 public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
@@ -48,54 +47,59 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
         return new AnalysisLatticeElementImpl(mapLatticeElement.join(other));
     }
 
+    @Override
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<Context, StateLatticeElement> other, HeapMapLatticeElement otherAnalysis) {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
-    public MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getLocals(Context context) {
+    public MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getLocals(Context context) {
         return getValue(context).getLocals();
     }
 
     @Override
-    public PowerSetLatticeElement<HeapLocation> getLocalsValue(Context context, VariableName variableName) {
+    public HeapLocationPowerSetLatticeElement getLocalsValue(Context context, VariableName variableName) {
         return getLocals(context).getValue(variableName);
     }
 
     @Override
-    public AnalysisLatticeElement setLocals(Context context, MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals) {
+    public AnalysisLatticeElement setLocals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals) {
         return addValue(context, c -> getValue(c).setLocals(locals));
     }
 
     @Override
-    public AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, Generator<VariableName, PowerSetLatticeElement<HeapLocation>> generator) {
+    public AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, Generator<VariableName, HeapLocationPowerSetLatticeElement> generator) {
         return setLocals(context, getLocals(context).addValue(variableName, generator));
     }
 
     @Override
     public AnalysisLatticeElement addLocationToLocal(Context context, VariableName variableName, HeapLocation location) {
-        return setLocalsValue(context, variableName, v -> getLocalsValue(context, v).addValue(location));
+        return setLocalsValue(context, variableName, v -> getLocalsValue(context, v).addLocation(location));
     }
 
     @Override
-    public MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getGlobals(Context context) {
+    public MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getGlobals(Context context) {
         return getValue(context).getGlobals();
     }
 
     @Override
-    public PowerSetLatticeElement<HeapLocation> getGlobalsValue(Context context, VariableName variableName) {
+    public HeapLocationPowerSetLatticeElement getGlobalsValue(Context context, VariableName variableName) {
         return getGlobals(context).getValue(variableName);
     }
 
     @Override
     public AnalysisLatticeElement addLocationToGlobal(Context context, VariableName variableName, HeapLocation location) {
-        return setGlobalsValue(context, variableName, v -> getGlobalsValue(context, v).addValue(location));
+        return setGlobalsValue(context, variableName, v -> getGlobalsValue(context, v).addLocation(location));
     }
 
     @Override
-    public AnalysisLatticeElement setGlobals(Context context, MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals) {
+    public AnalysisLatticeElement setGlobals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals) {
         return addValue(context, c -> getValue(c).setGlobals(globals));
     }
 
     @Override
-    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, Generator<VariableName, PowerSetLatticeElement<HeapLocation>> generator) {
+    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, Generator<VariableName, HeapLocationPowerSetLatticeElement> generator) {
         return setGlobals(context, getGlobals(context).addValue(variableName, generator));
     }
 
@@ -139,10 +143,28 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
         return setStack(context, getStack(context).addValue(variableName, generator));
     }
 
-    @Override
-    public boolean containedIn(MapLatticeElement<Context, StateLatticeElement> other) {
-        return mapLatticeElement.containedIn(other);
+
+    private Set<Context> jointDomain(MapLatticeElement<Context, StateLatticeElement> m1, MapLatticeElement<Context, StateLatticeElement> m2) {
+        Set<Context> newDomain = m1.getDomain();
+        newDomain.addAll(m2.getDomain());
+        return newDomain;
     }
+
+
+    @Override
+    public boolean containedIn(AnalysisLatticeElement other) {
+        for (Context key : jointDomain(this, other)) {
+            if (!getValue(key).containedIn(
+                    getHeap(key),
+                    other.getValue(key),
+                    other.getHeap(key))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     @Override
     public void print(LatticePrinter printer) {
@@ -151,6 +173,6 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof  AnalysisLatticeElement && mapLatticeElement.equals(other);
+        return other instanceof AnalysisLatticeElement && mapLatticeElement.equals(other);
     }
 }

@@ -6,7 +6,7 @@ package dk.au.cs.tapas.lattice;
  */
 public interface ListArrayLatticeElement extends ArrayLatticeElement{
 
-    PowerSetLatticeElement<HeapLocation> getLocations();
+    HeapLocationPowerSetLatticeElement getLocations();
 
     ListArrayLatticeElement addLocation(HeapLocation location);
 

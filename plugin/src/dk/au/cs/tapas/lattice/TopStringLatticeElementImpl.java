@@ -16,8 +16,8 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
     }
 
     @Override
-    public boolean containedIn(StringLatticeElement other) {
-        return equals(other);
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, StringLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return containedIn(other);
     }
 
     @Override
@@ -27,5 +27,10 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
 
     public boolean equals(Object obj){
         return  obj instanceof TopStringLatticeElementImpl;
+    }
+
+    @Override
+    public boolean containedIn(StringLatticeElement other) {
+        return equals(other);
     }
 }

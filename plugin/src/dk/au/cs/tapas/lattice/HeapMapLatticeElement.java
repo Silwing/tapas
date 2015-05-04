@@ -8,8 +8,6 @@ import java.util.function.BinaryOperator;
  */
 public interface HeapMapLatticeElement extends MapLatticeElement<HeapLocation, ValueLatticeElement>{
 
-    boolean containedIn(HeapMapLatticeElement other);
-
     @Override
     HeapMapLatticeElement join( MapLatticeElement<HeapLocation, ValueLatticeElement> other);
 

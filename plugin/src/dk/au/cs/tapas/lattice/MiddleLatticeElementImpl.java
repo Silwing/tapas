@@ -4,13 +4,18 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/20/15.
  *
  */
-public abstract class MiddleLatticeElementImpl<T extends LatticeElement> implements LatticeElement<T> {
+public abstract class MiddleLatticeElementImpl<T extends MiddleCandidateLatticeElement> implements MiddleCandidateLatticeElement<T> {
     private final ElementFinder<T> join;
     private final ElementFinder<T> meet;
 
     public MiddleLatticeElementImpl(ElementFinder<T> meet, ElementFinder<T> join) {
         this.join = join;
         this.meet = meet;
+    }
+
+    @Override
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, T other, HeapMapLatticeElement otherAnalysis) {
+        return containedIn(other);
     }
 
     @Override
@@ -31,7 +36,7 @@ public abstract class MiddleLatticeElementImpl<T extends LatticeElement> impleme
         if (other.containedIn(this)) {
             return (T) this;
         }
-        if(containedIn((T) this)){
+        if(containedIn((T) this )){
             return other;
         }
         return join.find(other);

@@ -6,8 +6,8 @@ package dk.au.cs.tapas.lattice;
  */
 public interface MapArrayLatticeElement extends ArrayLatticeElement{
 
-    MapLatticeElement<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> getMap();
+    MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> getMap();
 
-    MapArrayLatticeElement addValue(IndexLatticeElement key, MapLatticeElement.Generator<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> generator);
+    MapArrayLatticeElement addValue(IndexLatticeElement key, MapLatticeElement.Generator<IndexLatticeElement, HeapLocationPowerSetLatticeElement> generator);
 
 }

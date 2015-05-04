@@ -1,30 +1,28 @@
 package dk.au.cs.tapas.lattice;
 
-import java.util.List;
-
 /**
  * Created by budde on 4/20/15.
  *
  */
 public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
-    final private MapLatticeElement<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> map;
+    final private MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> map;
 
     public MapArrayLatticeElementImpl() {
-        this(new MapLatticeElementImpl<>((IndexLatticeElement) -> new PowerSetLatticeElementImpl<>()));
+        this(new MapLatticeElementImpl<>((IndexLatticeElement) -> new HeapLocationPowerSetLatticeElementImpl()));
     }
 
-    public MapArrayLatticeElementImpl(MapLatticeElement<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> map) {
+    public MapArrayLatticeElementImpl(MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> map) {
         this.map = map;
     }
 
 
     @Override
-    public MapLatticeElement<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> getMap() {
+    public MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> getMap() {
         return map;
     }
 
     @Override
-    public MapArrayLatticeElement addValue(IndexLatticeElement key, MapLatticeElement.Generator<IndexLatticeElement, PowerSetLatticeElement<HeapLocation>> generator) {
+    public MapArrayLatticeElement addValue(IndexLatticeElement key, MapLatticeElement.Generator<IndexLatticeElement, HeapLocationPowerSetLatticeElement> generator) {
         return new MapArrayLatticeElementImpl(getMap().addValue(key, generator));
     }
 
@@ -57,8 +55,11 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     }
 
     @Override
-    public boolean containedIn(ArrayLatticeElement other) {
-        return other instanceof TopArrayLatticeElementImpl || (other  instanceof MapArrayLatticeElement && getMap().containedIn(((MapArrayLatticeElement) other).getMap()));
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+        return other instanceof TopArrayLatticeElementImpl || (other  instanceof MapArrayLatticeElement && getMap().containedIn(
+                thisAnalysis,
+                ((MapArrayLatticeElement) other).getMap(),
+                otherAnalysis));
     }
 
     @Override

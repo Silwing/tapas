@@ -1,21 +1,19 @@
 package dk.au.cs.tapas.lattice;
 
-import org.w3c.dom.html.HTMLDListElement;
-
 /**
  * Created by budde on 4/19/15.
  *
  */
-public interface StateLatticeElement extends LatticeElement<StateLatticeElement> {
+public interface StateLatticeElement extends LatticeElement<StateLatticeElement,HeapMapLatticeElement> {
 
 
-    MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getLocals();
+    MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getLocals();
 
-    StateLatticeElement setLocals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals);
+    StateLatticeElement setLocals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals);
 
-    MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> getGlobals();
+    MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getGlobals();
 
-    StateLatticeElement setGlobals(MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals);
+    StateLatticeElement setGlobals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals);
 
     HeapMapLatticeElement getHeap();
 

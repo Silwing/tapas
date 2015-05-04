@@ -17,7 +17,7 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
     }
 
     @Override
-    public boolean containedIn(ArrayLatticeElement other) {
+    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return true;
     }
 
