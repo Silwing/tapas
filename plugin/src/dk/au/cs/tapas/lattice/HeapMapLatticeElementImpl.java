@@ -57,14 +57,14 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
 
     @Override
     public HeapMapLatticeElement meet(MapLatticeElement<HeapLocation, ValueLatticeElement> other) {
-        return new HeapMapLatticeElementImpl(mapLatticeElement.join(other));
+        return new HeapMapLatticeElementImpl(mapLatticeElement.meet(other));
     }
 
 
 
     @Override
     public HeapMapLatticeElement join(MapLatticeElement<HeapLocation, ValueLatticeElement> other) {
-        return new HeapMapLatticeElementImpl(mapLatticeElement.meet(other));
+        return new HeapMapLatticeElementImpl(mapLatticeElement.join(other));
     }
 
     @Override

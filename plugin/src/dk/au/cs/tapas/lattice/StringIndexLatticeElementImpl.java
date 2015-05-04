@@ -28,7 +28,7 @@ public class StringIndexLatticeElementImpl implements StringIndexLatticeElement 
             return this;
         }
         if(other instanceof StringIndexLatticeElement){
-            return IndexLatticeElement.generateStringLIndex(((StringIndexLatticeElement) other).getString().meet(getString()));
+            return IndexLatticeElement.generateStringLIndex(((StringIndexLatticeElement) other).getString().join(getString()));
         }
         return  top;
     }
