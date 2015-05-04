@@ -7,7 +7,7 @@ public class StateLatticeElementImpl implements StateLatticeElement {
 
     private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals;
     private final MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals;
-    private final MapLatticeElement<HeapLocation, ValueLatticeElement> heap;
+    private final HeapMapLatticeElement heap;
     private final MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack;
 
     public StateLatticeElementImpl() {
@@ -21,7 +21,7 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     public StateLatticeElementImpl(
             MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> locals,
             MapLatticeElement<VariableName, PowerSetLatticeElement<HeapLocation>> globals,
-            MapLatticeElement<HeapLocation, ValueLatticeElement> heap,
+            HeapMapLatticeElement heap,
             MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
         this.locals = locals;
         this.globals = globals;
@@ -50,12 +50,12 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     }
 
     @Override
-    public MapLatticeElement<HeapLocation, ValueLatticeElement> getHeap() {
+    public HeapMapLatticeElement getHeap() {
         return heap;
     }
 
     @Override
-    public StateLatticeElement setHeap(MapLatticeElement<HeapLocation, ValueLatticeElement> heap) {
+    public StateLatticeElement setHeap(HeapMapLatticeElement heap) {
         return new StateLatticeElementImpl(locals, globals, heap, stack);
     }
 

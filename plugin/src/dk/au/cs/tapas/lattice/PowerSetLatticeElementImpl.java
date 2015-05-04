@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.function.BinaryOperator;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class PowerSetLatticeElementImpl<T> implements PowerSetLatticeElement<T>{
     public Set<T> getValues() {
         return new HashSet<>(values);
     }
+
 
     @Override
     public PowerSetLatticeElement<T> addValue(T value) {

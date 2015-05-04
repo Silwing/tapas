@@ -29,6 +29,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
+    public StateLatticeElement[] getValues() {
+        return mapLatticeElement.getValues();
+    }
+
+    @Override
     public AnalysisLatticeElement addValue(Context key, Generator<Context, StateLatticeElement> generator) {
         return new AnalysisLatticeElementImpl(mapLatticeElement.addValue(key, generator));
     }
@@ -95,7 +100,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public MapLatticeElement<HeapLocation, ValueLatticeElement> getHeap(Context context) {
+    public HeapMapLatticeElement getHeap(Context context) {
         return getValue(context).getHeap();
     }
 
@@ -105,7 +110,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public AnalysisLatticeElement setHeap(Context context, MapLatticeElement<HeapLocation, ValueLatticeElement> heap) {
+    public AnalysisLatticeElement setHeap(Context context, HeapMapLatticeElement heap) {
         return addValue(context, c -> getValue(c).setHeap(heap));
     }
 

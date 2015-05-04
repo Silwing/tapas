@@ -39,11 +39,11 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,PowerSetLatticeElement<HeapLocation>> generator);
 
-    MapLatticeElement<HeapLocation, ValueLatticeElement> getHeap(Context context);
+    HeapMapLatticeElement getHeap(Context context);
 
     ValueLatticeElement getHeapValue(Context context, HeapLocation heapLocation);
 
-    AnalysisLatticeElement setHeap(Context context, MapLatticeElement<HeapLocation, ValueLatticeElement> heap);
+    AnalysisLatticeElement setHeap(Context context, HeapMapLatticeElement heap);
 
     AnalysisLatticeElement setHeapValue(Context context, HeapLocation heapLocation, MapLatticeElement.Generator<HeapLocation, ValueLatticeElement> generator);
 

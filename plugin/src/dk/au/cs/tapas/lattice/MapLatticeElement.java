@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,6 +12,8 @@ public interface MapLatticeElement<K,V extends LatticeElement<V>> extends Lattic
     Set<K> getDomain();
 
     V getValue(K key);
+
+    V[] getValues();
 
     MapLatticeElement<K,V> addValue(K key, Generator<K,V> generator);
 

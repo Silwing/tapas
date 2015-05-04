@@ -1,9 +1,6 @@
 package dk.au.cs.tapas.lattice;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by budde on 4/19/15.
@@ -33,6 +30,11 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
     public V getValue(K key) {
         if(!cache.containsKey(key)) cache.put(key, generator.generate(key));
         return cache.get(key);
+    }
+
+    @Override
+    public V[] getValues() {
+        return (V[]) domain.stream().map(this::getValue).toArray();
     }
 
     @Override
