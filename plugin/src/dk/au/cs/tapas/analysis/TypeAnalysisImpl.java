@@ -230,6 +230,21 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseIncrementDecrementOperationExpressionNode(IncrementDecrementOperationExpressionNode n, AnalysisLatticeElement l, Context c) {
+        switch (n.getOperation()){
+            case PRE_INCREMENT:
+
+
+                break;
+            case POST_INCREMENT:
+                break;
+            case PRE_DECREMENT:
+                break;
+            case POST_DECREMENT:
+                break;
+        }
+
+
+
         return l;
     }
 

@@ -42,6 +42,6 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
 
     @Override
     public BooleanLatticeElement negate() {
-        return this;
+        return top;
     }
 }
