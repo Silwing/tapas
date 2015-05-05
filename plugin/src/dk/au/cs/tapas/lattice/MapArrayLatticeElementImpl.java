@@ -27,6 +27,11 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     }
 
     @Override
+    public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
+        return getMap().getValue(key);
+    }
+
+    @Override
     public ArrayLatticeElement meet(ArrayLatticeElement other) {
         if(other.equals(top)){
             return this;

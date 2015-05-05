@@ -10,4 +10,5 @@ public interface MapArrayLatticeElement extends ArrayLatticeElement{
 
     MapArrayLatticeElement addValue(IndexLatticeElement key, MapLatticeElement.Generator<IndexLatticeElement, HeapLocationPowerSetLatticeElement> generator);
 
+    HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key);
 }
