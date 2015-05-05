@@ -1,16 +1,17 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
+import dk.au.cs.tapas.lattice.VariableName;
 
 /**
  * Created by budde on 4/26/15.
  */
 public class ReadNodeImpl extends NodeImpl implements ReadNode {
 
-    private final String variable;
+    private final VariableName variable;
     private final TemporaryVariableName target;
 
-    public ReadNodeImpl(String variable, TemporaryVariableName target, Node successor) {
+    public ReadNodeImpl(VariableName variable, TemporaryVariableName target, Node successor) {
         super(successor);
         this.variable = variable;
         this.target = target;
@@ -18,7 +19,7 @@ public class ReadNodeImpl extends NodeImpl implements ReadNode {
 
 
     @Override
-    public String getVariableName() {
+    public VariableName getVariableName() {
         return variable;
     }
 

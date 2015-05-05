@@ -97,8 +97,8 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseUnaryOperationNode(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement value = l.getStackValue(c, n.getOperandName());
-        if(n.getOperator() == UnaryOperator.NEGATION){
-            return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl( value.toBoolean().negate()));
+        if (n.getOperator() == UnaryOperator.NEGATION) {
+            return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl(value.toBoolean().negate()));
         }
         return l;
     }
@@ -135,7 +135,10 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         final Context exitNodeContext = context.addNode(resultNode.getCallNode());
-
+        if(argument instanceof TemporaryVariableCallArgument){
+            //Clearing stack variable before iteration. Just in case
+            resultLattice = resultLattice.setStackValue(context, ((TemporaryVariableCallArgument) argument).getArgument(), new ValueLatticeElementImpl());
+        }
         for (CallArgument exitArgument : resultNode.getExitNode().getCallArguments()) {
             if (argument instanceof HeapLocationSetCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
                 //If alias method and alias return, then parse locations
@@ -159,10 +162,11 @@ public class TypeAnalysisImpl implements Analysis {
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
                 //If method and location return, then stack variable with location values.
                 final HeapLocationSetCallArgument finalExit = (HeapLocationSetCallArgument) exitArgument;
-                resultLattice = resultLattice.setStackValue(
+                resultLattice = resultLattice.joinStackValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        v -> locationSetToValue(latticeElement.getValue(exitNodeContext), finalExit.getArgument()));
+                        locationSetToValue(latticeElement.getValue(exitNodeContext), finalExit.getArgument()));
+                //TODO check this
 
 
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
@@ -185,13 +189,10 @@ public class TypeAnalysisImpl implements Analysis {
         return resultLattice;
     }
 
-    @NotNull
-    private AnalysisLatticeElement updateGlobalsLocals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> mapLatticeElement, StateLatticeElement value) {
-        return new AnalysisLatticeElementImpl();
-    }
 
     private ValueLatticeElement locationSetToValue(StateLatticeElement latticeElement, Set<HeapLocation> locations) {
-        return null;
+        //TODO implement
+        return latticeElement.getHeap().getValue(locations, LatticeElement::join);
     }
 
 
@@ -200,19 +201,26 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseReadNode(ReadNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+        HeapLocationPowerSetLatticeElement locations;
+        if (c.isEmpty()) {
+            locations = l.getGlobalsValue(c, n.getVariableName());
+        } else {
+            locations = l.getLocalsValue(c, n.getVariableName());
+        }
+        //Reading the joint value from heap to stack
+        return l.setStackValue(c, n.getTargetName(), name -> l.getHeap(c).getValue(locations.getLocations(), LatticeElement::join));
     }
 
     private AnalysisLatticeElement analyseReadConstNode(ReadConstNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newTarget;
         Object constant = n.getConstant().getValue();
-        if(n.getConstant() instanceof StringConstantImpl)
-            newTarget = new ValueLatticeElementImpl(StringLatticeElement.generateStringLatticeElement((String)constant));
-        else if(n.getConstant() instanceof NumberConstantImpl)
-            newTarget = new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement((Integer)constant));
-        else if(n.getConstant() instanceof BooleanConstantImpl)
-            newTarget = new ValueLatticeElementImpl(BooleanLatticeElement.generateBooleanLatticeElement((Boolean)constant));
-        else if(n.getConstant() instanceof NullConstantImpl)
+        if (n.getConstant() instanceof StringConstantImpl)
+            newTarget = new ValueLatticeElementImpl(StringLatticeElement.generateStringLatticeElement((String) constant));
+        else if (n.getConstant() instanceof NumberConstantImpl)
+            newTarget = new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement((Integer) constant)); //TODO what if not integer?
+        else if (n.getConstant() instanceof BooleanConstantImpl)
+            newTarget = new ValueLatticeElementImpl(BooleanLatticeElement.generateBooleanLatticeElement((Boolean) constant));
+        else if (n.getConstant() instanceof NullConstantImpl)
             newTarget = new ValueLatticeElementImpl(NullLatticeElement.top);
         else
             newTarget = new ValueLatticeElementImpl();
@@ -244,8 +252,27 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseAssignmentNode(AssignmentNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+    private AnalysisLatticeElement analyseAssignmentNode(AssignmentNode n, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement value = latticeElement.getStackValue(context, n.getValueName());
+
+        if (n.getVariableLocations().size() == 1) {
+            //Hard update on single heap location
+            latticeElement = latticeElement.setHeapValue(
+                    context,
+                    n.getVariableLocations().iterator().next(),
+                    value);
+        } else {
+            //Soft update on multiple locations
+            for (HeapLocation location : n.getVariableLocations()) {
+                latticeElement = latticeElement.joinHeapValue(context, location, value);
+            }
+        }
+
+        //Remember to update target stack
+        latticeElement.setStackValue(context, n.getValueName(), value);
+
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseArrayWriteExpressionNode(ArrayWriteExpressionNode n, AnalysisLatticeElement l, Context c) {
@@ -261,7 +288,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce((ListArrayLatticeElement)new ListArrayLatticeElementImpl(), (acc, h) -> acc.addLocation(h), (l1, l2) -> (ListArrayLatticeElement)l1.join(l2));
+        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce((ListArrayLatticeElement) new ListArrayLatticeElementImpl(), (acc, h) -> acc.addLocation(h), (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
         return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, (loc) -> acc.getHeapValue(c, loc).join(newTarget)), (l1, l2) -> l1.join(l2));
     }
@@ -282,7 +309,7 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         VariableName name = new VariableNameImpl(n.getVariableName());
         Set<HeapLocation> newLocations;
-        if(c.isEmpty())
+        if (c.isEmpty())
             newLocations = l.getGlobalsValue(c, name).getLocations();
         else
             newLocations = l.getLocalsValue(c, name).getLocations();

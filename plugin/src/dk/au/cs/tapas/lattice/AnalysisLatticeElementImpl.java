@@ -69,6 +69,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
+    public AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, HeapLocationPowerSetLatticeElement set) {
+        return setLocalsValue(context, variableName, n -> set);
+    }
+
+    @Override
     public AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, Generator<VariableName, HeapLocationPowerSetLatticeElement> generator) {
         return setLocals(context, getLocals(context).addValue(variableName, generator));
     }
@@ -99,6 +104,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
+    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, HeapLocationPowerSetLatticeElement set) {
+        return setGlobalsValue(context, variableName, n -> set);
+    }
+
+    @Override
     public AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, Generator<VariableName, HeapLocationPowerSetLatticeElement> generator) {
         return setGlobals(context, getGlobals(context).addValue(variableName, generator));
     }
@@ -116,6 +126,16 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     @Override
     public AnalysisLatticeElement setHeap(Context context, HeapMapLatticeElement heap) {
         return addValue(context, c -> getValue(c).setHeap(heap));
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapValue(Context context, HeapLocation heapLocation, ValueLatticeElement value) {
+        return setHeapValue(context, heapLocation, h -> value);
+    }
+
+    @Override
+    public AnalysisLatticeElement joinHeapValue(Context context, HeapLocation heapLocation, ValueLatticeElement value) {
+        return setHeapValue(context, heapLocation, value.join(getHeapValue(context, heapLocation)));
     }
 
     @Override
@@ -139,8 +159,18 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
+    public AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value) {
+        return setStackValue(context,variableName, n -> value);
+    }
+
+    @Override
     public AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, Generator<TemporaryVariableName, ValueLatticeElement> generator) {
         return setStack(context, getStack(context).addValue(variableName, generator));
+    }
+
+    @Override
+    public AnalysisLatticeElement joinStackValue(Context context, TemporaryVariableName name, ValueLatticeElement value) {
+        return setStackValue(context, name, value.join(getStackValue(context, name)));
     }
 
 

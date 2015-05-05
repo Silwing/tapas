@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadNodeImpl;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
+import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -20,7 +21,7 @@ public class VariableReadExpressionGraphImpl extends ExpressionGraphImpl<Variabl
 
     public VariableReadExpressionGraphImpl(PsiParser psiParser, Variable element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
-        this.entryNode = new ReadNodeImpl(element.getFQN(), name, graph.getEntryNode());
+        this.entryNode = new ReadNodeImpl(new VariableNameImpl(element.getName()), name, graph.getEntryNode());
 
     }
 

@@ -22,6 +22,8 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setLocals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals);
 
+    AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, HeapLocationPowerSetLatticeElement set);
+
     AnalysisLatticeElement setLocalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,HeapLocationPowerSetLatticeElement> generator);
 
     AnalysisLatticeElement addLocationToLocal(Context context, VariableName variableName, HeapLocation location);
@@ -34,6 +36,9 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setGlobals(Context context, MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals);
 
+
+    AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, HeapLocationPowerSetLatticeElement set);
+
     AnalysisLatticeElement setGlobalsValue(Context context, VariableName variableName, MapLatticeElement.Generator<VariableName,HeapLocationPowerSetLatticeElement> generator);
 
     HeapMapLatticeElement getHeap(Context context);
@@ -41,6 +46,10 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
     ValueLatticeElement getHeapValue(Context context, HeapLocation heapLocation);
 
     AnalysisLatticeElement setHeap(Context context, HeapMapLatticeElement heap);
+
+    AnalysisLatticeElement setHeapValue(Context context, HeapLocation heapLocation, ValueLatticeElement value);
+
+    AnalysisLatticeElement joinHeapValue(Context context, HeapLocation heapLocation, ValueLatticeElement value);
 
     AnalysisLatticeElement setHeapValue(Context context, HeapLocation heapLocation, MapLatticeElement.Generator<HeapLocation, ValueLatticeElement> generator);
 
@@ -50,7 +59,10 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setStack(Context context, MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack);
 
+    AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value);
+
     AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, MapLatticeElement.Generator<TemporaryVariableName, ValueLatticeElement> generator);
 
 
+    AnalysisLatticeElement joinStackValue(Context context, TemporaryVariableName name, ValueLatticeElement value);
 }
