@@ -39,13 +39,15 @@ public class FinalGraphImpl implements Graph{
         if (objects.contains(entryNode)) {
             return null;
         }
+        HashSet<Node> newSet = new HashSet<>(objects);
+        newSet.add(entryNode);
 
         if(entryNode.getSuccessors().length == 0){
             return entryNode;
         }
 
         for (Node child : entryNode.getSuccessors()) {
-            Node prospect = findExitNode(child);
+            Node prospect = findExitNode(child, newSet);
             if(prospect != null){
                 return prospect;
             }
