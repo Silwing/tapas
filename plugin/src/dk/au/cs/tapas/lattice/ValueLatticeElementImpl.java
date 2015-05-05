@@ -109,6 +109,11 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return null;
+    }
+
+    @Override
     public BooleanLatticeElement toBoolean() {
         return
                 getArray().toBoolean()
@@ -117,6 +122,11 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
                         .join(getNumber().toBoolean())
                         .join(getNull().toBoolean());
 
+    }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
     }
 
     @Override

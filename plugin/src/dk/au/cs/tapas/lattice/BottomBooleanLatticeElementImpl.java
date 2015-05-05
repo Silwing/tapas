@@ -41,6 +41,11 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
     @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
     public BooleanLatticeElement negate() {
         return top;
     }

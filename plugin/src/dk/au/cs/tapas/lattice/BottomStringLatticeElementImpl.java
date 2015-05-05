@@ -41,4 +41,13 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
         return BooleanLatticeElement.bottom;
     }
 
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement concat(StringLatticeElement other) {
+        return null;
+    }
 }

@@ -38,6 +38,16 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return string.length() == 0?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolFalse;
+        return string.length() == 0?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolTrue;
+    }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement concat(StringLatticeElement other) {
+        return null;
     }
 }

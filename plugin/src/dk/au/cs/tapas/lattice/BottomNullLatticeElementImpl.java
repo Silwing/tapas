@@ -35,4 +35,9 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.bottom;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
 }

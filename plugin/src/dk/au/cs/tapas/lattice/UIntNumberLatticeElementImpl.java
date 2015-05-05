@@ -42,6 +42,11 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return NumberLatticeElement.generateNumberLatticeElement(number.intValue()+1);
     }
@@ -49,5 +54,35 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     @Override
     public NumberLatticeElement decrement() {
         return NumberLatticeElement.generateNumberLatticeElement(number.intValue()-1);
+    }
+
+    @Override
+    public NumberLatticeElement add(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement subtract(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement multiply(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement divide(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement modulo(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement exponent(NumberLatticeElement other) {
+        return null;
     }
 }

@@ -16,4 +16,5 @@ public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>
 
     NullLatticeElement getNull();
 
+    StringLatticeElement toStringLattice();
 }

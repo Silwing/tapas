@@ -35,7 +35,12 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return number.equals(0) ? BooleanLatticeElement.boolTrue : BooleanLatticeElement.boolTrue;
+        return number.equals(0) ? BooleanLatticeElement.boolFalse : BooleanLatticeElement.boolTrue;
+    }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return this;
     }
 
     @Override
@@ -46,5 +51,35 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     @Override
     public NumberLatticeElement decrement() {
         return NumberLatticeElement.generateNumberLatticeElement(number.doubleValue() - 1);
+    }
+
+    @Override
+    public NumberLatticeElement add(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement subtract(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement multiply(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement divide(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement modulo(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement exponent(NumberLatticeElement other) {
+        return null;
     }
 }

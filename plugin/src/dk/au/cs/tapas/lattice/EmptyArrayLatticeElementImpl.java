@@ -33,4 +33,9 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.boolFalse;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
 }

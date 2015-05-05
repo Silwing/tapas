@@ -33,4 +33,9 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
 }

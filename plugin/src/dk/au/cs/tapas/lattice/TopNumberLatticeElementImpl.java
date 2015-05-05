@@ -40,6 +40,11 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return this;
     }
@@ -47,5 +52,35 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     @Override
     public NumberLatticeElement decrement() {
         return this;
+    }
+
+    @Override
+    public NumberLatticeElement add(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement subtract(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement multiply(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement divide(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement modulo(NumberLatticeElement other) {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement exponent(NumberLatticeElement other) {
+        return null;
     }
 }

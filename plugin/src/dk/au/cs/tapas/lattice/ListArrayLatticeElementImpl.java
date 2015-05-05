@@ -81,5 +81,10 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.boolTrue;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
 }
 

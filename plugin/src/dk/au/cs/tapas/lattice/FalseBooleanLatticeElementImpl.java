@@ -29,6 +29,11 @@ public class FalseBooleanLatticeElementImpl extends MiddleLatticeElementImpl<Boo
         return this;
     }
 
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
 
     @Override
     public BooleanLatticeElement negate() {

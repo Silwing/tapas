@@ -18,4 +18,16 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
 
     NumberLatticeElement increment();
     NumberLatticeElement decrement();
+
+    NumberLatticeElement add(NumberLatticeElement other);
+
+    NumberLatticeElement subtract(NumberLatticeElement other);
+
+    NumberLatticeElement multiply(NumberLatticeElement other);
+
+    NumberLatticeElement divide(NumberLatticeElement other);
+
+    NumberLatticeElement modulo(NumberLatticeElement other);
+
+    NumberLatticeElement exponent(NumberLatticeElement other);
 }

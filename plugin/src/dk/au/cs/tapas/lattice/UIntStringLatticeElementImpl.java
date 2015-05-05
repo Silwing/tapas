@@ -40,4 +40,14 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
     public BooleanLatticeElement toBoolean() {
         return string.equals("0")?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolTrue;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement concat(StringLatticeElement other) {
+        return null;
+    }
 }

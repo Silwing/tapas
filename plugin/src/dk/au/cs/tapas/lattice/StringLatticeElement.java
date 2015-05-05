@@ -15,4 +15,6 @@ public interface StringLatticeElement extends MiddleCandidateLatticeElement<Stri
         }
         return new NotUIntStringLatticeElementImpl(string);
     }
+
+    NumberLatticeElement concat(StringLatticeElement other);
 }

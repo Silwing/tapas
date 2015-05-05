@@ -216,20 +216,22 @@ public class TypeAnalysisImpl implements Analysis {
 
 
         //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope. This should be done recursive on arrays and the like
-
+        //Need to see book
 
         return resultLattice;
     }
 
 
     private ValueLatticeElement locationSetToValue(StateLatticeElement latticeElement, Set<HeapLocation> locations) {
-        //TODO implement
         return latticeElement.getHeap().getValue(locations, LatticeElement::join);
     }
 
 
-    private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+    private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+
+        //TODO this is not going to work... We need a variable name or array heap location
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseReadNode(ReadNode n, AnalysisLatticeElement l, Context c) {
@@ -300,11 +302,70 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseCallNode(CallNode n, AnalysisLatticeElement l, Context c) {
+
+        //TODO implement
         return l;
     }
 
-    private AnalysisLatticeElement analyseBinaryOperationNode(BinaryOperationNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+    private AnalysisLatticeElement analyseBinaryOperationNode(BinaryOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement
+                leftValue = latticeElement.getStackValue(context, node.getLeftOperandName()),
+                rightValue = latticeElement.getStackValue(context, node.getRightOperandName()),
+                targetValue;
+
+        switch (node.getOperator()){
+            case ADDITION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().add(rightValue.toNumber()));
+                break;
+            case SUBTRACTION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().subtract(rightValue.toNumber()));
+                break;
+            case MULTIPLICATION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().multiply(rightValue.toNumber()));
+                break;
+            case DIVISION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().divide(rightValue.toNumber()));
+                break;
+            case MODULO:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().modulo(rightValue.toNumber()));
+                break;
+            case EXPONENTIATION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().exponent(rightValue.toNumber()));
+                break;
+            case EQUAL:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case IDENTICAL:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case NOT_EQUAL:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case NOT_IDENTICAL:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case GREATER_THAN:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case LESS_THAN:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case GREATER_THAN_OR_EQ:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case LESS_THAN_OR_EQ:
+                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                break;
+            case CONCATENATION:
+                targetValue = new ValueLatticeElementImpl(leftValue.toStringLattice().concat(rightValue.toStringLattice()));
+                break;
+            default:
+                return latticeElement;
+        }
+
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), targetValue);
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseAssignmentNode(AssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -421,7 +482,10 @@ public class TypeAnalysisImpl implements Analysis {
 
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
+        //TODO initialize to NULL?
 
         return latticeElement;
     }
+
+    //TODO implement support for super-globals
 }

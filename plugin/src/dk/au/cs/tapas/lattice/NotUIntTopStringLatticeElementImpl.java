@@ -33,4 +33,14 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;
     }
+
+    @Override
+    public NumberLatticeElement toNumber() {
+        return null;
+    }
+
+    @Override
+    public NumberLatticeElement concat(StringLatticeElement other) {
+        return null;
+    }
 }
