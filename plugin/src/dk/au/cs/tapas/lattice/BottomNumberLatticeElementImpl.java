@@ -39,4 +39,14 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.bottom;
     }
+
+    @Override
+    public NumberLatticeElement increment() {
+        return this;
+    }
+
+    @Override
+    public NumberLatticeElement decrement() {
+        return this;
+    }
 }

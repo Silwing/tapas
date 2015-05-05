@@ -40,4 +40,14 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     public BooleanLatticeElement toBoolean() {
         return number.equals(0)?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolTrue;
     }
+
+    @Override
+    public NumberLatticeElement increment() {
+        return NumberLatticeElement.generateNumberLatticeElement(number.intValue()+1);
+    }
+
+    @Override
+    public NumberLatticeElement decrement() {
+        return NumberLatticeElement.generateNumberLatticeElement(number.intValue()-1);
+    }
 }

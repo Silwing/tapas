@@ -136,7 +136,7 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         final Context exitNodeContext = context.addNode(resultNode.getCallNode());
-        if(argument instanceof TemporaryVariableCallArgument){
+        if (argument instanceof TemporaryVariableCallArgument) {
             //Clearing stack variable before iteration. Just in case
             resultLattice = resultLattice.setStackValue(context, ((TemporaryVariableCallArgument) argument).getArgument(), new ValueLatticeElementImpl());
         }
@@ -229,23 +229,31 @@ public class TypeAnalysisImpl implements Analysis {
         return l.setStackValue(c, n.getTargetName(), (temp) -> l.getStackValue(c, n.getTargetName()).join(newTarget));
     }
 
-    private AnalysisLatticeElement analyseIncrementDecrementOperationExpressionNode(IncrementDecrementOperationExpressionNode n, AnalysisLatticeElement l, Context c) {
-        switch (n.getOperation()){
+    private AnalysisLatticeElement analyseIncrementDecrementOperationExpressionNode(IncrementDecrementOperationExpressionNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement value, targetValue, locationValue = latticeElement.getHeap(context).getValue(node.getHeapLocationSet(), LatticeElement::join);
+        //Notice that PHP does not coerce when value not a number (inc,dec)
+        switch (node.getOperation()) {
             case PRE_INCREMENT:
-
-
+                value = targetValue = new ValueLatticeElementImpl(locationValue.getNumber().increment());
                 break;
             case POST_INCREMENT:
+                targetValue = locationValue;
+                value = new ValueLatticeElementImpl(locationValue.getNumber().increment());
                 break;
             case PRE_DECREMENT:
+                value = targetValue = new ValueLatticeElementImpl(locationValue.getNumber().decrement());
                 break;
             case POST_DECREMENT:
+                targetValue = locationValue;
+                value = new ValueLatticeElementImpl(locationValue.getNumber().decrement());
                 break;
+            default:
+                return latticeElement;
         }
 
-
-
-        return l;
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), targetValue);
+        latticeElement = updateLocations(latticeElement, context, node.getHeapLocationSet(), value);
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseIfNode(IfNode n, AnalysisLatticeElement l, Context c) {
@@ -268,26 +276,32 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseAssignmentNode(AssignmentNode n, AnalysisLatticeElement latticeElement, Context context) {
-        ValueLatticeElement value = latticeElement.getStackValue(context, n.getValueName());
+    private AnalysisLatticeElement analyseAssignmentNode(AssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement value = latticeElement.getStackValue(context, node.getValueName());
 
-        if (n.getVariableLocations().size() == 1) {
+
+        latticeElement = updateLocations(latticeElement, context, node.getVariableLocations(), value);
+
+        //Remember to update target stack
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), value);
+
+
+        return latticeElement;
+    }
+
+    private AnalysisLatticeElement updateLocations(AnalysisLatticeElement latticeElement, Context context, Set<HeapLocation> variableLocations, ValueLatticeElement value) {
+        if (variableLocations.size() == 1) {
             //Hard update on single heap location
             latticeElement = latticeElement.setHeapValue(
                     context,
-                    n.getVariableLocations().iterator().next(),
+                    variableLocations.iterator().next(),
                     value);
         } else {
             //Soft update on multiple locations
-            for (HeapLocation location : n.getVariableLocations()) {
+            for (HeapLocation location : variableLocations) {
                 latticeElement = latticeElement.joinHeapValue(context, location, value);
             }
         }
-
-        //Remember to update target stack
-        latticeElement.setStackValue(context, n.getTargetName(), value);
-
-
         return latticeElement;
     }
 
@@ -326,14 +340,14 @@ public class TypeAnalysisImpl implements Analysis {
         VariableName name = n.getVariableName();
         Set<HeapLocation> newLocations;
         //If no locations, create one.
-        if (context.isEmpty()){
-            if(latticeElement.getGlobalsValue(context, name).getLocations().size() == 0){
+        if (context.isEmpty()) {
+            if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
                 HeapLocation location = new HeapLocationImpl();
                 latticeElement = latticeElement.addLocationToGlobal(context, name, location);
             }
             newLocations = latticeElement.getGlobalsValue(context, name).getLocations();
         } else {
-            if(latticeElement.getGlobalsValue(context, name).getLocations().size() == 0){
+            if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
                 HeapLocation location = new HeapLocationImpl();
                 latticeElement = latticeElement.addLocationToLocal(context, name, location);
             }

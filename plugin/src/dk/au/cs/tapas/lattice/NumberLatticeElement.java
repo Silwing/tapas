@@ -16,4 +16,6 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
         return  new NotUIntNumberLatticeElementImpl(i);
     }
 
+    NumberLatticeElement increment();
+    NumberLatticeElement decrement();
 }

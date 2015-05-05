@@ -38,4 +38,14 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;
     }
+
+    @Override
+    public NumberLatticeElement increment() {
+        return this;
+    }
+
+    @Override
+    public NumberLatticeElement decrement() {
+        return this;
+    }
 }
