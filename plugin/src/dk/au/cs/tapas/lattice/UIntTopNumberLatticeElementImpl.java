@@ -47,34 +47,33 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     public NumberLatticeElement decrement() {
         return this;
     }
-
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 
     @Override
     public NumberLatticeElement divide(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 
     @Override
     public NumberLatticeElement modulo(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
-        return null;
+        return top;
     }
 }

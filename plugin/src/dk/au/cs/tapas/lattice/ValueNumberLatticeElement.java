@@ -5,6 +5,6 @@ package dk.au.cs.tapas.lattice;
  *
  */
 public interface ValueNumberLatticeElement extends NumberLatticeElement{
-
+    //TODO more precision on calculations
     Number getNumber();
 }
