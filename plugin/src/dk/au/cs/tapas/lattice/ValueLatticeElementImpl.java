@@ -110,10 +110,12 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        BooleanLatticeElement b = getArray().toBoolean()
-                .join(getString().toBoolean())
-                .join(getNumber().toBoolean())
-                .join(getNull().toBoolean());
+        BooleanLatticeElement b =
+                getArray().toBoolean()
+                        .join(getBoolean())
+                        .join(getString().toBoolean())
+                        .join(getNumber().toBoolean())
+                        .join(getNull().toBoolean());
 
         return b.equals(BooleanLatticeElement.bottom) ? BooleanLatticeElement.top : b; //We know that it is a boolean, just not which.
     }

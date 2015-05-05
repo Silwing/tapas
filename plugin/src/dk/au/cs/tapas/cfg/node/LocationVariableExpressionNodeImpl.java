@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.VariableName;
 
 import java.util.Set;
 
@@ -9,9 +10,9 @@ import java.util.Set;
  */
 public class LocationVariableExpressionNodeImpl extends NodeImpl implements LocationVariableExpressionNode{
     private Set<HeapLocation> locations;
-    private String variableName;
+    private VariableName variableName;
 
-    public LocationVariableExpressionNodeImpl(Node successor, String variableName, Set<HeapLocation> locations) {
+    public LocationVariableExpressionNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> locations) {
         super(successor);
         this.locations = locations;
         this.variableName = variableName;
@@ -29,7 +30,7 @@ public class LocationVariableExpressionNodeImpl extends NodeImpl implements Loca
     }
 
     @Override
-    public String getVariableName() {
+    public VariableName getVariableName() {
         return variableName;
     }
 }

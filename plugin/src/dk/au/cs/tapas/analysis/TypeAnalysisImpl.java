@@ -6,6 +6,7 @@ import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -269,7 +270,7 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         //Remember to update target stack
-        latticeElement.setStackValue(context, n.getValueName(), value);
+        latticeElement.setStackValue(context, n.getTargetName(), value);
 
 
         return latticeElement;
@@ -290,7 +291,7 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce((ListArrayLatticeElement) new ListArrayLatticeElementImpl(), (acc, h) -> acc.addLocation(h), (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
-        return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, (loc) -> acc.getHeapValue(c, loc).join(newTarget)), (l1, l2) -> l1.join(l2));
+        return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, acc.getHeapValue(c, h).join(newTarget)), (l1, l2) -> l1.join(l2));
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
@@ -299,23 +300,35 @@ public class TypeAnalysisImpl implements Analysis {
         HeapLocation location = new HeapLocationImpl();
         ListArrayLatticeElement list = new ListArrayLatticeElementImpl().addLocation(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
-        return l.setHeapValue(c, location, (loc) -> newValue).setStackValue(c, n.getTargetName(), (name) -> l.getStackValue(c, n.getTargetName()).join(newTarget));
+        return l.setHeapValue(c, location, (loc) -> newValue).setStackValue(c, n.getTargetName(), l.getStackValue(c, n.getTargetName()).join(newTarget));
     }
 
     private AnalysisLatticeElement analyseNodeArrayInitExpressionNode(ArrayInitExpressionNode n, AnalysisLatticeElement l, Context c) {
         return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl(ArrayLatticeElement.emptyArray));
     }
 
-    private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        VariableName name = new VariableNameImpl(n.getVariableName());
+    private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
+        VariableName name = n.getVariableName();
         Set<HeapLocation> newLocations;
-        if (c.isEmpty())
-            newLocations = l.getGlobalsValue(c, name).getLocations();
-        else
-            newLocations = l.getLocalsValue(c, name).getLocations();
+        //If no locations, create one.
+        if (context.isEmpty()){
+            if(latticeElement.getGlobalsValue(context, name).getLocations().size() == 0){
+                HeapLocation location = new HeapLocationImpl();
+                latticeElement = latticeElement.addLocationToGlobal(context, name, location);
+            }
+            newLocations = latticeElement.getGlobalsValue(context, name).getLocations();
+        } else {
+            if(latticeElement.getGlobalsValue(context, name).getLocations().size() == 0){
+                HeapLocation location = new HeapLocationImpl();
+                latticeElement = latticeElement.addLocationToLocal(context, name, location);
+            }
+            newLocations = latticeElement.getLocalsValue(context, name).getLocations();
+        }
+
+
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
 
-        return l;
+        return latticeElement;
     }
 }
