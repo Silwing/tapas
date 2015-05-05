@@ -333,28 +333,28 @@ public class TypeAnalysisImpl implements Analysis {
                 targetValue = new ValueLatticeElementImpl(leftValue.toNumber().exponent(rightValue.toNumber()));
                 break;
             case EQUAL:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue = new ValueLatticeElementImpl(leftValue.equalOperation(rightValue));
                 break;
             case IDENTICAL:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue = new ValueLatticeElementImpl(leftValue.identical(rightValue));
                 break;
             case NOT_EQUAL:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue = new ValueLatticeElementImpl(leftValue.notEqualOperation(rightValue));
                 break;
             case NOT_IDENTICAL:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue = new ValueLatticeElementImpl(leftValue.notIdentical(rightValue));
                 break;
             case GREATER_THAN:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().greaterThan(rightValue.toNumber()));
                 break;
             case LESS_THAN:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().lessThan(rightValue.toNumber()));
                 break;
             case GREATER_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().greaterThanOrEqual(rightValue.toNumber()));
                 break;
             case LESS_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top); //TODO more precision
+                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().lessThanOrEqual(rightValue.toNumber()));
                 break;
             case CONCATENATION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toStringLattice().concat(rightValue.toStringLattice()));

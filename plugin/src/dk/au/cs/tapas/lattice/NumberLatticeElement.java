@@ -62,4 +62,12 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
     NumberLatticeElement modulo(NumberLatticeElement other);
 
     NumberLatticeElement exponent(NumberLatticeElement other);
+
+    BooleanLatticeElement greaterThan(NumberLatticeElement other);
+
+    BooleanLatticeElement lessThan(NumberLatticeElement other);
+
+    BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other);
+
+    BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement);
 }

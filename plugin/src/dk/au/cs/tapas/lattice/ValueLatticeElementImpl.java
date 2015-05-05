@@ -114,6 +114,22 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(ValueLatticeElement rightValue) {
+        return BooleanLatticeElement.top;    }
+
+    @Override
+    public BooleanLatticeElement identical(ValueLatticeElement rightValue) {
+        return BooleanLatticeElement.top;    }
+
+    @Override
+    public BooleanLatticeElement notEqualOperation(ValueLatticeElement rightValue) {
+        return BooleanLatticeElement.top;    }
+
+    @Override
+    public BooleanLatticeElement notIdentical(ValueLatticeElement rightValue) {
+        return BooleanLatticeElement.top;    }
+
+    @Override
     public BooleanLatticeElement toBoolean() {
         return
                 getArray().toBoolean()

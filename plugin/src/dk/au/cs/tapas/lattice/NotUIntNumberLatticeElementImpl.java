@@ -82,4 +82,24 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     public NumberLatticeElement exponent(NumberLatticeElement other) {
         return top;
     }
+
+    @Override
+    public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(NumberLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
+        return BooleanLatticeElement.top;
+    }
 }
