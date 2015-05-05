@@ -6,7 +6,7 @@ import java.util.Set;
  * Created by budde on 4/19/15.
  *
  */
-public interface HeapLocationPowerSetLatticeElement extends LatticeElement<HeapLocationPowerSetLatticeElement, HeapMapLatticeElement>{
+public interface HeapLocationPowerSetLatticeElement extends LatticeElement<HeapLocationPowerSetLatticeElement>{
 
 
     Set<HeapLocation> getLocations();

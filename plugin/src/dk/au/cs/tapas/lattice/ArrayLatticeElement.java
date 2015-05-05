@@ -4,7 +4,7 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/19/15.
  *
  */
-public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement, HeapMapLatticeElement> {
+public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement> {
 
     ArrayLatticeElement bottom = new BottomArrayLatticeElementImpl();
     ArrayLatticeElement emptyArray = new EmptyArrayLatticeElementImpl();
