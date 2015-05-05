@@ -28,4 +28,9 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     public boolean equals(Object other) {
         return  other instanceof EmptyArrayLatticeElement;
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.boolFalse;
+    }
 }

@@ -77,5 +77,9 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
         return  object == this || (object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations()));
     }
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.boolTrue;
+    }
 }
 

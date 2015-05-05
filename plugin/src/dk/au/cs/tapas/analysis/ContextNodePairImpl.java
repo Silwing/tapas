@@ -34,6 +34,6 @@ public class ContextNodePairImpl extends PairImpl<Context, Node> implements Cont
 
     @Override
     public String toString() {
-        return super.toString()+" "+hashCode();
+        return super.toString();
     }
 }

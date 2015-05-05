@@ -22,12 +22,11 @@ import java.nio.file.StandardOpenOption;
 
 /**
  * Created by budde on 2/4/15.
- *
  */
 public class TestAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         PhpFile psi = (PhpFile) e.getData((DataKey) LangDataKeys.PSI_FILE);
-        if(psi == null){
+        if (psi == null) {
             return;
         }
 
@@ -36,12 +35,9 @@ public class TestAction extends AnAction {
         String dotString = g.getEntryNode().toDotString();
         Analyse analyse = new AnalyseImpl(g, new TypeAnalysisImpl());
         AnalysisLatticeElement l = analyse.getExitLattice();
-        try {
-            l.print(new PrintStreamLatticePrinter(new PrintStream(Files.newOutputStream(Paths.get("D:\\Randi\\Programmering\\Speciale\\tapas-survey\\plugin\\lattice.log"), StandardOpenOption.CREATE), false, "UTF-8")));
-        } catch(IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
+
+        l.print(new PrintStreamLatticePrinter(System.out));
+
         System.out.println(g);
     }
 

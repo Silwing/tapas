@@ -4,7 +4,7 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/19/15.
  *
  */
-public interface BooleanLatticeElement extends MiddleCandidateLatticeElement<BooleanLatticeElement>{
+public interface BooleanLatticeElement extends MiddleCandidateLatticeElement<BooleanLatticeElement>, Coercible{
     BooleanLatticeElement bottom = new BottomBooleanLatticeElementImpl();
     BooleanLatticeElement top = new TopBooleanLatticeElementImpl();
     BooleanLatticeElement boolTrue = new TrueBooleanLatticeElement();
@@ -15,4 +15,7 @@ public interface BooleanLatticeElement extends MiddleCandidateLatticeElement<Boo
         else
             return boolFalse;
     }
+
+    BooleanLatticeElement negate();
+
 }

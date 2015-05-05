@@ -36,4 +36,14 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return this;
+    }
+
+
+    @Override
+    public BooleanLatticeElement negate() {
+        return this;
+    }
 }

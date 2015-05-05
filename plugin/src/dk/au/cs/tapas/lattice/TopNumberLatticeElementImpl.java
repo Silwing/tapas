@@ -33,4 +33,9 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     public boolean containedIn(NumberLatticeElement other) {
         return equals(other);
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

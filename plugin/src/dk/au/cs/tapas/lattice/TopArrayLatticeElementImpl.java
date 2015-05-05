@@ -29,4 +29,8 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
         return  obj instanceof TopArrayLatticeElementImpl;
     }
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

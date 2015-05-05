@@ -2,9 +2,8 @@ package dk.au.cs.tapas.lattice;
 
 /**
  * Created by budde on 4/20/15.
- *
  */
-public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements ValueNumberLatticeElement{
+public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements ValueNumberLatticeElement {
 
     private final Number number;
 
@@ -25,12 +24,17 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         printer.print(getNumber().toString());
     }
 
-    public boolean equals(Object object){
+    public boolean equals(Object object) {
         return object == this || (object instanceof NotUIntNumberLatticeElementImpl && ((NotUIntNumberLatticeElementImpl) object).getNumber().equals(getNumber()));
     }
 
     @Override
     public boolean containedIn(NumberLatticeElement other) {
-        return other.equals(this) || notUIntTop.containedIn( other);
+        return other.equals(this) || notUIntTop.containedIn(other);
+    }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return number.equals(0) ? BooleanLatticeElement.boolTrue : BooleanLatticeElement.boolTrue;
     }
 }

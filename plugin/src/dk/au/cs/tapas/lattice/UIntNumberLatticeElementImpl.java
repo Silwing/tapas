@@ -34,4 +34,10 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     public boolean containedIn(NumberLatticeElement other) {
         return other.equals(this) || uIntTop.containedIn(other);
     }
+
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return number.equals(0)?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolTrue;
+    }
 }

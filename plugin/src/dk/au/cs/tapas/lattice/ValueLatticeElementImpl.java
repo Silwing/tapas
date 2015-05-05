@@ -2,9 +2,8 @@ package dk.au.cs.tapas.lattice;
 
 /**
  * Created by budde on 4/20/15.
- *
  */
-public class ValueLatticeElementImpl implements ValueLatticeElement{
+public class ValueLatticeElementImpl implements ValueLatticeElement {
 
     public final ArrayLatticeElement array;
     public final StringLatticeElement string;
@@ -110,6 +109,16 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
     }
 
     @Override
+    public BooleanLatticeElement toBoolean() {
+        BooleanLatticeElement b = getArray().toBoolean()
+                .join(getString().toBoolean())
+                .join(getNumber().toBoolean())
+                .join(getNull().toBoolean());
+
+        return b.equals(BooleanLatticeElement.bottom) ? BooleanLatticeElement.top : b; //We know that it is a boolean, just not which.
+    }
+
+    @Override
     public ValueLatticeElement meet(ValueLatticeElement other) {
         return new ValueLatticeElementImpl(
                 getArray().meet(other.getArray()),
@@ -133,10 +142,10 @@ public class ValueLatticeElementImpl implements ValueLatticeElement{
     public boolean containedIn(HeapMapLatticeElement thisAnalysis, ValueLatticeElement other, HeapMapLatticeElement otherAnalysis) {
         return
                 getArray().containedIn(thisAnalysis, other.getArray(), otherAnalysis) &&
-                getString().containedIn(thisAnalysis, other.getString(), otherAnalysis) &&
-                getNumber().containedIn(thisAnalysis, other.getNumber(), otherAnalysis) &&
-                getBoolean().containedIn(thisAnalysis, other.getBoolean(),otherAnalysis ) &&
-                getNull().containedIn(thisAnalysis, other.getNull(), otherAnalysis);
+                        getString().containedIn(thisAnalysis, other.getString(), otherAnalysis) &&
+                        getNumber().containedIn(thisAnalysis, other.getNumber(), otherAnalysis) &&
+                        getBoolean().containedIn(thisAnalysis, other.getBoolean(), otherAnalysis) &&
+                        getNull().containedIn(thisAnalysis, other.getNull(), otherAnalysis);
     }
 
     @Override

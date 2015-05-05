@@ -25,4 +25,8 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     public boolean equals(Object object) {
         return object instanceof UIntTopStringLatticeElementImpl;
     }
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

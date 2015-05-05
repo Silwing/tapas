@@ -28,4 +28,9 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
     public boolean containedIn(StringLatticeElement other) {
         return other.equals(this) || other.equals(top);
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

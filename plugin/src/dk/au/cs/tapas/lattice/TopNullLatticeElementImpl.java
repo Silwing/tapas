@@ -29,4 +29,8 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
         return  obj instanceof TopNullLatticeElementImpl;
     }
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

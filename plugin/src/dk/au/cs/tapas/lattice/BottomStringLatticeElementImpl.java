@@ -36,5 +36,9 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
         return other instanceof BottomStringLatticeElementImpl;
     }
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.bottom;
+    }
 
 }

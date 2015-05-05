@@ -26,4 +26,9 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
     public boolean containedIn(NumberLatticeElement other) {
         return other.equals(top) || other.equals(this);
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

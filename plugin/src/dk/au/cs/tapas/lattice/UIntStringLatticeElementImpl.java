@@ -34,4 +34,10 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
     public boolean containedIn(StringLatticeElement other) {
         return other.equals(this) || uIntStringTop.containedIn(other);
     }
+
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return string.equals("0")?BooleanLatticeElement.boolFalse:BooleanLatticeElement.boolTrue;
+    }
 }

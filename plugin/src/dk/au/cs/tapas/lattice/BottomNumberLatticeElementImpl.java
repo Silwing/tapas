@@ -34,4 +34,9 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     public boolean containedIn(NumberLatticeElement other) {
         return true;
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.bottom;
+    }
 }

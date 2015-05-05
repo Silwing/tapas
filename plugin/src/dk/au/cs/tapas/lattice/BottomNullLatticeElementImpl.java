@@ -30,4 +30,9 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public boolean equals(Object obj) {
         return obj instanceof BottomNullLatticeElementImpl;
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.bottom;
+    }
 }

@@ -28,4 +28,9 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         return object instanceof UIntTopNumberLatticeElementImpl;
     }
 
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
+
 }

@@ -4,7 +4,7 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/19/15.
  *
  */
-public interface StringLatticeElement extends MiddleCandidateLatticeElement<StringLatticeElement>{
+public interface StringLatticeElement extends MiddleCandidateLatticeElement<StringLatticeElement>, Coercible{
     StringLatticeElement bottom = new BottomStringLatticeElementImpl();
     StringLatticeElement top = new TopStringLatticeElementImpl();
     StringLatticeElement uIntStringTop = new UIntTopStringLatticeElementImpl();

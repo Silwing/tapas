@@ -1,11 +1,6 @@
 package dk.au.cs.tapas.analysis;
 
-import dk.au.cs.tapas.cfg.CallArgument;
-import dk.au.cs.tapas.cfg.HeapLocationSetCallArgument;
-import dk.au.cs.tapas.cfg.TemporaryVariableCallArgument;
-import dk.au.cs.tapas.cfg.BooleanConstantImpl;
-import dk.au.cs.tapas.cfg.NullConstantImpl;
-import dk.au.cs.tapas.cfg.StringConstantImpl;
+import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
@@ -101,6 +96,10 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseUnaryOperationNode(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
+        ValueLatticeElement value = l.getStackValue(c, n.getOperandName());
+        if(n.getOperator() == UnaryOperator.NEGATION){
+            return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl( value.toBoolean().negate()));
+        }
         return l;
     }
 
@@ -195,7 +194,6 @@ public class TypeAnalysisImpl implements Analysis {
         return null;
     }
 
-    //TODO by keeping creating heap locations, how are we ensured that the algorithm will stop?
 
     private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode n, AnalysisLatticeElement l, Context c) {
         return l;

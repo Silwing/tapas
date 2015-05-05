@@ -77,7 +77,7 @@ public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>
         }
 
         if(element.getFirstPsiChild() == null){
-            if(element.getText().matches("^[1-9][0-9]*$")){
+            if(element.getText().matches("^([1-9][0-9]*)|0$")){
                 return new NumberConstantImpl(Integer.parseInt(element.getText()));
             }
             //TODO check for other numbers: binary, hex, float, exp ... See part

@@ -25,4 +25,16 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
     public boolean containedIn(BooleanLatticeElement other) {
         return other.equals(top) || other.equals(this);
     }
+
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return this;
+    }
+
+
+    @Override
+    public BooleanLatticeElement negate() {
+        return boolFalse;
+    }
 }

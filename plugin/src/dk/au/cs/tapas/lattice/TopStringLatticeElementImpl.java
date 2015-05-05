@@ -33,4 +33,9 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
     public boolean containedIn(StringLatticeElement other) {
         return equals(other);
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.top;
+    }
 }

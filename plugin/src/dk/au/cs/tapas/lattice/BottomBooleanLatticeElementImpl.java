@@ -34,4 +34,14 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     public boolean containedIn(BooleanLatticeElement other) {
         return true;
     }
+
+    @Override
+    public BooleanLatticeElement toBoolean() {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement negate() {
+        return this;
+    }
 }
