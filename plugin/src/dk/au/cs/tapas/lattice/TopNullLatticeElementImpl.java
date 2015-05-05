@@ -36,6 +36,6 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.top;
     }
 }

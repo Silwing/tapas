@@ -43,7 +43,8 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        Number number = NumberLatticeElement.parseNumberString(string);
+        return NumberLatticeElement.generateNumberLatticeElement(number == null?0:number);
     }
 
     @Override

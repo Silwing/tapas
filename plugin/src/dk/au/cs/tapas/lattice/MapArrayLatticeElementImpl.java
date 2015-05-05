@@ -83,6 +83,6 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 }

@@ -41,7 +41,7 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return this;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.top;
     }
 
     @Override

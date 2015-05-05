@@ -7,7 +7,7 @@ import dk.au.cs.tapas.cfg.ConstantImpl;
  *
  */
 public class NumberConstantImpl extends ConstantImpl {
-    public NumberConstantImpl(int i) {
+    public NumberConstantImpl(Number i) {
         super(i);
     }
 }

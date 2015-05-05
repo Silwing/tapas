@@ -36,6 +36,6 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 }

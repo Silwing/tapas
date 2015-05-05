@@ -31,7 +31,7 @@ public class FalseBooleanLatticeElementImpl extends MiddleLatticeElementImpl<Boo
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.generateNumberLatticeElement(0);
     }
 
 

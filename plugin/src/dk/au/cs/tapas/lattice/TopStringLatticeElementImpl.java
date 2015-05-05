@@ -41,7 +41,7 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.top;
     }
 
     @Override

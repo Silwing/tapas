@@ -35,7 +35,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return this;
     }
 
     @Override

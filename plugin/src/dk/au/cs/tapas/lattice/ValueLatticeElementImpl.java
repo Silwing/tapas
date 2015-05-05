@@ -126,7 +126,11 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return getArray().toNumber()
+                .join(getBoolean().toNumber())
+                .join(getString().toNumber())
+                .join(getNull().toNumber())
+                .join(getNumber());
     }
 
     @Override

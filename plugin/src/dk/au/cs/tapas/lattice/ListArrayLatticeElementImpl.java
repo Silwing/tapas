@@ -84,7 +84,7 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 }
 

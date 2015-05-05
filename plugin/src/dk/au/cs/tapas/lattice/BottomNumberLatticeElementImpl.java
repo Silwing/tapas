@@ -42,7 +42,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 
     @Override

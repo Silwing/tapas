@@ -34,7 +34,7 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.generateNumberLatticeElement(1);
     }
 
 

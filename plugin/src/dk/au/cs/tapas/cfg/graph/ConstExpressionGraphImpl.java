@@ -10,14 +10,16 @@ import dk.au.cs.tapas.cfg.NullConstantImpl;
 import dk.au.cs.tapas.cfg.StringConstantImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadConstNodeImpl;
+import dk.au.cs.tapas.lattice.NumberLatticeElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.DoubleSummaryStatistics;
+
 /**
  * Created by budde on 4/26/15.
- *
  */
-public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>{
+public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression> {
     public static PsiParser.ExpressionGraphGenerator<PhpExpression> generator = ConstExpressionGraphImpl::new;
     private final ReadConstNodeImpl entryNode;
 
@@ -48,39 +50,37 @@ public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>
     }
 
     private static Constant getConst(PhpExpression element) {
-        if(element == null){
+        if (element == null) {
             return null;
         }
 
-        if(element instanceof StringLiteralExpression){
+        if (element instanceof StringLiteralExpression) {
             return new StringConstantImpl(((StringLiteralExpression) element).getContents());
         }
 
-        if(element instanceof ConstantReference){
+        if (element instanceof ConstantReference) {
             String fqn = ((ConstantReference) element).getFQN();
-            if(fqn == null){
-                return  null;
+            if (fqn == null) {
+                return null;
             }
-            if(fqn.equals("\\true")){
-               return new BooleanConstantImpl(true);
-            }
-
-            if(fqn.equals("\\false")){
-               return new BooleanConstantImpl(false);
+            if (fqn.equals("\\true")) {
+                return new BooleanConstantImpl(true);
             }
 
-            if(fqn.equals("\\null")){
-               return new NullConstantImpl();
+            if (fqn.equals("\\false")) {
+                return new BooleanConstantImpl(false);
             }
 
-            return  null;
+            if (fqn.equals("\\null")) {
+                return new NullConstantImpl();
+            }
+
+            return null;
         }
 
-        if(element.getFirstPsiChild() == null){
-            if(element.getText().matches("^([1-9][0-9]*)|0$")){
-                return new NumberConstantImpl(Integer.parseInt(element.getText()));
-            }
-            //TODO check for other numbers: binary, hex, float, exp ... See part
+        if (element.getFirstPsiChild() == null) {
+            Number number = NumberLatticeElement.parseNumberString(element.getText());
+            return number == null?null:new NumberConstantImpl(number);
         }
 
         return null;

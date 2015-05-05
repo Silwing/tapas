@@ -38,6 +38,6 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 }

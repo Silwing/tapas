@@ -42,7 +42,7 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return null;
+        return NumberLatticeElement.bottom;
     }
 
     @Override
