@@ -38,4 +38,9 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.bottom;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return null;
+    }
 }

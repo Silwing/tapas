@@ -46,6 +46,11 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
         return NumberLatticeElement.top;
     }
 
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.top;
+    }
+
 
     @Override
     public BooleanLatticeElement negate() {

@@ -38,4 +38,9 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.top;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.top;
+    }
 }

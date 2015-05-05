@@ -9,9 +9,6 @@ public interface IntegerLatticeElement extends MiddleCandidateLatticeElement<Int
     IntegerLatticeElement bottom = new BottomIntegerLatticeElementImpl();
     IntegerLatticeElement top = new TopIntegerLatticeElementImpl();
     static IntegerLatticeElement generateElement(Integer integer){
-        if(integer < 0){
-            throw new UnsupportedOperationException();
-        }
         return new ValueIntegerLatticeElementImpl(integer);
     }
 

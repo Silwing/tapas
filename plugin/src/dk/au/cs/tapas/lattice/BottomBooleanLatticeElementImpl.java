@@ -43,6 +43,11 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     @Override
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.bottom;
+	}
+	
+	@Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.bottom;
     }
 
     @Override

@@ -45,6 +45,11 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.top;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return this;
     }

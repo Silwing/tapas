@@ -8,6 +8,6 @@ import javax.swing.*;
 public interface Coercible {
 
     BooleanLatticeElement toBoolean();
-
     NumberLatticeElement toNumber();
+    IntegerLatticeElement toInteger();
 }

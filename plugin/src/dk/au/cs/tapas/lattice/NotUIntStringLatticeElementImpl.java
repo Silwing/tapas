@@ -51,4 +51,9 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     public NumberLatticeElement concat(StringLatticeElement other) {
         return null;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.bottom;
+    }
 }

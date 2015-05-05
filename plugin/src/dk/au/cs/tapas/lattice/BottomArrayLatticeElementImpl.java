@@ -39,4 +39,9 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.bottom;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.bottom;
+    }
 }

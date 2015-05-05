@@ -37,6 +37,11 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
         return NumberLatticeElement.generateNumberLatticeElement(1);
     }
 
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.generateElement(1);
+    }
+
 
     @Override
     public BooleanLatticeElement negate() {

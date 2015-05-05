@@ -150,6 +150,11 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     }
 
     @Override
+    public IntegerLatticeElement toInteger() {
+        return getArray().toInteger().join(getString().toInteger()).join(getNull().toInteger()).join(getNumber().toInteger()).join(getBoolean().toInteger());
+    }
+
+    @Override
     public ValueLatticeElement meet(ValueLatticeElement other) {
         return new ValueLatticeElementImpl(
                 getArray().meet(other.getArray()),

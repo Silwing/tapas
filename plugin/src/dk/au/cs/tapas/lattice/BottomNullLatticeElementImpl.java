@@ -40,4 +40,9 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.bottom;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.bottom;
+    }
 }

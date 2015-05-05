@@ -86,5 +86,10 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.bottom;
     }
+
+    @Override
+    public IntegerLatticeElement toInteger() {
+        return IntegerLatticeElement.generateElement(1);
+    }
 }
 

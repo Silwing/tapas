@@ -47,6 +47,11 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
+    public IntegerLatticeElement toInteger() {
+        return number instanceof Integer ? IntegerLatticeElement.generateElement(number.intValue()) : IntegerLatticeElement.generateElement((int)Math.floor(number.doubleValue()));
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return NumberLatticeElement.generateNumberLatticeElement(number.intValue()+1);
     }
