@@ -345,6 +345,39 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayLocationVariableExpressionNode(ArrayLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
+        Set<HeapLocation> target = n.getTargetLocationSet();
+
+        ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
+        IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
+
+        NumberLatticeElement number = index.getNumber();
+        IndexLatticeElement iindex = null;
+        if(number instanceof ValueNumberLatticeElement) {
+            ValueNumberLatticeElement value = (ValueNumberLatticeElement)number;
+            Integer integer;
+            if(value.getNumber() instanceof Integer){
+                integer = value.getNumber().intValue();
+            } else {
+                integer = (int)Math.floor(value.getNumber().doubleValue());
+            }
+            IntegerLatticeElement integerLattice = IntegerLatticeElement.generateElement(integer);
+            iindex = IndexLatticeElement.generateIntegerIndex(integerLattice);
+
+        }
+
+        for(HeapLocation loc : n.getValueHeapLocationSet()) {
+            ValueLatticeElement array = l.getHeapValue(c, loc);
+            if(array.getArray() instanceof MapArrayLatticeElement) {
+                MapArrayLatticeElement map = (MapArrayLatticeElement)array.getArray();
+                target.addAll(map.getValue(sindex).getLocations());
+                if(iindex != null)
+                    target.addAll(map.getValue(iindex).getLocations());
+            } else if(array.getArray() instanceof ListArrayLatticeElement) {
+                ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+                target.addAll(list.getLocations().getLocations());
+            }
+        }
+
         return l;
     }
 
