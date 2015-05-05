@@ -9,18 +9,18 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 public class IfNodeImpl extends NodeImpl implements IfNode {
     private final TemporaryVariableName condition;
 
-    public IfNodeImpl(TemporaryVariableName condition, Node successor1, Node successor2) {
-        super(new Node[]{successor1, successor2});
+    public IfNodeImpl(TemporaryVariableName condition, Node trueSuccessor, Node falseSuccessor) {
+        super(new Node[]{trueSuccessor, falseSuccessor});
         this.condition = condition;
     }
 
 
-    public void setSuccessor1(Node successor){
+    public void setTrueSuccessor(Node successor){
         successors[0] = successor;
 
     }
 
-    public void setSuccessor2(Node successor){
+    public void setFalseSuccessor(Node successor){
         successors[1] = successor;
 
     }
@@ -31,13 +31,13 @@ public class IfNodeImpl extends NodeImpl implements IfNode {
     }
 
     @Override
-    public Node getSuccessor1(){
+    public Node getTrueSuccessor(){
         return  successors[0];
 
     }
 
     @Override
-    public Node getSuccessor2(){
+    public Node getFalseSuccessor(){
         return successors[1];
 
     }

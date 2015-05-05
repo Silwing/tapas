@@ -108,8 +108,39 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseShortCircuitBinaryOperationNode(ShortCircuitBinaryOperationNode n, AnalysisLatticeElement l, Context c) {
-        return l;
+    private AnalysisLatticeElement analyseShortCircuitBinaryOperationNode(ShortCircuitBinaryOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement
+                targetValue;
+        BooleanLatticeElement
+                leftValue = latticeElement.getStackValue(context, node.getLeftOperandName()).getBoolean(),
+                rightValue = latticeElement.getStackValue(context, node.getRightOperandName()).getBoolean();
+
+        switch (node.getOperator()) {
+            case AND:
+                if (leftValue.equals(BooleanLatticeElement.boolFalse) || rightValue.equals(BooleanLatticeElement.boolFalse)) {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+                } else if (leftValue.equals(BooleanLatticeElement.boolTrue) && rightValue.equals(BooleanLatticeElement.boolTrue)) {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.boolTrue);
+                } else {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top);
+                }
+                break;
+            case OR:
+                if (leftValue.equals(BooleanLatticeElement.boolFalse) && rightValue.equals(BooleanLatticeElement.boolFalse)) {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+                } else if (leftValue.equals(BooleanLatticeElement.boolTrue) || rightValue.equals(BooleanLatticeElement.boolTrue)) {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.boolTrue);
+                } else {
+                    targetValue = new ValueLatticeElementImpl(BooleanLatticeElement.top);
+                }
+                break;
+            default:
+                return latticeElement;
+        }
+
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), targetValue);
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement latticeElement, Context context) {
@@ -218,7 +249,7 @@ public class TypeAnalysisImpl implements Analysis {
         if (n.getConstant() instanceof StringConstantImpl)
             newTarget = new ValueLatticeElementImpl(StringLatticeElement.generateStringLatticeElement((String) constant));
         else if (n.getConstant() instanceof NumberConstantImpl)
-            newTarget = new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement((Integer) constant)); //TODO what if not integer?
+            newTarget = new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement((Number) constant));
         else if (n.getConstant() instanceof BooleanConstantImpl)
             newTarget = new ValueLatticeElementImpl(BooleanLatticeElement.generateBooleanLatticeElement((Boolean) constant));
         else if (n.getConstant() instanceof NullConstantImpl)

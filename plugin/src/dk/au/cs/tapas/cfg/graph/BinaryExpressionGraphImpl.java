@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by budde on 4/22/15.
- *
  */
 public class BinaryExpressionGraphImpl extends ExpressionGraphImpl<BinaryExpression> {
     public static PsiParser.ExpressionGraphGenerator<BinaryExpression> generator = BinaryExpressionGraphImpl::new;
@@ -26,10 +25,16 @@ public class BinaryExpressionGraphImpl extends ExpressionGraphImpl<BinaryExpress
 
         TemporaryVariableName leftName = new TemporaryVariableNameImpl(), rightName = new TemporaryVariableNameImpl();
         String operator = element.getOperation().getText();
-        if(operator.equals("&&") || operator.equals("||")){
+        if (operator.equals("&&") || operator.equals("||")) {
             endNode = new ShortCircuitBinaryOperationNodeImpl(graph.getEntryNode(), leftName, BinaryOperator.fromString(operator), rightName, name);
             Graph rightGraph = parser.parseExpression((PhpExpression) element.getRightOperand(), g -> g, rightName).generate(new NodeGraphImpl(endNode));
-            Node ifNode = new IfNodeImpl(leftName, rightGraph.getEntryNode(), endNode);
+            Node ifNode;
+            if (endNode.getOperator() == BinaryOperator.AND) {
+                ifNode = new IfNodeImpl(leftName, rightGraph.getEntryNode(), endNode);
+            } else {
+                ifNode = new IfNodeImpl(leftName, endNode, rightGraph.getEntryNode());
+
+            }
             leftGraph = parser.parseExpression((PhpExpression) element.getLeftOperand(), g -> g, leftName).generate(new NodeGraphImpl(ifNode));
 
         } else {

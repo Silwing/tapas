@@ -10,7 +10,7 @@ public interface IfNode {
 
     TemporaryVariableName getConditionName();
 
-    Node getSuccessor1();
+    Node getTrueSuccessor();
 
-    Node getSuccessor2();
+    Node getFalseSuccessor();
 }

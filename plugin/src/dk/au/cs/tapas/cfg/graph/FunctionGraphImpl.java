@@ -6,7 +6,7 @@ import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
-import dk.au.cs.tapas.lattice.Context;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -65,8 +65,13 @@ public class FunctionGraphImpl  implements FunctionGraph {
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair cn) {
-        return null;
+    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair cn) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

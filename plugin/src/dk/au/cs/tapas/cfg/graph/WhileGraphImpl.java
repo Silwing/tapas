@@ -26,10 +26,10 @@ public class WhileGraphImpl extends StatementGraphImpl<While> {
         exitNode = new SkipNodeImpl(graph.getEntryNode());
         TemporaryVariableName condition_result = new TemporaryVariableNameImpl();
 
-        IfNodeImpl ifNode = new IfNodeImpl(condition_result, exitNode, null);
+        IfNodeImpl ifNode = new IfNodeImpl(condition_result, null, exitNode);
         conditionGraph = parser.parseExpression((PhpExpression) element.getCondition(), g -> g, condition_result).generate(new NodeGraphImpl(ifNode));
         Graph statementGraph = parser.parseElement(element.getStatement(), g -> g).generate(conditionGraph);
-        ifNode.setSuccessor2(statementGraph.getEntryNode());
+        ifNode.setTrueSuccessor(statementGraph.getEntryNode());
 
     }
 

@@ -28,7 +28,7 @@ public class ForGraphImpl extends StatementGraphImpl<For>{
         endNode = new SkipNodeImpl(targetGraph.getEntryNode());
 
         TemporaryVariableName conditionName = new TemporaryVariableNameImpl();
-        IfNodeImpl ifNode = new IfNodeImpl(conditionName, endNode, null);
+        IfNodeImpl ifNode = new IfNodeImpl(conditionName, null, endNode);
 
         Graph conditionalExpression = parseExpressionList(element.getConditionalExpressions(), conditionName).generate(new NodeGraphImpl(ifNode));
 
@@ -38,7 +38,7 @@ public class ForGraphImpl extends StatementGraphImpl<For>{
 
         Graph statementGraph = parser.parseElement(element.getStatement(), g -> g).generate(repeatedGraph);
 
-        ifNode.setSuccessor2(statementGraph.getEntryNode());
+        ifNode.setTrueSuccessor(statementGraph.getEntryNode());
 
 
     }

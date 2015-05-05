@@ -4,7 +4,11 @@ import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.analysis.ContextNodePairImpl;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.ExitNode;
+import dk.au.cs.tapas.cfg.node.IfNode;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
+import dk.au.cs.tapas.lattice.BooleanLatticeElement;
 import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +67,7 @@ public class FinalGraphImpl implements Graph{
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair contextNodePair) {
         Node node = contextNodePair.getNode();
         Context context = contextNodePair.getContext();
         Set<ContextNodePair> nodes = new HashSet<>();
@@ -75,12 +79,25 @@ public class FinalGraphImpl implements Graph{
             nodes.add(new ContextNodePairImpl(
                     context.popNode(),
                     context.getLastCallNode().getResultNode()));
+        } else if(node instanceof IfNode){
+            if(!latticeElement.getStackValue(context, ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
+                nodes.add(new ContextNodePairImpl(context, ((IfNode) node).getFalseSuccessor()));
+            }
+            if(!latticeElement.getStackValue(context, ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolFalse)){
+                nodes.add(new ContextNodePairImpl(context, ((IfNode) node).getTrueSuccessor()));
+            }
+
         } else {
             for(Node successor: node.getSuccessors()){
                 nodes.add(new ContextNodePairImpl(context, successor));
             }
         }
         return nodes;
+    }
+
+    @Override
+    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+        return getFlow(new AnalysisLatticeElementImpl(), contextNodePair);
     }
 
     @Override
