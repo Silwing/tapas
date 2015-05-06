@@ -31,13 +31,14 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
                 callArguments[i] = new TemporaryVariableCallArgumentImpl();
             }
         }
-        CallNode callNode = new CallNodeImpl(endNode, element.getFQN(), callArguments, endNode);
+        CallNodeImpl callNode = new CallNodeImpl(endNode, element.getFQN(), callArguments, endNode);
         Graph callNodeGraph = new NodeGraphImpl(callNode);
         if (element.getParameters().length > 0) {
             entryGraph = buildParameterGraph((PhpPsiElement) element.getParameters()[0], callArguments).generate(callNodeGraph);
         } else {
             entryGraph = callNodeGraph;
         }
+        callNode.setFunctionGraph(functionGraph);
         endNode.setExitNode(functionGraph.getExitNode());
         endNode.setFunctionGraph(functionGraph);
         endNode.setCallNode(callNode);

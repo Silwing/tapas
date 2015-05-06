@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.VariableName;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -33,6 +34,11 @@ public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     @Override
     public boolean isAliasReturn() {
         return aliasReturn;
+    }
+
+    @Override
+    public VariableName[] getArgumentNames() {
+        return new VariableName[0];
     }
 
     @NotNull

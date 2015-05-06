@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.cfg.CallArgument;
+import dk.au.cs.tapas.cfg.graph.FunctionGraph;
 
 import java.util.Arrays;
 
@@ -11,6 +12,7 @@ public class CallNodeImpl extends NodeImpl implements CallNode{
     private String functionName;
     private CallArgument[] callArguments;
     private ResultNode resultNode;
+    private FunctionGraph functionGraph;
 
     public CallNodeImpl(Node successor, String functionName, CallArgument[] callArguments, ResultNode resultNode) {
         super(successor);
@@ -25,6 +27,13 @@ public class CallNodeImpl extends NodeImpl implements CallNode{
     }
 
     @Override
+    public FunctionGraph getFunctionGraph() {
+        return functionGraph;
+    }
+
+
+
+    @Override
     public CallArgument[] getCallArguments() {
         return callArguments;
     }
@@ -37,5 +46,9 @@ public class CallNodeImpl extends NodeImpl implements CallNode{
     @Override
     public String toString() {
         return "call(" + functionName + ", " + Arrays.toString(callArguments) + ")";
+    }
+
+    public void setFunctionGraph(FunctionGraph functionGraph) {
+        this.functionGraph = functionGraph;
     }
 }

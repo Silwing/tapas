@@ -7,6 +7,8 @@ import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.VariableName;
+import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -19,14 +21,16 @@ public class FunctionGraphImpl  implements FunctionGraph {
     private final ExitNode exitNode;
     private final StartNode entryNode;
     private final Function element;
+    private final VariableName[] argumentNames;
 
     public FunctionGraphImpl(PsiParser parser, Function element) {
         Parameter[] parameters = element.getParameters();
         this.element = element;
         arguments = new boolean[parameters.length];
-
+        argumentNames = new VariableName[parameters.length];
         for(int i = 0; i < parameters.length; i ++){
             arguments[i] = parameters[i].isPassByRef();
+            argumentNames[i] = new VariableNameImpl(parameters[i].getName());
         }
         exitNode = new ExitNodeImpl();
 
@@ -50,6 +54,11 @@ public class FunctionGraphImpl  implements FunctionGraph {
     @Override
     public boolean isAliasReturn() {
         return element.getText().replaceAll("\\s", "").startsWith("function&");
+    }
+
+    @Override
+    public VariableName[] getArgumentNames() {
+        return argumentNames;
     }
 
     @NotNull

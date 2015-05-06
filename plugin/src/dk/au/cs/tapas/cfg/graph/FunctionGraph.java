@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.StartNode;
+import dk.au.cs.tapas.lattice.VariableName;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -18,6 +19,7 @@ public interface FunctionGraph extends Graph{
 
     boolean isAliasReturn();
 
+    VariableName[] getArgumentNames();
 
     @NotNull
     @Override

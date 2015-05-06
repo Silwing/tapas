@@ -31,7 +31,6 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     }
 
     @Override
-<<<<<<< f4c0a8684b36ca38ed917ef1aab3e5e6939d0998
     public NumberLatticeElement toNumber() {
         return NumberLatticeElement.top;
     }
@@ -39,9 +38,9 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     @Override
     public NumberLatticeElement concat(StringLatticeElement other) {
         return null;
-=======
+    }
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.top;
->>>>>>> 48787faedda6ae77521f1ee71f373e6bde9e04fe
+
     }
 }
