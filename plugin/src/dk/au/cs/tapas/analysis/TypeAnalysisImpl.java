@@ -6,6 +6,7 @@ import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -106,7 +107,7 @@ public class TypeAnalysisImpl implements Analysis {
         ValueLatticeElement listValue = new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(node.getValueLocationSet()));
 
 
-        for(HeapLocation location: node.getVariableLocationSet()){
+        for (HeapLocation location : node.getVariableLocationSet()) {
             latticeElement = latticeElement.joinHeapValue(context, location, listValue);
         }
 
@@ -114,7 +115,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseVariableReferenceAssignmentNode(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-        if(context.isEmpty()){
+        if (context.isEmpty()) {
             latticeElement = latticeElement.setGlobalsValue(context, node.getVariableName(), node.getValueLocationSet());
         } else {
             latticeElement = latticeElement.setLocalsValue(context, node.getVariableName(), node.getValueLocationSet());
@@ -122,6 +123,11 @@ public class TypeAnalysisImpl implements Analysis {
 
         return latticeElement;
     }
+
+    private IndexLatticeElement[] generateArrayIndices(ValueLatticeElement element) {
+        return new IndexLatticeElement[]{element.getBoolean().toArrayIndex(), element.getNull().toArrayIndex(), element.getString().toArrayIndex(), element.getNumber().toArrayIndex()};
+    }
+
 
     private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(ArrayWriteReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
 
@@ -346,7 +352,7 @@ public class TypeAnalysisImpl implements Analysis {
                         newContext,
                         argumentNames[i],
                         ((HeapLocationSetCallArgument) callArgument).getArgument());
-            } else if (callArgument instanceof TemporaryVariableCallArgument){
+            } else if (callArgument instanceof TemporaryVariableCallArgument) {
                 lattice.setLocalsValue(
                         newContext,
                         argumentNames[i],
@@ -456,20 +462,21 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseArrayReadExpressionNode(ArrayReadExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement array = l.getStackValue(c, n.getArrayName());
         if (array.getArray() instanceof MapArrayLatticeElement) {
-            MapArrayLatticeElement map = (MapArrayLatticeElement)array.getArray();
+            MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
-            IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString()); //TODO use .toArrayIndex()
-            IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
-
-            ValueLatticeElement value = l.getHeap(c).getValue(map.getValue(sindex).join(map.getValue(iindex)).join(map.getValue(IndexLatticeElement.top)).getLocations(), LatticeElement::join);
+            Set<HeapLocation> locations = new HashSet<>();
+            for(IndexLatticeElement arrayIndex: generateArrayIndices(index)){
+                locations.addAll(map.getValue(arrayIndex).getLocations());
+            }
+            ValueLatticeElement value = l.getHeap(c).getValue(locations, LatticeElement::join);
 
             l = l.joinStackValue(c, n.getTargetName(), value);
-        } else if(array.getArray() instanceof ListArrayLatticeElement) {
-            ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+        } else if (array.getArray() instanceof ListArrayLatticeElement) {
+            ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
             ValueLatticeElement value = l.getHeap(c).getValue(list.getLocations().getLocations(), LatticeElement::join);
 
             l = l.joinStackValue(c, n.getTargetName(), value);
-        } else if(array.getArray() instanceof EmptyArrayLatticeElement) {
+        } else if (array.getArray() instanceof EmptyArrayLatticeElement) {
             // TODO: what happens when trying to read from an empty array?
         } else {
             // TODO: what happens when trying to read from not an array or top array element?
