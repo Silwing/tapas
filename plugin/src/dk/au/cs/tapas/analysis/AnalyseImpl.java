@@ -17,8 +17,6 @@ public class AnalyseImpl implements Analyse {
     private final Map<ContextNodePair, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
     private final Queue<PairImpl<ContextNodePair, ContextNodePair>> worklist = new LinkedList<>();
 
-    private final Stack<Node> resultNodes = new Stack<>();
-
     private final Graph graph;
     private final Analysis analysis;
 
