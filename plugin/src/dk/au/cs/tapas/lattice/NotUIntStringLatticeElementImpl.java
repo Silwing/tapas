@@ -48,12 +48,22 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     }
 
     @Override
-    public NumberLatticeElement concat(StringLatticeElement other) {
-        return null;
+    public StringLatticeElement concat(StringLatticeElement other) {
+        if(other instanceof ValueStringLatticeElement) {
+            ValueStringLatticeElement otherVal = (ValueStringLatticeElement)other;
+            return StringLatticeElement.generateStringLatticeElement(getString() + otherVal.getString());
+        } else {
+            return StringLatticeElement.top;
+        }
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.bottom;
+    }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return this;
     }
 }

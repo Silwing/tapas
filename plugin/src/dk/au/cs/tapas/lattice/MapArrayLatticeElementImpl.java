@@ -88,7 +88,11 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.generateElement(1);
-        // TODO: should the size be checked here or will empty arrays always be instances of EmptyArrayLatticeElement?
+        return IntegerLatticeElement.bottom;
+    }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.generateStringLatticeElement("Array");
     }
 }

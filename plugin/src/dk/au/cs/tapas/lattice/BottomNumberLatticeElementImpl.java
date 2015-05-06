@@ -51,6 +51,11 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.bottom;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return this;
     }

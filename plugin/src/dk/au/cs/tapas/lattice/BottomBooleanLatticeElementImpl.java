@@ -51,6 +51,11 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.bottom;
+    }
+
+    @Override
     public BooleanLatticeElement negate() {
         return top;
     }

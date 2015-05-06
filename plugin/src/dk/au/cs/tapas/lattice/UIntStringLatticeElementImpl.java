@@ -47,11 +47,21 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
     }
 
     @Override
-    public NumberLatticeElement concat(StringLatticeElement other) {
-        return null;
+    public StringLatticeElement concat(StringLatticeElement other) {
+        if(other instanceof ValueStringLatticeElement) {
+            ValueStringLatticeElement otherVal = (ValueStringLatticeElement)other;
+            return StringLatticeElement.generateStringLatticeElement(getString() + otherVal.getString());
+        } else {
+            return StringLatticeElement.top;
+        }
     }
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.generateElement(Integer.parseInt(string));
 
+    }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return this;
     }
 }

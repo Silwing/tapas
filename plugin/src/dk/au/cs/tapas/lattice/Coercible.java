@@ -8,4 +8,5 @@ public interface Coercible {
     BooleanLatticeElement toBoolean();
     NumberLatticeElement toNumber();
     IntegerLatticeElement toInteger();
+    StringLatticeElement toStringLattice();
 }

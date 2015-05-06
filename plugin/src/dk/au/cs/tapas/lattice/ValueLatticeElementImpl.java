@@ -110,7 +110,12 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
 
     @Override
     public StringLatticeElement toStringLattice() {
-        return null;
+        return
+                getArray().toStringLattice()
+                    .join(getBoolean().toStringLattice())
+                    .join(getString())
+                    .join(getNull().toStringLattice())
+                    .join(getNumber().toStringLattice());
     }
 
     @Override

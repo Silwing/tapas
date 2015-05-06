@@ -45,4 +45,9 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.bottom;
     }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.bottom;
+    }
 }

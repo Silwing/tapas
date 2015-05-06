@@ -16,8 +16,6 @@ public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>
 
     NullLatticeElement getNull();
 
-    StringLatticeElement toStringLattice();
-
     BooleanLatticeElement equalOperation(ValueLatticeElement rightValue);
 
     BooleanLatticeElement identical(ValueLatticeElement rightValue);
