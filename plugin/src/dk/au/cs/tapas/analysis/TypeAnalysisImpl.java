@@ -461,6 +461,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseArrayReadExpressionNode(ArrayReadExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement array = l.getStackValue(c, n.getArrayName());
+        ValueLatticeElement value;
         if (array.getArray() instanceof MapArrayLatticeElement) {
             MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
@@ -468,21 +469,16 @@ public class TypeAnalysisImpl implements Analysis {
             for(IndexLatticeElement arrayIndex: generateArrayIndices(index)){
                 locations.addAll(map.getValue(arrayIndex).getLocations());
             }
-            ValueLatticeElement value = l.getHeap(c).getValue(locations, LatticeElement::join);
-
-            l = l.joinStackValue(c, n.getTargetName(), value);
-        } else if (array.getArray() instanceof ListArrayLatticeElement) {
-            ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
-            ValueLatticeElement value = l.getHeap(c).getValue(list.getLocations().getLocations(), LatticeElement::join);
-
-            l = l.joinStackValue(c, n.getTargetName(), value);
-        } else if (array.getArray() instanceof EmptyArrayLatticeElement) {
-            // TODO: what happens when trying to read from an empty array?
+            value = l.getHeap(c).getValue(locations, LatticeElement::join);
+        } else if(array.getArray() instanceof ListArrayLatticeElement) {
+            ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+            value = l.getHeap(c).getValue(list.getLocations().getLocations(), LatticeElement::join);
+        } else if(array.getArray() instanceof EmptyArrayLatticeElement) {
+            value = new ValueLatticeElementImpl(NullLatticeElement.top);
         } else {
-            // TODO: what happens when trying to read from not an array or top array element?
+            value = ValueLatticeElement.top;
         }
-
-        // TODO: string indexing?
+        l = l.joinStackValue(c, n.getTargetName(), value);
 
         return l;
     }
