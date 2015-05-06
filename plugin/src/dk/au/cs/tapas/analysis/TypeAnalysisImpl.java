@@ -505,11 +505,20 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private AnalysisLatticeElement analyseArrayWriteExpressionNode(ArrayWriteExpressionNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseArrayWriteExpressionNode(ArrayWriteExpressionNode node, AnalysisLatticeElement latticeElement, Context context) {
 
+        ValueLatticeElement
+                arrayValue = latticeElement.getStackValue(context, node.getTargetName()),
+                entryValue = latticeElement.getStackValue(context, node.getValueName());
+        ArrayLatticeElement array = arrayValue.getArray();
+        HeapLocation newLocation = new HeapLocationImpl();
+        Set<HeapLocation> newLocationSet = new HashSet<>();
+        newLocationSet.add(newLocation);
+        array = writeArray(array, newLocationSet, generateArrayIndices(entryValue));
 
-        //TODO implement
-        return l;
+        return latticeElement
+                .setStackValue(context, node.getTargetName(), arrayValue.setArray(array)) //Update the new stack value
+                .setHeapValue(context, newLocation, entryValue); //Add the entry to the heap
     }
 
     private AnalysisLatticeElement analyseArrayReadExpressionNode(ArrayReadExpressionNode n, AnalysisLatticeElement l, Context c) {
