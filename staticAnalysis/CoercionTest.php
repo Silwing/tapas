@@ -13,4 +13,8 @@ $d = (int)$c;
 $e = (bool)$a;
 $f = (bool)$c;
 
-var_dump($b,$d, $e, $f);
+$g = false;
+$h = $g + 4;
+$i = null ? 42 : 1337;
+
+var_dump($b,$d, $e, $f, $h, $i);

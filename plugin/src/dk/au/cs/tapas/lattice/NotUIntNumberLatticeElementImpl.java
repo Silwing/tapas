@@ -54,6 +54,11 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.generateStringLatticeElement(getNumber().toString());
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return NumberLatticeElement.generateNumberLatticeElement(number.doubleValue() + 1);
     }

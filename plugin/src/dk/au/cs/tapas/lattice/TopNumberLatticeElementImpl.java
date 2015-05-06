@@ -50,6 +50,11 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.top;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return this;
     }

@@ -51,6 +51,11 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
         return IntegerLatticeElement.top;
     }
 
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.top;
+    }
+
 
     @Override
     public BooleanLatticeElement negate() {

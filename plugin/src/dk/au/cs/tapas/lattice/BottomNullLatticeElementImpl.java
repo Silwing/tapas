@@ -49,4 +49,9 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public IndexLatticeElement toArrayIndex() {
         return null; //TODO implement
     }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.bottom;
+    }
 }

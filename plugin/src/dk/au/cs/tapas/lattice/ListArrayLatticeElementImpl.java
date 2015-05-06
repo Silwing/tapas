@@ -103,5 +103,10 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     public IndexLatticeElement toArrayIndex() {
         return null; //TODO implement
     }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.generateStringLatticeElement("Array");
+    }
 }
 

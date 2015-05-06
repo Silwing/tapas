@@ -47,8 +47,8 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     }
 
     @Override
-    public NumberLatticeElement concat(StringLatticeElement other) {
-        return null;
+    public StringLatticeElement concat(StringLatticeElement other) {
+        return StringLatticeElement.top;
     }
 
     public IntegerLatticeElement toInteger() {
@@ -59,6 +59,11 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
         return null; //TODO implement
     }
 
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return this;
+    }
 
 
 }

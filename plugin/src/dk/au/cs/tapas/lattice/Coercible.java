@@ -10,4 +10,5 @@ public interface Coercible {
     IntegerLatticeElement toInteger();
     IndexLatticeElement toArrayIndex();
 
+    StringLatticeElement toStringLattice();
 }

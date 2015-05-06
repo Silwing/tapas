@@ -41,12 +41,17 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
     }
 
     @Override
-    public NumberLatticeElement concat(StringLatticeElement other) {
-        return null;
+    public StringLatticeElement concat(StringLatticeElement other) {
+        return StringLatticeElement.top;
     }
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.top;
 
+    }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return this;
     }
     @Override
     public IndexLatticeElement toArrayIndex() {

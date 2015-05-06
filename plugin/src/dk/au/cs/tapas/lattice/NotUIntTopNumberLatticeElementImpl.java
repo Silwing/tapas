@@ -43,6 +43,11 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.notUIntStringTop;
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return this;
     }

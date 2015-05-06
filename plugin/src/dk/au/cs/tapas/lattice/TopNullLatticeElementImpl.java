@@ -31,17 +31,22 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return BooleanLatticeElement.top;
+        return BooleanLatticeElement.boolFalse;
     }
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.top;
+        return NumberLatticeElement.generateNumberLatticeElement(0);
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.top;
+        return IntegerLatticeElement.generateElement(0);
+    }
+
+    @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.generateStringLatticeElement("");
     }
 
     @Override

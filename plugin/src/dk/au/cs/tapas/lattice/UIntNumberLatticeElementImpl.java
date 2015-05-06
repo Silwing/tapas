@@ -52,6 +52,11 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
+    public StringLatticeElement toStringLattice() {
+        return StringLatticeElement.generateStringLatticeElement(getNumber().toString());
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return NumberLatticeElement.generateNumberLatticeElement(number.intValue()+1);
     }

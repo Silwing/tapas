@@ -454,13 +454,29 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayReadExpressionNode(ArrayReadExpressionNode n, AnalysisLatticeElement l, Context c) {
-        ValueLatticeElement val = l.getStackValue(c, n.getArrayName());
-        if (val.getArray() instanceof MapArrayLatticeElement) {
+        ValueLatticeElement array = l.getStackValue(c, n.getArrayName());
+        if (array.getArray() instanceof MapArrayLatticeElement) {
+            MapArrayLatticeElement map = (MapArrayLatticeElement)array.getArray();
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
             IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
             IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
 
+            ValueLatticeElement value = locationSetToValue(l.getValue(c), map.getValue(sindex).join(map.getValue(iindex)).join(map.getValue(IndexLatticeElement.top)).getLocations());
+
+            l = l.joinStackValue(c, n.getTargetName(), value);
+        } else if(array.getArray() instanceof ListArrayLatticeElement) {
+            ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+            ValueLatticeElement value = locationSetToValue(l.getValue(c), list.getLocations().getLocations());
+
+            l = l.joinStackValue(c, n.getTargetName(), value);
+        } else if(array.getArray() instanceof EmptyArrayLatticeElement) {
+            // TODO: what happens when trying to read from an empty array?
+        } else {
+            // TODO: what happens when trying to read from not an array or top array element?
         }
+
+        // TODO: string indexing?
+
         return l;
     }
 
@@ -477,6 +493,7 @@ public class TypeAnalysisImpl implements Analysis {
                 MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
                 target.addAll(map.getValue(sindex).getLocations());
                 target.addAll(map.getValue(iindex).getLocations());
+                target.addAll(map.getValue(IndexLatticeElement.top).getLocations());
             } else if (array.getArray() instanceof ListArrayLatticeElement) {
                 ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
                 target.addAll(list.getLocations().getLocations());
@@ -489,12 +506,12 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
         ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce(new ListArrayLatticeElementImpl(), ListArrayLatticeElement::addLocation, (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
+        // TODO: this is completely wrong I think :S
         return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, acc.getHeapValue(c, h).join(newTarget)), (l1, l2) -> l1.join(l2));
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newValue = l.getStackValue(c, n.getValueName());
-        newValue.print(new PrintStreamLatticePrinter(System.out));
         HeapLocation location = new HeapLocationImpl();
         ListArrayLatticeElement list = new ListArrayLatticeElementImpl().addLocation(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
