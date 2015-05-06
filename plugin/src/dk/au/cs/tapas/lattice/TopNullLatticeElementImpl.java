@@ -43,4 +43,9 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.top;
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

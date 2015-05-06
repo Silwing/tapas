@@ -54,4 +54,10 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
         return IntegerLatticeElement.generateElement(Integer.parseInt(string));
 
     }
+
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

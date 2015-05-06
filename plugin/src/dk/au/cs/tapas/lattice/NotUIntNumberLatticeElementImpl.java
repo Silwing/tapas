@@ -49,6 +49,11 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
+
+    @Override
     public NumberLatticeElement increment() {
         return NumberLatticeElement.generateNumberLatticeElement(number.doubleValue() + 1);
     }

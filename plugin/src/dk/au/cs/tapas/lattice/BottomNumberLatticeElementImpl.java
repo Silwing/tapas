@@ -105,4 +105,9 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
         return BooleanLatticeElement.top;    }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

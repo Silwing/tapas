@@ -91,4 +91,8 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
         return IntegerLatticeElement.generateElement(1);
         // TODO: should the size be checked here or will empty arrays always be instances of EmptyArrayLatticeElement?
     }
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

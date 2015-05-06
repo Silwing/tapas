@@ -43,4 +43,9 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     public IntegerLatticeElement toInteger() {
         return null;
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

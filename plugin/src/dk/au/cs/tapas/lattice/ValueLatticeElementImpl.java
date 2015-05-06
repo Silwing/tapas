@@ -141,6 +141,16 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     }
 
     @Override
+    public IndexLatticeElement toArrayIndex() {
+        return getArray().toArrayIndex()
+                .join(getBoolean().toArrayIndex())
+                .join(getString().toArrayIndex())
+                .join(getNumber().toArrayIndex())
+                .join(getNull().toArrayIndex());
+    }
+
+
+    @Override
     public NumberLatticeElement toNumber() {
         return getArray().toNumber()
                 .join(getBoolean().toNumber())
@@ -221,4 +231,5 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
                 getNull().equals(((ValueLatticeElement) other).getNull()) &&
                 getBoolean().equals(((ValueLatticeElement) other).getBoolean()));
     }
+
 }

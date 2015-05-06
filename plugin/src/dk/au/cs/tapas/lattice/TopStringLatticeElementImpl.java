@@ -52,4 +52,9 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
         return IntegerLatticeElement.top;
 
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

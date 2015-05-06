@@ -97,4 +97,9 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
         return BooleanLatticeElement.top;    }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

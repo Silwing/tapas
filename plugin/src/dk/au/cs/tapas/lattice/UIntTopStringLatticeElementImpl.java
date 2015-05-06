@@ -43,4 +43,9 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
         return IntegerLatticeElement.top;
 
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

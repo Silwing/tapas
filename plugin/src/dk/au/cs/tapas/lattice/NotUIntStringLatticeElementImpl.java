@@ -56,4 +56,9 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.bottom;
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

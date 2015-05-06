@@ -54,6 +54,11 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.bottom;
     }
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
+
 
 
 }

@@ -13,7 +13,7 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
     NumberLatticeElement notUIntTop = new NotUIntTopNumberLatticeElementImpl();
     static NumberLatticeElement generateNumberLatticeElement(Number i){
         if(i instanceof Integer && i.intValue() >= 0){
-            return new UIntNumberLatticeElementImpl(i);
+            return new UIntNumberLatticeElementImpl((Integer) i);
         }
         return  new NotUIntNumberLatticeElementImpl(i);
     }

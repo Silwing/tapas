@@ -47,4 +47,9 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
     public BooleanLatticeElement negate() {
         return boolFalse;
     }
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }

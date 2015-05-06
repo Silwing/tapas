@@ -51,6 +51,11 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
     @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
+
+    @Override
     public BooleanLatticeElement negate() {
         return top;
     }

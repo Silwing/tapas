@@ -97,5 +97,11 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.generateElement(1);
     }
+
+
+    @Override
+    public IndexLatticeElement toArrayIndex() {
+        return null; //TODO implement
+    }
 }
 
