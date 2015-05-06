@@ -9,7 +9,6 @@ import java.util.Set;
  */
 public interface ReferenceAssignmentNode extends ExpressionNode{
 
-    public Set<HeapLocation> getValueLocationSet();
+    Set<HeapLocation> getValueLocationSet();
 
-    public Set<HeapLocation> getVariableLocationSet();
 }

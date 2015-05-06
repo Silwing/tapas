@@ -3,7 +3,7 @@ package dk.au.cs.tapas.lattice;
 /**
  * Created by budde on 4/20/15.
  */
-public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements ValueNumberLatticeElement {
+public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements NotUIntNumberLatticeElement{
 
     private final Number number;
 

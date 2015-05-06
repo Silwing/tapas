@@ -4,10 +4,10 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/20/15.
  *
  */
-public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements ValueNumberLatticeElement {
-    private final Number number;
+public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<NumberLatticeElement> implements UIntNumberLatticeElement {
+    private final Integer number;
 
-    public UIntNumberLatticeElementImpl(Number number) {
+    public UIntNumberLatticeElementImpl(Integer number) {
         super(
                 (NumberLatticeElement n) -> bottom,
                 (NumberLatticeElement n) -> n instanceof UIntNumberLatticeElementImpl?uIntTop:top
@@ -26,7 +26,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
-    public Number getNumber() {
+    public Integer getNumber() {
         return number;
     }
 

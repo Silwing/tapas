@@ -1,6 +1,8 @@
 package dk.au.cs.tapas.lattice;
 
 
+import java.util.Set;
+
 /**
  * Created by budde on 4/20/15.
  *
@@ -15,6 +17,10 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     public ListArrayLatticeElementImpl(HeapLocationPowerSetLatticeElement locations) {
         this.locations = locations;
+    }
+
+    public ListArrayLatticeElementImpl(Set<HeapLocation> valueLocationSet) {
+        this(new HeapLocationPowerSetLatticeElementImpl(valueLocationSet));
     }
 
     @Override

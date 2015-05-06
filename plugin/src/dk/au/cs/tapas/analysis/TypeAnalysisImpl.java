@@ -5,9 +5,7 @@ import dk.au.cs.tapas.cfg.graph.LibraryFunctionGraph;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -80,8 +78,14 @@ public class TypeAnalysisImpl implements Analysis {
         if (n instanceof ReadNode) {
             return analyseReadNode((ReadNode) n, l, c);
         }
-        if (n instanceof ReferenceAssignmentNode) {
-            return analyseReferenceAssignmentNode((ReferenceAssignmentNode) n, l, c);
+        if (n instanceof ArrayWriteReferenceAssignmentNode) {
+            return analyseArrayReferenceAssignmentNode((ArrayWriteReferenceAssignmentNode) n, l, c);
+        }
+        if (n instanceof ArrayAppendReferenceAssignmentNode) {
+            return analyseArrayAppendReferenceAssignmentNode((ArrayAppendReferenceAssignmentNode) n, l, c);
+        }
+        if (n instanceof VariableReferenceAssignmentNode) {
+            return analyseVariableReferenceAssignmentNode((VariableReferenceAssignmentNode) n, l, c);
         }
         if (n instanceof ResultNode) {
             return analyseResultNode((ResultNode) n, l, c);
@@ -96,6 +100,33 @@ public class TypeAnalysisImpl implements Analysis {
 
         // Fallback to identity function for unhandled nodes
         return l;
+    }
+
+    private AnalysisLatticeElement analyseArrayAppendReferenceAssignmentNode(ArrayAppendReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement listValue = new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(node.getValueLocationSet()));
+
+
+        for(HeapLocation location: node.getVariableLocationSet()){
+            latticeElement = latticeElement.joinHeapValue(context, location, listValue);
+        }
+
+        return latticeElement;
+    }
+
+    private AnalysisLatticeElement analyseVariableReferenceAssignmentNode(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        if(context.isEmpty()){
+            latticeElement = latticeElement.setGlobalsValue(context, node.getVariableName(), node.getValueLocationSet());
+        } else {
+            latticeElement = latticeElement.setLocalsValue(context, node.getVariableName(), node.getValueLocationSet());
+        }
+
+        return latticeElement;
+    }
+
+    private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(ArrayWriteReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+
+        //TODO implement
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseUnaryOperationNode(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
@@ -222,13 +253,6 @@ public class TypeAnalysisImpl implements Analysis {
         return resultLattice;
     }
 
-
-    private AnalysisLatticeElement analyseReferenceAssignmentNode(ReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-
-        //TODO this is not going to work... We need a variable name or array heap location
-
-        return latticeElement;
-    }
 
     private AnalysisLatticeElement analyseReadNode(ReadNode n, AnalysisLatticeElement l, Context c) {
         HeapLocationPowerSetLatticeElement locations;
@@ -441,7 +465,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayLocationVariableExpressionNode(ArrayLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        Set<HeapLocation> target = n.getTargetLocationSet();
+        Set<HeapLocation> target = n.getTargetLocationSet(); //TODO clear
 
         ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
         IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());

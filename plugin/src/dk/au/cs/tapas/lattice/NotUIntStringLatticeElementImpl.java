@@ -4,7 +4,7 @@ package dk.au.cs.tapas.lattice;
  * Created by budde on 4/20/15.
  *
  */
-public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<StringLatticeElement> implements ValueStringLatticeElement{
+public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<StringLatticeElement> implements NotUIntStringLatticeElement{
     private final String string;
 
     public NotUIntStringLatticeElementImpl(String string) {

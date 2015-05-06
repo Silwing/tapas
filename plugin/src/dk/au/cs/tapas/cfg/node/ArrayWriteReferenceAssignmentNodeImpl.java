@@ -8,16 +8,18 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class ReferenceAssignmentNodeImpl extends NodeImpl implements ReferenceAssignmentNode {
+public class ArrayWriteReferenceAssignmentNodeImpl extends NodeImpl implements ArrayWriteReferenceAssignmentNode {
     private final  TemporaryVariableName targetName;
     private final  Set<HeapLocation> valueLocationSet;
     private final  Set<HeapLocation> variableLocationSet;
+    private final TemporaryVariableName writeArgument;
 
-    public ReferenceAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, Set<HeapLocation> valueLocationSet, Set<HeapLocation> variableLocationSet) {
+    public ArrayWriteReferenceAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, Set<HeapLocation> valueLocationSet, Set<HeapLocation> variableLocationSet, TemporaryVariableName writeArgument) {
         super(successor);
         this.targetName = targetName;
         this.valueLocationSet = valueLocationSet;
         this.variableLocationSet = variableLocationSet;
+        this.writeArgument = writeArgument;
     }
 
     @Override
@@ -38,9 +40,14 @@ public class ReferenceAssignmentNodeImpl extends NodeImpl implements ReferenceAs
 
     @Override
     public String toString() {
-        return "assign_ref("+ variableLocationSet +
+        return "array_assign_ref("+ variableLocationSet +
                 ", " + valueLocationSet +
                 ", " + targetName +
                 ')';
+    }
+
+    @Override
+    public TemporaryVariableName getWriteArgument() {
+        return writeArgument;
     }
 }

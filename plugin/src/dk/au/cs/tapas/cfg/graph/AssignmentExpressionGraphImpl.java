@@ -1,16 +1,14 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import com.intellij.psi.PsiElement;
-import com.jetbrains.php.lang.psi.elements.AssignmentExpression;
-import com.jetbrains.php.lang.psi.elements.PhpExpression;
+import com.jetbrains.php.lang.psi.elements.*;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
-import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.cfg.node.AssignmentNodeImpl;
-import dk.au.cs.tapas.cfg.node.ReferenceAssignmentNodeImpl;
+import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -33,9 +31,27 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
 
         if(isAlias(element.getFirstChild())){
             Set<HeapLocation> valueLocations = new HashSet<>();
-            this.assignmentNode = new ReferenceAssignmentNodeImpl(graph.getEntryNode(), name, locations, valueLocations);
-            Graph valueGraph = psiParser.parseReferenceExpression((PhpExpression) element.getValue(), g -> g, valueLocations).generate(new NodeGraphImpl(assignmentNode));
-            this.variableGraph = psiParser.parseVariableExpression((PhpExpression) element.getVariable(), g -> g, locations).generate(valueGraph);
+            PhpPsiElement variable = element.getVariable();
+            if(variable instanceof Variable){
+                assignmentNode = new VariableReferenceAssignmentNodeImpl(graph.getEntryNode(), new VariableNameImpl(variable.getName()), valueLocations, name);
+                variableGraph = createValueGraph(valueLocations);
+            } else if(variable instanceof ArrayAccessExpression){
+                PhpExpression indexValue = (PhpExpression) ((ArrayAccessExpression) variable).getIndex().getValue();
+                Graph nextGraph;
+                if(indexValue == null){
+                    assignmentNode = new ArrayAppendReferenceAssignmentNodeImpl(graph.getEntryNode(), locations, valueLocations, name);
+                    nextGraph = createValueGraph(valueLocations);
+                } else {
+                    TemporaryVariableName indexTemp = new TemporaryVariableNameImpl();
+                    assignmentNode = new ArrayWriteReferenceAssignmentNodeImpl(graph.getEntryNode(), name, valueLocations, locations, indexTemp);
+                    nextGraph = createValueGraph(valueLocations, parser.parseExpression(indexValue, g -> g, indexTemp).generate(new NodeGraphImpl(assignmentNode)));
+
+                }
+                variableGraph = psiParser.parseVariableExpression((PhpExpression) element.getVariable(), g -> g, locations).generate(nextGraph);
+            } else {
+                throw new UnsupportedOperationException();
+            }
+
         } else {
             TemporaryVariableName valueName = new TemporaryVariableNameImpl();
             this.assignmentNode = new AssignmentNodeImpl(graph.getEntryNode(), name, locations, valueName);
@@ -44,6 +60,14 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
         }
 
 
+    }
+
+    private Graph createValueGraph(Set<HeapLocation> valueLocations, Graph graph) {
+        return parser.parseReferenceExpression((PhpExpression) element.getValue(), g -> g, valueLocations).generate(graph);
+    }
+
+    private Graph createValueGraph(Set<HeapLocation> valueLocations) {
+        return createValueGraph(valueLocations, new NodeGraphImpl(assignmentNode));
     }
 
     private boolean isAlias(PsiElement element) {

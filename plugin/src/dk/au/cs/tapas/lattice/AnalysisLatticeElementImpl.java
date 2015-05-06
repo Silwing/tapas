@@ -187,6 +187,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
     }
 
+    @Override
+    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, Set<HeapLocation> locationSet) {
+        return setGlobalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(locationSet));
+    }
+
 
     private Set<Context> jointDomain(MapLatticeElement<Context, StateLatticeElement> m1, MapLatticeElement<Context, StateLatticeElement> m2) {
         Set<Context> newDomain = m1.getDomain();
