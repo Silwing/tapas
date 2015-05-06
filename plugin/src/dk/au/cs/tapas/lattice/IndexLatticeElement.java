@@ -33,4 +33,6 @@ public interface IndexLatticeElement extends LatticeElement<IndexLatticeElement>
         }
     }
 
+    boolean containedIn(IndexLatticeElement other);
+
 }

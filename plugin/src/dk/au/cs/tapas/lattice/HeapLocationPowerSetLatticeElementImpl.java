@@ -20,6 +20,14 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
         this.values = values;
     }
 
+    public HeapLocationPowerSetLatticeElementImpl(HeapLocationPowerSetLatticeElement[] values) {
+        this(new HashSet<>());
+
+        for(HeapLocationPowerSetLatticeElement elm : values) {
+            this.values.addAll(elm.getLocations());
+        }
+    }
+
     public HeapLocationPowerSetLatticeElementImpl(HeapLocation newLocation) {
         this(new HashSet<>(Arrays.asList(new HeapLocation[]{newLocation})));
     }

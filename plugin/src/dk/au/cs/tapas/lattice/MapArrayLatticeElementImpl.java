@@ -1,5 +1,8 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by budde on 4/20/15.
  *
@@ -28,7 +31,18 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
-        return getMap().getValue(key);
+        if(key.equals(IndexLatticeElement.top)) return new HeapLocationPowerSetLatticeElementImpl(getMap().getValues());
+        if(key.equals(IndexLatticeElement.bottom)) return new HeapLocationPowerSetLatticeElementImpl();
+
+        Set<HeapLocationPowerSetLatticeElement> locations = new HashSet<>();
+
+        for(IndexLatticeElement index : getMap().getDomain()) {
+            if(key.containedIn(index) || index.containedIn(key)) {
+                locations.add(getMap().getValue(index));
+            }
+        }
+
+        return new HeapLocationPowerSetLatticeElementImpl(locations.toArray(new HeapLocationPowerSetLatticeElement[locations.size()]));
     }
 
     @Override

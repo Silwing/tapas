@@ -537,19 +537,16 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayLocationVariableExpressionNode(ArrayLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        Set<HeapLocation> target = n.getTargetLocationSet(); //TODO clear
-
-        ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
-        IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
-        IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
+        Set<HeapLocation> target = n.getTargetLocationSet();
+        target.clear();
+        ValueLatticeElement indexValue = l.getStackValue(c, n.getIndexName());
 
         for (HeapLocation loc : n.getValueHeapLocationSet()) {
             ValueLatticeElement array = l.getHeapValue(c, loc);
             if (array.getArray() instanceof MapArrayLatticeElement) {
                 MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
-                target.addAll(map.getValue(sindex).getLocations());
-                target.addAll(map.getValue(iindex).getLocations());
-                target.addAll(map.getValue(IndexLatticeElement.top).getLocations());
+                for(IndexLatticeElement index : generateArrayIndices(indexValue))
+                    target.addAll(map.getValue(index).getLocations());
             } else if (array.getArray() instanceof ListArrayLatticeElement) {
                 ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
                 target.addAll(list.getLocations().getLocations());

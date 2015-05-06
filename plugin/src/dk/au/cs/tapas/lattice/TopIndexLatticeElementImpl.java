@@ -29,4 +29,9 @@ public class TopIndexLatticeElementImpl implements IndexLatticeElement {
     public boolean equals(Object other) {
         return other instanceof TopIndexLatticeElementImpl;
     }
+
+    @Override
+    public boolean containedIn(IndexLatticeElement other) {
+        return equals(other);
+    }
 }

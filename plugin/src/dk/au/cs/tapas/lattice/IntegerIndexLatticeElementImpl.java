@@ -45,7 +45,7 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
 
     @Override
     public boolean containedIn(HeapMapLatticeElement thisAnalysis, IndexLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return other instanceof TopIndexLatticeElementImpl || other.equals(this);
+        return containedIn(other);
     }
 
     @Override
@@ -58,4 +58,13 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
         return other == this || (other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger()));
     }
 
+    @Override
+    public boolean containedIn(IndexLatticeElement other) {
+
+        if (other instanceof IntegerIndexLatticeElement){
+            return getInteger().containedIn(((IntegerIndexLatticeElement) other).getInteger());
+        }
+
+        return other instanceof TopIndexLatticeElementImpl;
+    }
 }
