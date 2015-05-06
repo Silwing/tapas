@@ -13,21 +13,24 @@ public interface IndexLatticeElement extends LatticeElement<IndexLatticeElement>
         if (element.equals(IntegerLatticeElement.top)) {
             return top;
         }
-        if (element instanceof ValueIntegerLatticeElement) {
+        else if (element.equals(IntegerLatticeElement.bottom)) {
+            return bottom;
+        }
+        else {
             return new IntegerIndexLatticeElementImpl((ValueIntegerLatticeElement) element);
         }
-
-        return bottom;
     }
 
     static IndexLatticeElement generateStringLIndex(StringLatticeElement element){
         if(element.equals(StringLatticeElement.top)){
             return top;
         }
-        if(element instanceof ValueStringLatticeElement){
-            return  new StringIndexLatticeElementImpl(element);
+        else if (element.equals(StringLatticeElement.bottom)) {
+            return bottom;
         }
-        return  bottom;
+        else {
+            return new StringIndexLatticeElementImpl(element);
+        }
     }
 
 }
