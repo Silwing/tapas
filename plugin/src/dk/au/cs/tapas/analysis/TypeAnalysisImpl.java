@@ -461,12 +461,12 @@ public class TypeAnalysisImpl implements Analysis {
             IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
             IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
 
-            ValueLatticeElement value = locationSetToValue(l.getValue(c), map.getValue(sindex).join(map.getValue(iindex)).join(map.getValue(IndexLatticeElement.top)).getLocations());
+            ValueLatticeElement value = l.getHeap(c).getValue(map.getValue(sindex).join(map.getValue(iindex)).join(map.getValue(IndexLatticeElement.top)).getLocations(), LatticeElement::join);
 
             l = l.joinStackValue(c, n.getTargetName(), value);
         } else if(array.getArray() instanceof ListArrayLatticeElement) {
             ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
-            ValueLatticeElement value = locationSetToValue(l.getValue(c), list.getLocations().getLocations());
+            ValueLatticeElement value = l.getHeap(c).getValue(list.getLocations().getLocations(), LatticeElement::join);
 
             l = l.joinStackValue(c, n.getTargetName(), value);
         } else if(array.getArray() instanceof EmptyArrayLatticeElement) {
