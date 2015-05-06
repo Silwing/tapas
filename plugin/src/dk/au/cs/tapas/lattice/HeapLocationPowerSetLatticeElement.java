@@ -17,4 +17,5 @@ public interface HeapLocationPowerSetLatticeElement extends LatticeElement<HeapL
 
     HeapLocationPowerSetLatticeElement addLocation(HeapLocation value);
 
+    HeapLocationPowerSetLatticeElement addLocations(Set<HeapLocation> locations);
 }

@@ -7,13 +7,12 @@ import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/19/15.
- *
  */
 public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPowerSetLatticeElement {
 
     private final Set<HeapLocation> values;
 
-    public HeapLocationPowerSetLatticeElementImpl(){
+    public HeapLocationPowerSetLatticeElementImpl() {
         this(new HashSet<>());
     }
 
@@ -32,13 +31,23 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
 
     @Override
     public HeapLocationPowerSetLatticeElement addLocation(HeapLocation value) {
-        if(values.contains(value)){
+        if (values.contains(value)) {
             return this;
         }
-        Set<HeapLocation> newValues  = getLocations();
+        Set<HeapLocation> newValues = getLocations();
         newValues.add(value);
         return new HeapLocationPowerSetLatticeElementImpl(newValues);
 
+    }
+
+    @Override
+    public HeapLocationPowerSetLatticeElement addLocations(Set<HeapLocation> locations) {
+        Set<HeapLocation> newValues = getLocations();
+        newValues.addAll(locations);
+        if (newValues.equals(getLocations())) {
+            return this;
+        }
+        return new HeapLocationPowerSetLatticeElementImpl(newValues);
     }
 
     @Override

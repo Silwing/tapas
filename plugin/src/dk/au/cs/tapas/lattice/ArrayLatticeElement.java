@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.Set;
+
 /**
  * Created by budde on 4/19/15.
  *
@@ -24,5 +26,14 @@ public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement>
 
     static MapArrayLatticeElement generateMap(){
         return new MapArrayLatticeElementImpl();
+    }
+
+    static ListArrayLatticeElement generateList(Set<HeapLocation> locationSet) {
+        return generateList(new HeapLocationPowerSetLatticeElementImpl(locationSet));
+    }
+
+    static MapArrayLatticeElement generateMap(IndexLatticeElement index, Set<HeapLocation> locationSet) {
+        MapLatticeElement<IndexLatticeElement, HeapLocationPowerSetLatticeElement> map = new MapLatticeElementImpl<>(i -> new HeapLocationPowerSetLatticeElementImpl());
+        return generateMap(map.addValue(index, i -> new HeapLocationPowerSetLatticeElementImpl(locationSet)));
     }
 }

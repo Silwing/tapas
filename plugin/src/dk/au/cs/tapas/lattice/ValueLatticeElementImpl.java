@@ -135,6 +135,11 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
         return BooleanLatticeElement.top;    }
 
     @Override
+    public ValueLatticeElement setArray(ArrayLatticeElement array) {
+        return new ValueLatticeElementImpl(array, getString(), getNumber(), getBoolean(), getNull());
+    }
+
+    @Override
     public BooleanLatticeElement toBoolean() {
         return
                 getArray().toBoolean()

@@ -79,6 +79,11 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
         return new ListArrayLatticeElementImpl(getLocations().addLocation(location));
     }
 
+    @Override
+    public ListArrayLatticeElement addLocations(Set<HeapLocation> locations) {
+        return new ListArrayLatticeElementImpl(getLocations().addLocations(locations));
+    }
+
     public boolean equals(Object object) {
         return  object == this || (object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations()));
     }

@@ -23,4 +23,8 @@ public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>
     BooleanLatticeElement notEqualOperation(ValueLatticeElement rightValue);
 
     BooleanLatticeElement notIdentical(ValueLatticeElement rightValue);
+
+    ValueLatticeElement setArray(ArrayLatticeElement array);
+
+
 }

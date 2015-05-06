@@ -129,9 +129,40 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
 
-    private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(ArrayWriteReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+    private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(
+            ArrayWriteReferenceAssignmentNode node,
+            AnalysisLatticeElement latticeElement, Context context) {
 
-        //TODO implement
+        for (HeapLocation location : node.getVariableLocationSet()) {
+            ValueLatticeElement value = latticeElement.getHeapValue(context, location);
+            ArrayLatticeElement array = value.getArray();
+            if (array.equals(ArrayLatticeElement.top)) {
+                continue;
+            }
+            ArrayLatticeElement newArray = ArrayLatticeElement.emptyArray;
+            if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
+                for (IndexLatticeElement index : generateArrayIndices(latticeElement.getStackValue(context, node.getWriteArgument()))) {
+                    if (index.equals(IndexLatticeElement.generateIntegerIndex(IntegerLatticeElement.generateElement(0)))) {
+                        newArray = newArray.join(ArrayLatticeElement.generateList(node.getValueLocationSet()));
+                    } else {
+                        newArray = newArray.join(ArrayLatticeElement.generateMap(index, node.getValueLocationSet()));
+                    }
+                }
+            } else if (array instanceof ListArrayLatticeElement) {
+                newArray = ((ListArrayLatticeElement) array).addLocations(node.getValueLocationSet());
+
+            } else if (array instanceof MapArrayLatticeElement) {
+                for (IndexLatticeElement index : generateArrayIndices(latticeElement.getStackValue(context, node.getWriteArgument()))) {
+                    newArray = newArray.join(ArrayLatticeElement.generateMap(index, node.getValueLocationSet()));
+                }
+
+            }
+            //If you "array write" to something that is initialized, but not an array, you get a warning and the variable is unchanged.
+            latticeElement = latticeElement.setHeapValue(context, location, value.setArray(newArray));
+
+        }
+
+
         return latticeElement;
     }
 
@@ -456,6 +487,9 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayWriteExpressionNode(ArrayWriteExpressionNode n, AnalysisLatticeElement l, Context c) {
+
+
+        //TODO implement
         return l;
     }
 
@@ -465,7 +499,7 @@ public class TypeAnalysisImpl implements Analysis {
             MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
             Set<HeapLocation> locations = new HashSet<>();
-            for(IndexLatticeElement arrayIndex: generateArrayIndices(index)){
+            for (IndexLatticeElement arrayIndex : generateArrayIndices(index)) {
                 locations.addAll(map.getValue(arrayIndex).getLocations());
             }
             ValueLatticeElement value = l.getHeap(c).getValue(locations, LatticeElement::join);
