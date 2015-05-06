@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.*;
+import dk.au.cs.tapas.cfg.graph.LibraryFunctionGraph;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
@@ -154,6 +155,10 @@ public class TypeAnalysisImpl implements Analysis {
             argumentSet.clear();
         }
 
+        final Context exitNodeContext = context.addNode(resultNode.getCallNode());
+        resultLattice = resultLattice.setHeap(context, resultLattice.getHeap(exitNodeContext)); //Setting the heap
+        resultLattice = resultLattice.setGlobals(context, resultLattice.getGlobals(exitNodeContext)); //Setting the globals
+
         if (resultNode.getExitNode().getCallArguments().length == 0) {
             // If void method, it returns null
             if (argument instanceof TemporaryVariableCallArgument) {
@@ -166,7 +171,6 @@ public class TypeAnalysisImpl implements Analysis {
             return resultLattice;
         }
 
-        final Context exitNodeContext = context.addNode(resultNode.getCallNode());
         if (argument instanceof TemporaryVariableCallArgument) {
             //Clearing stack variable before iteration. Just in case
             resultLattice = resultLattice.setStackValue(context, ((TemporaryVariableCallArgument) argument).getArgument(), new ValueLatticeElementImpl());
@@ -212,7 +216,7 @@ public class TypeAnalysisImpl implements Analysis {
 
         }
 
-        //Updating locals
+        //Plan: Take locals + stack from call-node lattice. Take globals + heap from exit.
 
 
         //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope. This should be done recursive on arrays and the like
@@ -301,10 +305,43 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseCallNode(CallNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseCallNode(CallNode node, AnalysisLatticeElement lattice, Context context) {
+
+        if (node instanceof LibraryFunctionGraph) {
+            //Should be handled by dedicated transfer function
+            throw new UnsupportedOperationException();
+        }
+
+        //Plan: Move heap from current context to new context. Set arguments in local scope.
+
+        Context newContext = context.addNode(node);
+
+        VariableName[] argumentNames = node.getFunctionGraph().getArgumentNames();
+        CallArgument[] callArguments = node.getCallArguments();
+
+        lattice = lattice.setHeap(newContext, lattice.getHeap(context)); //Setting heap
+        lattice = lattice.setGlobals(newContext, lattice.getGlobals(context)); //Setting globals
+
+        for (int i = 0; i < argumentNames.length; i++) {
+            CallArgument callArgument = callArguments[i];
+            //Setting arguments in local scope
+            if (callArgument instanceof HeapLocationSetCallArgument) {
+                lattice = lattice.setLocalsValue(
+                        newContext,
+                        argumentNames[i],
+                        ((HeapLocationSetCallArgument) callArgument).getArgument());
+            } else if (callArgument instanceof TemporaryVariableCallArgument){
+                lattice.setLocalsValue(
+                        newContext,
+                        argumentNames[i],
+                        lattice.getStackValue(context, ((TemporaryVariableCallArgument) callArgument).getArgument()));
+            }
+
+        }
+
 
         //TODO implement
-        return l;
+        return lattice;
     }
 
     private AnalysisLatticeElement analyseBinaryOperationNode(BinaryOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -312,8 +349,8 @@ public class TypeAnalysisImpl implements Analysis {
                 leftValue = latticeElement.getStackValue(context, node.getLeftOperandName()),
                 rightValue = latticeElement.getStackValue(context, node.getRightOperandName()),
                 targetValue;
-
-        switch (node.getOperator()){
+        //TODO more precision
+        switch (node.getOperator()) {
             case ADDITION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toNumber().add(rightValue.toNumber()));
                 break;
@@ -345,21 +382,22 @@ public class TypeAnalysisImpl implements Analysis {
                 targetValue = new ValueLatticeElementImpl(leftValue.notIdentical(rightValue));
                 break;
             case GREATER_THAN:
-                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().greaterThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThan(rightValue.toNumber()));
                 break;
             case LESS_THAN:
-                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().lessThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThan(rightValue.toNumber()));
                 break;
             case GREATER_THAN_OR_EQ:
-                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().greaterThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThanOrEqual(rightValue.toNumber()));
                 break;
             case LESS_THAN_OR_EQ:
-                targetValue =  new ValueLatticeElementImpl(leftValue.toNumber().lessThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThanOrEqual(rightValue.toNumber()));
                 break;
             case CONCATENATION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toStringLattice().concat(rightValue.toStringLattice()));
                 break;
             default:
+                //Other operations are covered by other methods
                 return latticeElement;
         }
 
@@ -403,7 +441,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseArrayReadExpressionNode(ArrayReadExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement val = l.getStackValue(c, n.getArrayName());
-        if(val.getArray() instanceof MapArrayLatticeElement) {
+        if (val.getArray() instanceof MapArrayLatticeElement) {
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
             IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
             IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
@@ -419,14 +457,14 @@ public class TypeAnalysisImpl implements Analysis {
         IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
         IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
 
-        for(HeapLocation loc : n.getValueHeapLocationSet()) {
+        for (HeapLocation loc : n.getValueHeapLocationSet()) {
             ValueLatticeElement array = l.getHeapValue(c, loc);
-            if(array.getArray() instanceof MapArrayLatticeElement) {
-                MapArrayLatticeElement map = (MapArrayLatticeElement)array.getArray();
+            if (array.getArray() instanceof MapArrayLatticeElement) {
+                MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
                 target.addAll(map.getValue(sindex).getLocations());
                 target.addAll(map.getValue(iindex).getLocations());
-            } else if(array.getArray() instanceof ListArrayLatticeElement) {
-                ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+            } else if (array.getArray() instanceof ListArrayLatticeElement) {
+                ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
                 target.addAll(list.getLocations().getLocations());
             }
         }

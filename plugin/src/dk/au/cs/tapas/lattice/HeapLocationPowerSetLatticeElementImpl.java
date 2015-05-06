@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +19,10 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
 
     public HeapLocationPowerSetLatticeElementImpl(Set<HeapLocation> values) {
         this.values = values;
+    }
+
+    public HeapLocationPowerSetLatticeElementImpl(HeapLocation newLocation) {
+        this(new HashSet<>(Arrays.asList(new HeapLocation[]{newLocation})));
     }
 
     @Override

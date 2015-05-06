@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import java.util.Set;
+
 /**
  * Created by budde on 4/28/15.
  */
@@ -65,4 +67,8 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
 
     AnalysisLatticeElement joinStackValue(Context context, TemporaryVariableName name, ValueLatticeElement value);
+
+    AnalysisLatticeElement setLocalsValue(Context context, VariableName name, Set<HeapLocation> argument);
+
+    AnalysisLatticeElement setLocalsValue(Context context, VariableName name, ValueLatticeElement argument);
 }
