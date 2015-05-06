@@ -32,7 +32,13 @@ public interface IndexLatticeElement extends LatticeElement<IndexLatticeElement>
             return new StringIndexLatticeElementImpl(element);
         }
     }
+    static IndexLatticeElement generateStringLIndex(String element){
+        return generateStringLIndex(StringLatticeElement.generateStringLatticeElement(element));
+    }
 
     boolean containedIn(IndexLatticeElement other);
 
+    static IndexLatticeElement generateIntegerIndex(int i) {
+        return generateIntegerIndex(IntegerLatticeElement.generateElement(i));
+    }
 }

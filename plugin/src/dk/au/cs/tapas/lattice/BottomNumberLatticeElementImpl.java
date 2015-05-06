@@ -113,6 +113,6 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 }

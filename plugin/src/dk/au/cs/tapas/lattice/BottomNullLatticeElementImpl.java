@@ -47,7 +47,7 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     }
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 
     @Override

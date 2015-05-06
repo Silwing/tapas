@@ -106,7 +106,7 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 
     @Override

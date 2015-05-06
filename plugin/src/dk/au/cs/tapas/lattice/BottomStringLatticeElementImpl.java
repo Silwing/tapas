@@ -56,7 +56,7 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     }
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 
 

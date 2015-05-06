@@ -111,6 +111,6 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     }
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 }

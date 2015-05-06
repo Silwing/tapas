@@ -52,6 +52,6 @@ public class FalseBooleanLatticeElementImpl extends MiddleLatticeElementImpl<Boo
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateIntegerIndex(0);
     }
 }

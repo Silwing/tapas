@@ -52,7 +52,7 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 
     @Override
