@@ -107,14 +107,15 @@ public class TypeAnalysisImpl implements Analysis {
         ValueLatticeElement listValue = new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(node.getValueLocationSet()));
 
 
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(node.getValueLocationSet(), LatticeElement::join));
         for (HeapLocation location : node.getVariableLocationSet()) {
             latticeElement = latticeElement.joinHeapValue(context, location, listValue);
         }
-
         return latticeElement;
     }
 
     private AnalysisLatticeElement analyseVariableReferenceAssignmentNode(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(node.getValueLocationSet(), LatticeElement::join));
         if (context.isEmpty()) {
             latticeElement = latticeElement.setGlobalsValue(context, node.getVariableName(), node.getValueLocationSet());
         } else {
@@ -132,39 +133,57 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(
             ArrayWriteReferenceAssignmentNode node,
             AnalysisLatticeElement latticeElement, Context context) {
-
+        Set<HeapLocation> valueLocations = node.getValueLocationSet();
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
+        //For each possible location
         for (HeapLocation location : node.getVariableLocationSet()) {
             ValueLatticeElement value = latticeElement.getHeapValue(context, location);
-            ArrayLatticeElement array = value.getArray();
-            if (array.equals(ArrayLatticeElement.top)) {
-                continue;
-            }
-            ArrayLatticeElement newArray = ArrayLatticeElement.emptyArray;
-            if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
-                for (IndexLatticeElement index : generateArrayIndices(latticeElement.getStackValue(context, node.getWriteArgument()))) {
-                    if (index.equals(IndexLatticeElement.generateIntegerIndex(IntegerLatticeElement.generateElement(0)))) {
-                        newArray = newArray.join(ArrayLatticeElement.generateList(node.getValueLocationSet()));
-                    } else {
-                        newArray = newArray.join(ArrayLatticeElement.generateMap(index, node.getValueLocationSet()));
-                    }
-                }
-            } else if (array instanceof ListArrayLatticeElement) {
-                newArray = ((ListArrayLatticeElement) array).addLocations(node.getValueLocationSet());
+            ArrayLatticeElement array = writeArray(
+                    value.getArray(),
+                    valueLocations,
+                    generateArrayIndices(
+                            latticeElement.getStackValue(
+                                    context,
+                                    node.getWriteArgument())));
 
-            } else if (array instanceof MapArrayLatticeElement) {
-                for (IndexLatticeElement index : generateArrayIndices(latticeElement.getStackValue(context, node.getWriteArgument()))) {
-                    newArray = newArray.join(ArrayLatticeElement.generateMap(index, node.getValueLocationSet()));
-                }
-
-            }
             //If you "array write" to something that is initialized, but not an array, you get a warning and the variable is unchanged.
-            latticeElement = latticeElement.setHeapValue(context, location, value.setArray(newArray));
+            latticeElement = latticeElement.setHeapValue(context,location,value.setArray(array));
 
         }
 
 
         return latticeElement;
     }
+
+
+    ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, IndexLatticeElement[] arrayIndices) {
+        //If location is top array, do nothing
+        if (array.equals(ArrayLatticeElement.top)) {
+            return array;
+        }
+        if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
+            //For every possible index
+            for (IndexLatticeElement index : arrayIndices) {
+                //If not initialized as array, or empty array, and index is 0. Then create list.
+                if (index.equals(IndexLatticeElement.generateIntegerIndex(IntegerLatticeElement.generateElement(0)))) {
+                    array = array.join(ArrayLatticeElement.generateList(valueLocationSet));
+                } else {
+                    //If not initialized as array, or empty array, and index is not 0. Then create map.
+                    array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
+                }
+            }
+        } else if (array instanceof ListArrayLatticeElement) {
+            array = ((ListArrayLatticeElement) array).addLocations(valueLocationSet);
+
+        } else if (array instanceof MapArrayLatticeElement) {
+            for (IndexLatticeElement index : arrayIndices) {
+                array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
+            }
+
+        }
+        return array;
+    }
+
 
     private AnalysisLatticeElement analyseUnaryOperationNode(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement value = l.getStackValue(c, n.getOperandName());
