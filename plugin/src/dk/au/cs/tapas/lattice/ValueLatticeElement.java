@@ -6,6 +6,14 @@ package dk.au.cs.tapas.lattice;
  */
 public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>, Coercible{
 
+    ValueLatticeElement top = new ValueLatticeElementImpl(
+            ArrayLatticeElement.top,
+            StringLatticeElement.top,
+            NumberLatticeElement.top,
+            BooleanLatticeElement.top,
+            NullLatticeElement.top
+    );
+
     ArrayLatticeElement getArray();
 
     StringLatticeElement getString();
