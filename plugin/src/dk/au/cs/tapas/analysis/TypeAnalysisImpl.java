@@ -26,6 +26,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     @Override
     public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
+        l.print(new PrintStreamLatticePrinter(System.out));
         Node n = nc.getNode();
         Context c = nc.getContext();
         if (n instanceof LocationVariableExpressionNode) {
@@ -144,10 +145,11 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement latticeElement, Context context) {
+    private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement resultLattice, Context context) {
         CallArgument argument = resultNode.getCallArgument();
+        final AnalysisLatticeElement inputLattice = resultLattice;
 
-        AnalysisLatticeElement resultLattice = resultNode.getCallLattice(context);
+        AnalysisLatticeElement callLattice = resultNode.getCallLattice(context);
 
         Set<HeapLocation> argumentSet = null;
         if (argument instanceof HeapLocationSetCallArgument) {
@@ -156,8 +158,12 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         final Context exitNodeContext = context.addNode(resultNode.getCallNode());
+
+        //Taking globals from prev. lattice and restoring locals from call lattice.
         resultLattice = resultLattice.setHeap(context, resultLattice.getHeap(exitNodeContext)); //Setting the heap
         resultLattice = resultLattice.setGlobals(context, resultLattice.getGlobals(exitNodeContext)); //Setting the globals
+        resultLattice = resultLattice.setLocals(context, callLattice.getLocals(context)); //Setting the locals
+        resultLattice = resultLattice.setStack(context, callLattice.getStack(context)); //Setting the stack
 
         if (resultNode.getExitNode().getCallArguments().length == 0) {
             // If void method, it returns null
@@ -178,10 +184,8 @@ public class TypeAnalysisImpl implements Analysis {
         for (CallArgument exitArgument : resultNode.getExitNode().getCallArguments()) {
             if (argument instanceof HeapLocationSetCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
                 //If alias method and alias return, then parse locations
-                for (HeapLocation location : ((HeapLocationSetCallArgument) exitArgument).getArgument()) {
-                    argumentSet.add(location);
-                    resultLattice = resultLattice.setHeapValue(context, location, h -> latticeElement.getHeapValue(exitNodeContext, h));
-                }
+                argumentSet.addAll(((HeapLocationSetCallArgument) exitArgument).getArgument());
+
 
             } else if (argument instanceof HeapLocationSetCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
                 //If alias method and stack variable. return, then create location with stack value.
@@ -190,7 +194,7 @@ public class TypeAnalysisImpl implements Analysis {
                         context,
                         location,
                         h ->
-                                latticeElement.getStackValue(
+                                inputLattice.getStackValue(
                                         exitNodeContext,
                                         ((TemporaryVariableCallArgument) exitArgument).getArgument()));
                 argumentSet.add(location);
@@ -201,8 +205,7 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.joinStackValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        locationSetToValue(latticeElement.getValue(exitNodeContext), finalExit.getArgument()));
-                //TODO check this
+                        inputLattice.getHeap(exitNodeContext).getValue(finalExit.getArgument(), LatticeElement::join));
 
 
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
@@ -211,23 +214,12 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.setStackValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        v -> latticeElement.getStackValue(exitNodeContext, finalExit.getArgument()));
+                        v -> inputLattice.getStackValue(exitNodeContext, finalExit.getArgument()));
             }
 
         }
 
-        //Plan: Take locals + stack from call-node lattice. Take globals + heap from exit.
-
-
-        //TODO migrate heap! Take locals + globals addresses from old scope and add heap values from new scope. This should be done recursive on arrays and the like
-        //Need to see book
-
         return resultLattice;
-    }
-
-
-    private ValueLatticeElement locationSetToValue(StateLatticeElement latticeElement, Set<HeapLocation> locations) {
-        return latticeElement.getHeap().getValue(locations, LatticeElement::join);
     }
 
 
@@ -473,7 +465,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce((ListArrayLatticeElement) new ListArrayLatticeElementImpl(), ListArrayLatticeElement::addLocation, (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
+        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce(new ListArrayLatticeElementImpl(), ListArrayLatticeElement::addLocation, (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
         return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, acc.getHeapValue(c, h).join(newTarget)), (l1, l2) -> l1.join(l2));
     }
@@ -498,13 +490,17 @@ public class TypeAnalysisImpl implements Analysis {
         if (context.isEmpty()) {
             if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
                 HeapLocation location = new HeapLocationImpl();
-                latticeElement = latticeElement.addLocationToGlobal(context, name, location);
+                latticeElement = latticeElement
+                        .addLocationToGlobal(context, name, location)
+                        .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top)); // Initialize to Null
             }
             newLocations = latticeElement.getGlobalsValue(context, name).getLocations();
         } else {
             if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
                 HeapLocation location = new HeapLocationImpl();
-                latticeElement = latticeElement.addLocationToLocal(context, name, location);
+                latticeElement = latticeElement
+                        .addLocationToLocal(context, name, location)
+                        .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top)); // Initialize to Null
             }
             newLocations = latticeElement.getLocalsValue(context, name).getLocations();
         }
@@ -512,7 +508,6 @@ public class TypeAnalysisImpl implements Analysis {
 
         n.getTargetLocationSet().clear(); // TODO: is this right?
         n.getTargetLocationSet().addAll(newLocations);
-        //TODO initialize to NULL?
 
         return latticeElement;
     }
