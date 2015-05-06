@@ -557,10 +557,16 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
-        ListArrayLatticeElement list = n.getValueHeapLocationSet().stream().reduce(new ListArrayLatticeElementImpl(), ListArrayLatticeElement::addLocation, (l1, l2) -> (ListArrayLatticeElement) l1.join(l2));
-        ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
-        // TODO: this is completely wrong I think :S
-        return n.getTargetLocationSet().stream().reduce(l, (acc, h) -> acc.setHeapValue(c, h, acc.getHeapValue(c, h).join(newTarget)), (l1, l2) -> l1.join(l2));
+        Set<HeapLocation> target = n.getTargetLocationSet();
+        target.clear();
+
+        for(HeapLocation loc : n.getValueHeapLocationSet()) {
+            HeapLocation newLoc = new HeapLocationImpl();
+            target.add(newLoc);
+            l = l.joinHeapValue(c, loc, new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(new HeapLocationPowerSetLatticeElementImpl(newLoc))));
+        }
+
+        return l;
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
