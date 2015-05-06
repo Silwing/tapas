@@ -458,7 +458,7 @@ public class TypeAnalysisImpl implements Analysis {
         if (array.getArray() instanceof MapArrayLatticeElement) {
             MapArrayLatticeElement map = (MapArrayLatticeElement)array.getArray();
             ValueLatticeElement index = l.getStackValue(c, n.getIndexName());
-            IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString());
+            IndexLatticeElement sindex = IndexLatticeElement.generateStringLIndex(index.getString()); //TODO use .toArrayIndex()
             IndexLatticeElement iindex = IndexLatticeElement.generateIntegerIndex(index.getNumber().toInteger());
 
             ValueLatticeElement value = l.getHeap(c).getValue(map.getValue(sindex).join(map.getValue(iindex)).join(map.getValue(IndexLatticeElement.top)).getLocations(), LatticeElement::join);
