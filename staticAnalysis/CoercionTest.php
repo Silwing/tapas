@@ -18,5 +18,7 @@ $h = $g + 4;
 $i = null ? 42 : 1337;
 $j = $a[null];
 $a[null] = "Hmm";
+$l = 1;
+$k = array_pop($l);
 
-var_dump($a, $b,$d, $e, $f, $h, $i, $j);
+var_dump($a, $b,$d, $e, $f, $h, $i, $j, $k, $l);

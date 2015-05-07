@@ -94,7 +94,14 @@ public class TypeAnalysisImpl implements Analysis {
             return analyseVariableReferenceAssignmentNode((VariableReferenceAssignmentNode) n, l, c);
         }
         if (n instanceof ResultNode) {
-            return analyseResultNode((ResultNode) n, l, c);
+            ResultNode node = (ResultNode)n;
+            if(node.getFunctionGraph() instanceof LibraryFunctionGraph) {
+                if(node.getCallNode().getFunctionName().equals("\\array_pop")) {
+                    return analyseArrayPopLibraryFunction(node, l, c);
+                }
+                throw new UnsupportedOperationException("ResultNode for library function " + node.getCallNode().getFunctionName() + " is not implemented.");
+            }
+            return analyseResultNode(node, l, c);
         }
         if (n instanceof StartNode) {
             return analyseStartNode((StartNode) n, l, c);
@@ -329,6 +336,28 @@ public class TypeAnalysisImpl implements Analysis {
         return resultLattice;
     }
 
+    private AnalysisLatticeElement analyseArrayPopLibraryFunction(ResultNode node, AnalysisLatticeElement lattice, Context context) {
+        Set<HeapLocation> argLocations = ((HeapLocationSetCallArgument)node.getCallNode().getCallArguments()[0]).getArgument();
+        TemporaryVariableName result = ((TemporaryVariableCallArgument)node.getCallArgument()).getArgument();
+
+        ValueLatticeElement newVal = new ValueLatticeElementImpl();
+        for(HeapLocation loc : argLocations) {
+            ValueLatticeElement val = lattice.getHeapValue(context, loc);
+            if(val.getArray() instanceof ListArrayLatticeElement) {
+                newVal = newVal.join(lattice.getHeap(context).getValue(((ListArrayLatticeElement)val.getArray()).getLocations().getLocations(), LatticeElement::join));
+            }
+            if(!val.getNumber().equals(NumberLatticeElement.bottom)
+                    || !val.getString().equals(StringLatticeElement.bottom)
+                    || !val.getBoolean().equals(BooleanLatticeElement.bottom)
+                    || !val.getNull().equals(NullLatticeElement.bottom)) {
+                newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
+            }
+            //TODO: should we somehow report list operation if this is a map?
+        }
+
+        return lattice.setStackValue(context, result, newVal);
+    }
+
 
     private AnalysisLatticeElement analyseReadNode(ReadNode n, AnalysisLatticeElement l, Context c) {
         HeapLocationPowerSetLatticeElement locations = getVariableLocation(n.getVariableName(), c, l);
@@ -395,7 +424,10 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseCallNode(CallNode node, AnalysisLatticeElement lattice, Context context) {
 
-        if (node instanceof LibraryFunctionGraph) {
+        if (node.getFunctionGraph() instanceof LibraryFunctionGraph) {
+            if(node.getFunctionName().equals("\\array_pop")) {
+                return lattice; // noop
+            }
             //Should be handled by dedicated transfer function
             throw new UnsupportedOperationException();
         }
