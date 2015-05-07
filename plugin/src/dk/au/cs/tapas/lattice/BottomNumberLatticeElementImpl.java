@@ -72,7 +72,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return other; // TODO: negate
+        return other.minus();
     }
 
     @Override
@@ -114,7 +114,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement minus() {
-        return null; //TODO implement
+        return NumberLatticeElement.generateNumberLatticeElement(0);
     }
     @Override
     public IndexLatticeElement toArrayIndex() {
