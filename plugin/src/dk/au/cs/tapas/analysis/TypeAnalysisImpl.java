@@ -311,14 +311,21 @@ public class TypeAnalysisImpl implements Analysis {
 
 
     private AnalysisLatticeElement analyseReadNode(ReadNode n, AnalysisLatticeElement l, Context c) {
-        HeapLocationPowerSetLatticeElement locations;
-        if (c.isEmpty()) {
-            locations = l.getGlobalsValue(c, n.getVariableName());
-        } else {
-            locations = l.getLocalsValue(c, n.getVariableName());
-        }
+        HeapLocationPowerSetLatticeElement locations = getVariableLocation(n.getVariableName(), c, l);
         //Reading the joint value from heap to stack
         return l.setStackValue(c, n.getTargetName(), name -> l.getHeap(c).getValue(locations.getLocations(), LatticeElement::join));
+    }
+
+    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement){
+        if(isSuperGlobal(name) || context.isEmpty()){
+            return latticeElement.getGlobalsValue(context, name);
+        }
+
+        return latticeElement.getLocalsValue(context, name);
+    }
+
+    private boolean isSuperGlobal(VariableName variableName) {
+        return variableName.getName().matches("^(GLOBALS|(_(POST|GET|SESSION|COOKIE|SERVER|REQUEST|FILES|ENV)))$");
     }
 
     private AnalysisLatticeElement analyseReadConstNode(ReadConstNode n, AnalysisLatticeElement l, Context c) {
@@ -592,31 +599,24 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
         VariableName name = n.getVariableName();
-        Set<HeapLocation> newLocations;
-        //If no locations, create one.
-        if (context.isEmpty()) {
-            if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
-                HeapLocation location = new HeapLocationImpl();
-                latticeElement = latticeElement
-                        .addLocationToGlobal(context, name, location)
-                        .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top)); // Initialize to Null
-            }
-            newLocations = latticeElement.getGlobalsValue(context, name).getLocations();
-        } else {
-            if (latticeElement.getGlobalsValue(context, name).getLocations().size() == 0) {
-                HeapLocation location = new HeapLocationImpl();
-                latticeElement = latticeElement
-                        .addLocationToLocal(context, name, location)
-                        .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top)); // Initialize to Null
-            }
-            newLocations = latticeElement.getLocalsValue(context, name).getLocations();
+        Set<HeapLocation> newLocations = getVariableLocation(name, context, latticeElement).getLocations();
+        if(newLocations.isEmpty()){
+            HeapLocation location = new HeapLocationImpl();
+            latticeElement = addVariableLocation(location, name, context, latticeElement).setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
+            newLocations.add(location);
         }
-
-
-        n.getTargetLocationSet().clear(); // TODO: is this right?
+        n.getTargetLocationSet().clear();
         n.getTargetLocationSet().addAll(newLocations);
 
         return latticeElement;
+    }
+
+    private AnalysisLatticeElement addVariableLocation(HeapLocation location, VariableName name, Context context, AnalysisLatticeElement latticeElement) {
+        if(isSuperGlobal(name) || context.isEmpty()){
+            return latticeElement.addLocationToGlobal(context, name, location);
+        }
+
+        return  latticeElement.addLocationToLocal(context, name, location);
     }
 
     //TODO implement support for super-globals
