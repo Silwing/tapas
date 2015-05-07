@@ -73,12 +73,12 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
-    public NumberLatticeElement divide(NumberLatticeElement other) {
+    public ValueLatticeElement divide(NumberLatticeElement other) {
         return top;
     }
 
     @Override
-    public NumberLatticeElement modulo(NumberLatticeElement other) {
+    public ValueLatticeElement modulo(NumberLatticeElement other) {
         return top;
     }
 

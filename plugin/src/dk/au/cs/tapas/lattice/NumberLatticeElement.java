@@ -57,9 +57,9 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
 
     NumberLatticeElement multiply(NumberLatticeElement other);
 
-    NumberLatticeElement divide(NumberLatticeElement other);
+    ValueLatticeElement divide(NumberLatticeElement other);
 
-    NumberLatticeElement modulo(NumberLatticeElement other);
+    ValueLatticeElement modulo(NumberLatticeElement other);
 
     NumberLatticeElement exponent(NumberLatticeElement other);
 

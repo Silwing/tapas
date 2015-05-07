@@ -97,12 +97,12 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.bottom;
+        return NumberLatticeElement.top;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.bottom;
+        return IntegerLatticeElement.top;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.bottom;
+        return NumberLatticeElement.top;
     }
 
     @Override
