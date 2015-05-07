@@ -67,49 +67,50 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return top;
+        return other;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return top;
+        return other; // TODO: negate
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        return top;
+        return NumberLatticeElement.generateNumberLatticeElement(0);
     }
 
     @Override
-    public NumberLatticeElement divide(NumberLatticeElement other) {
-        return top;
+    public ValueLatticeElement divide(NumberLatticeElement other) {
+        return other.equals(this) ? new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse) : new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
     }
 
     @Override
-    public NumberLatticeElement modulo(NumberLatticeElement other) {
-        return top;
+    public ValueLatticeElement modulo(NumberLatticeElement other) {
+        return other.equals(this) ? new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse) : new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
-        return top;
+        return other.equals(this) ? NumberLatticeElement.generateNumberLatticeElement(1) : NumberLatticeElement.generateNumberLatticeElement(0);
     }
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        return BooleanLatticeElement.boolFalse;    }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        return other.equals(this) ? BooleanLatticeElement.boolFalse : BooleanLatticeElement.boolTrue;    }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        return other.equals(this) ? BooleanLatticeElement.boolTrue : greaterThan(other);
+    }
 
     @Override
-    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
-        return BooleanLatticeElement.top;    }
+    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
+        return other.equals(this) ? BooleanLatticeElement.boolTrue : lessThan(other);    }
 
     @Override
     public IndexLatticeElement toArrayIndex() {

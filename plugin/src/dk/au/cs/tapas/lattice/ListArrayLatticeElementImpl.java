@@ -95,12 +95,12 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.generateNumberLatticeElement(1);
+        return NumberLatticeElement.top;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.generateElement(1);
+        return IntegerLatticeElement.top;
     }
 
 

@@ -32,22 +32,22 @@ public class BottomArrayLatticeElementImpl implements ArrayLatticeElement{
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return BooleanLatticeElement.bottom;
+        return BooleanLatticeElement.top;
     }
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.bottom;
+        return NumberLatticeElement.top;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.bottom;
+        return IntegerLatticeElement.top;
     }
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return IndexLatticeElement.bottom;
+        return IndexLatticeElement.top;
     }
 
     @Override

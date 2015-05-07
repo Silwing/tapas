@@ -441,10 +441,10 @@ public class TypeAnalysisImpl implements Analysis {
                 targetValue = new ValueLatticeElementImpl(leftValue.toNumber().multiply(rightValue.toNumber()));
                 break;
             case DIVISION:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().divide(rightValue.toNumber()));
+                targetValue = leftValue.toNumber().divide(rightValue.toNumber());
                 break;
             case MODULO:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().modulo(rightValue.toNumber()));
+                targetValue = leftValue.toNumber().modulo(rightValue.toNumber());
                 break;
             case EXPONENTIATION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toNumber().exponent(rightValue.toNumber()));
