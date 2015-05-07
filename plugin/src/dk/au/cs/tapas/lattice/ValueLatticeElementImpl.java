@@ -33,6 +33,14 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
         this.nullLatticeElement = nullLatticeElement;
     }
 
+    public ValueLatticeElementImpl(NumberLatticeElement number, BooleanLatticeElement bool) {
+        this.array = ArrayLatticeElement.bottom;
+        this.string = StringLatticeElement.bottom;
+        this.number = number;
+        this.bool = bool;
+        this.nullLatticeElement = NullLatticeElement.bottom;
+    }
+
     public ValueLatticeElementImpl(ArrayLatticeElement array) {
         this(
                 array,

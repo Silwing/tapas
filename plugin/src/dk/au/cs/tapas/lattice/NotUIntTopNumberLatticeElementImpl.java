@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 /**
  * Created by budde on 4/20/15.
  *
@@ -59,50 +61,75 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
 
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return this;
+        if(other.containedIn(this)) return top;
+
+        return this;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return this;
+        if(other.containedIn(this)) return top;
+
+        return this;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
+        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(0);
+
         return top;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        return new ValueLatticeElementImpl(NumberLatticeElement.top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        return new ValueLatticeElementImpl(NumberLatticeElement.top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
+        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(1);
+
         return top;
     }
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
-    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
-        return BooleanLatticeElement.top;    }
+    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
     public IndexLatticeElement toArrayIndex() {
@@ -112,6 +139,6 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
 
     @Override
     public NumberLatticeElement minus() {
-        return null; //TODO implement
+        return this;
     }
 }
