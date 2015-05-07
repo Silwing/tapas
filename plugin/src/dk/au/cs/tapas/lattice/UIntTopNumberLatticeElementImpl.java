@@ -55,7 +55,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public NumberLatticeElement decrement() {
-        return this;
+        return NumberLatticeElement.top;
     }
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
