@@ -31,5 +31,6 @@ $t = -2;
 $u = $t < $f;
 $v = $f < $t;
 $w = 5/2;
+$x = -$z;
 
-var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w);
+var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w, $x);

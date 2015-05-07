@@ -81,12 +81,12 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        return new ValueLatticeElementImpl(this);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        return new ValueLatticeElementImpl(this);
     }
 
     @Override
@@ -101,7 +101,10 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
@@ -113,7 +116,7 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement minus() {
-        return null; //TODO implement
+        return this;
     }
 
     @Override

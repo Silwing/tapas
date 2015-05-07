@@ -38,7 +38,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public NumberLatticeElement minus() {
-        return null; //TODO implement
+        return NumberLatticeElement.generateNumberLatticeElement(-getNumber());
     }
     @Override
     public BooleanLatticeElement toBoolean() {
