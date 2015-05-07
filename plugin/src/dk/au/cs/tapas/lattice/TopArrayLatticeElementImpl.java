@@ -46,7 +46,7 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.bottom;
     }
 
     @Override

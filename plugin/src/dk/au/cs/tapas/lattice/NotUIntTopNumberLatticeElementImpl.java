@@ -106,6 +106,6 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateIntegerIndex(toInteger());
     }
 }

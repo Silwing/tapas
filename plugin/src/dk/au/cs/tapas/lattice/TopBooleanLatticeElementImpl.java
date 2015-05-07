@@ -64,6 +64,6 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateIntegerIndex(toInteger());
     }
 }

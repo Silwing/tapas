@@ -51,6 +51,6 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateStringLIndex(toStringLattice());
     }
 }

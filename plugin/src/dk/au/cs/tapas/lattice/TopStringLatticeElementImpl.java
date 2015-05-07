@@ -60,6 +60,6 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateStringLIndex(this);
     }
 }
