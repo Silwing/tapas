@@ -6,11 +6,11 @@ import dk.au.cs.tapas.cfg.graph.*;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/22/15.
@@ -18,11 +18,12 @@ import java.util.Set;
  */
 public class PsiParserImpl implements PsiParser {
 
+    Map<String, Supplier<FunctionGraph>> functionGraphSuppliers = new HashMap<>();
     Map<String, FunctionGraph> functionGraphs = new HashMap<>();
     private FunctionGraphImpl currentFunctionGraph;
 
     public PsiParserImpl() {
-        functionGraphs.put("\\array_pop", new LibraryFunctionGraphImpl(new boolean[]{true}, false));
+        functionGraphSuppliers.put("\\array_pop", () -> new LibraryFunctionGraphImpl(new boolean[]{true}, false));
     }
 
 
@@ -79,12 +80,12 @@ public class PsiParserImpl implements PsiParser {
     }
 
     public GraphGenerator parseFunction(Function element, GraphGenerator generator) {
-        functionGraphs.put(element.getFQN(), createFunctionGraph(element));
+        functionGraphSuppliers.put(element.getFQN(), createFunctionGraphSupplier(element));
         return generator;
     }
 
-    private FunctionGraph createFunctionGraph(Function element) {
-        return new FunctionGraphImpl(this, element);
+    private Supplier<FunctionGraph> createFunctionGraphSupplier(Function element) {
+        return () -> new FunctionGraphImpl(this, element);
     }
 
     public GraphGenerator parseExpression(PhpExpression element, GraphGenerator generator) {
@@ -180,7 +181,83 @@ public class PsiParserImpl implements PsiParser {
 
     @Override
     public Map<String, FunctionGraph> getFunctions() {
-        return functionGraphs;
+        return new Map<String, FunctionGraph>() {
+            @Override
+            public int size() {
+                return functionGraphSuppliers.size();
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return functionGraphSuppliers.isEmpty();
+            }
+
+            @Override
+            public boolean containsKey(Object key) {
+                return functionGraphSuppliers.containsKey(key);
+            }
+
+            @Override
+            public boolean containsValue(Object value) {
+                return value instanceof FunctionGraph && values().contains(value);
+            }
+
+            @Override
+            public FunctionGraph get(Object key) {
+                if(!(key instanceof String)){
+                    return null;
+                }
+                if(!functionGraphSuppliers.containsKey(key)){
+                    return null;
+                }
+                if(functionGraphs.containsKey(key)){
+                    return functionGraphs.get(key);
+                }
+                FunctionGraph graph = functionGraphSuppliers.get(key).get();
+                functionGraphs.put((String) key, graph);
+                return graph;
+            }
+
+            @Override
+            public FunctionGraph put(String key, FunctionGraph value) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public FunctionGraph remove(Object key) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public void putAll(@NotNull Map<? extends String, ? extends FunctionGraph> m) {
+                throw new UnsupportedOperationException();
+
+            }
+
+            @Override
+            public void clear() {
+                throw new UnsupportedOperationException();
+
+            }
+
+            @NotNull
+            @Override
+            public Set<String> keySet() {
+                return functionGraphSuppliers.keySet();
+            }
+
+            @NotNull
+            @Override
+            public Collection<FunctionGraph> values() {
+                return keySet().stream().map(this::get).collect(Collectors.toCollection(LinkedList::new));
+            }
+
+            @NotNull
+            @Override
+            public Set<Entry<String, FunctionGraph>> entrySet() {
+                return keySet().stream().map(key -> new AbstractMap.SimpleEntry<>(key, get(key))).collect(Collectors.toSet());
+            }
+        };
     }
 
     @Override

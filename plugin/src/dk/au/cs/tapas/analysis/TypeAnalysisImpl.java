@@ -23,9 +23,9 @@ public class TypeAnalysisImpl implements Analysis {
     public AnalysisLatticeElement getStartLattice() {
         AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
         for (VariableName name: VariableName.superGlobals){
-            lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
+            lattice = lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
         }
-
+        lattice.print(new PrintStreamLatticePrinter(System.out));
         return lattice;
     }
 

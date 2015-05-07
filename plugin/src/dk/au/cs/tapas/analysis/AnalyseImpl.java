@@ -25,17 +25,10 @@ public class AnalyseImpl implements Analyse {
         this.analysis = analysis;
         ContextNodePair entryNode = new ContextNodePairImpl(graph.getEntryNode());
         inLatticeMap.put(entryNode, analysis.getStartLattice());
-        createWorklist(entryNode);
+        worklist.addAll(graph.getFlow(entryNode).stream().map(successorPair -> new PairImpl<>(entryNode, successorPair)).collect(Collectors.toList()));
         iterateWorklist();
     }
 
-    private void createWorklist(ContextNodePair entryNode) {
-
-
-        for(ContextNodePair successorPair : graph.getFlow( entryNode)) {
-            worklist.addAll(graph.getFlow(successorPair).stream().map(m -> new PairImpl<>(successorPair, m)).collect(Collectors.toList()));
-        }
-    }
 
     private AnalysisLatticeElement inLatticeElement(ContextNodePair pair){
         AnalysisLatticeElement element;
