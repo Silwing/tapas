@@ -24,11 +24,12 @@ $m = 2;
 $n = pow($m,$f);
 $o = pow($f,$m);
 $p = pow($f, $f);
-$q = $f >= $f;
-$r = $m >= $f;
-$s = $f >= $m;
+$q = $f < $f;
+$r = $m < $f;
+$s = $f < $m;
 $t = -2;
-$u = $t >= $f;
-$v = $f >= $t;
+$u = $t < $f;
+$v = $f < $t;
+$w = 5/2;
 
-var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v);
+var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w);
