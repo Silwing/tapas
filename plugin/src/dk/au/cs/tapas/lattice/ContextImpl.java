@@ -10,11 +10,12 @@ import java.util.List;
  */
 public class ContextImpl implements Context{
     private final LinkedList<CallNode> nodes;
-    private static final int limit = 5;
+    private static final int limit = 3;
 
 
     public ContextImpl(List<CallNode> nodes) {
         this.nodes = new LinkedList<>(nodes);
+
     }
 
     public ContextImpl() {
@@ -23,15 +24,12 @@ public class ContextImpl implements Context{
 
     @Override
     public List<CallNode> getNodes() {
-        return new LinkedList<>(nodes);
+        return new LinkedList<>(getView());
     }
 
     @Override
     public Context addNode(CallNode node) {
         LinkedList<CallNode> newList = new LinkedList<>(nodes);
-        if(newList.size() == limit){
-            newList.removeFirst();
-        }
         newList.add(node);
         return new ContextImpl(newList);
     }
@@ -55,16 +53,20 @@ public class ContextImpl implements Context{
 
 
     public boolean equals(Object other) {
-        return other instanceof Context && other.hashCode() == hashCode();
+        return other instanceof ContextImpl && ((ContextImpl) other).getView().equals(getView());
     }
 
     @Override
     public String toString() {
-        return "context"+nodes;
+        return "context"+getView();
     }
 
     @Override
     public int hashCode() {
-        return nodes.hashCode();
+        return getView().hashCode();
+    }
+
+    private List<CallNode> getView(){
+        return nodes.subList(Math.max(0, nodes.size()-limit), nodes.size());
     }
 }

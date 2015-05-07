@@ -66,7 +66,7 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
 
     @Override
     public AnalysisLatticeElement getCallLattice(Context context) {
-        return latticeMap.get(context).removeLast();
+        return latticeMap.get(context).getLast();
     }
 
 

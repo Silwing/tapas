@@ -19,11 +19,13 @@ import java.util.Set;
 public class FunctionGraphImpl  implements FunctionGraph {
     private final boolean[] arguments;
     private final ExitNode exitNode;
-    private final StartNode entryNode;
+    private final PsiParser parser;
+    private StartNode entryNode = null;
     private final Function element;
     private final VariableName[] argumentNames;
 
     public FunctionGraphImpl(PsiParser parser, Function element) {
+        this.parser = parser;
         Parameter[] parameters = element.getParameters();
         this.element = element;
         arguments = new boolean[parameters.length];
@@ -34,13 +36,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
         }
         exitNode = new ExitNodeImpl();
 
-        parser.setCurrentFunctionGraph(this);
 
-        Graph body = parser.parseElement((PhpPsiElement) element.getLastChild(), g -> g).generate(new NodeGraphImpl(exitNode));
-
-        parser.setCurrentFunctionGraph(null);
-
-        entryNode = new StartNodeImpl(body.getEntryNode());
 
 
 
@@ -70,7 +66,23 @@ public class FunctionGraphImpl  implements FunctionGraph {
     @NotNull
     @Override
     public StartNode getEntryNode() {
+
+        setUp();
+
         return entryNode;
+    }
+
+    private void setUp() {
+        if(entryNode != null){
+            return;
+        }
+        parser.pushCurrentFunctionGraph(this);
+
+        Graph body = parser.parseElement((PhpPsiElement) element.getLastChild(), g -> g).generate(new NodeGraphImpl(exitNode));
+
+        parser.popCurrentFunctionGraph();
+
+        entryNode = new StartNodeImpl(body.getEntryNode());
     }
 
     @Override

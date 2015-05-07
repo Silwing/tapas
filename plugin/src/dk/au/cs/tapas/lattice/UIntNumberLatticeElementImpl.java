@@ -113,7 +113,8 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
-        return BooleanLatticeElement.top;    }
+        return BooleanLatticeElement.top;
+    }
 
 
     @Override

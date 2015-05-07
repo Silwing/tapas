@@ -41,9 +41,11 @@ public interface PsiParser {
 
     Map<String, FunctionGraph> getFunctions();
 
-    void setCurrentFunctionGraph(FunctionGraphImpl functionGraph);
+    void pushCurrentFunctionGraph(FunctionGraph functionGraph);
 
     FunctionGraph getCurrentFunctionGraph();
+
+    void popCurrentFunctionGraph();
 
     interface GraphGenerator {
         Graph generate(Graph graph);

@@ -20,7 +20,7 @@ public class PsiParserImpl implements PsiParser {
 
     Map<String, Supplier<FunctionGraph>> functionGraphSuppliers = new HashMap<>();
     Map<String, FunctionGraph> functionGraphs = new HashMap<>();
-    private FunctionGraphImpl currentFunctionGraph;
+    private LinkedList<FunctionGraph> currentFunctionGraph = new LinkedList<>();
 
     public PsiParserImpl() {
         functionGraphSuppliers.put("\\array_pop", () -> new LibraryFunctionGraphImpl(new boolean[]{true}, false));
@@ -261,13 +261,18 @@ public class PsiParserImpl implements PsiParser {
     }
 
     @Override
-    public void setCurrentFunctionGraph(FunctionGraphImpl functionGraph) {
-        this.currentFunctionGraph = functionGraph;
+    public void pushCurrentFunctionGraph(FunctionGraph functionGraph) {
+        this.currentFunctionGraph.addLast(functionGraph);
     }
 
     @Override
     public FunctionGraph getCurrentFunctionGraph() {
-        return this.currentFunctionGraph;
+        return this.currentFunctionGraph.getLast();
+    }
+
+    @Override
+    public void popCurrentFunctionGraph() {
+        this.currentFunctionGraph.removeLast();
     }
 
 

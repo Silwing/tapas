@@ -25,14 +25,12 @@ public class TypeAnalysisImpl implements Analysis {
         for (VariableName name: VariableName.superGlobals){
             lattice = lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
         }
-        lattice.print(new PrintStreamLatticePrinter(System.out));
         return lattice;
     }
 
     @Override
     public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
 
-        l.print(new PrintStreamLatticePrinter(System.out));
         Node n = nc.getNode();
         Context c = nc.getContext();
         if (n instanceof LocationVariableExpressionNode) {
@@ -423,7 +421,7 @@ public class TypeAnalysisImpl implements Analysis {
                         argumentNames[i],
                         ((HeapLocationSetCallArgument) callArgument).getArgument());
             } else if (callArgument instanceof TemporaryVariableCallArgument) {
-                lattice.setLocalsValue(
+                lattice = lattice.setLocalsValue(
                         newContext,
                         argumentNames[i],
                         lattice.getStackValue(context, ((TemporaryVariableCallArgument) callArgument).getArgument()));
