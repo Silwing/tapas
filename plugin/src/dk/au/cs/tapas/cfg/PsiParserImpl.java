@@ -50,10 +50,16 @@ public class PsiParserImpl implements PsiParser {
             generator = parseFor((For) element, generator);
         } else if(element instanceof PhpReturn){
             generator = parseReturn((PhpReturn) element, generator);
-        }   else {
+        }  else if(element instanceof Global){
+            generator = parseGlobal((Global) element, generator);
+        }  else {
             generator = parseElementNeighbourhood(element.getFirstPsiChild(), generator);
         }
         return generator;
+    }
+
+    private GraphGenerator parseGlobal(Global element, GraphGenerator generator) {
+        return buildStatementGenerator(GlobalGraphImpl.generator, generator, element);
     }
 
     private GraphGenerator parseReturn(PhpReturn element, GraphGenerator generator) {

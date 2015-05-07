@@ -8,6 +8,7 @@ import dk.au.cs.tapas.lattice.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Created by Silwing on 28-04-2015.
@@ -98,9 +99,25 @@ public class TypeAnalysisImpl implements Analysis {
             return analyseUnaryOperationNode((UnaryOperationNode) n, l, c);
         }
 
+        if(n instanceof GlobalNode){
+            return analyseGlobalNode((GlobalNode) n, l,c);
+        }
+
 
         // Fallback to identity function for unhandled nodes
         return l;
+    }
+
+    private AnalysisLatticeElement analyseGlobalNode(GlobalNode node, AnalysisLatticeElement latticeElement, Context context) {
+        if(context.isEmpty()){
+            return latticeElement;
+        }
+
+        for(VariableName name: node.getVariableNames()){
+            latticeElement = latticeElement.setLocalsValue(context, name, latticeElement.getGlobalsValue(context, name));
+        }
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseArrayAppendReferenceAssignmentNode(ArrayAppendReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -116,14 +133,11 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseVariableReferenceAssignmentNode(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
         latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(node.getValueLocationSet(), LatticeElement::join));
-        if (context.isEmpty()) {
-            latticeElement = latticeElement.setGlobalsValue(context, node.getVariableName(), node.getValueLocationSet());
-        } else {
-            latticeElement = latticeElement.setLocalsValue(context, node.getVariableName(), node.getValueLocationSet());
-        }
+        latticeElement = updateVariable(node.getVariableName(), context, latticeElement, m -> new HeapLocationPowerSetLatticeElementImpl(node.getValueLocationSet()));
 
         return latticeElement;
     }
+
 
     private IndexLatticeElement[] generateArrayIndices(ValueLatticeElement element) {
         return new IndexLatticeElement[]{element.getBoolean().toArrayIndex(), element.getNull().toArrayIndex(), element.getString().toArrayIndex(), element.getNumber().toArrayIndex()};
@@ -316,17 +330,6 @@ public class TypeAnalysisImpl implements Analysis {
         return l.setStackValue(c, n.getTargetName(), name -> l.getHeap(c).getValue(locations.getLocations(), LatticeElement::join));
     }
 
-    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement){
-        if(isSuperGlobal(name) || context.isEmpty()){
-            return latticeElement.getGlobalsValue(context, name);
-        }
-
-        return latticeElement.getLocalsValue(context, name);
-    }
-
-    private boolean isSuperGlobal(VariableName variableName) {
-        return variableName.getName().matches("^(GLOBALS|(_(POST|GET|SESSION|COOKIE|SERVER|REQUEST|FILES|ENV)))$");
-    }
 
     private AnalysisLatticeElement analyseReadConstNode(ReadConstNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newTarget;
@@ -602,7 +605,12 @@ public class TypeAnalysisImpl implements Analysis {
         Set<HeapLocation> newLocations = getVariableLocation(name, context, latticeElement).getLocations();
         if(newLocations.isEmpty()){
             HeapLocation location = new HeapLocationImpl();
-            latticeElement = addVariableLocation(location, name, context, latticeElement).setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
+            latticeElement = updateVariable(
+                    name,
+                    context,
+                    latticeElement,
+                    m -> m.addLocation(location))
+                    .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
             newLocations.add(location);
         }
         n.getTargetLocationSet().clear();
@@ -611,13 +619,25 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private AnalysisLatticeElement addVariableLocation(HeapLocation location, VariableName name, Context context, AnalysisLatticeElement latticeElement) {
-        if(isSuperGlobal(name) || context.isEmpty()){
-            return latticeElement.addLocationToGlobal(context, name, location);
-        }
-
-        return  latticeElement.addLocationToLocal(context, name, location);
+    private boolean isSuperGlobal(VariableName variableName) {
+        return variableName.getName().matches("^(GLOBALS|(_(POST|GET|SESSION|COOKIE|SERVER|REQUEST|FILES|ENV)))$");
     }
 
-    //TODO implement support for super-globals
+
+    private AnalysisLatticeElement updateVariable(VariableName name, Context context, AnalysisLatticeElement latticeElement, Function<HeapLocationPowerSetLatticeElement, HeapLocationPowerSetLatticeElement> updater){
+
+        if(isSuperGlobal(name) || context.isEmpty()){
+            return latticeElement.setGlobalsValue(context, name, updater.apply(latticeElement.getGlobalsValue(context, name)));
+        }
+        return latticeElement.setLocalsValue(context, name, updater.apply(latticeElement.getLocalsValue(context, name)));
+    }
+
+    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement){
+        if(isSuperGlobal(name) || context.isEmpty()){
+            return latticeElement.getGlobalsValue(context, name);
+        }
+
+        return latticeElement.getLocalsValue(context, name);
+    }
+
 }

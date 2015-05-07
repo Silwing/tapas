@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.lattice;
 
+import com.jetbrains.php.lang.psi.elements.Variable;
+
 /**
  * Created by Silwing on 28-04-2015.
  */
@@ -8,6 +10,10 @@ public class VariableNameImpl implements VariableName {
 
     public VariableNameImpl(String n) {
         name = n;
+    }
+
+    public VariableNameImpl(Variable variable) {
+        this(variable.getName());
     }
 
     @Override
