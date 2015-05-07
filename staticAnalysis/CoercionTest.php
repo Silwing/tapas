@@ -16,5 +16,7 @@ $f = (bool)$c;
 $g = false;
 $h = $g + 4;
 $i = null ? 42 : 1337;
+$j = $a[null];
+$a[null] = "Hmm";
 
-var_dump($b,$d, $e, $f, $h, $i);
+var_dump($a, $b,$d, $e, $f, $h, $i, $j);

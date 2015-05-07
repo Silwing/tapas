@@ -69,6 +69,6 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return null; //TODO implement
+        return IndexLatticeElement.generateStringLIndex(this);
     }
 }
