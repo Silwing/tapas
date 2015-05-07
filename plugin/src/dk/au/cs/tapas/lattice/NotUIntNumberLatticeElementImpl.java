@@ -70,27 +70,45 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return top;
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() + ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+        if(other.equals(bottom)) return this;
+        if(other.equals(uIntTop)) return notUIntTop;
+
+        return other; // NotUIntTop
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return top;
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() - ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+        if(other.equals(bottom)) return this;
+        if(other.equals(uIntTop)) return notUIntTop;
+
+        return other; // NotUIntTop
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        return top;
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() * ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+        if(other.equals(bottom)) return this;
+        if(other.equals(uIntTop)) return notUIntTop;
+
+        return other;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return top;
+        return ValueLatticeElementImpl.top;
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return top;
+        return ValueLatticeElement.top;
     }
 
     @Override
