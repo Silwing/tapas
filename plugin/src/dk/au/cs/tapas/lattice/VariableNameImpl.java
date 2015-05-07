@@ -33,5 +33,10 @@ public class VariableNameImpl implements VariableName {
     }
 
     @Override
+    public boolean isSuperGlobal() {
+        return VariableName.isSuperGlobal(this);
+    }
+
+    @Override
     public String toString() { return getName(); }
 }

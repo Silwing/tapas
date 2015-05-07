@@ -21,11 +21,17 @@ public class TypeAnalysisImpl implements Analysis {
 
     @Override
     public AnalysisLatticeElement getStartLattice() {
-        return new AnalysisLatticeElementImpl();
+        AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
+        for (VariableName name: VariableName.superGlobals){
+            lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
+        }
+
+        return lattice;
     }
 
     @Override
     public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
+
         l.print(new PrintStreamLatticePrinter(System.out));
         Node n = nc.getNode();
         Context c = nc.getContext();
@@ -619,21 +625,16 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private boolean isSuperGlobal(VariableName variableName) {
-        return variableName.getName().matches("^(GLOBALS|(_(POST|GET|SESSION|COOKIE|SERVER|REQUEST|FILES|ENV)))$");
-    }
-
-
     private AnalysisLatticeElement updateVariable(VariableName name, Context context, AnalysisLatticeElement latticeElement, Function<HeapLocationPowerSetLatticeElement, HeapLocationPowerSetLatticeElement> updater){
 
-        if(isSuperGlobal(name) || context.isEmpty()){
+        if(name.isSuperGlobal() || context.isEmpty()){
             return latticeElement.setGlobalsValue(context, name, updater.apply(latticeElement.getGlobalsValue(context, name)));
         }
         return latticeElement.setLocalsValue(context, name, updater.apply(latticeElement.getLocalsValue(context, name)));
     }
 
     private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement){
-        if(isSuperGlobal(name) || context.isEmpty()){
+        if(name.isSuperGlobal() || context.isEmpty()){
             return latticeElement.getGlobalsValue(context, name);
         }
 

@@ -1,6 +1,5 @@
 package dk.au.cs.tapas.lattice;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -161,7 +160,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
     @Override
     public AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value) {
-        return setStackValue(context,variableName, n -> value);
+        return setStackValue(context, variableName, n -> value);
     }
 
     @Override
@@ -184,6 +183,14 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
         HeapLocation newLocation = new HeapLocationImpl();
         AnalysisLatticeElement resultLattice = setHeapValue(context, newLocation, argument);
         return resultLattice.setLocalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(newLocation));
+
+    }
+
+    @Override
+    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, ValueLatticeElement argument) {
+        HeapLocation newLocation = new HeapLocationImpl();
+        AnalysisLatticeElement resultLattice = setHeapValue(context, newLocation, argument);
+        return resultLattice.setGlobalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(newLocation));
 
     }
 

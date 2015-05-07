@@ -72,5 +72,7 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setLocalsValue(Context context, VariableName name, ValueLatticeElement argument);
 
+    AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, ValueLatticeElement argument);
+
     AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, Set<HeapLocation> locationSet);
 }

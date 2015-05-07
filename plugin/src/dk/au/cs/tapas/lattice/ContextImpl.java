@@ -17,6 +17,10 @@ public class ContextImpl implements Context{
         this.nodes = new LinkedList<>(nodes);
     }
 
+    public ContextImpl() {
+        this(new LinkedList<>());
+    }
+
     @Override
     public List<CallNode> getNodes() {
         return new LinkedList<>(nodes);
