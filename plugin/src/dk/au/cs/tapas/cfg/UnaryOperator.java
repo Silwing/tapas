@@ -5,6 +5,7 @@ package dk.au.cs.tapas.cfg;
  */
 public enum UnaryOperator {
     NEGATION,
+    MINUS,
     PRE_INCREMENT,
     POST_INCREMENT,
     PRE_DECREMENT,
@@ -13,6 +14,8 @@ public enum UnaryOperator {
     @Override
     public String toString() {
         switch (this) {
+            case MINUS:
+                return "-_";
             case NEGATION:
                 return "!_";
             case PRE_INCREMENT:
@@ -39,6 +42,8 @@ public enum UnaryOperator {
                 return PRE_DECREMENT;
             case "_--":
                 return POST_DECREMENT;
+            case "-_":
+                return MINUS;
         }
         throw new UnsupportedOperationException();
     }

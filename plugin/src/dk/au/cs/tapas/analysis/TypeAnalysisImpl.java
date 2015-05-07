@@ -210,6 +210,10 @@ public class TypeAnalysisImpl implements Analysis {
         if (n.getOperator() == UnaryOperator.NEGATION) {
             return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl(value.toBoolean().negate()));
         }
+        if(n.getOperator() == UnaryOperator.MINUS){
+            return l.setStackValue(c, n.getTargetName(), target  -> new ValueLatticeElementImpl(value.toNumber().minus()));
+        }
+
         return l;
     }
 

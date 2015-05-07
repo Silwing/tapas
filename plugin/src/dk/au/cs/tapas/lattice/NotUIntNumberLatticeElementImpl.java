@@ -39,6 +39,10 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
+    public NumberLatticeElement minus() {
+        return null; //TODO implement
+    }
+    @Override
     public NumberLatticeElement toNumber() {
         return this;
     }

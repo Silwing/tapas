@@ -1,7 +1,5 @@
 package dk.au.cs.tapas.lattice;
 
-import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
-
 /**
  * Created by budde on 4/19/15.
  *
@@ -70,4 +68,6 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
     BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other);
 
     BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement);
+
+    NumberLatticeElement minus();
 }

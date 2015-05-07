@@ -113,6 +113,10 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
         return other.equals(this) ? BooleanLatticeElement.boolTrue : lessThan(other);    }
 
     @Override
+    public NumberLatticeElement minus() {
+        return null; //TODO implement
+    }
+    @Override
     public IndexLatticeElement toArrayIndex() {
         return IndexLatticeElement.bottom;
     }

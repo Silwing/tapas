@@ -112,6 +112,11 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
         return BooleanLatticeElement.top;    }
 
     @Override
+    public NumberLatticeElement minus() {
+        return null; //TODO implement
+    }
+
+    @Override
     public IndexLatticeElement toArrayIndex() {
         return IndexLatticeElement.generateIntegerIndex(toInteger());
     }
