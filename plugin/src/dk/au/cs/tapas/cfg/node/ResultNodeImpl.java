@@ -6,6 +6,7 @@ import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.Context;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Map;
 public class ResultNodeImpl extends NodeImpl implements ResultNode{
     private CallNode callNode;
     private CallArgument targetName;
-    private Map<Context, AnalysisLatticeElement> latticeMap = new HashMap<>();
+    private Map<Context, LinkedList<AnalysisLatticeElement>> latticeMap = new HashMap<>();
     private ExitNode exitNode;
     private FunctionGraph functionGraph;
 
@@ -56,13 +57,16 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
 
     @Override
     public void addCallLattice(Context context, AnalysisLatticeElement lattice) {
-        latticeMap.put(context, lattice);
+        if(!latticeMap.containsKey(context)){
+            latticeMap.put(context, new LinkedList<>());
+        }
+        latticeMap.get(context).addLast( lattice);
 
     }
 
     @Override
     public AnalysisLatticeElement getCallLattice(Context context) {
-        return latticeMap.get(context);
+        return latticeMap.get(context).removeLast();
     }
 
 
