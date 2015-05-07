@@ -81,12 +81,12 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return new ValueLatticeElementImpl(this);
+        return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return new ValueLatticeElementImpl(this);
+        return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
     }
 
     @Override

@@ -82,12 +82,20 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return other.equals(this) ? new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse) : new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
+        if(other.equals(this)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        if(other instanceof ValueNumberLatticeElement) return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
+
+        return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0), BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return other.equals(this) ? new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse) : new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
+        if(other.equals(this)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        if(other instanceof ValueNumberLatticeElement) return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
+
+        return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0), BooleanLatticeElement.boolFalse);
     }
 
     @Override

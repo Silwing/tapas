@@ -115,7 +115,7 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
             return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() / otherVal.getNumber().doubleValue()));
         }
 
-        return new ValueLatticeElementImpl(top);
+        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
