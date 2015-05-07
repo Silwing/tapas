@@ -57,7 +57,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement increment() {
-        return this;
+        return NumberLatticeElement.generateNumberLatticeElement(1);
     }
 
     @Override
