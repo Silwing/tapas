@@ -10,8 +10,8 @@ public interface NumberLatticeElement extends MiddleCandidateLatticeElement<Numb
     NumberLatticeElement uIntTop = new UIntTopNumberLatticeElementImpl();
     NumberLatticeElement notUIntTop = new NotUIntTopNumberLatticeElementImpl();
     static NumberLatticeElement generateNumberLatticeElement(Number i){
-        if(i instanceof Integer && i.intValue() >= 0){
-            return new UIntNumberLatticeElementImpl((Integer) i);
+        if(i.doubleValue() == i.intValue() && i.intValue() >= 0){
+            return new UIntNumberLatticeElementImpl(i.intValue());
         }
         return  new NotUIntNumberLatticeElementImpl(i);
     }
