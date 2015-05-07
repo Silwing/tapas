@@ -302,10 +302,8 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.setHeapValue(
                         context,
                         location,
-                        h ->
-                                inputLattice.getStackValue(
-                                        exitNodeContext,
-                                        ((TemporaryVariableCallArgument) exitArgument).getArgument()));
+                        inputLattice.getStackValue(exitNodeContext,((TemporaryVariableCallArgument) exitArgument).getArgument()));
+
                 argumentSet.add(location);
 
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof HeapLocationSetCallArgument) {
@@ -320,10 +318,10 @@ public class TypeAnalysisImpl implements Analysis {
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
                 //If method and stack variable return, then "rename" stack variable.
                 final TemporaryVariableCallArgument finalExit = (TemporaryVariableCallArgument) exitArgument;
-                resultLattice = resultLattice.setStackValue(
+                resultLattice = resultLattice.joinStackValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        v -> inputLattice.getStackValue(exitNodeContext, finalExit.getArgument()));
+                        inputLattice.getStackValue(exitNodeContext, finalExit.getArgument()));
             }
 
         }
