@@ -71,49 +71,131 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return this;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber() + ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        if(other.equals(notUIntTop)) return top;
+
+        return other;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return this;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber() - ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        if(other.equals(uIntTop)) return top;
+
+        return other;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(0);
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(getNumber() * ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        if(other.equals(notUIntTop)) return top;
+
+        return other;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        if(other instanceof ValueNumberLatticeElement) {
+            ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
+            if(otherVal.getNumber().doubleValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+            if(getNumber() == 0) return new ValueLatticeElementImpl(this);
+
+            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() / otherVal.getNumber().doubleValue()));
+        }
+
+        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return ValueLatticeElement.top;
+        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        if(other instanceof ValueNumberLatticeElement) {
+            ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
+            if(otherVal.getNumber().doubleValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+            if(getNumber() == 0) return new ValueLatticeElementImpl(this);
+
+            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() % otherVal.getNumber().doubleValue()));
+        }
+
+        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
-        return top;
+        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(1);
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return NumberLatticeElement.generateNumberLatticeElement(Math.pow(getNumber(), ((ValueNumberLatticeElement) other).getNumber().doubleValue()));
+        }
+
+        if(other.equals(notUIntTop)) return top;
+
+        return other;
     }
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() > ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() < ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        return BooleanLatticeElement.top;    }
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() >= ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        return BooleanLatticeElement.top;
+    }
 
     @Override
-    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement numberLatticeElement) {
-        return BooleanLatticeElement.top;    }
+    public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+
+        if(other instanceof ValueNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() <= ((ValueNumberLatticeElement)other).getNumber().doubleValue());
+        }
+
+        return BooleanLatticeElement.top;
+    }
 
 
     @Override
