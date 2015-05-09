@@ -21,4 +21,7 @@ $a[null] = "Hmm";
 $l = 1;
 $k = array_pop($l);
 
+$a[-1] = "Test";
+$a["-1"] = "Test2";
+
 var_dump($a, $b,$d, $e, $f, $h, $i, $j, $k, $l);

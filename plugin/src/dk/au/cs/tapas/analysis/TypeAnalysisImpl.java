@@ -12,6 +12,7 @@ import java.util.function.Function;
 
 /**
  * Created by Silwing on 28-04-2015.
+ *
  */
 public class TypeAnalysisImpl implements Analysis {
     @Override
