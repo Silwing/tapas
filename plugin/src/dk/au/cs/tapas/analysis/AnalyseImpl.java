@@ -4,7 +4,10 @@ import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
@@ -47,28 +50,18 @@ public class AnalyseImpl implements Analyse {
         while ((flow = worklist.poll()) != null) {
             AnalysisTarget left, right;
             AnalysisLatticeElement newRightLattice, oldRightLattice;
-            try {
 
-                left = flow.getLeft();
-                right = flow.getRight();
-                newRightLattice = analysis.analyse(left, inLatticeElement(left));
-                oldRightLattice = inLatticeElement(right);
-            } catch (StackOverflowError e) {
-                e = e;
-                throw e;
-            }
-                try {
-
+            left = flow.getLeft();
+            right = flow.getRight();
+            newRightLattice = analysis.analyse(left, inLatticeElement(left));
+            oldRightLattice = inLatticeElement(right);
             if (!hasContextNodePair(right) || !newRightLattice.containedIn(oldRightLattice)) {
                 AnalysisLatticeElement joinedAnalysis = oldRightLattice.join(newRightLattice);
                 inLatticeMap.put(flow.getRight(), joinedAnalysis);
                 final PairImpl<AnalysisTarget, AnalysisTarget> finalFlow = flow;
                 worklist.addAll(graph.getFlow(joinedAnalysis, flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
             }
-            } catch (StackOverflowError e) {
-                e = e;
-                throw e;
-            }
+
 
         }
     }
