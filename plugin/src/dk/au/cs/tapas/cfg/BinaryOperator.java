@@ -4,7 +4,7 @@ package dk.au.cs.tapas.cfg;
  * Created by budde on 4/29/15.
  */
 public enum BinaryOperator {
-
+    //TODO bitwise operators support? 
     ADDITION,
     SUBTRACTION,
     MULTIPLICATION,
