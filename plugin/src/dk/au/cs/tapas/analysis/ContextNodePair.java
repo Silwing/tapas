@@ -1,6 +1,5 @@
 package dk.au.cs.tapas.analysis;
 
-import com.intellij.refactoring.changeSignature.ParameterInfo;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.Context;
 

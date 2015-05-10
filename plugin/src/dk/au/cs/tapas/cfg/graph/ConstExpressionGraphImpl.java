@@ -10,11 +10,9 @@ import dk.au.cs.tapas.cfg.NullConstantImpl;
 import dk.au.cs.tapas.cfg.StringConstantImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadConstNodeImpl;
-import dk.au.cs.tapas.lattice.NumberLatticeElement;
+import dk.au.cs.tapas.lattice.element.NumberLatticeElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.DoubleSummaryStatistics;
 
 /**
  * Created by budde on 4/26/15.

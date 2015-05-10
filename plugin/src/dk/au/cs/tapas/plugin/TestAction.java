@@ -11,14 +11,8 @@ import dk.au.cs.tapas.analysis.TypeAnalysisImpl;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.PrintStreamLatticePrinter;
-
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 /**
  * Created by budde on 2/4/15.

@@ -6,7 +6,7 @@ import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.analysis.ContextNodePair;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.VariableName;
 import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;

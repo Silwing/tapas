@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.graph.LibraryFunctionGraph;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
+import dk.au.cs.tapas.lattice.element.*;
 
 import java.util.HashSet;
 import java.util.Set;

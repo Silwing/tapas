@@ -1,7 +1,6 @@
 package dk.au.cs.tapas.analysis;
 
-import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 
 /**
  * Created by Silwing on 28-04-2015.

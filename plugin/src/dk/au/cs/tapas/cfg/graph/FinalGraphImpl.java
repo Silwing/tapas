@@ -6,9 +6,9 @@ import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.IfNode;
 import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElementImpl;
-import dk.au.cs.tapas.lattice.BooleanLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElementImpl;
+import dk.au.cs.tapas.lattice.element.BooleanLatticeElement;
 import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,9 +1,8 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.graph.Graph;
-import dk.au.cs.tapas.cfg.node.CallNode;
-import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public class AnalyseImpl implements Analyse {
         iterateWorklist();
     }
 
-
+    @NotNull
     private AnalysisLatticeElement inLatticeElement(ContextNodePair pair){
         AnalysisLatticeElement element;
 
@@ -49,15 +48,11 @@ public class AnalyseImpl implements Analyse {
         PairImpl<ContextNodePair, ContextNodePair> flow;
         while((flow = worklist.poll()) != null) {
             ContextNodePair left = flow.getLeft(), right = flow.getRight();
-            if(left.getNode() instanceof CallNode){
-                // Adding lattice to return node in order to restore scope
-                ((CallNode) left.getNode()).getResultNode().addCallLattice(left.getContext(), inLatticeElement(left));
-            }
-
             AnalysisLatticeElement newRightLattice = analysis.analyse(left, inLatticeElement(left));
             AnalysisLatticeElement oldRightLattice = inLatticeElement(right);
+
+
             if(!hasContextNodePair(right) || !newRightLattice.containedIn(oldRightLattice)) {
-                assert oldRightLattice != null;
                 AnalysisLatticeElement joinedAnalysis = oldRightLattice.join(newRightLattice);
                 inLatticeMap.put(flow.getRight(), joinedAnalysis);
                 final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;

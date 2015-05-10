@@ -2,7 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.cfg.CallArgument;
 import dk.au.cs.tapas.cfg.graph.FunctionGraph;
-import dk.au.cs.tapas.lattice.AnalysisLatticeElement;
+import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.Context;
 
 import java.util.HashMap;
