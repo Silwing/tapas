@@ -36,7 +36,7 @@ public abstract class MiddleLatticeElementImpl<T extends MiddleCandidateLatticeE
         if (other.containedIn(this)) {
             return (T) this;
         }
-        if(containedIn((T) this )){
+        if(containedIn((T) other )){
             return other;
         }
         return join.find(other);

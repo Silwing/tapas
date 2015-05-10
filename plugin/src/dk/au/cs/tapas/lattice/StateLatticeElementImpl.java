@@ -92,7 +92,7 @@ public class StateLatticeElementImpl implements StateLatticeElement {
         return
                 getLocals().containedIn(thisAnalysis, other.getLocals(), otherAnalysis) &&
                         getGlobals().containedIn(thisAnalysis, other.getGlobals(), otherAnalysis) &&
-                        getHeap().containedIn(thisAnalysis, other.getHeap(), otherAnalysis) &&
+                        //getHeap().containedIn(thisAnalysis, other.getHeap(), otherAnalysis) &&
                         getStack().containedIn(thisAnalysis, other.getStack(), otherAnalysis);
     }
 

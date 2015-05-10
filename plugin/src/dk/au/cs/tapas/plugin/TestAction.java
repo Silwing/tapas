@@ -39,7 +39,6 @@ public class TestAction extends AnAction {
 
         l.print(new PrintStreamLatticePrinter(System.out));
 
-        System.out.println(g);
     }
 
 
