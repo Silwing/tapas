@@ -53,6 +53,6 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public StringLatticeElement toStringLattice() {
-        return StringLatticeElement.top;
+        return StringLatticeElement.top; //TODO shouldn't this be "Array"
     }
 }
