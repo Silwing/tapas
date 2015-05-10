@@ -2,6 +2,8 @@ package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.lattice.VariableName;
 
+import java.util.Arrays;
+
 /**
  * Created by budde on 5/7/15.
  */
@@ -17,4 +19,10 @@ public class GlobalNodeImpl extends NodeImpl implements GlobalNode{
     public VariableName[] getVariableNames() {
         return variableNames;
     }
+
+
+    public String toString() {
+        return "global(" + Arrays.toString(variableNames) + ")";
+    }
+
 }
