@@ -18,8 +18,5 @@ public interface ResultNode extends Node{
 
     FunctionGraph getFunctionGraph();
 
-    void addCallLattice(Context context, AnalysisLatticeElement lattice);
-
-    AnalysisLatticeElement getCallLattice(Context context);
 
 }

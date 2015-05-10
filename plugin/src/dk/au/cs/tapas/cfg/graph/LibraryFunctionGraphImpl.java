@@ -1,6 +1,6 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import dk.au.cs.tapas.analysis.ContextNodePair;
+import dk.au.cs.tapas.analysis.AnalysisTarget;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.VariableName;
@@ -54,12 +54,12 @@ public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair cn) {
+    public Set<AnalysisTarget> getFlow(AnalysisLatticeElement latticeElement, AnalysisTarget cn) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+    public Set<AnalysisTarget> getFlow(AnalysisTarget analysisTarget) {
         throw new UnsupportedOperationException();
     }
 

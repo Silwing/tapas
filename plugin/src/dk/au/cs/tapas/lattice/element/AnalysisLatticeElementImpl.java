@@ -41,11 +41,13 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
     @Override
     public AnalysisLatticeElement meet(MapLatticeElement<Context, StateLatticeElement> other) {
+        assert this != other;
         return new AnalysisLatticeElementImpl(mapLatticeElement.meet(other));
     }
 
     @Override
     public AnalysisLatticeElement join(MapLatticeElement<Context, StateLatticeElement> other) {
+        assert this != other;
         return new AnalysisLatticeElementImpl(mapLatticeElement.join(other));
     }
 

@@ -48,11 +48,13 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
 
     @Override
     public MapLatticeElement<K,V> meet(MapLatticeElement<K,V> other) {
+        assert other != this;
         return new MapLatticeElementImpl<>(jointDomain(this, other), (K k) -> getValue(k).meet(other.getValue(k)));
     }
 
     @Override
     public MapLatticeElement<K,V> join(MapLatticeElement<K,V> other) {
+        assert other != this;
         return new MapLatticeElementImpl<>(jointDomain(this, other), (K k) -> getValue(k).join(other.getValue(k)));
     }
 

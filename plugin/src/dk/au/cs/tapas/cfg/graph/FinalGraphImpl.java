@@ -1,7 +1,8 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import dk.au.cs.tapas.analysis.ContextNodePair;
-import dk.au.cs.tapas.analysis.ContextNodePairImpl;
+import dk.au.cs.tapas.analysis.CallLatticeContext;
+import dk.au.cs.tapas.analysis.AnalysisTarget;
+import dk.au.cs.tapas.analysis.AnalysisTargetImpl;
 import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.IfNode;
@@ -9,7 +10,6 @@ import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElementImpl;
 import dk.au.cs.tapas.lattice.element.BooleanLatticeElement;
-import dk.au.cs.tapas.lattice.Context;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -69,37 +69,38 @@ public class FinalGraphImpl implements Graph{
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair contextNodePair) {
-        Node node = contextNodePair.getNode();
-        Context context = contextNodePair.getContext();
-        Set<ContextNodePair> nodes = new HashSet<>();
+    public Set<AnalysisTarget> getFlow(AnalysisLatticeElement latticeElement, AnalysisTarget analysisTarget) {
+        Node node = analysisTarget.getNode();
+        CallLatticeContext context = analysisTarget.getContext();
+        Set<AnalysisTarget> nodes = new HashSet<>();
         if(node instanceof CallNode){
-            nodes.add(new ContextNodePairImpl(
-                    context.addNode((CallNode) node),
+            nodes.add(new AnalysisTargetImpl(
+                    context.addNode((CallNode) node, latticeElement),
                     functionGraphMap.get(((CallNode) node).getFunctionName()).getEntryNode()));
         } else if(node instanceof ExitNode){
-            nodes.add(new ContextNodePairImpl(
+            nodes.add(new AnalysisTargetImpl(
                     context.popNode(),
-                    context.getLastCallNode().getResultNode()));
+                    context.getLastCallNode().getLeft().getResultNode(),
+                    context.getLastCallNode().getRight()));
         } else if(node instanceof IfNode){
-            if(!latticeElement.getStackValue(context, ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
-                nodes.add(new ContextNodePairImpl(context, ((IfNode) node).getFalseSuccessor()));
+            if(!latticeElement.getStackValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
+                nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getFalseSuccessor()));
             }
-            if(!latticeElement.getStackValue(context, ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolFalse)){
-                nodes.add(new ContextNodePairImpl(context, ((IfNode) node).getTrueSuccessor()));
+            if(!latticeElement.getStackValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolFalse)){
+                nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getTrueSuccessor()));
             }
 
         } else {
             for(Node successor: node.getSuccessors()){
-                nodes.add(new ContextNodePairImpl(context, successor));
+                nodes.add(new AnalysisTargetImpl(context, successor));
             }
         }
         return nodes;
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
-        return getFlow(new AnalysisLatticeElementImpl(), contextNodePair);
+    public Set<AnalysisTarget> getFlow(AnalysisTarget analysisTarget) {
+        return getFlow(new AnalysisLatticeElementImpl(), analysisTarget);
     }
 
     @Override

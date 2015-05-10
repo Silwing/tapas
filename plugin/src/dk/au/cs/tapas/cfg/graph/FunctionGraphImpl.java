@@ -3,7 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.Function;
 import com.jetbrains.php.lang.psi.elements.Parameter;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
-import dk.au.cs.tapas.analysis.ContextNodePair;
+import dk.au.cs.tapas.analysis.AnalysisTarget;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
@@ -86,12 +86,12 @@ public class FunctionGraphImpl  implements FunctionGraph {
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair cn) {
+    public Set<AnalysisTarget> getFlow(AnalysisLatticeElement latticeElement, AnalysisTarget cn) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair contextNodePair) {
+    public Set<AnalysisTarget> getFlow(AnalysisTarget analysisTarget) {
         throw new UnsupportedOperationException();
     }
 

@@ -9,12 +9,11 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Silwing on 28-04-2015.
- *
  */
 public class AnalyseImpl implements Analyse {
-    private final Map<ContextNodePair, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
-    private final Map<ContextNodePair, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
-    private final Queue<PairImpl<ContextNodePair, ContextNodePair>> worklist = new LinkedList<>();
+    private final Map<AnalysisTarget, AnalysisLatticeElement> inLatticeMap = new HashMap<>();
+    private final Map<AnalysisTarget, AnalysisLatticeElement> outLatticeMap = new HashMap<>();
+    private final Queue<PairImpl<AnalysisTarget, AnalysisTarget>> worklist = new LinkedList<>();
 
     private final Graph graph;
     private final Analysis analysis;
@@ -22,66 +21,79 @@ public class AnalyseImpl implements Analyse {
     public AnalyseImpl(Graph graph, Analysis analysis) {
         this.graph = graph;
         this.analysis = analysis;
-        ContextNodePair entryNode = new ContextNodePairImpl(graph.getEntryNode());
+        AnalysisTarget entryNode = new AnalysisTargetImpl(graph.getEntryNode());
         inLatticeMap.put(entryNode, analysis.getStartLattice());
         worklist.addAll(graph.getFlow(entryNode).stream().map(successorPair -> new PairImpl<>(entryNode, successorPair)).collect(Collectors.toList()));
         iterateWorklist();
     }
 
     @NotNull
-    private AnalysisLatticeElement inLatticeElement(ContextNodePair pair){
+    private AnalysisLatticeElement inLatticeElement(AnalysisTarget pair) {
         AnalysisLatticeElement element;
 
-        if((element = inLatticeMap.get(pair)) == null){
+        if ((element = inLatticeMap.get(pair)) == null) {
             return analysis.getEmptyLattice();
         }
-        return  element;
+        return element;
     }
 
-    private boolean hasContextNodePair(ContextNodePair pair){
+    private boolean hasContextNodePair(AnalysisTarget pair) {
         return inLatticeMap.containsKey(pair);
     }
 
 
-
     private void iterateWorklist() {
-        PairImpl<ContextNodePair, ContextNodePair> flow;
-        while((flow = worklist.poll()) != null) {
-            ContextNodePair left = flow.getLeft(), right = flow.getRight();
-            AnalysisLatticeElement newRightLattice = analysis.analyse(left, inLatticeElement(left));
-            AnalysisLatticeElement oldRightLattice = inLatticeElement(right);
+        PairImpl<AnalysisTarget, AnalysisTarget> flow;
+        while ((flow = worklist.poll()) != null) {
+            AnalysisTarget left, right;
+            AnalysisLatticeElement newRightLattice, oldRightLattice;
+            try {
 
+                left = flow.getLeft();
+                right = flow.getRight();
+                newRightLattice = analysis.analyse(left, inLatticeElement(left));
+                oldRightLattice = inLatticeElement(right);
+            } catch (StackOverflowError e) {
+                e = e;
+                throw e;
+            }
+                try {
 
-            if(!hasContextNodePair(right) || !newRightLattice.containedIn(oldRightLattice)) {
+            if (!hasContextNodePair(right) || !newRightLattice.containedIn(oldRightLattice)) {
                 AnalysisLatticeElement joinedAnalysis = oldRightLattice.join(newRightLattice);
                 inLatticeMap.put(flow.getRight(), joinedAnalysis);
-                final PairImpl<ContextNodePair, ContextNodePair> finalFlow = flow;
+                final PairImpl<AnalysisTarget, AnalysisTarget> finalFlow = flow;
                 worklist.addAll(graph.getFlow(joinedAnalysis, flow.getRight()).stream().map(n -> new PairImpl<>(finalFlow.getRight(), n)).collect(Collectors.toList()));
             }
+            } catch (StackOverflowError e) {
+                e = e;
+                throw e;
+            }
+
         }
     }
 
 
     @Override
     public AnalysisLatticeElement getEntryLattice() {
-        ContextNodePair startPair = new ContextNodePairImpl(graph.getEntryNode());
+        AnalysisTarget startPair = new AnalysisTargetImpl(graph.getEntryNode());
         return getLattice(startPair);
     }
 
     @Override
     public AnalysisLatticeElement getExitLattice() {
-        ContextNodePair endPair = new ContextNodePairImpl(graph.getExitNode());
+        AnalysisTarget endPair = new AnalysisTargetImpl(graph.getExitNode());
         return getLattice(endPair);
     }
 
     @Override
-    public AnalysisLatticeElement getLattice(ContextNodePair pair) {
-        if(outLatticeMap.containsKey(pair)){
+    public AnalysisLatticeElement getLattice(AnalysisTarget pair) {
+        if (outLatticeMap.containsKey(pair)) {
             return outLatticeMap.get(pair);
         }
         //TODO this is not right for return nodes. Need to set call lattice first
 
-        outLatticeMap.put(pair,analysis.analyse(pair, inLatticeElement(pair)));
+        outLatticeMap.put(pair, analysis.analyse(pair, inLatticeElement(pair)));
         return getLattice(pair);
     }
 }

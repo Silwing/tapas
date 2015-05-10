@@ -15,7 +15,6 @@ import java.util.Map;
 public class ResultNodeImpl extends NodeImpl implements ResultNode{
     private CallNode callNode;
     private CallArgument targetName;
-    private Map<Context, LinkedList<AnalysisLatticeElement>> latticeMap = new HashMap<>();
     private ExitNode exitNode;
     private FunctionGraph functionGraph;
 
@@ -53,20 +52,6 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
     @Override
     public FunctionGraph getFunctionGraph() {
         return functionGraph;
-    }
-
-    @Override
-    public void addCallLattice(Context context, AnalysisLatticeElement lattice) {
-        if(!latticeMap.containsKey(context)){
-            latticeMap.put(context, new LinkedList<>());
-        }
-        latticeMap.get(context).addLast( lattice);
-
-    }
-
-    @Override
-    public AnalysisLatticeElement getCallLattice(Context context) {
-        return latticeMap.get(context).getLast();
     }
 
 

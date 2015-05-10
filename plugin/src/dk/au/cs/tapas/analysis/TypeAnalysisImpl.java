@@ -31,94 +31,96 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     @Override
-    public AnalysisLatticeElement analyse(ContextNodePair nc, AnalysisLatticeElement l) {
+    public AnalysisLatticeElement analyse(AnalysisTarget target, AnalysisLatticeElement latticeElement) {
 
-        Node n = nc.getNode();
-        Context c = nc.getContext();
-        if (n instanceof LocationVariableExpressionNode) {
-            return analyseNodeLocalVariableExpressionNode((LocationVariableExpressionNode) n, l, c);
+
+        Node node = target.getNode();
+        Context context = target.getContext().toContext();
+        if (node instanceof LocationVariableExpressionNode) {
+            return analyseNodeLocalVariableExpressionNode((LocationVariableExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayInitExpressionNode) {
-            return analyseNodeArrayInitExpressionNode((ArrayInitExpressionNode) n, l, c);
+        if (node instanceof ArrayInitExpressionNode) {
+            return analyseNodeArrayInitExpressionNode((ArrayInitExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayAppendExpressionNode) {
-            return analyseArrayAppendExpressionNode((ArrayAppendExpressionNode) n, l, c);
+        if (node instanceof ArrayAppendExpressionNode) {
+            return analyseArrayAppendExpressionNode((ArrayAppendExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayAppendLocationVariableExpressionNode) {
-            return analyseArrayAppendLocationVariableExpressionNode((ArrayAppendLocationVariableExpressionNode) n, l, c);
+        if (node instanceof ArrayAppendLocationVariableExpressionNode) {
+            return analyseArrayAppendLocationVariableExpressionNode((ArrayAppendLocationVariableExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayLocationVariableExpressionNode) {
-            return analyseArrayLocationVariableExpressionNode((ArrayLocationVariableExpressionNode) n, l, c);
+        if (node instanceof ArrayLocationVariableExpressionNode) {
+            return analyseArrayLocationVariableExpressionNode((ArrayLocationVariableExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayReadExpressionNode) {
-            return analyseArrayReadExpressionNode((ArrayReadExpressionNode) n, l, c);
+        if (node instanceof ArrayReadExpressionNode) {
+            return analyseArrayReadExpressionNode((ArrayReadExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayWriteExpressionNode) {
-            return analyseArrayWriteExpressionNode((ArrayWriteExpressionNode) n, l, c);
+        if (node instanceof ArrayWriteExpressionNode) {
+            return analyseArrayWriteExpressionNode((ArrayWriteExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof AssignmentNode) {
-            return analyseAssignmentNode((AssignmentNode) n, l, c);
+        if (node instanceof AssignmentNode) {
+            return analyseAssignmentNode((AssignmentNode) node, latticeElement, context);
         }
-        if (n instanceof ShortCircuitBinaryOperationNode) {
-            return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) n, l, c);
+        if (node instanceof ShortCircuitBinaryOperationNode) {
+            return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) node, latticeElement, context);
         }
-        if (n instanceof BinaryOperationNode) {
-            return analyseBinaryOperationNode((BinaryOperationNode) n, l, c);
+        if (node instanceof BinaryOperationNode) {
+            return analyseBinaryOperationNode((BinaryOperationNode) node, latticeElement, context);
         }
-        if (n instanceof CallNode) {
-            return analyseCallNode((CallNode) n, l, c);
+        if (node instanceof CallNode) {
+            return analyseCallNode((CallNode) node, latticeElement, context);
         }
-        if (n instanceof EndNode) {
-            return analyseEndNode((EndNode) n, l, c);
+        if (node instanceof EndNode) {
+            return analyseEndNode((EndNode) node, latticeElement, context);
         }
-        if (n instanceof ExitNode) {
-            return analyseExitNode((ExitNode) n, l, c);
+        if (node instanceof ExitNode) {
+            return analyseExitNode((ExitNode) node, latticeElement, context);
         }
-        if (n instanceof IfNode) {
-            return analyseIfNode((IfNode) n, l, c);
+        if (node instanceof IfNode) {
+            return analyseIfNode((IfNode) node, latticeElement, context);
         }
-        if (n instanceof IncrementDecrementOperationExpressionNode) {
-            return analyseIncrementDecrementOperationExpressionNode((IncrementDecrementOperationExpressionNode) n, l, c);
+        if (node instanceof IncrementDecrementOperationExpressionNode) {
+            return analyseIncrementDecrementOperationExpressionNode((IncrementDecrementOperationExpressionNode) node, latticeElement, context);
         }
-        if (n instanceof ReadConstNode) {
-            return analyseReadConstNode((ReadConstNode) n, l, c);
+        if (node instanceof ReadConstNode) {
+            return analyseReadConstNode((ReadConstNode) node, latticeElement, context);
         }
-        if (n instanceof ReadNode) {
-            return analyseReadNode((ReadNode) n, l, c);
+        if (node instanceof ReadNode) {
+            return analyseReadNode((ReadNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayWriteReferenceAssignmentNode) {
-            return analyseArrayReferenceAssignmentNode((ArrayWriteReferenceAssignmentNode) n, l, c);
+        if (node instanceof ArrayWriteReferenceAssignmentNode) {
+            return analyseArrayReferenceAssignmentNode((ArrayWriteReferenceAssignmentNode) node, latticeElement, context);
         }
-        if (n instanceof ArrayAppendReferenceAssignmentNode) {
-            return analyseArrayAppendReferenceAssignmentNode((ArrayAppendReferenceAssignmentNode) n, l, c);
+        if (node instanceof ArrayAppendReferenceAssignmentNode) {
+            return analyseArrayAppendReferenceAssignmentNode((ArrayAppendReferenceAssignmentNode) node, latticeElement, context);
         }
-        if (n instanceof VariableReferenceAssignmentNode) {
-            return analyseVariableReferenceAssignmentNode((VariableReferenceAssignmentNode) n, l, c);
+        if (node instanceof VariableReferenceAssignmentNode) {
+            return analyseVariableReferenceAssignmentNode((VariableReferenceAssignmentNode) node, latticeElement, context);
         }
-        if (n instanceof ResultNode) {
-            ResultNode node = (ResultNode)n;
-            if(node.getFunctionGraph() instanceof LibraryFunctionGraph) {
-                if(node.getCallNode().getFunctionName().equals("\\array_pop")) {
-                    return analyseArrayPopLibraryFunction(node, l, c);
+        if (node instanceof ResultNode) {
+            ResultNode resultNode = (ResultNode)node;
+            if(resultNode.getFunctionGraph() instanceof LibraryFunctionGraph) {
+                if(resultNode.getCallNode().getFunctionName().equals("\\array_pop")) {
+                    return analyseArrayPopLibraryFunction(resultNode, latticeElement, context);
                 }
-                throw new UnsupportedOperationException("ResultNode for library function " + node.getCallNode().getFunctionName() + " is not implemented.");
+                throw new UnsupportedOperationException("ResultNode for library function " + resultNode.getCallNode().getFunctionName() + " is not implemented.");
             }
-            return analyseResultNode(node, l, c);
+            return analyseResultNode(resultNode, latticeElement, target.getCallLattice(), context);
         }
-        if (n instanceof StartNode) {
-            return analyseStartNode((StartNode) n, l, c);
+        if (node instanceof StartNode) {
+            return analyseStartNode((StartNode) node, latticeElement, context);
         }
-        if (n instanceof UnaryOperationNode) {
-            return analyseUnaryOperationNode((UnaryOperationNode) n, l, c);
+        if (node instanceof UnaryOperationNode) {
+            return analyseUnaryOperationNode((UnaryOperationNode) node, latticeElement, context);
         }
 
-        if(n instanceof GlobalNode){
-            return analyseGlobalNode((GlobalNode) n, l,c);
+        if(node instanceof GlobalNode){
+            return analyseGlobalNode((GlobalNode) node, latticeElement,context);
         }
 
 
         // Fallback to identity function for unhandled nodes
-        return l;
+        return latticeElement;
+
     }
 
     private AnalysisLatticeElement analyseGlobalNode(GlobalNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -263,11 +265,9 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement resultLattice, Context context) {
+    private AnalysisLatticeElement analyseResultNode(ResultNode resultNode, AnalysisLatticeElement resultLattice, AnalysisLatticeElement callLattice, Context context) {
         CallArgument argument = resultNode.getCallArgument();
         final AnalysisLatticeElement inputLattice = resultLattice;
-
-        AnalysisLatticeElement callLattice = resultNode.getCallLattice(context);
 
         Set<HeapLocation> argumentSet = null;
         if (argument instanceof HeapLocationSetCallArgument) {

@@ -1,6 +1,6 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import dk.au.cs.tapas.analysis.ContextNodePair;
+import dk.au.cs.tapas.analysis.AnalysisTarget;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import org.jetbrains.annotations.NotNull;
@@ -20,9 +20,9 @@ public interface Graph {
     Node getEntryNode();
 
 
-    Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair contextNodePair);
+    Set<AnalysisTarget> getFlow(AnalysisLatticeElement latticeElement, AnalysisTarget analysisTarget);
 
-    Set<ContextNodePair> getFlow(ContextNodePair contextNodePair);
+    Set<AnalysisTarget> getFlow(AnalysisTarget analysisTarget);
 
     Set<Node> getNodes();
 

@@ -1,6 +1,6 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import dk.au.cs.tapas.analysis.ContextNodePair;
+import dk.au.cs.tapas.analysis.AnalysisTarget;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 
@@ -13,12 +13,12 @@ public abstract class GraphImpl implements Graph {
 
 
     @Override
-    public Set<ContextNodePair> getFlow(AnalysisLatticeElement latticeElement, ContextNodePair context) {
+    public Set<AnalysisTarget> getFlow(AnalysisLatticeElement latticeElement, AnalysisTarget context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<ContextNodePair> getFlow(ContextNodePair context) {
+    public Set<AnalysisTarget> getFlow(AnalysisTarget context) {
         throw new UnsupportedOperationException();
     }
 
