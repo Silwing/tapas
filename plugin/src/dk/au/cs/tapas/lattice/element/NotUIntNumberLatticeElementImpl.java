@@ -79,7 +79,7 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() + ((ValueNumberLatticeElement) other).getNumber().doubleValue());
         }
-        if(other.equals(bottom)) return this;
+        if(other.equals(bottom)) return this; \\TODO why is this correct? 
         if(other.equals(uIntTop)) return notUIntTop;
 
         return top;
@@ -90,7 +90,7 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() - ((ValueNumberLatticeElement) other).getNumber().doubleValue());
         }
-        if(other.equals(bottom)) return this;
+        if(other.equals(bottom)) return this; \\TODO why is this correct? 
         if(other.equals(uIntTop)) return notUIntTop;
 
         return top;
