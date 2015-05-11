@@ -9,4 +9,5 @@ import dk.au.cs.tapas.lattice.Coercible;
 public interface NullLatticeElement extends LatticeElement<NullLatticeElement>, Coercible {
     NullLatticeElement bottom = new BottomNullLatticeElementImpl();
     NullLatticeElement top= new TopNullLatticeElementImpl();
+
 }

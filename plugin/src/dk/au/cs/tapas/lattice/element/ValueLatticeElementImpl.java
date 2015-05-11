@@ -2,6 +2,8 @@ package dk.au.cs.tapas.lattice.element;
 
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
+import java.util.function.BiFunction;
+
 /**
  * Created by budde on 4/20/15.
  */
@@ -143,6 +145,38 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     @Override
     public BooleanLatticeElement notIdentical(ValueLatticeElement rightValue) {
         return BooleanLatticeElement.top;    }
+
+    @Override
+    public BooleanLatticeElement lessThan(ValueLatticeElement other) {
+        return relativeOp(other, NumberLatticeElement::lessThan);
+    }
+
+    private BooleanLatticeElement relativeOp(ValueLatticeElement other, BiFunction<NumberLatticeElement, NumberLatticeElement, BooleanLatticeElement> function){
+        if(getBoolean().equals(other.getBoolean()) && getBoolean().equals(BooleanLatticeElement.boolFalse) &&
+                getString().equals(other.getString()) && getString().equals(StringLatticeElement.bottom) &&
+                getArray().equals(other.getArray()) && getArray().equals(ArrayLatticeElement.bottom) &&
+                getNull().equals(other.getNull()) && getNull().equals(NullLatticeElement.bottom)){
+            return BooleanLatticeElement.top;
+
+        }
+
+        return function.apply(getNumber(), other.getNumber());
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(ValueLatticeElement other) {
+        return relativeOp(other, NumberLatticeElement::greaterThan);
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanOrEqual(ValueLatticeElement other) {
+        return relativeOp(other, NumberLatticeElement::greaterThanOrEqual);
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanOrEqual(ValueLatticeElement other) {
+        return relativeOp(other, NumberLatticeElement::lessThanOrEqual);
+    }
 
     @Override
     public ValueLatticeElement setArray(ArrayLatticeElement array) {

@@ -502,16 +502,16 @@ public class TypeAnalysisImpl implements Analysis {
                 targetValue = new ValueLatticeElementImpl(leftValue.notIdentical(rightValue));
                 break;
             case GREATER_THAN:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.greaterThan(rightValue));
                 break;
             case LESS_THAN:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.lessThan(rightValue));
                 break;
             case GREATER_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.greaterThanOrEqual(rightValue));
                 break;
             case LESS_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.lessThanOrEqual(rightValue));
                 break;
             case CONCATENATION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toStringLattice().concat(rightValue.toStringLattice()));
