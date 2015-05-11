@@ -38,12 +38,12 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.top;
+        return NumberLatticeElement.bottom;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.generateElement(0);
+        return IntegerLatticeElement.bottom;
     }
 
     @Override

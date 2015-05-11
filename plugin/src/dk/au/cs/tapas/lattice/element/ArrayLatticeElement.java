@@ -10,8 +10,7 @@ import java.util.Set;
  *
  */
 public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement>, Coercible {
-    //TODO fix toBoolean to be top for list and map. We don't know the size of the array
-    //TODO fix toNumber should always be bottom
+
     ArrayLatticeElement bottom = new BottomArrayLatticeElementImpl();
     ArrayLatticeElement emptyArray = new EmptyArrayLatticeElementImpl();
     ArrayLatticeElement top = new TopArrayLatticeElementImpl();

@@ -38,12 +38,12 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.top;
+        return NumberLatticeElement.bottom;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.top;
+        return IntegerLatticeElement.bottom;
     }
 
     @Override
@@ -53,6 +53,6 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
 
     @Override
     public StringLatticeElement toStringLattice() {
-        return StringLatticeElement.top; //TODO shouldn't this be "Array"
+        return StringLatticeElement.generateStringLatticeElement("Array");
     }
 }

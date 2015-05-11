@@ -93,17 +93,17 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return BooleanLatticeElement.boolTrue;
+        return BooleanLatticeElement.top;
     }
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.top;
+        return NumberLatticeElement.bottom;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.top;
+        return IntegerLatticeElement.bottom;
     }
 
 
