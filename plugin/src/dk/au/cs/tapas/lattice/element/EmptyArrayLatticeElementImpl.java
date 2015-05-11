@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 /**
@@ -54,5 +55,15 @@ public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
     @Override
     public StringLatticeElement toStringLattice() {
         return StringLatticeElement.generateStringLatticeElement("Array");
+    }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement) {
+        return false;
+    }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location) {
+        return false;
     }
 }

@@ -15,4 +15,6 @@ public interface ListArrayLatticeElement extends ArrayLatticeElement{
     ListArrayLatticeElement addLocation(HeapLocation location);
 
     ListArrayLatticeElement addLocations(Set<HeapLocation> locations);
+
+
 }

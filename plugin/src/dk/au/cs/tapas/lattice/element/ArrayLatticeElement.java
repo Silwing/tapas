@@ -16,6 +16,10 @@ public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement>
     ArrayLatticeElement emptyArray = new EmptyArrayLatticeElementImpl();
     ArrayLatticeElement top = new TopArrayLatticeElementImpl();
 
+    boolean isRecursive(HeapMapLatticeElement latticeElement);
+
+    boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location);
+
     static ListArrayLatticeElement generateList(HeapLocationPowerSetLatticeElement locations){
         return new ListArrayLatticeElementImpl(locations);
     }

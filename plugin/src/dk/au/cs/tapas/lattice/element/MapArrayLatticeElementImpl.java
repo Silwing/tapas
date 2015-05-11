@@ -79,10 +79,19 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return other instanceof TopArrayLatticeElementImpl || (other  instanceof MapArrayLatticeElement && getMap().containedIn(
-                thisAnalysis,
-                ((MapArrayLatticeElement) other).getMap(),
-                otherAnalysis));
+        if (other.equals(top)) {
+            return true;
+        }
+
+        if (!(other instanceof MapArrayLatticeElement)) {
+            return false;
+        }
+
+        boolean recursive1 = isRecursive(thisAnalysis), recursive2 = other.isRecursive(otherAnalysis);
+
+        return recursive2 || !recursive1 && getMap().containedIn(thisAnalysis, ((MapArrayLatticeElement) other).getMap(), thisAnalysis);
+
+
     }
 
     @Override
@@ -117,4 +126,17 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     public IndexLatticeElement toArrayIndex() {
         return IndexLatticeElement.bottom;
     }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement) {
+        return  map.getValues().stream().anyMatch(h -> h.isRecursive(latticeElement));
+    }
+
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location) {
+        return map.getValues().stream().anyMatch(h -> h.isRecursive(latticeElement, location));
+    }
+
+
 }

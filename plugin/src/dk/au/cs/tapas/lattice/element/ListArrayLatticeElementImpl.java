@@ -8,7 +8,6 @@ import java.util.Set;
 
 /**
  * Created by budde on 4/20/15.
- *
  */
 public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
@@ -28,15 +27,15 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public ArrayLatticeElement meet(ArrayLatticeElement other) {
-        if(other.equals(top)){
+        if (other.equals(top)) {
             return this;
         }
 
-        if(other instanceof MapArrayLatticeElement){
+        if (other instanceof MapArrayLatticeElement) {
             return emptyArray;
         }
 
-        if(!(other instanceof  ListArrayLatticeElement)){
+        if (!(other instanceof ListArrayLatticeElement)) {
             return other;
         }
         return new ListArrayLatticeElementImpl(((ListArrayLatticeElement) other).getLocations().meet(getLocations()));
@@ -44,10 +43,10 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public ArrayLatticeElement join(ArrayLatticeElement other) {
-        if(other.equals(bottom) || other.equals(emptyArray)){
+        if (other.equals(bottom) || other.equals(emptyArray)) {
             return this;
         }
-        if(!(other instanceof  ListArrayLatticeElement)){
+        if (!(other instanceof ListArrayLatticeElement)) {
             return top;
         }
         return new ListArrayLatticeElementImpl(((ListArrayLatticeElement) other).getLocations().join(getLocations()));
@@ -55,15 +54,24 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
 
     @Override
     public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return other.equals(top) || (other instanceof ListArrayLatticeElement && getLocations().containedIn(
-                thisAnalysis,
-                ((ListArrayLatticeElement) other).getLocations(),
-                otherAnalysis));
+        if (other.equals(top)) {
+            return true;
+        }
+
+        if (!(other instanceof ListArrayLatticeElement)) {
+            return false;
+        }
+
+        boolean recursive1 = isRecursive(thisAnalysis), recursive2 = other.isRecursive(otherAnalysis);
+
+        return recursive2 || !recursive1 && getLocations().containedIn(thisAnalysis, ((ListArrayLatticeElement) other).getLocations(), thisAnalysis);
+
+
     }
 
     @Override
     public void print(LatticePrinter printer) {
-        if(locations.getLocations().isEmpty())
+        if (locations.getLocations().isEmpty())
             printer.print("[]");
         else {
             printer.print("[");
@@ -88,7 +96,7 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     public boolean equals(Object object) {
-        return  object == this || (object instanceof  ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations()));
+        return object == this || (object instanceof ListArrayLatticeElement && ((ListArrayLatticeElement) object).getLocations().equals(getLocations()));
     }
 
     @Override
@@ -116,5 +124,18 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     public StringLatticeElement toStringLattice() {
         return StringLatticeElement.generateStringLatticeElement("Array");
     }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement) {
+        return locations.isRecursive(latticeElement);
+    }
+
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location) {
+        return locations.isRecursive(latticeElement, location);
+    }
+
+
 }
 
