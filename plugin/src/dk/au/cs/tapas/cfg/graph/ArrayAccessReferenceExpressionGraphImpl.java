@@ -36,4 +36,5 @@ public class ArrayAccessReferenceExpressionGraphImpl extends ReferenceExpression
     public Node getExitNode() {
         return subGraph.getExitNode();
     }
+
 }

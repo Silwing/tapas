@@ -47,7 +47,7 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
                     nextGraph = createValueGraph(valueLocations, parser.parseExpression(indexValue, g -> g, indexTemp).generate(new NodeGraphImpl(assignmentNode)));
 
                 }
-                variableGraph = psiParser.parseVariableExpression((PhpExpression) element.getVariable(), g -> g, locations).generate(nextGraph);
+                variableGraph = psiParser.parseVariableExpression((PhpExpression) ((ArrayAccessExpression) variable).getValue(), g -> g, locations).generate(nextGraph);
             } else {
                 throw new UnsupportedOperationException();
             }

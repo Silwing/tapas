@@ -20,4 +20,8 @@ public interface HeapLocationPowerSetLatticeElement extends LatticeElement<HeapL
     HeapLocationPowerSetLatticeElement addLocation(HeapLocation value);
 
     HeapLocationPowerSetLatticeElement addLocations(Set<HeapLocation> locations);
+
+    boolean isRecursive(HeapMapLatticeElement heapMap);
+    boolean isRecursive(HeapMapLatticeElement heapMap, HeapLocation location);
+
 }

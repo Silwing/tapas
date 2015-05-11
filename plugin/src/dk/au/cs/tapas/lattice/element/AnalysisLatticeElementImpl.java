@@ -2,6 +2,7 @@ package dk.au.cs.tapas.lattice.element;
 
 import dk.au.cs.tapas.lattice.*;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,7 +31,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public StateLatticeElement[] getValues() {
+    public List<StateLatticeElement> getValues() {
         return mapLatticeElement.getValues();
     }
 

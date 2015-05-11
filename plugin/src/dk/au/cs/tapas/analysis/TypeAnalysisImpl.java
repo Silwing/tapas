@@ -13,7 +13,6 @@ import java.util.function.Function;
 
 /**
  * Created by Silwing on 28-04-2015.
- *
  */
 public class TypeAnalysisImpl implements Analysis {
     @Override
@@ -24,7 +23,7 @@ public class TypeAnalysisImpl implements Analysis {
     @Override
     public AnalysisLatticeElement getStartLattice() {
         AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
-        for (VariableName name: VariableName.superGlobals){
+        for (VariableName name : VariableName.superGlobals) {
             lattice = lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
         }
         return lattice;
@@ -97,9 +96,9 @@ public class TypeAnalysisImpl implements Analysis {
             return analyseVariableReferenceAssignmentNode((VariableReferenceAssignmentNode) node, latticeElement, context);
         }
         if (node instanceof ResultNode) {
-            ResultNode resultNode = (ResultNode)node;
-            if(resultNode.getFunctionGraph() instanceof LibraryFunctionGraph) {
-                if(resultNode.getCallNode().getFunctionName().equals("\\array_pop")) {
+            ResultNode resultNode = (ResultNode) node;
+            if (resultNode.getFunctionGraph() instanceof LibraryFunctionGraph) {
+                if (resultNode.getCallNode().getFunctionName().equals("\\array_pop")) {
                     return analyseArrayPopLibraryFunction(resultNode, latticeElement, context);
                 }
                 throw new UnsupportedOperationException("ResultNode for library function " + resultNode.getCallNode().getFunctionName() + " is not implemented.");
@@ -113,8 +112,8 @@ public class TypeAnalysisImpl implements Analysis {
             return analyseUnaryOperationNode((UnaryOperationNode) node, latticeElement, context);
         }
 
-        if(node instanceof GlobalNode){
-            return analyseGlobalNode((GlobalNode) node, latticeElement,context);
+        if (node instanceof GlobalNode) {
+            return analyseGlobalNode((GlobalNode) node, latticeElement, context);
         }
 
 
@@ -124,11 +123,11 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseGlobalNode(GlobalNode node, AnalysisLatticeElement latticeElement, Context context) {
-        if(context.isEmpty()){
+        if (context.isEmpty()) {
             return latticeElement;
         }
 
-        for(VariableName name: node.getVariableNames()){
+        for (VariableName name : node.getVariableNames()) {
             latticeElement = latticeElement.setLocalsValue(context, name, latticeElement.getGlobalsValue(context, name));
         }
 
@@ -136,7 +135,7 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayAppendReferenceAssignmentNode(ArrayAppendReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-        ValueLatticeElement listValue = new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(node.getValueLocationSet()));
+        ValueLatticeElement listValue = new ValueLatticeElementImpl(ArrayLatticeElement.generateList(node.getValueLocationSet()));
 
 
         latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(node.getValueLocationSet(), LatticeElement::join));
@@ -176,7 +175,7 @@ public class TypeAnalysisImpl implements Analysis {
                                     node.getWriteArgument())));
 
             //If you "array write" to something that is initialized, but not an array, you get a warning and the variable is unchanged.
-            latticeElement = latticeElement.setHeapValue(context,location,value.setArray(array));
+            latticeElement = latticeElement.setHeapValue(context, location, value.setArray(array));
 
         }
 
@@ -219,8 +218,8 @@ public class TypeAnalysisImpl implements Analysis {
         if (n.getOperator() == UnaryOperator.NEGATION) {
             return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl(value.toBoolean().negate()));
         }
-        if(n.getOperator() == UnaryOperator.MINUS){
-            return l.setStackValue(c, n.getTargetName(), target  -> new ValueLatticeElementImpl(value.toNumber().minus()));
+        if (n.getOperator() == UnaryOperator.MINUS) {
+            return l.setStackValue(c, n.getTargetName(), target -> new ValueLatticeElementImpl(value.toNumber().minus()));
         }
 
         return l;
@@ -311,7 +310,7 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.setHeapValue(
                         context,
                         location,
-                        inputLattice.getStackValue(exitNodeContext,((TemporaryVariableCallArgument) exitArgument).getArgument()));
+                        inputLattice.getStackValue(exitNodeContext, ((TemporaryVariableCallArgument) exitArgument).getArgument()));
 
                 argumentSet.add(location);
 
@@ -339,16 +338,16 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyseArrayPopLibraryFunction(ResultNode node, AnalysisLatticeElement lattice, Context context) {
-        Set<HeapLocation> argLocations = ((HeapLocationSetCallArgument)node.getCallNode().getCallArguments()[0]).getArgument();
-        TemporaryVariableName result = ((TemporaryVariableCallArgument)node.getCallArgument()).getArgument();
+        Set<HeapLocation> argLocations = ((HeapLocationSetCallArgument) node.getCallNode().getCallArguments()[0]).getArgument();
+        TemporaryVariableName result = ((TemporaryVariableCallArgument) node.getCallArgument()).getArgument();
 
         ValueLatticeElement newVal = new ValueLatticeElementImpl();
-        for(HeapLocation loc : argLocations) {
+        for (HeapLocation loc : argLocations) {
             ValueLatticeElement val = lattice.getHeapValue(context, loc);
-            if(val.getArray() instanceof ListArrayLatticeElement) {
-                newVal = newVal.join(lattice.getHeap(context).getValue(((ListArrayLatticeElement)val.getArray()).getLocations().getLocations(), LatticeElement::join));
+            if (val.getArray() instanceof ListArrayLatticeElement) {
+                newVal = newVal.join(lattice.getHeap(context).getValue(((ListArrayLatticeElement) val.getArray()).getLocations().getLocations(), LatticeElement::join));
             }
-            if(!val.getNumber().equals(NumberLatticeElement.bottom)
+            if (!val.getNumber().equals(NumberLatticeElement.bottom)
                     || !val.getString().equals(StringLatticeElement.bottom)
                     || !val.getBoolean().equals(BooleanLatticeElement.bottom)
                     || !val.getNull().equals(NullLatticeElement.bottom)) {
@@ -427,7 +426,7 @@ public class TypeAnalysisImpl implements Analysis {
     private AnalysisLatticeElement analyseCallNode(CallNode node, AnalysisLatticeElement lattice, Context context) {
 
         if (node.getFunctionGraph() instanceof LibraryFunctionGraph) {
-            if(node.getFunctionName().equals("\\array_pop")) {
+            if (node.getFunctionName().equals("\\array_pop")) {
                 return lattice; // noop
             }
             //Should be handled by dedicated transfer function
@@ -502,16 +501,16 @@ public class TypeAnalysisImpl implements Analysis {
                 targetValue = new ValueLatticeElementImpl(leftValue.notIdentical(rightValue));
                 break;
             case GREATER_THAN:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.greaterThan(rightValue));
                 break;
             case LESS_THAN:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThan(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.lessThan(rightValue));
                 break;
             case GREATER_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().greaterThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.greaterThanOrEqual(rightValue));
                 break;
             case LESS_THAN_OR_EQ:
-                targetValue = new ValueLatticeElementImpl(leftValue.toNumber().lessThanOrEqual(rightValue.toNumber()));
+                targetValue = new ValueLatticeElementImpl(leftValue.lessThanOrEqual(rightValue));
                 break;
             case CONCATENATION:
                 targetValue = new ValueLatticeElementImpl(leftValue.toStringLattice().concat(rightValue.toStringLattice()));
@@ -582,10 +581,10 @@ public class TypeAnalysisImpl implements Analysis {
                 locations.addAll(map.getValue(arrayIndex).getLocations());
             }
             value = l.getHeap(c).getValue(locations, LatticeElement::join);
-        } else if(array.getArray() instanceof ListArrayLatticeElement) {
-            ListArrayLatticeElement list = (ListArrayLatticeElement)array.getArray();
+        } else if (array.getArray() instanceof ListArrayLatticeElement) {
+            ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
             value = l.getHeap(c).getValue(list.getLocations().getLocations(), LatticeElement::join);
-        } else if(array.getArray() instanceof EmptyArrayLatticeElement) {
+        } else if (array.getArray() instanceof EmptyArrayLatticeElement) {
             value = new ValueLatticeElementImpl(NullLatticeElement.top);
         } else {
             value = ValueLatticeElement.top;
@@ -595,43 +594,55 @@ public class TypeAnalysisImpl implements Analysis {
         return l;
     }
 
-    private AnalysisLatticeElement analyseArrayLocationVariableExpressionNode(ArrayLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseArrayLocationVariableExpressionNode(ArrayLocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
         Set<HeapLocation> target = n.getTargetLocationSet();
         target.clear();
-        ValueLatticeElement indexValue = l.getStackValue(c, n.getIndexName());
+        ValueLatticeElement indexValue = latticeElement.getStackValue(context, n.getIndexName());
 
         for (HeapLocation loc : n.getValueHeapLocationSet()) {
-            ValueLatticeElement array = l.getHeapValue(c, loc);
+            ValueLatticeElement array = latticeElement.getHeapValue(context, loc);
             if (array.getArray() instanceof MapArrayLatticeElement) {
                 MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
-                for(IndexLatticeElement index : generateArrayIndices(indexValue))
+                for (IndexLatticeElement index : generateArrayIndices(indexValue))
                     target.addAll(map.getValue(index).getLocations());
             } else if (array.getArray() instanceof ListArrayLatticeElement) {
                 ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
                 target.addAll(list.getLocations().getLocations());
+            } else if (!array.getArray().equals(ArrayLatticeElement.top)) {
+                //Initialize new array if empty or not array
+                ArrayLatticeElement arrayLattice;
+                HeapLocation location = new HeapLocationImpl();
+                //If index is 0, create a list, else a map
+                if (indexValue.equals(new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0)))) {
+                    arrayLattice = ArrayLatticeElement.generateList(location);
+                } else {
+                    arrayLattice = ArrayLatticeElement.generateMap(indexValue.toArrayIndex(), location);
+                }
+                target.add(location);
+                latticeElement = latticeElement.setHeapValue(context, loc, new ValueLatticeElementImpl(arrayLattice));
             }
         }
 
-        return l;
+        return latticeElement;
     }
 
-    private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
         Set<HeapLocation> target = n.getTargetLocationSet();
         target.clear();
 
-        for(HeapLocation loc : n.getValueHeapLocationSet()) {
+        for (HeapLocation loc : n.getValueHeapLocationSet()) {
             HeapLocation newLoc = new HeapLocationImpl();
             target.add(newLoc);
-            l = l.joinHeapValue(c, loc, new ValueLatticeElementImpl(new ListArrayLatticeElementImpl(new HeapLocationPowerSetLatticeElementImpl(newLoc))));
+            latticeElement = latticeElement.joinHeapValue(context, loc, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(newLoc)));
         }
 
-        return l;
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newValue = l.getStackValue(c, n.getValueName());
         HeapLocation location = new HeapLocationImpl();
-        ListArrayLatticeElement list = new ListArrayLatticeElementImpl().addLocation(location);
+        ArrayLatticeElement list = ArrayLatticeElement.generateList(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
         return l.setHeapValue(c, location, (loc) -> newValue).setStackValue(c, n.getTargetName(), l.getStackValue(c, n.getTargetName()).join(newTarget));
     }
@@ -640,10 +651,10 @@ public class TypeAnalysisImpl implements Analysis {
         return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl(ArrayLatticeElement.emptyArray));
     }
 
-    private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
-        VariableName name = n.getVariableName();
+    private AnalysisLatticeElement analyseNodeLocalVariableExpressionNode(LocationVariableExpressionNode node, AnalysisLatticeElement latticeElement, Context context) {
+        VariableName name = node.getVariableName();
         Set<HeapLocation> newLocations = getVariableLocation(name, context, latticeElement).getLocations();
-        if(newLocations.isEmpty()){
+        if (newLocations.isEmpty()) {
             HeapLocation location = new HeapLocationImpl();
             latticeElement = updateVariable(
                     name,
@@ -653,22 +664,22 @@ public class TypeAnalysisImpl implements Analysis {
                     .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
             newLocations.add(location);
         }
-        n.getTargetLocationSet().clear();
-        n.getTargetLocationSet().addAll(newLocations);
+        node.getTargetLocationSet().clear();
+        node.getTargetLocationSet().addAll(newLocations);
 
         return latticeElement;
     }
 
-    private AnalysisLatticeElement updateVariable(VariableName name, Context context, AnalysisLatticeElement latticeElement, Function<HeapLocationPowerSetLatticeElement, HeapLocationPowerSetLatticeElement> updater){
+    private AnalysisLatticeElement updateVariable(VariableName name, Context context, AnalysisLatticeElement latticeElement, Function<HeapLocationPowerSetLatticeElement, HeapLocationPowerSetLatticeElement> updater) {
 
-        if(name.isSuperGlobal() || context.isEmpty()){
+        if (name.isSuperGlobal() || context.isEmpty()) {
             return latticeElement.setGlobalsValue(context, name, updater.apply(latticeElement.getGlobalsValue(context, name)));
         }
         return latticeElement.setLocalsValue(context, name, updater.apply(latticeElement.getLocalsValue(context, name)));
     }
 
-    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement){
-        if(name.isSuperGlobal() || context.isEmpty()){
+    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement) {
+        if (name.isSuperGlobal() || context.isEmpty()) {
             return latticeElement.getGlobalsValue(context, name);
         }
 

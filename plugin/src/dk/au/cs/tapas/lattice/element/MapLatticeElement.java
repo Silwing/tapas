@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.lattice.element;
 
 import java.util.Set;
+import java.util.List;
 
 /**
  * Created by budde on 4/19/15.
@@ -12,7 +13,7 @@ public interface MapLatticeElement<K,V extends LatticeElement<V>> extends Lattic
 
     V getValue(K key);
 
-    V[] getValues();
+    List<V> getValues();
 
     MapLatticeElement<K,V> addValue(K key, Generator<K,V> generator);
 

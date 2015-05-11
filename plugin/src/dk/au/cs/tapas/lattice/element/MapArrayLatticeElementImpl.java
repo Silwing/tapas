@@ -1,9 +1,11 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/20/15.
@@ -33,16 +35,16 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
-        if(key.equals(IndexLatticeElement.top)) return new HeapLocationPowerSetLatticeElementImpl(getMap().getValues());
+        if(key.equals(IndexLatticeElement.top)) {
+            Set<HeapLocation> locations = getMap().getValues().stream().map(HeapLocationPowerSetLatticeElement::getLocations).reduce(new HashSet<>(), (set, powerSet) -> {
+                set.addAll(powerSet);
+                return set;
+            });
+            return new HeapLocationPowerSetLatticeElementImpl(locations);
+        }
         if(key.equals(IndexLatticeElement.bottom)) return new HeapLocationPowerSetLatticeElementImpl();
 
-        Set<HeapLocationPowerSetLatticeElement> locations = new HashSet<>();
-
-        for(IndexLatticeElement index : getMap().getDomain()) {
-            if(key.containedIn(index) || index.containedIn(key)) {
-                locations.add(getMap().getValue(index));
-            }
-        }
+        Set<HeapLocationPowerSetLatticeElement> locations = getMap().getDomain().stream().filter(index -> key.containedIn(index) || index.containedIn(key)).map(index -> getMap().getValue(index)).collect(Collectors.toSet());
 
         return new HeapLocationPowerSetLatticeElementImpl(locations.toArray(new HeapLocationPowerSetLatticeElement[locations.size()]));
     }
@@ -77,10 +79,19 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return other instanceof TopArrayLatticeElementImpl || (other  instanceof MapArrayLatticeElement && getMap().containedIn(
-                thisAnalysis,
-                ((MapArrayLatticeElement) other).getMap(),
-                otherAnalysis));
+        if (other.equals(top)) {
+            return true;
+        }
+
+        if (!(other instanceof MapArrayLatticeElement)) {
+            return false;
+        }
+
+        boolean recursive1 = isRecursive(thisAnalysis), recursive2 = other.isRecursive(otherAnalysis);
+
+        return recursive2 || !recursive1 && getMap().containedIn(thisAnalysis, ((MapArrayLatticeElement) other).getMap(), thisAnalysis);
+
+
     }
 
     @Override
@@ -94,17 +105,17 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public BooleanLatticeElement toBoolean() {
-        return BooleanLatticeElement.boolTrue;
+        return BooleanLatticeElement.top;
     }
 
     @Override
     public NumberLatticeElement toNumber() {
-        return NumberLatticeElement.top;
+        return NumberLatticeElement.bottom;
     }
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return IntegerLatticeElement.top;
+        return IntegerLatticeElement.bottom;
     }
 
     @Override
@@ -115,4 +126,17 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     public IndexLatticeElement toArrayIndex() {
         return IndexLatticeElement.bottom;
     }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement) {
+        return  map.getValues().stream().anyMatch(h -> h.isRecursive(latticeElement));
+    }
+
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location) {
+        return map.getValues().stream().anyMatch(h -> h.isRecursive(latticeElement, location));
+    }
+
+
 }

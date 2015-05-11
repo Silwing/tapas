@@ -26,17 +26,17 @@ class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
     public ArrayAccessExpressionSubGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, Set<HeapLocation> locations, ParserGenerator generator) {
         PhpPsiElement indexValue = element.getIndex().getValue();
         Graph nextGraph;
-        Set<HeapLocation> variableLocations = new HashSet<>();
+        Set<HeapLocation> valueLocations = new HashSet<>();
         if(indexValue == null){
-            endNode = new ArrayAppendLocationVariableExpressionNodeImpl(graph.getEntryNode(), variableLocations, locations);
+            endNode = new ArrayAppendLocationVariableExpressionNodeImpl(graph.getEntryNode(), valueLocations, locations);
             nextGraph = new NodeGraphImpl(endNode);
         } else {
             TemporaryVariableName indexName = new TemporaryVariableNameImpl();
-            endNode = new ArrayLocationVariableExpressionNodeImpl(graph.getEntryNode(), indexName, variableLocations, locations);
+            endNode = new ArrayLocationVariableExpressionNodeImpl(graph.getEntryNode(), indexName,  valueLocations, locations);
             nextGraph = parser.parseExpression((PhpExpression) indexValue, g -> g, indexName).generate(new NodeGraphImpl(endNode));
         }
 
-        variableGraph = generator.generate((PhpExpression) element.getValue(), locations).generate(nextGraph);
+        variableGraph = generator.generate((PhpExpression) element.getValue(), valueLocations).generate(nextGraph);
 
     }
 

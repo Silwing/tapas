@@ -156,6 +156,8 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() > ((ValueNumberLatticeElement)other).getNumber().doubleValue());
         }

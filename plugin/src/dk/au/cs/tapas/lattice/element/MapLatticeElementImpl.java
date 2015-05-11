@@ -3,6 +3,7 @@ package dk.au.cs.tapas.lattice.element;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/19/15.
@@ -35,8 +36,8 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
     }
 
     @Override
-    public V[] getValues() {
-        return (V[]) domain.stream().map(this::getValue).toArray();
+    public List<V> getValues() {
+        return domain.stream().map(this::getValue).collect(Collectors.toList());
     }
 
     @Override
@@ -48,13 +49,17 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
 
     @Override
     public MapLatticeElement<K,V> meet(MapLatticeElement<K,V> other) {
-        assert other != this;
+        if(other == this){
+            return other;
+        }
         return new MapLatticeElementImpl<>(jointDomain(this, other), (K k) -> getValue(k).meet(other.getValue(k)));
     }
 
     @Override
     public MapLatticeElement<K,V> join(MapLatticeElement<K,V> other) {
-        assert other != this;
+        if(other == this){
+            return other;
+        }
         return new MapLatticeElementImpl<>(jointDomain(this, other), (K k) -> getValue(k).join(other.getValue(k)));
     }
 

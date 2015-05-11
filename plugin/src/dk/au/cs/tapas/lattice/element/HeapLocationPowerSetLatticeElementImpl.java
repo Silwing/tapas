@@ -26,7 +26,7 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
     public HeapLocationPowerSetLatticeElementImpl(HeapLocationPowerSetLatticeElement[] values) {
         this(new HashSet<>());
 
-        for(HeapLocationPowerSetLatticeElement elm : values) {
+        for (HeapLocationPowerSetLatticeElement elm : values) {
             this.values.addAll(elm.getLocations());
         }
     }
@@ -59,6 +59,17 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
             return this;
         }
         return new HeapLocationPowerSetLatticeElementImpl(newValues);
+    }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement heapMap) {
+        return values.stream().anyMatch(l -> heapMap.getValue(l).getArray().isRecursive(heapMap, l));
+    }
+
+    @Override
+    public boolean isRecursive(HeapMapLatticeElement heapMap, HeapLocation location) {
+        return values.contains(location) ||
+                values.stream().anyMatch(l -> heapMap.getValue(l).getArray().isRecursive(heapMap, location));
     }
 
     @Override
