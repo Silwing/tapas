@@ -13,7 +13,7 @@ $c++;
 $d--;
 
 $e = [1,2,3];
-//$f = $a + $e; // fatal error
+$f = $a + $e; // fatal error
 $g = $z * $a;
 $h = $a / $z;
 $i = $a / 0;
@@ -21,9 +21,9 @@ $j = 0 / 0;
 $k = $f % 2;
 $l = 43 % $f;
 $m = 2;
-$n = pow($m,$f);
+/*$n = pow($m,$f);
 $o = pow($f,$m);
-$p = pow($f, $f);
+$p = pow($f, $f);*/
 $q = $f < $f;
 $r = $m < $f;
 $s = $f < $m;
@@ -33,4 +33,4 @@ $v = $f < $t;
 $w = 5/2;
 $x = -$z;
 
-var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w, $x);
+//var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w, $x);

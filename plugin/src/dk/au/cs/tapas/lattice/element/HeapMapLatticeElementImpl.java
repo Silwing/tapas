@@ -3,6 +3,7 @@ package dk.au.cs.tapas.lattice.element;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.BinaryOperator;
 
@@ -33,7 +34,7 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
     }
 
     @Override
-    public ValueLatticeElement[] getValues() {
+    public List<ValueLatticeElement> getValues() {
         return mapLatticeElement.getValues();
     }
 

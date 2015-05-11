@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 import java.util.HashSet;
@@ -33,7 +34,13 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
-        if(key.equals(IndexLatticeElement.top)) return new HeapLocationPowerSetLatticeElementImpl(getMap().getValues());
+        if(key.equals(IndexLatticeElement.top)) {
+            Set<HeapLocation> locations = getMap().getValues().stream().map(HeapLocationPowerSetLatticeElement::getLocations).reduce(new HashSet<>(), (set, powerSet) -> {
+                set.addAll(powerSet);
+                return set;
+            });
+            return new HeapLocationPowerSetLatticeElementImpl(locations);
+        }
         if(key.equals(IndexLatticeElement.bottom)) return new HeapLocationPowerSetLatticeElementImpl();
 
         Set<HeapLocationPowerSetLatticeElement> locations = new HashSet<>();
