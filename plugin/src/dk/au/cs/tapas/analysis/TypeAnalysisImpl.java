@@ -626,17 +626,17 @@ public class TypeAnalysisImpl implements Analysis {
         return latticeElement;
     }
 
-    private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement l, Context c) {
+    private AnalysisLatticeElement analyseArrayAppendLocationVariableExpressionNode(ArrayAppendLocationVariableExpressionNode n, AnalysisLatticeElement latticeElement, Context context) {
         Set<HeapLocation> target = n.getTargetLocationSet();
         target.clear();
 
         for (HeapLocation loc : n.getValueHeapLocationSet()) {
             HeapLocation newLoc = new HeapLocationImpl();
             target.add(newLoc);
-            l = l.joinHeapValue(c, loc, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(newLoc)));
+            latticeElement = latticeElement.joinHeapValue(context, loc, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(newLoc)));
         }
 
-        return l;
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {

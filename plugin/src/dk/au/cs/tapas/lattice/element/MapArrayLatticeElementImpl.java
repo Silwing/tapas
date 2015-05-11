@@ -5,6 +5,7 @@ import dk.au.cs.tapas.lattice.LatticePrinter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by budde on 4/20/15.
@@ -43,13 +44,7 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
         }
         if(key.equals(IndexLatticeElement.bottom)) return new HeapLocationPowerSetLatticeElementImpl();
 
-        Set<HeapLocationPowerSetLatticeElement> locations = new HashSet<>();
-
-        for(IndexLatticeElement index : getMap().getDomain()) {
-            if(key.containedIn(index) || index.containedIn(key)) {
-                locations.add(getMap().getValue(index));
-            }
-        }
+        Set<HeapLocationPowerSetLatticeElement> locations = getMap().getDomain().stream().filter(index -> key.containedIn(index) || index.containedIn(key)).map(index -> getMap().getValue(index)).collect(Collectors.toSet());
 
         return new HeapLocationPowerSetLatticeElementImpl(locations.toArray(new HeapLocationPowerSetLatticeElement[locations.size()]));
     }

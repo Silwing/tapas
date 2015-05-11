@@ -34,4 +34,10 @@ public class ArrayAppendReferenceAssignmentNodeImpl extends NodeImpl implements 
     public TemporaryVariableName getTargetName() {
         return targetName;
     }
+
+    @Override
+    public String toString() {
+        return "array_append_ref("+variableLocationSet+ ", "+ valueLocationSet+ ", "+targetName+")";
+    }
+
 }
