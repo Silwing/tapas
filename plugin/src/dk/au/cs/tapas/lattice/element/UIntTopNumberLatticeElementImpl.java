@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 /**
@@ -65,65 +66,80 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        if(other.equals(bottom)) return this;
+        if(other.equals(bottom)) return bottom;
 
-        if(other.containedIn(uIntTop)) return this;
+        if(other.containedIn(uIntTop)) return uIntTop;
 
         return top;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        if(other.equals(bottom)) return this;
+        if(other.equals(bottom)) return bottom;
+
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
+            return uIntTop;
+
+        if(other instanceof NotUIntNumberLatticeElement) {
+            NotUIntNumberLatticeElement otherVal = (NotUIntNumberLatticeElement)other;
+            if(otherVal.getNumber().doubleValue() < 0 && otherVal.getNumber().intValue() == Math.ceil(otherVal.getNumber().doubleValue()))
+                return uIntTop;
+            else return notUIntTop;
+        }
 
         return top;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(0);
+        if(other.equals(bottom)) return bottom;
 
-        if(other.containedIn(this)) return this;
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
+            return NumberLatticeElement.generateNumberLatticeElement(0);
+
+        if(other.containedIn(uIntTop)) return uIntTop;
+
+        if(other instanceof NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return notUIntTop;
 
         return top;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
 
-        if(other instanceof ValueNumberLatticeElement) {
-            ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
-            if(otherVal.getNumber().doubleValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
-            return new ValueLatticeElementImpl(top);
-        }
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
+            return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        if(other instanceof  NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return new ValueLatticeElementImpl(notUIntTop);
+
+        if(other.containedIn(notUIntTop) || other instanceof UIntNumberLatticeElement) return new ValueLatticeElementImpl(top);
 
         return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        if(other.equals(bottom)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
 
-        if(other instanceof ValueNumberLatticeElement) {
-            ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
-            if(otherVal.getNumber().doubleValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
-            return new ValueLatticeElementImpl(top);
-        }
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
+            return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
 
-        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
+        if(other.containedIn(notUIntTop) || other instanceof UIntNumberLatticeElement) return new ValueLatticeElementImpl(uIntTop);
+
+        return new ValueLatticeElementImpl(uIntTop, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
-        if(other.equals(bottom)) return NumberLatticeElement.generateNumberLatticeElement(1);
+        if(other.equals(bottom)) return bottom;
 
-        if(other instanceof ValueNumberLatticeElement) {
-            ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
-            if(otherVal.getNumber().doubleValue() == 0) return NumberLatticeElement.generateNumberLatticeElement(1);
-        }
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
+            return NumberLatticeElement.generateNumberLatticeElement(1);
 
-        if(other.containedIn(this) && !other.equals(this)) return this;
+        if(other.containedIn(uIntTop)) return uIntTop;
 
         return top;
     }

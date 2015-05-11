@@ -59,7 +59,7 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement increment() {
-        return NumberLatticeElement.generateNumberLatticeElement(1);
+        return this;
     }
 
     @Override
@@ -69,40 +69,32 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
-        return other;
+        return this;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
-        return other.minus();
+        return this;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-        return NumberLatticeElement.generateNumberLatticeElement(0);
+        return this;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        if(other.equals(this)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
-
-        if(other instanceof ValueNumberLatticeElement) return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
-
-        return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0), BooleanLatticeElement.boolFalse);
+        return new ValueLatticeElementImpl(this);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        if(other.equals(this)) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
-
-        if(other instanceof ValueNumberLatticeElement) return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0));
-
-        return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(0), BooleanLatticeElement.boolFalse);
+        return new ValueLatticeElementImpl(this);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
-        return other.equals(this) ? NumberLatticeElement.generateNumberLatticeElement(1) : NumberLatticeElement.generateNumberLatticeElement(0);
+        return this;
     }
 
     @Override

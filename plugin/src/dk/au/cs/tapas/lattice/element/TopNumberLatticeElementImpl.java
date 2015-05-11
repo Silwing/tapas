@@ -68,31 +68,57 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
 
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
         return this;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
         return this;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0) {
+            return NumberLatticeElement.generateNumberLatticeElement(0);
+        }
+
         return this;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
-        return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
+
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        BooleanLatticeElement bool = (other.containedIn(notUIntTop)) ? BooleanLatticeElement.bottom : BooleanLatticeElement.boolFalse;
+
+        return new ValueLatticeElementImpl(this, bool);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
-        return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
+
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+
+        BooleanLatticeElement bool = (other.containedIn(notUIntTop)) ? BooleanLatticeElement.bottom : BooleanLatticeElement.boolFalse;
+
+        return new ValueLatticeElementImpl(this, bool);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0) return NumberLatticeElement.generateNumberLatticeElement(1);
+
         return this;
     }
 
