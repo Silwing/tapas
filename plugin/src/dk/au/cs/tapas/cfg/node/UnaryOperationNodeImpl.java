@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -13,8 +14,8 @@ public class UnaryOperationNodeImpl extends NodeImpl implements UnaryOperationNo
     private final UnaryOperator operator;
     private final TemporaryVariableName targetName;
 
-    public UnaryOperationNodeImpl(Node successor, TemporaryVariableName operandName, UnaryOperator operator, TemporaryVariableName target) {
-        super(successor);
+    public UnaryOperationNodeImpl(Node successor, TemporaryVariableName operandName, UnaryOperator operator, TemporaryVariableName target, PsiElement psiElement) {
+        super(successor, psiElement);
         this.operandName = operandName;
         this.operator = operator;
         this.targetName = target;

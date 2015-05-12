@@ -38,13 +38,13 @@ public class UnaryExpressionGraphImpl extends ExpressionGraphImpl<UnaryExpressio
         if(operationText.contains("++") || operationText.contains("--")){
 
             Set<HeapLocation> operandLocations = new HashSet<>();
-            operationNode = new IncrementDecrementOperationExpressionNodeImpl(graph.getEntryNode(), operandLocations, operator, name);
+            operationNode = new IncrementDecrementOperationExpressionNodeImpl(graph.getEntryNode(), operandLocations, operator, name, element);
             operandGraph = parser.parseVariableExpression((PhpExpression) element.getValue(), g -> g, operandLocations).generate(new NodeGraphImpl(operationNode));
 
 
         } else {
             TemporaryVariableName operandName = new TemporaryVariableNameImpl();
-            operationNode = new UnaryOperationNodeImpl(graph.getEntryNode(), operandName, operator, name);
+            operationNode = new UnaryOperationNodeImpl(graph.getEntryNode(), operandName, operator, name, element);
             operandGraph = parser.parseExpression((PhpExpression) element.getValue(), g -> g, operandName).generate(new NodeGraphImpl(operationNode));
 
         }

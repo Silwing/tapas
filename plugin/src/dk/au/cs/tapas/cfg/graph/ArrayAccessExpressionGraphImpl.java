@@ -20,7 +20,7 @@ public class ArrayAccessExpressionGraphImpl extends ExpressionGraphImpl<ArrayAcc
     public ArrayAccessExpressionGraphImpl(PsiParser psiParser, ArrayAccessExpression element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
         TemporaryVariableName arrayName = new TemporaryVariableNameImpl(), indexName = new TemporaryVariableNameImpl();
-        endNode = new ArrayReadExpressionNodeImpl(graph.getEntryNode(), arrayName, indexName, name);
+        endNode = new ArrayReadExpressionNodeImpl(graph.getEntryNode(), arrayName, indexName, name, element);
 
         Graph indexGraph = parser.parseExpression((PhpExpression) element.getIndex().getValue(), g -> g, indexName).generate(new NodeGraphImpl(endNode));
 

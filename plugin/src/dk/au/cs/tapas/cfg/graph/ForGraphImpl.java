@@ -25,10 +25,10 @@ public class ForGraphImpl extends StatementGraphImpl<For>{
     public ForGraphImpl(PsiParser parser, For element, Graph targetGraph) {
         super(parser, element, targetGraph);
 
-        endNode = new SkipNodeImpl(targetGraph.getEntryNode());
+        endNode = new SkipNodeImpl(targetGraph.getEntryNode(), element);
 
         TemporaryVariableName conditionName = new TemporaryVariableNameImpl();
-        IfNodeImpl ifNode = new IfNodeImpl(conditionName, null, endNode);
+        IfNodeImpl ifNode = new IfNodeImpl(conditionName, null, endNode, element);
 
         Graph conditionalExpression = parseExpressionList(element.getConditionalExpressions(), conditionName).generate(new NodeGraphImpl(ifNode));
 

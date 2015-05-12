@@ -28,11 +28,11 @@ class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
         Graph nextGraph;
         Set<HeapLocation> valueLocations = new HashSet<>();
         if(indexValue == null){
-            endNode = new ArrayAppendLocationVariableExpressionNodeImpl(graph.getEntryNode(), valueLocations, locations);
+            endNode = new ArrayAppendLocationVariableExpressionNodeImpl(graph.getEntryNode(), valueLocations, locations, element);
             nextGraph = new NodeGraphImpl(endNode);
         } else {
             TemporaryVariableName indexName = new TemporaryVariableNameImpl();
-            endNode = new ArrayLocationVariableExpressionNodeImpl(graph.getEntryNode(), indexName,  valueLocations, locations);
+            endNode = new ArrayLocationVariableExpressionNodeImpl(graph.getEntryNode(), indexName,  valueLocations, locations, element);
             nextGraph = parser.parseExpression((PhpExpression) indexValue, g -> g, indexName).generate(new NodeGraphImpl(endNode));
         }
 

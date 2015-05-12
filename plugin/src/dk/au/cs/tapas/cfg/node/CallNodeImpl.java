@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.CallArgument;
 import dk.au.cs.tapas.cfg.graph.FunctionGraph;
 
@@ -14,8 +15,8 @@ public class CallNodeImpl extends NodeImpl implements CallNode{
     private ResultNode resultNode;
     private FunctionGraph functionGraph;
 
-    public CallNodeImpl(Node successor, String functionName, CallArgument[] callArguments, ResultNode resultNode) {
-        super(successor);
+    public CallNodeImpl(Node successor, String functionName, CallArgument[] callArguments, ResultNode resultNode, PsiElement psiElement) {
+        super(successor, psiElement);
         this.callArguments = callArguments;
         this.functionName = functionName;
         this.resultNode = resultNode;

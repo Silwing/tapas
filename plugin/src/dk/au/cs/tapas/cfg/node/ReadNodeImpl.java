@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.VariableName;
 
@@ -11,8 +12,8 @@ public class ReadNodeImpl extends NodeImpl implements ReadNode {
     private final VariableName variable;
     private final TemporaryVariableName target;
 
-    public ReadNodeImpl(VariableName variable, TemporaryVariableName target, Node successor) {
-        super(successor);
+    public ReadNodeImpl(VariableName variable, TemporaryVariableName target, Node successor, PsiElement psiElement) {
+        super(successor, psiElement);
         this.variable = variable;
         this.target = target;
     }

@@ -23,7 +23,7 @@ public class ArrayInitExpressionGraphImpl extends ExpressionGraphImpl<ArrayCreat
 
         childGraph = buildGraphFromSiblings(element.getFirstPsiChild(), name, graph);
 
-        entryNode = new ArrayInitExpressionNodeImpl(childGraph.getEntryNode(), name);
+        entryNode = new ArrayInitExpressionNodeImpl(childGraph.getEntryNode(), name, element);
 
     }
 
@@ -48,12 +48,12 @@ public class ArrayInitExpressionGraphImpl extends ExpressionGraphImpl<ArrayCreat
         if (element instanceof ArrayHashElement) {
             TemporaryVariableName keyName = new TemporaryVariableNameImpl(), valueName = new TemporaryVariableNameImpl();
 
-            Node writeNode = new ArrayWriteExpressionNodeImpl(targetGraph.getEntryNode(), keyName, valueName, target);
+            Node writeNode = new ArrayWriteExpressionNodeImpl(targetGraph.getEntryNode(), keyName, valueName, target, element);
             Graph valueGraph = parser.parseExpression((PhpExpression) ((ArrayHashElement) element).getValue(), g -> g, valueName).generate(new NodeGraphImpl(writeNode));
             return parser.parseExpression((PhpExpression) ((ArrayHashElement) element).getKey(), g -> g, keyName).generate(valueGraph);
         }
         TemporaryVariableName valueName = new TemporaryVariableNameImpl();
-        Node appendNode = new ArrayAppendExpressionNodeImpl(targetGraph.getEntryNode(), valueName, target);
+        Node appendNode = new ArrayAppendExpressionNodeImpl(targetGraph.getEntryNode(), valueName, target, element);
         return parser.parseExpression((PhpExpression) element.getFirstPsiChild(), g -> g, valueName).generate(new NodeGraphImpl(appendNode));
     }
 }

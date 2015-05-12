@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.VariableName;
@@ -15,8 +16,8 @@ public class VariableReferenceAssignmentNodeImpl  extends NodeImpl implements Va
     final private Set<HeapLocation> valueLocationSet;
     final private TemporaryVariableName targetName;
 
-    public VariableReferenceAssignmentNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> valueLocationSet, TemporaryVariableName targetName) {
-        super(successor);
+    public VariableReferenceAssignmentNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> valueLocationSet, TemporaryVariableName targetName, PsiElement psiElement) {
+        super(successor, psiElement);
         this.variableName = variableName;
         this.valueLocationSet = valueLocationSet;
         this.targetName = targetName;

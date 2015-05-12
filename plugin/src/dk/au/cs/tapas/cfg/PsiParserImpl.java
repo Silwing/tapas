@@ -94,6 +94,7 @@ public class PsiParserImpl implements PsiParser {
 
 
     public GraphGenerator parseExpression(PhpExpression element, GraphGenerator generator, TemporaryVariableName name) {
+
         if (element instanceof AssignmentExpression) {
             return buildExpressionGenerator(AssignmentExpressionGraphImpl.generator, generator, element, name);
         }

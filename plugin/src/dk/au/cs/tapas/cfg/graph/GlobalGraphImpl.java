@@ -26,7 +26,7 @@ public class GlobalGraphImpl extends StatementGraphImpl<Global> {
             counter++;
         }
 
-        this.node = new GlobalNodeImpl(targetGraph.getEntryNode(), names);
+        this.node = new GlobalNodeImpl(targetGraph.getEntryNode(), names, element);
 
     }
 

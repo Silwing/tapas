@@ -6,7 +6,6 @@ import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.node.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by budde on 4/27/15.
@@ -31,7 +30,7 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
                 callArguments[i] = new TemporaryVariableCallArgumentImpl();
             }
         }
-        CallNodeImpl callNode = new CallNodeImpl(endNode, element.getFQN(), callArguments, endNode);
+        CallNodeImpl callNode = new CallNodeImpl(endNode, element.getFQN(), callArguments, endNode, element);
         Graph callNodeGraph = new NodeGraphImpl(callNode);
         if (element.getParameters().length > 0) {
             entryGraph = buildParameterGraph((PhpPsiElement) element.getParameters()[0], callArguments).generate(callNodeGraph);

@@ -19,7 +19,7 @@ public class FunctionReferenceExpressionGraphImpl extends ReferenceExpressionGra
 
     public FunctionReferenceExpressionGraphImpl(PsiParser parser, FunctionReference element, Graph graph, Set<HeapLocation> locations) {
         super(parser, element, graph, locations);
-        ResultNodeImpl endNode = new ResultNodeImpl(graph.getEntryNode(), new HeapLocationSetCallArgumentImpl(locations));
+        ResultNodeImpl endNode = new ResultNodeImpl(graph.getEntryNode(), new HeapLocationSetCallArgumentImpl(locations), element);
         subGraph = new FunctionReferenceSubGraphImpl(parser, element, endNode);
     }
 

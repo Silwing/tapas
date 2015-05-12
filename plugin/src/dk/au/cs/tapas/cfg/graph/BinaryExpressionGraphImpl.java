@@ -26,19 +26,19 @@ public class BinaryExpressionGraphImpl extends ExpressionGraphImpl<BinaryExpress
         TemporaryVariableName leftName = new TemporaryVariableNameImpl(), rightName = new TemporaryVariableNameImpl();
         String operator = element.getOperation().getText();
         if (operator.equals("&&") || operator.equals("||")) {
-            endNode = new ShortCircuitBinaryOperationNodeImpl(graph.getEntryNode(), leftName, BinaryOperator.fromString(operator), rightName, name);
+            endNode = new ShortCircuitBinaryOperationNodeImpl(graph.getEntryNode(), leftName, BinaryOperator.fromString(operator), rightName, name, element);
             Graph rightGraph = parser.parseExpression((PhpExpression) element.getRightOperand(), g -> g, rightName).generate(new NodeGraphImpl(endNode));
             Node ifNode;
             if (endNode.getOperator() == BinaryOperator.AND) {
-                ifNode = new IfNodeImpl(leftName, rightGraph.getEntryNode(), endNode);
+                ifNode = new IfNodeImpl(leftName, rightGraph.getEntryNode(), endNode, element);
             } else {
-                ifNode = new IfNodeImpl(leftName, endNode, rightGraph.getEntryNode());
+                ifNode = new IfNodeImpl(leftName, endNode, rightGraph.getEntryNode(), element);
 
             }
             leftGraph = parser.parseExpression((PhpExpression) element.getLeftOperand(), g -> g, leftName).generate(new NodeGraphImpl(ifNode));
 
         } else {
-            endNode = new BinaryOperationNodeImpl(graph.getEntryNode(), leftName, BinaryOperator.fromString(operator), rightName, name);
+            endNode = new BinaryOperationNodeImpl(graph.getEntryNode(), leftName, BinaryOperator.fromString(operator), rightName, name, element);
 
             Graph rightGraph = parser.parseExpression((PhpExpression) element.getRightOperand(), g -> g, rightName).generate(new NodeGraphImpl(endNode));
             leftGraph = parser.parseExpression((PhpExpression) element.getLeftOperand(), g -> g, leftName).generate(rightGraph);

@@ -23,10 +23,10 @@ public class WhileGraphImpl extends StatementGraphImpl<While> {
     public WhileGraphImpl(PsiParser parser, While element, Graph targetGraph) {
         super(parser, element, targetGraph);
 
-        exitNode = new SkipNodeImpl(graph.getEntryNode());
+        exitNode = new SkipNodeImpl(graph.getEntryNode(), element);
         TemporaryVariableName condition_result = new TemporaryVariableNameImpl();
 
-        IfNodeImpl ifNode = new IfNodeImpl(condition_result, null, exitNode);
+        IfNodeImpl ifNode = new IfNodeImpl(condition_result, null, exitNode, element);
         conditionGraph = parser.parseExpression((PhpExpression) element.getCondition(), g -> g, condition_result).generate(new NodeGraphImpl(ifNode));
         Graph statementGraph = parser.parseElement(element.getStatement(), g -> g).generate(conditionGraph);
         ifNode.setTrueSuccessor(statementGraph.getEntryNode());

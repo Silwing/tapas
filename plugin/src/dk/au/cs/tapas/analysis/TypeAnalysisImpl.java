@@ -15,6 +15,13 @@ import java.util.function.Function;
  * Created by Silwing on 28-04-2015.
  */
 public class TypeAnalysisImpl implements Analysis {
+
+    private final AnalysisAnnotator annotator;
+
+    public TypeAnalysisImpl(AnalysisAnnotator annotator) {
+        this.annotator = annotator;
+    }
+
     @Override
     public AnalysisLatticeElement getEmptyLattice() {
         return new AnalysisLatticeElementImpl();
@@ -31,9 +38,8 @@ public class TypeAnalysisImpl implements Analysis {
 
     @Override
     public AnalysisLatticeElement analyse(AnalysisTarget target, AnalysisLatticeElement latticeElement) {
-
-
         Node node = target.getNode();
+        annotator.setNode(node);
         Context context = target.getContext().toContext();
         if (node instanceof LocationVariableExpressionNode) {
             return analyseNodeLocalVariableExpressionNode((LocationVariableExpressionNode) node, latticeElement, context);
@@ -346,6 +352,8 @@ public class TypeAnalysisImpl implements Analysis {
             ValueLatticeElement val = lattice.getHeapValue(context, loc);
             if (val.getArray() instanceof ListArrayLatticeElement) {
                 newVal = newVal.join(lattice.getHeap(context).getValue(((ListArrayLatticeElement) val.getArray()).getLocations().getLocations(), LatticeElement::join));
+            } else if(val.getArray() instanceof MapArrayLatticeElement){
+                annotator.error("array_pop on map");
             }
             if (!val.getNumber().equals(NumberLatticeElement.bottom)
                     || !val.getString().equals(StringLatticeElement.bottom)
@@ -353,7 +361,7 @@ public class TypeAnalysisImpl implements Analysis {
                     || !val.getNull().equals(NullLatticeElement.bottom)) {
                 newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
             }
-            //TODO: should we somehow report list operation if this is a map?
+
         }
 
         return lattice.setStackValue(context, result, newVal);

@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import com.sun.net.httpserver.Authenticator;
 
 import java.sql.ResultSet;
@@ -16,14 +17,16 @@ public abstract class NodeImpl implements Node {
 
 
     protected final Node[] successors;
+    private final PsiElement element;
 
-    public NodeImpl(Node successor) {
-        this.successors = new Node[1];
-        this.successors[0] = successor;
+    public NodeImpl(Node successor, PsiElement element) {
+        this(new Node[]{successor}, element);
     }
 
-    public NodeImpl(Node[] successors) {
+
+    public NodeImpl(Node[] successors, PsiElement element) {
         this.successors = successors;
+        this.element = element;
     }
 
     @Override
@@ -59,5 +62,8 @@ public abstract class NodeImpl implements Node {
         return returnSet;
     }
 
-
+    @Override
+    public PsiElement getElement() {
+        return element;
+    }
 }

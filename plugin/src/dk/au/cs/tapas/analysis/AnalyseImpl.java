@@ -1,13 +1,19 @@
 package dk.au.cs.tapas.analysis;
 
+import com.intellij.psi.PsiElement;
+import com.jetbrains.php.lang.psi.PhpFile;
+import dk.au.cs.tapas.annotator.Annotation;
+import dk.au.cs.tapas.annotator.ErrorAnnotationImpl;
+import dk.au.cs.tapas.annotator.InformationAnnotationImpl;
+import dk.au.cs.tapas.annotator.WarningAnnotationImpl;
+import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.graph.Graph;
+import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -20,14 +26,24 @@ public class AnalyseImpl implements Analyse {
 
     private final Graph graph;
     private final Analysis analysis;
+    private final List<Annotation> annotations = new LinkedList<>();
 
-    public AnalyseImpl(Graph graph, Analysis analysis) {
+    public AnalyseImpl(Graph graph, Function<AnalysisAnnotator, Analysis> analysisFunction) {
         this.graph = graph;
-        this.analysis = analysis;
+        this.analysis = analysisFunction.apply(new AnalysisAnnotatorImpl(annotations));
         AnalysisTarget entryNode = new AnalysisTargetImpl(graph.getEntryNode());
         inLatticeMap.put(entryNode, analysis.getStartLattice());
         worklist.addAll(graph.getFlow(entryNode).stream().map(successorPair -> new PairImpl<>(entryNode, successorPair)).collect(Collectors.toList()));
         iterateWorklist();
+        annotations.addAll(graph.getNodes().stream().filter(node -> !inLatticeMap.containsKey(new AnalysisTargetImpl(node)) && node.getElement() != null).map(node -> new WarningAnnotationImpl(node.getElement(), "Unreachable node")).collect(Collectors.toList()));
+    }
+
+    public AnalyseImpl(Graph graph) {
+        this(graph, TypeAnalysisImpl::new);
+    }
+
+    public AnalyseImpl(PhpFile collectedInfo) {
+        this(new PsiParserImpl().parseFile(collectedInfo));
     }
 
     @NotNull
@@ -37,6 +53,14 @@ public class AnalyseImpl implements Analyse {
         if ((element = inLatticeMap.get(pair)) == null) {
             return analysis.getEmptyLattice();
         }
+
+        if (inLatticeMap.keySet().stream().anyMatch(p1 -> p1 == pair)) {
+            return element;
+        }
+
+
+        inLatticeMap.remove(pair);
+        inLatticeMap.put(pair, element);
         return element;
     }
 
@@ -84,9 +108,52 @@ public class AnalyseImpl implements Analyse {
         if (outLatticeMap.containsKey(pair)) {
             return outLatticeMap.get(pair);
         }
-        //TODO this is not right for return nodes. Need to set call lattice first
-
         outLatticeMap.put(pair, analysis.analyse(pair, inLatticeElement(pair)));
         return getLattice(pair);
+    }
+
+    @Override
+    @NotNull
+    public List<Annotation> getAnnotations() {
+        return this.annotations;
+    }
+
+    private class AnalysisAnnotatorImpl implements AnalysisAnnotator {
+        private final List<Annotation> annotations;
+        public Node node;
+
+        public AnalysisAnnotatorImpl(List<Annotation> annotations) {
+            this.annotations = annotations;
+        }
+
+        @Override
+        public void setNode(Node node) {
+            this.node = node;
+        }
+
+        @Override
+        public void warning(String message) {
+            add(e -> new WarningAnnotationImpl(e, message));
+        }
+
+        @Override
+        public void error(String message) {
+            add(e -> new ErrorAnnotationImpl(e, message));
+
+        }
+
+        @Override
+        public void information(String message) {
+            add(e -> new InformationAnnotationImpl(e, message));
+
+        }
+
+        private void add(Function<PsiElement, Annotation> annotation) {
+            if (node == null || node.getElement() == null) {
+                return;
+            }
+            annotations.add(annotation.apply(node.getElement()));
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.Constant;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -13,8 +14,8 @@ public class ReadConstNodeImpl extends NodeImpl implements ReadConstNode{
     private Constant constant;
     private TemporaryVariableName targetName;
 
-    public ReadConstNodeImpl(Node successor, Constant constant, TemporaryVariableName targetName) {
-        super(successor);
+    public ReadConstNodeImpl(Node successor, Constant constant, TemporaryVariableName targetName, PsiElement psiElement) {
+        super(successor, psiElement);
         this.constant = constant;
         this.targetName = targetName;
     }

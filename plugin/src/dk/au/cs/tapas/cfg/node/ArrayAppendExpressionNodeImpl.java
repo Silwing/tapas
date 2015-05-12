@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -9,8 +10,8 @@ public class ArrayAppendExpressionNodeImpl extends NodeImpl implements ArrayAppe
     private final TemporaryVariableName valueName;
     private final TemporaryVariableName targetName;
 
-    public ArrayAppendExpressionNodeImpl(Node entryNode, TemporaryVariableName valueName, TemporaryVariableName target) {
-        super(entryNode);
+    public ArrayAppendExpressionNodeImpl(Node entryNode, TemporaryVariableName valueName, TemporaryVariableName target, PsiElement psiElement) {
+        super(entryNode, psiElement);
         this.valueName = valueName;
         this.targetName = target;
 

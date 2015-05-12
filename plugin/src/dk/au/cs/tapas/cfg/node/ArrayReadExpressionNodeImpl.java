@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -10,8 +11,8 @@ public class ArrayReadExpressionNodeImpl extends NodeImpl implements ArrayReadEx
     private TemporaryVariableName arrayName;
     private TemporaryVariableName indexName;
 
-    public ArrayReadExpressionNodeImpl(Node successor, TemporaryVariableName arrayName, TemporaryVariableName indexName, TemporaryVariableName targetName) {
-        super(successor);
+    public ArrayReadExpressionNodeImpl(Node successor, TemporaryVariableName arrayName, TemporaryVariableName indexName, TemporaryVariableName targetName, PsiElement psiElement) {
+        super(successor, psiElement);
         this.arrayName = arrayName;
         this.indexName = indexName;
         this.targetName = targetName;

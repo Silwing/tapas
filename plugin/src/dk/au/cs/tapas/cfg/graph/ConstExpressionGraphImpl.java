@@ -26,7 +26,7 @@ public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>
 
         Constant constant = getConst(element);
 
-        entryNode = new ReadConstNodeImpl(graph.getEntryNode(), constant, name);
+        entryNode = new ReadConstNodeImpl(graph.getEntryNode(), constant, name, element);
 
 
     }

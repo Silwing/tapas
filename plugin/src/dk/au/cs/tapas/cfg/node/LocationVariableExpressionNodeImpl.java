@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.VariableName;
 
@@ -12,8 +13,8 @@ public class LocationVariableExpressionNodeImpl extends NodeImpl implements Loca
     private Set<HeapLocation> locations;
     private VariableName variableName;
 
-    public LocationVariableExpressionNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> locations) {
-        super(successor);
+    public LocationVariableExpressionNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> locations, PsiElement psiElement) {
+        super(successor, psiElement);
         this.locations = locations;
         this.variableName = variableName;
     }

@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -11,8 +12,8 @@ public class ArrayWriteExpressionNodeImpl extends NodeImpl implements ArrayWrite
     private final TemporaryVariableName keyName;
     private final TemporaryVariableName valueName;
 
-    public ArrayWriteExpressionNodeImpl(Node successor, TemporaryVariableName keyName, TemporaryVariableName valueName, TemporaryVariableName target) {
-        super(successor);
+    public ArrayWriteExpressionNodeImpl(Node successor, TemporaryVariableName keyName, TemporaryVariableName valueName, TemporaryVariableName target, PsiElement element) {
+        super(successor, element);
         this.keyName = keyName;
         this.valueName = valueName;
         this.targetName = target;

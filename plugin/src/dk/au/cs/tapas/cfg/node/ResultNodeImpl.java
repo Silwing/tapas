@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.CallArgument;
 import dk.au.cs.tapas.cfg.graph.FunctionGraph;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
@@ -19,12 +20,12 @@ public class ResultNodeImpl extends NodeImpl implements ResultNode{
     private FunctionGraph functionGraph;
 
 
-    public ResultNodeImpl(Node successor, CallArgument targetName) {
-        this(successor, targetName, null);
+    public ResultNodeImpl(Node successor, CallArgument targetName, PsiElement element) {
+        this(successor, targetName, null, element);
     }
 
-    public ResultNodeImpl(Node successor, CallArgument targetName, CallNode callNode) {
-        super(successor);
+    public ResultNodeImpl(Node successor, CallArgument targetName, CallNode callNode, PsiElement element) {
+        super(successor, element);
         this.callNode = callNode;
         this.targetName = targetName;
     }

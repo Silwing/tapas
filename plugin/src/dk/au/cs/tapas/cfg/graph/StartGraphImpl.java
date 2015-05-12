@@ -1,6 +1,5 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.StartNodeImpl;
 
 /**
@@ -11,7 +10,7 @@ public class StartGraphImpl extends NodeGraphImpl {
 
 
     public StartGraphImpl(Graph target) {
-        super(new StartNodeImpl(target.getEntryNode()));
+        super(new StartNodeImpl(target.getEntryNode(), null));
     }
 
 }

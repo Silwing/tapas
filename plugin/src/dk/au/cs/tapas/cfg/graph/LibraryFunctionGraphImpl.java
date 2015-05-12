@@ -19,8 +19,8 @@ public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     private boolean[] arguments;
 
     public LibraryFunctionGraphImpl(boolean[] arguments, boolean aliasReturn) {
-        exitNode = new ExitNodeImpl();
-        entryNode = new StartNodeImpl(exitNode);
+        exitNode = new ExitNodeImpl(null);
+        entryNode = new StartNodeImpl(exitNode, null);
         this.arguments = arguments;
         this.aliasReturn = aliasReturn;
 

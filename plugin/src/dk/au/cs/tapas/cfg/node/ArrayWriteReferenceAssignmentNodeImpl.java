@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -14,8 +15,8 @@ public class ArrayWriteReferenceAssignmentNodeImpl extends NodeImpl implements A
     private final  Set<HeapLocation> variableLocationSet;
     private final TemporaryVariableName writeArgument;
 
-    public ArrayWriteReferenceAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, Set<HeapLocation> valueLocationSet, Set<HeapLocation> variableLocationSet, TemporaryVariableName writeArgument) {
-        super(successor);
+    public ArrayWriteReferenceAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, Set<HeapLocation> valueLocationSet, Set<HeapLocation> variableLocationSet, TemporaryVariableName writeArgument, PsiElement psiElement) {
+        super(successor, psiElement);
         this.targetName = targetName;
         this.valueLocationSet = valueLocationSet;
         this.variableLocationSet = variableLocationSet;

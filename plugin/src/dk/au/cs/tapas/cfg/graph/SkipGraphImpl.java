@@ -13,7 +13,7 @@ public class SkipGraphImpl extends NodeGraphImpl {
 
 
     public SkipGraphImpl(Graph targetGraph) {
-        super(new SkipNodeImpl(targetGraph.getEntryNode()));
+        super(new SkipNodeImpl(targetGraph.getEntryNode(), null));
     }
 
 

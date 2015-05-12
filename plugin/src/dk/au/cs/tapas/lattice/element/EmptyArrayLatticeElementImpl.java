@@ -6,7 +6,7 @@ import dk.au.cs.tapas.lattice.LatticePrinter;
 /**
  * Created by Silwing on 29-04-2015.
  */
-public class EmptyArrayLatticeElementImpl implements ArrayLatticeElement {
+public class EmptyArrayLatticeElementImpl implements EmptyArrayLatticeElement {
     @Override
     public ArrayLatticeElement meet(ArrayLatticeElement other) {
         return other.equals(bottom)?other:this;

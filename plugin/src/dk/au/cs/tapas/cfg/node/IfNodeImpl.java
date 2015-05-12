@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 /**
@@ -9,8 +10,8 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 public class IfNodeImpl extends NodeImpl implements IfNode {
     private final TemporaryVariableName condition;
 
-    public IfNodeImpl(TemporaryVariableName condition, Node trueSuccessor, Node falseSuccessor) {
-        super(new Node[]{trueSuccessor, falseSuccessor});
+    public IfNodeImpl(TemporaryVariableName condition, Node trueSuccessor, Node falseSuccessor, PsiElement element) {
+        super(new Node[]{trueSuccessor, falseSuccessor}, element);
         this.condition = condition;
     }
 

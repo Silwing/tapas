@@ -10,7 +10,7 @@ import dk.au.cs.tapas.cfg.node.EndNodeImpl;
 public class EndGraphImpl extends NodeGraphImpl {
 
     public EndGraphImpl() {
-        super(new EndNodeImpl());
+        super(new EndNodeImpl(null));
     }
 
 

@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
@@ -14,8 +15,8 @@ public class IncrementDecrementOperationExpressionNodeImpl extends NodeImpl impl
     private UnaryOperator operation;
     private TemporaryVariableName targetName;
 
-    public IncrementDecrementOperationExpressionNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName) {
-        super(successor);
+    public IncrementDecrementOperationExpressionNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName, PsiElement psiElement) {
+        super(successor, psiElement);
         locationSet = locations;
         this.operation = operation;
         this.targetName = targetName;

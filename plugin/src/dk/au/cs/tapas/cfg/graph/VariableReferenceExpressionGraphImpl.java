@@ -22,7 +22,7 @@ public class VariableReferenceExpressionGraphImpl extends VariableVariableExpres
     public VariableReferenceExpressionGraphImpl(PsiParser parser, Variable element, Graph graph, Set<HeapLocation> locations) {
         super(parser, element, graph, locations);
 
-        node = new LocationVariableExpressionNodeImpl(graph.getEntryNode(), new VariableNameImpl(element.getName()), locations);
+        node = new LocationVariableExpressionNodeImpl(graph.getEntryNode(), new VariableNameImpl(element.getName()), locations, element);
 
     }
 

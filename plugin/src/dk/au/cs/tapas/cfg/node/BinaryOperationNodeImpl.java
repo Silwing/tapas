@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.BinaryOperator;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -15,8 +16,8 @@ public class BinaryOperationNodeImpl extends NodeImpl implements BinaryOperation
     protected final TemporaryVariableName rightOperandName;
     protected final TemporaryVariableName targetName;
 
-    public BinaryOperationNodeImpl(Node successor, TemporaryVariableName leftOperandName, BinaryOperator operator, TemporaryVariableName rightOperandName, TemporaryVariableName targetName) {
-        super(successor);
+    public BinaryOperationNodeImpl(Node successor, TemporaryVariableName leftOperandName, BinaryOperator operator, TemporaryVariableName rightOperandName, TemporaryVariableName targetName, PsiElement psiElement) {
+        super(successor, psiElement);
         this.leftOperandName = leftOperandName;
         this.operator = operator;
         this.rightOperandName = rightOperandName;

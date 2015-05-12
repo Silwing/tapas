@@ -21,7 +21,7 @@ public class VariableReadExpressionGraphImpl extends ExpressionGraphImpl<Variabl
 
     public VariableReadExpressionGraphImpl(PsiParser psiParser, Variable element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
-        this.entryNode = new ReadNodeImpl(new VariableNameImpl(element.getName()), name, graph.getEntryNode());
+        this.entryNode = new ReadNodeImpl(new VariableNameImpl(element.getName()), name, graph.getEntryNode(), element);
 
     }
 

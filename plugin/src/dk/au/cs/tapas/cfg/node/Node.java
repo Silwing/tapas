@@ -1,5 +1,7 @@
 package dk.au.cs.tapas.cfg.node;
 
+import com.intellij.psi.PsiElement;
+
 import java.util.Set;
 
 /**
@@ -19,5 +21,8 @@ public interface Node {
 
 
     String toString();
+
+    PsiElement getElement();
+
 
 }

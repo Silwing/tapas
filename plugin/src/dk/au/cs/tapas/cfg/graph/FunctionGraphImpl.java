@@ -11,6 +11,7 @@ import dk.au.cs.tapas.lattice.VariableName;
 import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,7 +35,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
             arguments[i] = parameters[i].isPassByRef();
             argumentNames[i] = new VariableNameImpl(parameters[i].getName());
         }
-        exitNode = new ExitNodeImpl();
+        exitNode = new ExitNodeImpl(element);
 
 
 
@@ -82,7 +83,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
 
         parser.popCurrentFunctionGraph();
 
-        entryNode = new StartNodeImpl(body.getEntryNode());
+        entryNode = new StartNodeImpl(body.getEntryNode(), element);
     }
 
     @Override
@@ -97,7 +98,7 @@ public class FunctionGraphImpl  implements FunctionGraph {
 
     @Override
     public Set<Node> getNodes() {
-        return null;
+        return new HashSet<>();
     }
 
 }
