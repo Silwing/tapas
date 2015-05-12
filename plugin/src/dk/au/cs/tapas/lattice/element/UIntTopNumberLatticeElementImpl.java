@@ -127,7 +127,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0)
             return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
 
-        if(other.containedIn(notUIntTop) || other instanceof UIntNumberLatticeElement) return new ValueLatticeElementImpl(uIntTop);
+        if(other instanceof UIntNumberLatticeElement) return new ValueLatticeElementImpl(uIntTop);
 
         return new ValueLatticeElementImpl(uIntTop, BooleanLatticeElement.boolFalse);
     }

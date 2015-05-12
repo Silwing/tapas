@@ -60,6 +60,9 @@ $bi = sqrt(-2);
 $bj = 0.5;
 $bj--;
 
+$ca = -0.8 % 2;
+$cb = 5 % -0.2;
 
 var_dump($a, $b, $c, $d, $f, $g, $h, $i, $j, $k, $l, $n, $o, $p, $q, $r, $s, $u, $v, $w, $x, $aa, $ab, $ac, $ad, $ae, $af, $ag, $ah, $ai, $aj, $ak, $al, $am, $an, $ao, $ap);
 var_dump($ba, $bb, $bc, $bd, $be, $bf, $bg, $bh, $bi, $bj);
+var_dump($ca, $cb);

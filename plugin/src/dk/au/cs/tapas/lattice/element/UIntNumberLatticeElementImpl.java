@@ -138,19 +138,14 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
         if(other instanceof ValueNumberLatticeElement) {
             ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
-            if(otherVal.getNumber().doubleValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+            if(otherVal.getNumber().intValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
 
             if(getNumber() == 0) return new ValueLatticeElementImpl(this);
 
-            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() % otherVal.getNumber().doubleValue()));
+            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() % otherVal.getNumber().intValue()));
         }
 
-        if(getNumber() == 0) {
-            if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(this);
-            else return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
-        }
-
-        if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(uIntTop);
+        if(getNumber() == 0) return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
 
         return new ValueLatticeElementImpl(uIntTop, BooleanLatticeElement.boolFalse);
     }
