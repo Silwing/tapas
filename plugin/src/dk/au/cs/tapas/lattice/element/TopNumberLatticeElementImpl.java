@@ -106,11 +106,17 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     public ValueLatticeElement modulo(NumberLatticeElement other) {
         if(other.equals(bottom)) return new ValueLatticeElementImpl();
 
-        if(other instanceof UIntNumberLatticeElement && ((UIntNumberLatticeElement) other).getNumber() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+        if(other instanceof ValueNumberLatticeElement && ((ValueNumberLatticeElement) other).getNumber().doubleValue() <= -1)
+            return new ValueLatticeElementImpl(top);
 
-        BooleanLatticeElement bool = (other.containedIn(notUIntTop)) ? BooleanLatticeElement.bottom : BooleanLatticeElement.boolFalse;
+        if(other instanceof UIntNumberLatticeElement) {
+            if(((UIntNumberLatticeElement) other).getNumber() == 0)
+                return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+            else
+                return new ValueLatticeElementImpl(top);
+        }
 
-        return new ValueLatticeElementImpl(this, bool);
+        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override

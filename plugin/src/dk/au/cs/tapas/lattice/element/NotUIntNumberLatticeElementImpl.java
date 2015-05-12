@@ -132,15 +132,14 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
         if(other instanceof ValueNumberLatticeElement) {
             ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
-            if(otherVal instanceof UIntNumberLatticeElement && otherVal.getNumber().intValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
+            if(otherVal.getNumber().intValue() == 0) return new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
 
-            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber().doubleValue() % otherVal.getNumber().doubleValue()));
+            return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber().intValue() % otherVal.getNumber().intValue()));
         }
 
-        NumberLatticeElement num = (number.doubleValue() < 0) ? notUIntTop : uIntTop;
-        BooleanLatticeElement bool = (other.equals(notUIntTop)) ? BooleanLatticeElement.bottom : BooleanLatticeElement.boolFalse;
+        NumberLatticeElement num = (number.doubleValue() > -1) ? uIntTop : notUIntTop;
 
-        return new ValueLatticeElementImpl(num, bool);
+        return new ValueLatticeElementImpl(num, BooleanLatticeElement.boolFalse);
     }
 
     @Override

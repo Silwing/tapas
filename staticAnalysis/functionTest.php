@@ -2,30 +2,30 @@
 /**
  * Created by IntelliJ IDEA.
  * User: budde
- * Date: 4/22/15
- * Time: 11:05 AM
+ * Date: 5/6/15
+ * Time: 10:17 AM
  */
 
-$a = 123;
 
-function test(&$a, $b, $c){
-    $result = null;
-    $a[] = 123;
-    $a[123] = 123;
-    return $result;
-}
-test($a,2,3);
+$b = 1;
 
-
-if(1){
-    $a = 1;
-}  else {
-    $a = 2;
+function a() {
+    global $a;
 }
 
 
+$b = a(); // Should be NULL
+
+function b(){
+    return 1;
+}
+
+$c = b(); //Should be 1
 
 
 
+function &c(&$a){
+    return $a;
+}
 
-
+$d[$a] = c($c); //Should be 1 on unique reference
