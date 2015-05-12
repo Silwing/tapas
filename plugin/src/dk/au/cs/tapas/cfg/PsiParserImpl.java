@@ -23,7 +23,8 @@ public class PsiParserImpl implements PsiParser {
     private LinkedList<FunctionGraph> currentFunctionGraph = new LinkedList<>();
 
     public PsiParserImpl() {
-        functionGraphSuppliers.put("\\array_pop", () -> new LibraryFunctionGraphImpl(new boolean[]{true}, false));
+        functionGraphSuppliers.put("\\array_pop", ArrayPopLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\count", CountLibraryFunctionGraphImpl::new);
     }
 
 

@@ -39,11 +39,11 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
                 PhpExpression indexValue = (PhpExpression) ((ArrayAccessExpression) variable).getIndex().getValue();
                 Graph nextGraph;
                 if(indexValue == null){
-                    assignmentNode = new ArrayAppendReferenceAssignmentNodeImpl(graph.getEntryNode(), locations, valueLocations, name, element);
+                    assignmentNode = new ArrayAppendReferenceAssignmentNodeImpl(graph.getEntryNode(), locations, valueLocations, name, variable);
                     nextGraph = createValueGraph(valueLocations);
                 } else {
                     TemporaryVariableName indexTemp = new TemporaryVariableNameImpl();
-                    assignmentNode = new ArrayWriteReferenceAssignmentNodeImpl(graph.getEntryNode(), name, valueLocations, locations, indexTemp, element);
+                    assignmentNode = new ArrayWriteReferenceAssignmentNodeImpl(graph.getEntryNode(), name, valueLocations, locations, indexTemp, variable);
                     nextGraph = createValueGraph(valueLocations, parser.parseExpression(indexValue, g -> g, indexTemp).generate(new NodeGraphImpl(assignmentNode)));
 
                 }

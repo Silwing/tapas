@@ -26,7 +26,7 @@ public class AnalyseImpl implements Analyse {
 
     private final Graph graph;
     private final Analysis analysis;
-    private final List<Annotation> annotations = new LinkedList<>();
+    private final Set<Annotation> annotations = new HashSet<>();
 
     public AnalyseImpl(Graph graph, Function<AnalysisAnnotator, Analysis> analysisFunction) {
         this.graph = graph;
@@ -114,15 +114,15 @@ public class AnalyseImpl implements Analyse {
 
     @Override
     @NotNull
-    public List<Annotation> getAnnotations() {
+    public Collection<Annotation> getAnnotations() {
         return this.annotations;
     }
 
     private class AnalysisAnnotatorImpl implements AnalysisAnnotator {
-        private final List<Annotation> annotations;
+        private final Collection<Annotation> annotations;
         public Node node;
 
-        public AnalysisAnnotatorImpl(List<Annotation> annotations) {
+        public AnalysisAnnotatorImpl(Collection<Annotation> annotations) {
             this.annotations = annotations;
         }
 

@@ -4,6 +4,7 @@ import dk.au.cs.tapas.annotator.Annotation;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ public interface Analyse {
     AnalysisLatticeElement getExitLattice();
     AnalysisLatticeElement getLattice(AnalysisTarget analysisTarget);
     @NotNull
-    List<Annotation> getAnnotations();
+    Collection<Annotation> getAnnotations();
 }

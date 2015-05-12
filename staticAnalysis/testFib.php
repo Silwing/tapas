@@ -21,3 +21,4 @@ function fib($i){
 $a = fib(1); //Should be 1
 $a = fib($n); //Should be 1*/
 $a = fib(10); //Should be top number
+

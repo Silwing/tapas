@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
+public abstract class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
     private final boolean aliasReturn;
     private StartNode entryNode;
     private ExitNode exitNode;

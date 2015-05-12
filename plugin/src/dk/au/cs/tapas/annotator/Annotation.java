@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.annotator;
 
 import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 
 /**
@@ -10,7 +11,7 @@ public interface Annotation {
 
     HighlightSeverity getSeverity();
 
-    PsiElement getPsiElement();
+    TextRange getTextRange();
 
     String getMessage();
 }

@@ -16,9 +16,9 @@ import java.util.*;
 /**
  * Created by budde on 5/12/15.
  */
-public class ExternalAnnotatorImpl extends ExternalAnnotator<PhpFile, List<Annotation>> {
+public class ExternalAnnotatorImpl extends ExternalAnnotator<PhpFile, Collection<Annotation>> {
 
-    Map<Pair<PsiFile, Long>, List<Annotation>> cache = new HashMap<>();
+    Map<Pair<PsiFile, Long>, Collection<Annotation>> cache = new HashMap<>();
 
 
     @Nullable
@@ -33,7 +33,7 @@ public class ExternalAnnotatorImpl extends ExternalAnnotator<PhpFile, List<Annot
 
     @Nullable
     @Override
-    public List<Annotation> doAnnotate(PhpFile collectedInfo) {
+    public Collection<Annotation> doAnnotate(PhpFile collectedInfo) {
         Pair <PsiFile, Long> pair = new PairImpl<>(collectedInfo, collectedInfo.getModificationStamp());
         // Check if file has been modified
         if(cache.containsKey(pair)){
@@ -45,15 +45,15 @@ public class ExternalAnnotatorImpl extends ExternalAnnotator<PhpFile, List<Annot
         ApplicationManager.getApplication().runReadAction(() -> {
             analyse[0] = new AnalyseImpl(collectedInfo);
         });
-        List<Annotation> annotations = analyse[0].getAnnotations();
+        Collection<Annotation> annotations = analyse[0].getAnnotations();
         cache.put(pair, annotations);
         return annotations;
     }
 
     @Override
-    public void apply(@NotNull PsiFile file, List<Annotation> annotationResult, @NotNull AnnotationHolder holder) {
+    public void apply(@NotNull PsiFile file, Collection<Annotation> annotationResult, @NotNull AnnotationHolder holder) {
         for (Annotation annotation: annotationResult){
-            com.intellij.lang.annotation.Annotation a = holder.createAnnotation(annotation.getSeverity(), annotation.getPsiElement().getTextRange(), annotation.getMessage());
+            com.intellij.lang.annotation.Annotation a = holder.createAnnotation(annotation.getSeverity(), annotation.getTextRange(), annotation.getMessage());
             if(annotation.getSeverity().equals(HighlightSeverity.ERROR)){
                 a.setHighlightType(ProblemHighlightType.ERROR);
             } else if (annotation.getSeverity().equals(HighlightSeverity.WARNING)){
