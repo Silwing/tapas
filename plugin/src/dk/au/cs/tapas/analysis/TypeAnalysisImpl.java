@@ -8,6 +8,8 @@ import dk.au.cs.tapas.lattice.*;
 import dk.au.cs.tapas.lattice.element.*;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -65,6 +67,9 @@ public class TypeAnalysisImpl implements Analysis {
         if (node instanceof AssignmentNode) {
             return analyseAssignmentNode((AssignmentNode) node, latticeElement, context);
         }
+        if (node instanceof ArrayWriteAssignmentNodeImpl) {
+            return analyseArrayWriteAssignmentNode((ArrayWriteAssignmentNode) node, latticeElement, context);
+        }
         if (node instanceof ShortCircuitBinaryOperationNode) {
             return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) node, latticeElement, context);
         }
@@ -93,7 +98,7 @@ public class TypeAnalysisImpl implements Analysis {
             return analyseReadNode((ReadNode) node, latticeElement, context);
         }
         if (node instanceof ArrayWriteReferenceAssignmentNode) {
-            return analyseArrayReferenceAssignmentNode((ArrayWriteReferenceAssignmentNode) node, latticeElement, context);
+            return analyseArrayWriteReferenceAssignmentNode((ArrayWriteReferenceAssignmentNode) node, latticeElement, context);
         }
         if (node instanceof ArrayAppendReferenceAssignmentNode) {
             return analyseArrayAppendReferenceAssignmentNode((ArrayAppendReferenceAssignmentNode) node, latticeElement, context);
@@ -123,6 +128,30 @@ public class TypeAnalysisImpl implements Analysis {
         // Fallback to identity function for unhandled nodes
         return latticeElement;
 
+    }
+
+    private AnalysisLatticeElement analyseArrayWriteAssignmentNode(ArrayWriteAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        //Setting target
+        latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getStackValue(context, node.getValueName()));
+        //For each possible location
+        HeapLocation valueLocation = new HeapLocationImpl();
+        latticeElement = latticeElement.setHeapValue(context, valueLocation, latticeElement.getStackValue(context, node.getValueName()));
+        for (HeapLocation location : node.getVariableLocationsSet()) {
+            ValueLatticeElement value = latticeElement.getHeapValue(context, location);
+            ArrayLatticeElement array = writeArray(
+                    value.getArray(),
+                    valueLocation,
+                    generateArrayIndices(
+                            latticeElement.getStackValue(
+                                    context,
+                                    node.getIndexName())));
+
+            //If you "array write" to something that is initialized, but not an array, you get a warning and the variable is unchanged.
+            latticeElement = latticeElement.setHeapValue(context, location, value.setArray(array));
+
+        }
+
+        return latticeElement;
     }
 
     private AnalysisLatticeElement analyseGlobalNode(GlobalNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -159,14 +188,20 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
 
-    private IndexLatticeElement[] generateArrayIndices(ValueLatticeElement element) {
-        return new IndexLatticeElement[]{element.getBoolean().toArrayIndex(), element.getNull().toArrayIndex(), element.getString().toArrayIndex(), element.getNumber().toArrayIndex()};
+    private List<IndexLatticeElement> generateArrayIndices(ValueLatticeElement element) {
+        List<IndexLatticeElement> list = new LinkedList<>();
+        list.add(element.getBoolean().toArrayIndex());
+        list.add(element.getNull().toArrayIndex());
+        list.add(element.getString().toArrayIndex());
+        list.add(element.getNumber().toArrayIndex());
+        return list;
     }
 
 
-    private AnalysisLatticeElement analyseArrayReferenceAssignmentNode(
+    private AnalysisLatticeElement analyseArrayWriteReferenceAssignmentNode(
             ArrayWriteReferenceAssignmentNode node,
             AnalysisLatticeElement latticeElement, Context context) {
+
         Set<HeapLocation> valueLocations = node.getValueLocationSet();
         latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
         //For each possible location
@@ -190,7 +225,13 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
 
-    ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, IndexLatticeElement[] arrayIndices) {
+    ArrayLatticeElement writeArray(ArrayLatticeElement array, HeapLocation valueLocation, List<IndexLatticeElement> arrayIndices) {
+        Set<HeapLocation> set = new HashSet<>();
+        set.add(valueLocation);
+        return writeArray(array, set, arrayIndices);
+    }
+
+    ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, List<IndexLatticeElement> arrayIndices) {
         //If location is top array, do nothing
         if (array.equals(ArrayLatticeElement.top)) {
             return array;
@@ -198,15 +239,18 @@ public class TypeAnalysisImpl implements Analysis {
         if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
             //For every possible index
             for (IndexLatticeElement index : arrayIndices) {
-                //If not initialized as array, or empty array, and index is 0. Then create list.
-                if (index.equals(IndexLatticeElement.generateIntegerIndex(IntegerLatticeElement.generateElement(0)))) {
-                    array = array.join(ArrayLatticeElement.generateList(valueLocationSet));
-                } else {
-                    //If not initialized as array, or empty array, and index is not 0. Then create map.
-                    array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
-                }
+                //For monotonicity, we need to make every initializing write a map.
+                array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
+
             }
         } else if (array instanceof ListArrayLatticeElement) {
+            if (arrayIndices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
+                //Needs to be monotone, so will need to convert to map
+                annotator.error("Array write with string index on list");
+                array = ArrayLatticeElement
+                        .generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations());
+                return writeArray(array, valueLocationSet, arrayIndices);
+            }
             array = ((ListArrayLatticeElement) array).addLocations(valueLocationSet);
 
         } else if (array instanceof MapArrayLatticeElement) {
@@ -536,12 +580,12 @@ public class TypeAnalysisImpl implements Analysis {
 
         ValueLatticeElement
                 arrayValue = latticeElement.getStackValue(context, node.getTargetName()),
-                entryValue = latticeElement.getStackValue(context, node.getValueName());
+                entryValue = latticeElement.getStackValue(context, node.getValueName()),
+                keyValue = latticeElement.getStackValue(context, node.getKeyName());
         ArrayLatticeElement array = arrayValue.getArray();
         HeapLocation newLocation = new HeapLocationImpl();
-        Set<HeapLocation> newLocationSet = new HashSet<>();
-        newLocationSet.add(newLocation);
-        array = writeArray(array, newLocationSet, generateArrayIndices(entryValue));
+
+        array = writeArray(array, newLocation, generateArrayIndices(keyValue));
 
         return latticeElement
                 .setStackValue(context, node.getTargetName(), arrayValue.setArray(array)) //Update the new stack value
@@ -622,13 +666,14 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyseArrayAppendExpressionNode(ArrayAppendExpressionNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement newValue = l.getStackValue(c, n.getValueName());
-        if (newValue.getArray() instanceof MapArrayLatticeElement) {
+        ValueLatticeElement oldArray = l.getStackValue(c, n.getTargetName());
+        if (oldArray.getArray() instanceof MapArrayLatticeElement) {
             annotator.error("Appending on map");
         }
         HeapLocation location = new HeapLocationImpl();
         ArrayLatticeElement list = ArrayLatticeElement.generateList(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
-        return l.setHeapValue(c, location, newValue).setStackValue(c, n.getTargetName(), l.getStackValue(c, n.getTargetName()).join(newTarget));
+        return l.setHeapValue(c, location, newValue).setStackValue(c, n.getTargetName(), oldArray.join(newTarget));
     }
 
     private AnalysisLatticeElement analyseNodeArrayInitExpressionNode(ArrayInitExpressionNode n, AnalysisLatticeElement l, Context c) {
