@@ -54,7 +54,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public IntegerLatticeElement toInteger() {
-        return number instanceof Integer ? IntegerLatticeElement.generateElement(number.intValue()) : IntegerLatticeElement.generateElement((int)Math.floor(number.doubleValue()));
+        return IntegerLatticeElement.generateElement(number.intValue());
     }
 
     @Override
@@ -64,52 +64,54 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public NumberLatticeElement increment() {
-        return NumberLatticeElement.generateNumberLatticeElement(number.intValue() + 1);
+        return NumberLatticeElement.generateNumberLatticeElement(number + 1);
     }
 
     @Override
     public NumberLatticeElement decrement() {
-        return NumberLatticeElement.generateNumberLatticeElement(number.intValue() - 1);
+        return NumberLatticeElement.generateNumberLatticeElement(number - 1);
     }
     @Override
     public NumberLatticeElement add(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
 
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(getNumber() + ((ValueNumberLatticeElement) other).getNumber().doubleValue());
         }
 
-        if(other.equals(notUIntTop)) return top;
+        if(other.equals(uIntTop)) return uIntTop;
 
-        return other;
+        return top;
     }
 
     @Override
     public NumberLatticeElement subtract(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
 
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(getNumber() - ((ValueNumberLatticeElement) other).getNumber().doubleValue());
         }
 
-        if(other.equals(uIntTop)) return top;
-
-        return other;
+        return top;
     }
 
     @Override
     public NumberLatticeElement multiply(NumberLatticeElement other) {
-
+        if(other.equals(bottom)) return bottom;
 
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(getNumber() * ((ValueNumberLatticeElement) other).getNumber().doubleValue());
         }
 
-        if(other.equals(notUIntTop)) return top;
+        if(getNumber() == 0) return NumberLatticeElement.generateNumberLatticeElement(0);
+        if(other.equals(uIntTop)) return uIntTop;
 
-        return other;
+        return top;
     }
 
     @Override
     public ValueLatticeElement divide(NumberLatticeElement other) {
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
 
         if(other instanceof ValueNumberLatticeElement) {
             ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
@@ -120,11 +122,19 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
             return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() / otherVal.getNumber().doubleValue()));
         }
 
+        if(getNumber() == 0) {
+            if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(this);
+            else return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
+        }
+
+        if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(top);
+
         return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public ValueLatticeElement modulo(NumberLatticeElement other) {
+        if(other.equals(bottom)) return new ValueLatticeElementImpl();
 
         if(other instanceof ValueNumberLatticeElement) {
             ValueNumberLatticeElement otherVal = (ValueNumberLatticeElement)other;
@@ -135,23 +145,35 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
             return new ValueLatticeElementImpl(NumberLatticeElement.generateNumberLatticeElement(getNumber() % otherVal.getNumber().doubleValue()));
         }
 
-        return new ValueLatticeElementImpl(top, BooleanLatticeElement.boolFalse);
+        if(getNumber() == 0) {
+            if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(this);
+            else return new ValueLatticeElementImpl(this, BooleanLatticeElement.boolFalse);
+        }
+
+        if(other.equals(notUIntTop)) return new ValueLatticeElementImpl(uIntTop);
+
+        return new ValueLatticeElementImpl(uIntTop, BooleanLatticeElement.boolFalse);
     }
 
     @Override
     public NumberLatticeElement exponent(NumberLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
 
         if(other instanceof ValueNumberLatticeElement) {
             return NumberLatticeElement.generateNumberLatticeElement(Math.pow(getNumber(), ((ValueNumberLatticeElement) other).getNumber().doubleValue()));
         }
 
-        if(other.equals(notUIntTop)) return top;
+        if(other.equals(uIntTop)) return uIntTop;
 
-        return other;
+        if(getNumber() == 0 && other.equals(notUIntTop)) return NumberLatticeElement.generateNumberLatticeElement(0);
+        if(getNumber() == 0 && other.equals(top)) return uIntTop;
+
+        return top;
     }
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() > ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -162,6 +184,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() < ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -172,6 +195,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() >= ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -182,6 +206,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber() <= ((ValueNumberLatticeElement)other).getNumber().doubleValue());
