@@ -50,15 +50,23 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
             }
 
         } else {
-            PhpExpression indexValue;
             TemporaryVariableName valueName = new TemporaryVariableNameImpl();
-            if (variable instanceof ArrayAccessExpression && (indexValue = (PhpExpression) ((ArrayAccessExpression) variable).getIndex().getValue()) != null) {
-                TemporaryVariableName indexName = new TemporaryVariableNameImpl();
-                assignmentNode = new ArrayWriteAssignmentNodeImpl(graph.getEntryNode(), targetName, valueName, indexName, variableLocations, element);
-                Graph valueGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
-                Graph indexGraph = psiParser.parseExpression(indexValue, g -> g, indexName).generate(valueGraph);
-                this.variableGraph = psiParser.parseVariableExpression((PhpExpression) ((ArrayAccessExpression) variable).getValue(), g -> g, variableLocations).generate(indexGraph);
-                //TODO add special node for append.
+            if (variable instanceof ArrayAccessExpression) {
+                PhpExpression indexValue = (PhpExpression) ((ArrayAccessExpression) variable).getIndex().getValue();
+                Graph nextGraph;
+                if(indexValue != null){
+                    TemporaryVariableName indexName = new TemporaryVariableNameImpl();
+                    assignmentNode = new ArrayWriteAssignmentNodeImpl(graph.getEntryNode(), targetName, valueName, indexName, variableLocations, element);
+                    Graph valueGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
+                    nextGraph = psiParser.parseExpression(indexValue, g -> g, indexName).generate(valueGraph);
+                } else {
+                    assignmentNode = new ArrayAppendAssignmentNodeImpl(graph.getEntryNode(), targetName, valueName, variableLocations, element);
+                    nextGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
+                }
+                this.variableGraph = psiParser.parseVariableExpression(
+                        (PhpExpression) ((ArrayAccessExpression) variable).getValue(),
+                        g -> g,
+                        variableLocations).generate(nextGraph);
 
             } else {
                 this.assignmentNode = new AssignmentNodeImpl(graph.getEntryNode(), targetName, variableLocations, valueName, element);

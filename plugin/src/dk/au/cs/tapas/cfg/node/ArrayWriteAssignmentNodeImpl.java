@@ -40,7 +40,7 @@ public class ArrayWriteAssignmentNodeImpl extends NodeImpl implements ArrayWrite
     }
 
     @Override
-    public Set<HeapLocation> getVariableLocationsSet() {
+    public Set<HeapLocation> getVariableLocationSet() {
         return variableLocations;
     }
 

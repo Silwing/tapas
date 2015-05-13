@@ -1,6 +1,8 @@
 package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.*;
+import dk.au.cs.tapas.cfg.graph.ArrayAppendAssignmentNode;
+import dk.au.cs.tapas.cfg.graph.ArrayAppendAssignmentNodeImpl;
 import dk.au.cs.tapas.cfg.graph.LibraryFunctionGraph;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
@@ -68,6 +70,10 @@ public class TypeAnalysisImpl implements Analysis {
         if (node instanceof ArrayWriteAssignmentNodeImpl) {
             return analyseArrayWriteAssignmentNode((ArrayWriteAssignmentNode) node, latticeElement, context);
         }
+        if(node  instanceof ArrayAppendAssignmentNode){
+            return analyseArrayAppendAssignmentNode((ArrayAppendAssignmentNode) node, latticeElement, context);
+        }
+
         if (node instanceof ShortCircuitBinaryOperationNode) {
             return analyseShortCircuitBinaryOperationNode((ShortCircuitBinaryOperationNode) node, latticeElement, context);
         }
@@ -128,6 +134,22 @@ public class TypeAnalysisImpl implements Analysis {
 
     }
 
+    private AnalysisLatticeElement analyseArrayAppendAssignmentNode(ArrayAppendAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+        ValueLatticeElement listValue = latticeElement.getStackValue(context, node.getValueName());
+        HeapLocation listLocation = new HeapLocationImpl();
+
+        latticeElement = latticeElement
+                .setStackValue(context, node.getTargetName(), listValue)
+                .setHeapValue(context, listLocation, listValue);
+
+        allCheckArray(latticeElement, context, node.getVariableLocationSet(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
+        checkArrayAddValue(latticeElement.getValue(context), node.getVariableLocationSet(),listLocation);
+        for (HeapLocation location : node.getVariableLocationSet()) {
+            latticeElement = latticeElement.joinHeapValue(context, location, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(listLocation)));
+        }
+        return latticeElement;
+    }
+
     private AnalysisLatticeElement analyseArrayWriteAssignmentNode(ArrayWriteAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
         //Setting target
         latticeElement = latticeElement.setStackValue(context, node.getTargetName(), latticeElement.getStackValue(context, node.getValueName()));
@@ -137,11 +159,11 @@ public class TypeAnalysisImpl implements Analysis {
 
         final AnalysisLatticeElement finalLatticeElement = latticeElement;
         //Only add write error if all arrays are lists
-        boolean addError = node.getVariableLocationsSet().stream().map(l -> finalLatticeElement.getHeapValue(context, l).getArray()).allMatch(a -> a instanceof ListArrayLatticeElement);
+        boolean addError = node.getVariableLocationSet().stream().map(l -> finalLatticeElement.getHeapValue(context, l).getArray()).allMatch(a -> a instanceof ListArrayLatticeElement);
 
-        checkArrayAddValue(latticeElement.getValue(context), node.getVariableLocationsSet(), valueLocation);
+        checkArrayAddValue(latticeElement.getValue(context), node.getVariableLocationSet(), valueLocation);
 
-        for (HeapLocation location : node.getVariableLocationsSet()) {
+        for (HeapLocation location : node.getVariableLocationSet()) {
             ValueLatticeElement value = latticeElement.getHeapValue(context, location);
             ArrayLatticeElement array = writeArray(
                     value.getArray(),

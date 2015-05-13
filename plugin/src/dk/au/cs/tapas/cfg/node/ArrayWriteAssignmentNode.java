@@ -15,7 +15,7 @@ public interface ArrayWriteAssignmentNode extends ExpressionNode{
 
     TemporaryVariableName getValueName() ;
 
-    Set<HeapLocation> getVariableLocationsSet() ;
+    Set<HeapLocation> getVariableLocationSet() ;
 
 
 }
