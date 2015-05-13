@@ -32,6 +32,7 @@ public class TypeAnalysisImpl implements Analysis {
     @Override
     public AnalysisLatticeElement getStartLattice() {
         AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
+        // TODO: init as maps
         for (VariableName name : VariableName.superGlobals) {
             lattice = lattice.setGlobalsValue(new ContextImpl(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
         }
