@@ -8,7 +8,6 @@ import dk.au.cs.tapas.lattice.*;
 import dk.au.cs.tapas.lattice.element.*;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -137,7 +136,11 @@ public class TypeAnalysisImpl implements Analysis {
         latticeElement = latticeElement.setHeapValue(context, valueLocation, latticeElement.getStackValue(context, node.getValueName()));
 
         final AnalysisLatticeElement finalLatticeElement = latticeElement;
+        //Only add write error if all arrays are lists
         boolean addError = node.getVariableLocationsSet().stream().map(l -> finalLatticeElement.getHeapValue(context, l).getArray()).allMatch(a -> a instanceof ListArrayLatticeElement);
+
+        checkArrayAddValue(latticeElement.getValue(context), node.getVariableLocationsSet(), valueLocation);
+
         for (HeapLocation location : node.getVariableLocationsSet()) {
             ValueLatticeElement value = latticeElement.getHeapValue(context, location);
             ArrayLatticeElement array = writeArray(
@@ -155,6 +158,48 @@ public class TypeAnalysisImpl implements Analysis {
 
         return latticeElement;
     }
+
+    private void checkArrayAddValue(StateLatticeElement state, Set<HeapLocation> variableLocationsSet, HeapLocation valueLocation) {
+        Set<HeapLocation> set = new HashSet<>();
+        set.add(valueLocation);
+        checkArrayAddValue(state, variableLocationsSet, set);
+
+    }
+
+    private void checkArrayAddValue(StateLatticeElement state, Set<HeapLocation> variableLocationsSet, Set<HeapLocation> valueLocationSet) {
+        ValueLatticeElement arrayValue = ValueLatticeElement.bottom;
+        for (HeapLocation l : variableLocationsSet) {
+            if (arrayValue.equals(ValueLatticeElement.top)) {
+                return;
+            }
+            ArrayLatticeElement v = state.getHeap().getValue(l).getArray();
+            if (v instanceof ListArrayLatticeElement) {
+                ValueLatticeElement newValue = state.getHeap().getValue(((ListArrayLatticeElement) v).getLocations(), LatticeElement::join);
+                arrayValue = arrayValue.join(newValue);
+            } else {
+                return;
+            }
+        }
+
+        ValueLatticeElement valueValue = state.getHeap().getValue(valueLocationSet, LatticeElement::join);
+        checkArrayAddValue(state, arrayValue, valueValue);
+
+    }
+
+    private void checkArrayAddValue(StateLatticeElement state, ValueLatticeElement v1, ValueLatticeElement v2) {
+        if (
+                (v1.getArray().equals(ArrayLatticeElement.bottom) && !v2.getArray().equals(ArrayLatticeElement.bottom)) ||
+                        (v1.getString().equals(StringLatticeElement.bottom) && !v2.getString().equals(StringLatticeElement.bottom)) ||
+                        (v1.getNumber().equals(NumberLatticeElement.bottom) && !v2.getNumber().equals(NumberLatticeElement.bottom)) ||
+                        (v1.getBoolean().equals(BooleanLatticeElement.bottom) && !v2.getBoolean().equals(BooleanLatticeElement.bottom)) ||
+                        ((v1.getArray() instanceof ListArrayLatticeElement) && v2.getArray() instanceof MapArrayLatticeElement) ||
+                        ((v2.getArray() instanceof ListArrayLatticeElement) && v1.getArray() instanceof MapArrayLatticeElement)
+
+                ) {
+            annotator.warning("Assigning value to list of different type");
+        }
+    }
+
 
     private AnalysisLatticeElement analyseGlobalNode(GlobalNode node, AnalysisLatticeElement latticeElement, Context context) {
         if (context.isEmpty()) {
@@ -598,6 +643,10 @@ public class TypeAnalysisImpl implements Analysis {
         ArrayLatticeElement array = arrayValue.getArray();
         HeapLocation newLocation = new HeapLocationImpl();
 
+        if (array instanceof ListArrayLatticeElement) {
+            checkArrayAddValue(latticeElement.getValue(context), latticeElement.getHeap(context).getValue(((ListArrayLatticeElement) array).getLocations(), LatticeElement::join), entryValue);
+        }
+
         array = writeArray(array, newLocation, generateArrayIndices(keyValue));
 
         return latticeElement
@@ -675,6 +724,7 @@ public class TypeAnalysisImpl implements Analysis {
 
         allCheckArray(latticeElement, context, n.getValueHeapLocationSet(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
 
+
         for (HeapLocation loc : n.getValueHeapLocationSet()) {
             HeapLocation newLoc = new HeapLocationImpl();
             target.add(newLoc);
@@ -697,7 +747,10 @@ public class TypeAnalysisImpl implements Analysis {
         ValueLatticeElement oldArray = l.getStackValue(c, n.getTargetName());
         if (oldArray.getArray() instanceof MapArrayLatticeElement) {
             annotator.error("Appending on map");
+        } else if (oldArray.getArray() instanceof ListArrayLatticeElement) {
+            checkArrayAddValue(l.getValue(c), l.getHeap(c).getValue(((ListArrayLatticeElement) oldArray.getArray()).getLocations(), LatticeElement::join), newValue);
         }
+
         HeapLocation location = new HeapLocationImpl();
         ArrayLatticeElement list = ArrayLatticeElement.generateList(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);

@@ -19,6 +19,8 @@ public interface HeapMapLatticeElement extends MapLatticeElement<HeapLocation, V
     @Override
     HeapMapLatticeElement addValue(HeapLocation key, Generator<HeapLocation, ValueLatticeElement> generator);
 
+    ValueLatticeElement getValue(HeapLocationPowerSetLatticeElement locations, BinaryOperator<ValueLatticeElement> combiner);
+
     ValueLatticeElement getValue(Set<HeapLocation> locations, BinaryOperator<ValueLatticeElement> combiner);
 
     ValueLatticeElement getValue(Set<HeapLocation> locations, ValueLatticeElement initial, BinaryOperator<ValueLatticeElement> combiner);

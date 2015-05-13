@@ -44,6 +44,11 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
     }
 
     @Override
+    public ValueLatticeElement getValue(HeapLocationPowerSetLatticeElement locations, BinaryOperator<ValueLatticeElement> combiner) {
+        return getValue(locations.getLocations(), combiner);
+    }
+
+    @Override
     public ValueLatticeElement getValue(Set<HeapLocation> locations, BinaryOperator<ValueLatticeElement> combiner) {
         return getValue(locations, new ValueLatticeElementImpl(), combiner);
     }

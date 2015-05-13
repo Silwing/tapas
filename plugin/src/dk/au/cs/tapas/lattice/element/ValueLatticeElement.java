@@ -15,6 +15,7 @@ public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>
             BooleanLatticeElement.top,
             NullLatticeElement.top
     );
+    ValueLatticeElement bottom = new ValueLatticeElementImpl();
 
     ArrayLatticeElement getArray();
 
