@@ -4,8 +4,8 @@ import com.jetbrains.php.lang.psi.elements.ArrayAccessExpression;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
-import dk.au.cs.tapas.cfg.node.ArrayAppendLocationVariableExpressionNodeImpl;
-import dk.au.cs.tapas.cfg.node.ArrayLocationVariableExpressionNodeImpl;
+import dk.au.cs.tapas.cfg.node.ArrayAppendLocationSetNodeImpl;
+import dk.au.cs.tapas.cfg.node.ArrayReadLocationSetNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
@@ -28,11 +28,11 @@ class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
         Graph nextGraph;
         Set<HeapLocation> valueLocations = new HashSet<>();
         if(indexValue == null){
-            endNode = new ArrayAppendLocationVariableExpressionNodeImpl(graph.getEntryNode(), valueLocations, locations, element);
+            endNode = new ArrayAppendLocationSetNodeImpl(graph.getEntryNode(), valueLocations, locations, element);
             nextGraph = new NodeGraphImpl(endNode);
         } else {
             TemporaryVariableName indexName = new TemporaryVariableNameImpl();
-            endNode = new ArrayLocationVariableExpressionNodeImpl(graph.getEntryNode(), indexName,  valueLocations, locations, element);
+            endNode = new ArrayReadLocationSetNodeImpl(graph.getEntryNode(), indexName, valueLocations, locations, element);
             nextGraph = parser.parseExpression((PhpExpression) indexValue, g -> g, indexName).generate(new NodeGraphImpl(endNode));
         }
 

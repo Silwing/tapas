@@ -9,13 +9,13 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class ArrayLocationVariableExpressionNodeImpl extends NodeImpl implements ArrayLocationVariableExpressionNode {
+public class ArrayReadLocationSetNodeImpl extends NodeImpl implements ArrayReadLocationSetNode {
 
     private final TemporaryVariableName indexName;
     private final Set<HeapLocation> locations;
     private Set<HeapLocation> valueHeapLocationSet;
 
-    public ArrayLocationVariableExpressionNodeImpl(Node successor, TemporaryVariableName indexName, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> targetLocations, PsiElement psiElement) {
+    public ArrayReadLocationSetNodeImpl(Node successor, TemporaryVariableName indexName, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> targetLocations, PsiElement psiElement) {
         super(successor, psiElement);
         this.valueHeapLocationSet = valueHeapLocationSet;
         this.locations = targetLocations;

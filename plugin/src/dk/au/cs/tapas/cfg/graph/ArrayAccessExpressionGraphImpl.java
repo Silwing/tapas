@@ -3,7 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.ArrayAccessExpression;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import dk.au.cs.tapas.cfg.PsiParser;
-import dk.au.cs.tapas.cfg.node.ArrayReadExpressionNodeImpl;
+import dk.au.cs.tapas.cfg.node.ArrayReadStackOperationNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
@@ -20,7 +20,7 @@ public class ArrayAccessExpressionGraphImpl extends ExpressionGraphImpl<ArrayAcc
     public ArrayAccessExpressionGraphImpl(PsiParser psiParser, ArrayAccessExpression element, Graph graph, TemporaryVariableName name) {
         super(psiParser, element, graph, name);
         TemporaryVariableName arrayName = new TemporaryVariableNameImpl(), indexName = new TemporaryVariableNameImpl();
-        endNode = new ArrayReadExpressionNodeImpl(graph.getEntryNode(), arrayName, indexName, name, element);
+        endNode = new ArrayReadStackOperationNodeImpl(graph.getEntryNode(), arrayName, indexName, name, element);
 
         Graph indexGraph = parser.parseExpression((PhpExpression) element.getIndex().getValue(), g -> g, indexName).generate(new NodeGraphImpl(endNode));
 

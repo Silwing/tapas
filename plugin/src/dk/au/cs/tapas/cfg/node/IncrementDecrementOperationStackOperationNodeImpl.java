@@ -10,12 +10,12 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class IncrementDecrementOperationExpressionNodeImpl extends NodeImpl implements IncrementDecrementOperationExpressionNode {
+public class IncrementDecrementOperationStackOperationNodeImpl extends NodeImpl implements IncrementDecrementOperationStackOperationNode {
     private Set<HeapLocation> locationSet;
     private UnaryOperator operation;
     private TemporaryVariableName targetName;
 
-    public IncrementDecrementOperationExpressionNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName, PsiElement psiElement) {
+    public IncrementDecrementOperationStackOperationNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName, PsiElement psiElement) {
         super(successor, psiElement);
         locationSet = locations;
         this.operation = operation;
