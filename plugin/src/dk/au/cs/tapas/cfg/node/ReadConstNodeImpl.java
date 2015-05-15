@@ -32,6 +32,6 @@ public class ReadConstNodeImpl extends NodeImpl implements ReadConstNode{
 
     @Override
     public String toString() {
-        return "read_c(" + constant + ", " + targetName + ')';
+        return "constant_read(" + constant + ", " + targetName + ')';
     }
 }

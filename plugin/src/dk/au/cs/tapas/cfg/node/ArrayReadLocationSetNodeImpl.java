@@ -40,6 +40,6 @@ public class ArrayReadLocationSetNodeImpl extends NodeImpl implements ArrayReadL
 
     @Override
     public String toString() {
-        return "loca("+valueHeapLocationSet+", "+ locations + ", " + indexName + ')';
+        return "array_read(" + valueHeapLocationSet + ", " + locations + ", " + indexName + ')';
     }
 }

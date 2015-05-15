@@ -27,7 +27,7 @@ public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayApp
 
     @Override
     public String toString() {
-        return "loc_append("+valueHeapLocationSet+", "+ locations + ')';
+        return "array_append(" + valueHeapLocationSet + ", " + locations + ')';
     }
 
     @Override

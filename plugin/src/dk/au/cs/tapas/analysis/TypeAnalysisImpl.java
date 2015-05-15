@@ -44,8 +44,8 @@ public class TypeAnalysisImpl implements Analysis {
         Node node = target.getNode();
         annotator.setNode(node);
         Context context = target.getContext().toContext();
-        if (node instanceof VariableLocationSetNode) {
-            return analyse((VariableLocationSetNode) node, latticeElement, context);
+        if (node instanceof VariableReadLocationSetNode) {
+            return analyse((VariableReadLocationSetNode) node, latticeElement, context);
         }
         if (node instanceof ArrayInitStackOperationNode) {
             return analyse((ArrayInitStackOperationNode) node, latticeElement, context);
@@ -762,7 +762,7 @@ public class TypeAnalysisImpl implements Analysis {
         return l.setStackValue(c, n.getTargetName(), (name) -> new ValueLatticeElementImpl(ArrayLatticeElement.emptyArray));
     }
 
-    private AnalysisLatticeElement analyse(VariableLocationSetNode node, AnalysisLatticeElement latticeElement, Context context) {
+    private AnalysisLatticeElement analyse(VariableReadLocationSetNode node, AnalysisLatticeElement latticeElement, Context context) {
         VariableName name = node.getVariableName();
         Set<HeapLocation> newLocations = getVariableLocation(name, context, latticeElement).getLocations();
         if (newLocations.isEmpty()) {

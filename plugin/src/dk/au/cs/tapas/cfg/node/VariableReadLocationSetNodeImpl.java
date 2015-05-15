@@ -9,11 +9,11 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class VariableLocationSetNodeImpl extends NodeImpl implements VariableLocationSetNode {
+public class VariableReadLocationSetNodeImpl extends NodeImpl implements VariableReadLocationSetNode {
     private Set<HeapLocation> locations;
     private VariableName variableName;
 
-    public VariableLocationSetNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> locations, PsiElement psiElement) {
+    public VariableReadLocationSetNodeImpl(Node successor, VariableName variableName, Set<HeapLocation> locations, PsiElement psiElement) {
         super(successor, psiElement);
         this.locations = locations;
         this.variableName = variableName;
@@ -27,7 +27,7 @@ public class VariableLocationSetNodeImpl extends NodeImpl implements VariableLoc
 
     @Override
     public String toString() {
-        return "loc("+ variableName + ", "+ locations +')';
+        return "var_read(" + variableName + ", " + locations + ')';
     }
 
     @Override

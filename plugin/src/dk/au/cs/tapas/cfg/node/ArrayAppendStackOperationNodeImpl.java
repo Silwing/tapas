@@ -30,6 +30,6 @@ public class ArrayAppendStackOperationNodeImpl extends NodeImpl implements Array
 
     @Override
     public String toString() {
-        return "a_append(" + valueName + ", " + targetName + ")";
+        return "array_append(" + valueName + ", " + targetName + ")";
     }
 }

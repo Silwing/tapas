@@ -36,6 +36,6 @@ public class ArrayWriteStackOperationNodeImpl extends NodeImpl implements ArrayW
 
     @Override
     public String toString() {
-        return "a_write(" + keyName + ", " + valueName + ", " + targetName + ")";
+        return "array_write(" + keyName + ", " + valueName + ", " + targetName + ")";
     }
 }

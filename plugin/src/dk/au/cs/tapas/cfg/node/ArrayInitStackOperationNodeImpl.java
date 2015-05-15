@@ -22,7 +22,7 @@ public class ArrayInitStackOperationNodeImpl extends NodeImpl implements ArrayIn
 
     @Override
     public String toString() {
-        return "ainit(" +
+        return "array_init(" +
                 targetName +
                 ')';
     }

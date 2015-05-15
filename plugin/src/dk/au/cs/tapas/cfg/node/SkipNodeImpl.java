@@ -17,7 +17,7 @@ public class SkipNodeImpl extends NodeImpl implements SkipNode {
     }
 
     public String toString(){
-        return "[nop]";
+        return "nop";
     }
 
 }

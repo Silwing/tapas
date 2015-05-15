@@ -41,7 +41,7 @@ public class ArrayWriteReferenceAssignmentNodeImpl extends NodeImpl implements A
 
     @Override
     public String toString() {
-        return "array_assign_ref("+ variableLocationSet +
+        return "array_write(" + variableLocationSet +
                 ", " + valueLocationSet +
                 ", " + targetName +
                 ')';

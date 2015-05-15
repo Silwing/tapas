@@ -36,7 +36,7 @@ public class ArrayReadStackOperationNodeImpl extends NodeImpl implements ArrayRe
 
     @Override
     public String toString() {
-        return "aread(" +
+        return "array_read(" +
                  arrayName +
                 ", " + indexName +
                 ", " + targetName+ ')';

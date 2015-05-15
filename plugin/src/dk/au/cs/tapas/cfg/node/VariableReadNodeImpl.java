@@ -32,6 +32,6 @@ public class VariableReadNodeImpl extends NodeImpl implements VariableReadNode {
 
     @Override
     public String toString() {
-        return "read("+variable + ", " + target +")";
+        return "var_read(" + variable + ", " + target + ")";
     }
 }

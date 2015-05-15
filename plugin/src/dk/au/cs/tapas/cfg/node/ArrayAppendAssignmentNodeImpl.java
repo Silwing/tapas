@@ -36,4 +36,9 @@ public class ArrayAppendAssignmentNodeImpl extends NodeImpl implements ArrayAppe
     public Set<HeapLocation> getVariableLocationSet() {
         return variableLocations;
     }
+
+    @Override
+    public String toString() {
+        return "array_append(" + variableLocations + ", " + valueName + ", " + targetName + ")";
+    }
 }

@@ -13,7 +13,7 @@ public class EndNodeImpl extends NodeImpl {
 
     @Override
     public String toString() {
-        return "[end]";
+        return "end";
     }
 
 }

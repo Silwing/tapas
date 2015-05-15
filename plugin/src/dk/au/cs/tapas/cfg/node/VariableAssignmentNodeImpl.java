@@ -33,4 +33,12 @@ public class VariableAssignmentNodeImpl extends NodeImpl implements VariableAssi
     public TemporaryVariableName getTargetName() {
         return targetName;
     }
+
+
+    @Override
+    public String toString() {
+        return "var_write(" + variableName + ", " + valueName + ", " + targetName + ')';
+    }
+
+
 }
