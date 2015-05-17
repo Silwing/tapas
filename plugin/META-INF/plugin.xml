@@ -37,4 +37,14 @@
     <!-- Add your project components here -->
   </project-components>
 
+  <actions>
+    <!--action id="Tapas.Analyse" class="dk.au.cs.tapas.plugin.AnalyseAction" text="Analysis Results to Folder" description="Export analysis results as files to a folder">
+      <add-to-group group-id="ToolsMenu" anchor="last" />
+    </action-->
+    <action id="dk.au.cs.tapas.plugin.AnalyseAction" class="dk.au.cs.tapas.plugin.AnalyseAction"
+            text="Analysis Results to Folder" description="Save results of analysis of current file to a folder">
+      <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="ToolsBasicGroup"/>
+    </action>
+  </actions>
+
 </idea-plugin>

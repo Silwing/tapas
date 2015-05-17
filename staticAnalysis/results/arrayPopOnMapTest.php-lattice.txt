@@ -1,0 +1,734 @@
+{
+	context[] -> {
+		stack -> {
+			t73 -> {
+				array -> [l63, l59],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t109 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			t79 -> {
+				array -> ?,
+				string -> ?,
+				number -> 0,
+				boolean -> ?,
+				null -> ?
+			}
+			t88 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t112 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t107 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			t101 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t69 -> {
+				array -> {
+					? -> l44, l45, l46
+					? -> l49
+					asd -> l49
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t93 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			t77 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t83 -> {
+				array -> ?,
+				string -> a,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t71 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t99 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t78 -> {
+				array -> ?,
+				string -> a,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t75 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t91 -> {
+				array -> [l63, l59],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t110 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t114 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t117 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t111 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t97 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			t85 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t80 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t63 -> {
+				array -> ?,
+				string -> ?,
+				number -> UIntNumber,
+				boolean -> ?,
+				null -> ?
+			}
+			t64 -> {
+				array -> ?,
+				string -> ?,
+				number -> UIntNumber,
+				boolean -> ?,
+				null -> ?
+			}
+			t87 -> {
+				array -> ?,
+				string -> ?,
+				number -> 0,
+				boolean -> ?,
+				null -> ?
+			}
+			t89 -> {
+				array -> ?,
+				string -> 5,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t62 -> {
+				array -> [l44, l45, l46],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t98 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			t95 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t105 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l51
+					1 -> l51
+					2 -> l52
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t115 -> {
+				array -> ?,
+				string -> ?,
+				number -> UIntNumber,
+				boolean -> ?,
+				null -> ?
+			}
+			t108 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			t81 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t72 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t118 -> {
+				array -> ?,
+				string -> ?,
+				number -> UIntNumber,
+				boolean -> ?,
+				null -> ?
+			}
+			t74 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t121 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			t82 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t119 -> {
+				array -> [l44, l45, l46],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t104 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l51
+					1 -> l51
+					2 -> l52
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t100 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t68 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l51
+					1 -> l51
+					2 -> l52
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t70 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t67 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l51
+					1 -> l51
+					2 -> l52
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t103 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t84 -> {
+				array -> ?,
+				string -> a,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t113 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t106 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			t120 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			t65 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t76 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t96 -> {
+				array -> [l57, l58, l56],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t90 -> {
+				array -> ?,
+				string -> ?,
+				number -> 0,
+				boolean -> ?,
+				null -> ?
+			}
+			t116 -> {
+				array -> [l44, l45, l46],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t94 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			t102 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t86 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t122 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			t66 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t92 -> {
+				array -> [l60, l61, l62],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+		},
+		locals -> {
+			
+		},
+		globals -> {
+			_COOKIE -> l37
+			_FILES -> l40
+			a -> l43
+			_ENV -> l41
+			b -> l47
+			c -> l50
+			d -> l55
+			_SERVER -> l38
+			g -> l54
+			h -> l50
+			GLOBALS -> l42
+			v -> l48
+			_REQUEST -> l39
+			_GET -> l35
+			_SESSION -> l36
+			_POST -> l34
+		},
+		heap -> {
+			l40 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l46 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			l50 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l43, l51
+					1 -> l51
+					2 -> l52
+					test -> l43
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l43 -> {
+				array -> [l63, l59],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l51 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			l36 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l63 -> {
+				array -> {
+					? -> l60, l61, l64, l62
+					a -> l66
+					? -> l66, l65
+					asd -> l65
+					1 -> l66
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l38 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l65 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l61 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			l39 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l64 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l44 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			l35 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l48 -> {
+				array -> ?,
+				string -> ?,
+				number -> UIntNumber,
+				boolean -> ?,
+				null -> ?
+			}
+			l66 -> {
+				array -> ?,
+				string -> asd,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l55 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l60 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			l54 -> {
+				array -> {
+					3 -> l53
+					? -> l53, l52, l51
+					1 -> l51
+					2 -> l52
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l49 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			l45 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			l41 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l59 -> {
+				array -> {
+					? -> l64, l57, l58, l56
+					asd -> l65
+					? -> l66, l65
+					1 -> l66
+					a -> l66
+				},
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l42 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l57 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			l62 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			l53 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			l58 -> {
+				array -> ?,
+				string -> ?,
+				number -> 3,
+				boolean -> ?,
+				null -> ?
+			}
+			l37 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l52 -> {
+				array -> ?,
+				string -> ?,
+				number -> 2,
+				boolean -> ?,
+				null -> ?
+			}
+			l34 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l56 -> {
+				array -> ?,
+				string -> ?,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+			l47 -> {
+				array -> ?,
+				string -> a,
+				number -> 1,
+				boolean -> ?,
+				null -> ?
+			}
+		}
+	}
+}
