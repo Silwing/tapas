@@ -13,11 +13,11 @@ function createInstance($string, $instance, $value)
     if (!isset($keyArray[$string])) {
         $keyArray[$string] = [];
         $valueArray[$string] = [];
-    } else if (($k = array_search($instance, $keyArray[$string], true)) !== false) {
-        return $valueArray[$string][$k];
+    } else if(($k = array_search($instance, $keyArray, true)) !== false){
+        return $this->valueArray[$k];
     }
-    $keyArray[$string][] = $instance;
-    return $valueArray[$string][] = $value;
+    $keyArray[] = $instance;
+    return $valueArray[] = $value;
 }
 
 createInstance("test", "test2", "testValue");
