@@ -18,6 +18,6 @@ public class StartNodeImpl extends NodeImpl implements StartNode {
 
     @Override
     public String toString() {
-        return "[start]";
+        return "start";
     }
 }

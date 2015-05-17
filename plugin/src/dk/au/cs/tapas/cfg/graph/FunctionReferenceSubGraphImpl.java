@@ -4,7 +4,9 @@ import com.jetbrains.php.lang.psi.elements.FunctionReference;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.*;
-import dk.au.cs.tapas.cfg.node.*;
+import dk.au.cs.tapas.cfg.node.CallNodeImpl;
+import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.cfg.node.ResultNodeImpl;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,7 +55,7 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
         }
         CallArgument callArgument = callArguments[counter];
         if (callArgument instanceof HeapLocationSetCallArgument) {
-            return parser.parseVariableExpression(
+            return parser.parseReferenceExpression(
                     (PhpExpression) parameter,
                     buildParameterGraph(parameter.getNextPsiSibling(), callArguments, counter + 1),
                     ((HeapLocationSetCallArgument) callArgument).getArgument());

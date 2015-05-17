@@ -7,10 +7,10 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
  * Created by budde on 4/26/15.
  *
  */
-public class ArrayInitExpressionNodeImpl extends NodeImpl implements ArrayInitExpressionNode {
+public class ArrayInitStackOperationNodeImpl extends NodeImpl implements ArrayInitStackOperationNode {
     private final TemporaryVariableName targetName;
 
-    public ArrayInitExpressionNodeImpl(Node successor, TemporaryVariableName targetName, PsiElement psiElement) {
+    public ArrayInitStackOperationNodeImpl(Node successor, TemporaryVariableName targetName, PsiElement psiElement) {
         super(successor, psiElement);
         this.targetName = targetName;
     }
@@ -22,7 +22,7 @@ public class ArrayInitExpressionNodeImpl extends NodeImpl implements ArrayInitEx
 
     @Override
     public String toString() {
-        return "ainit(" +
+        return "array_init(" +
                 targetName +
                 ')';
     }

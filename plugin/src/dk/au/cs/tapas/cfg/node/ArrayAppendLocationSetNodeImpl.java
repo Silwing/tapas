@@ -8,11 +8,11 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class ArrayAppendLocationVariableExpressionNodeImpl extends NodeImpl implements ArrayAppendLocationVariableExpressionNode{
+public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayAppendLocationSetNode {
     private Set<HeapLocation> locations;
     private Set<HeapLocation> valueHeapLocationSet;
 
-    public ArrayAppendLocationVariableExpressionNodeImpl(Node successor, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> locations, PsiElement psiElement) {
+    public ArrayAppendLocationSetNodeImpl(Node successor, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> locations, PsiElement psiElement) {
         super(successor, psiElement);
         this.valueHeapLocationSet = valueHeapLocationSet;
         this.locations = locations;
@@ -27,7 +27,7 @@ public class ArrayAppendLocationVariableExpressionNodeImpl extends NodeImpl impl
 
     @Override
     public String toString() {
-        return "loc_append("+valueHeapLocationSet+", "+ locations + ')';
+        return "array_append(" + valueHeapLocationSet + ", " + locations + ')';
     }
 
     @Override

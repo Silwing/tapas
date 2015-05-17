@@ -6,12 +6,12 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 /**
  * Created by budde on 4/27/15.
  */
-public class ArrayReadExpressionNodeImpl extends NodeImpl implements ArrayReadExpressionNode{
+public class ArrayReadStackOperationNodeImpl extends NodeImpl implements ArrayReadStackOperationNode {
     private TemporaryVariableName targetName;
     private TemporaryVariableName arrayName;
     private TemporaryVariableName indexName;
 
-    public ArrayReadExpressionNodeImpl(Node successor, TemporaryVariableName arrayName, TemporaryVariableName indexName, TemporaryVariableName targetName, PsiElement psiElement) {
+    public ArrayReadStackOperationNodeImpl(Node successor, TemporaryVariableName arrayName, TemporaryVariableName indexName, TemporaryVariableName targetName, PsiElement psiElement) {
         super(successor, psiElement);
         this.arrayName = arrayName;
         this.indexName = indexName;
@@ -36,7 +36,7 @@ public class ArrayReadExpressionNodeImpl extends NodeImpl implements ArrayReadEx
 
     @Override
     public String toString() {
-        return "aread(" +
+        return "array_read(" +
                  arrayName +
                 ", " + indexName +
                 ", " + targetName+ ')';

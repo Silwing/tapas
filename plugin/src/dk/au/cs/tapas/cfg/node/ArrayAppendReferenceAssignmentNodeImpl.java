@@ -38,7 +38,7 @@ public class ArrayAppendReferenceAssignmentNodeImpl extends NodeImpl implements 
 
     @Override
     public String toString() {
-        return "array_append_ref("+variableLocationSet+ ", "+ valueLocationSet+ ", "+targetName+")";
+        return "array_append(" + variableLocationSet + ", " + valueLocationSet + ", " + targetName + ")";
     }
 
 }

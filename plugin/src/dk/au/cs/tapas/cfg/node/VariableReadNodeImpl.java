@@ -7,12 +7,12 @@ import dk.au.cs.tapas.lattice.VariableName;
 /**
  * Created by budde on 4/26/15.
  */
-public class ReadNodeImpl extends NodeImpl implements ReadNode {
+public class VariableReadNodeImpl extends NodeImpl implements VariableReadNode {
 
     private final VariableName variable;
     private final TemporaryVariableName target;
 
-    public ReadNodeImpl(VariableName variable, TemporaryVariableName target, Node successor, PsiElement psiElement) {
+    public VariableReadNodeImpl(VariableName variable, TemporaryVariableName target, Node successor, PsiElement psiElement) {
         super(successor, psiElement);
         this.variable = variable;
         this.target = target;
@@ -32,6 +32,6 @@ public class ReadNodeImpl extends NodeImpl implements ReadNode {
 
     @Override
     public String toString() {
-        return "read("+variable + ", " + target +")";
+        return "var_read(" + variable + ", " + target + ")";
     }
 }

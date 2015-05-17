@@ -1,9 +1,6 @@
-package dk.au.cs.tapas.cfg.graph;
+package dk.au.cs.tapas.cfg.node;
 
 import com.intellij.psi.PsiElement;
-import com.jetbrains.php.lang.psi.elements.AssignmentExpression;
-import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.cfg.node.NodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
@@ -38,5 +35,10 @@ public class ArrayAppendAssignmentNodeImpl extends NodeImpl implements ArrayAppe
     @Override
     public Set<HeapLocation> getVariableLocationSet() {
         return variableLocations;
+    }
+
+    @Override
+    public String toString() {
+        return "array_append(" + variableLocations + ", " + valueName + ", " + targetName + ")";
     }
 }

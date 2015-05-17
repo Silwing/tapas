@@ -8,12 +8,10 @@ import java.util.Set;
 /**
  * Created by budde on 5/12/15.
  */
-public interface ArrayWriteAssignmentNode extends ExpressionNode{
+public interface ArrayWriteAssignmentNode extends AssignmentNode {
 
 
     TemporaryVariableName getIndexName() ;
-
-    TemporaryVariableName getValueName() ;
 
     Set<HeapLocation> getVariableLocationSet() ;
 

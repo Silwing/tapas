@@ -1,7 +1,10 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import com.intellij.psi.PsiElement;
-import com.jetbrains.php.lang.psi.elements.*;
+import com.jetbrains.php.lang.psi.elements.ArrayAccessExpression;
+import com.jetbrains.php.lang.psi.elements.AssignmentExpression;
+import com.jetbrains.php.lang.psi.elements.PhpExpression;
+import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.node.*;
@@ -69,7 +72,7 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
                         variableLocations).generate(nextGraph);
 
             } else {
-                this.assignmentNode = new AssignmentNodeImpl(graph.getEntryNode(), targetName, variableLocations, valueName, element);
+                this.assignmentNode = new VariableAssignmentNodeImpl(graph.getEntryNode(), new VariableNameImpl(variable.getName()), valueName, targetName, element);
                 Graph valueGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
                 this.variableGraph = psiParser.parseVariableExpression((PhpExpression) variable, g -> g, variableLocations).generate(valueGraph);
             }

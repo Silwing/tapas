@@ -6,11 +6,11 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
 /**
  * Created by budde on 4/26/15.
  */
-public class ArrayAppendExpressionNodeImpl extends NodeImpl implements ArrayAppendExpressionNode{
+public class ArrayAppendStackOperationNodeImpl extends NodeImpl implements ArrayAppendStackOperationNode {
     private final TemporaryVariableName valueName;
     private final TemporaryVariableName targetName;
 
-    public ArrayAppendExpressionNodeImpl(Node entryNode, TemporaryVariableName valueName, TemporaryVariableName target, PsiElement psiElement) {
+    public ArrayAppendStackOperationNodeImpl(Node entryNode, TemporaryVariableName valueName, TemporaryVariableName target, PsiElement psiElement) {
         super(entryNode, psiElement);
         this.valueName = valueName;
         this.targetName = target;
@@ -30,6 +30,6 @@ public class ArrayAppendExpressionNodeImpl extends NodeImpl implements ArrayAppe
 
     @Override
     public String toString() {
-        return "a_append(" + valueName + ", " + targetName + ")";
+        return "array_append(" + valueName + ", " + targetName + ")";
     }
 }

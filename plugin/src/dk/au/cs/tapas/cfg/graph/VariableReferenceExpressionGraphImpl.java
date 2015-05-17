@@ -2,8 +2,8 @@ package dk.au.cs.tapas.cfg.graph;
 
 import com.jetbrains.php.lang.psi.elements.Variable;
 import dk.au.cs.tapas.cfg.PsiParser;
-import dk.au.cs.tapas.cfg.node.LocationVariableExpressionNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.cfg.node.VariableReadLocationSetNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +17,12 @@ public class VariableReferenceExpressionGraphImpl extends VariableVariableExpres
 
     public static PsiParser.ReferenceExpressionGraphGenerator<Variable> generator = VariableReferenceExpressionGraphImpl::new;
 
-    private final LocationVariableExpressionNodeImpl node;
+    private final VariableReadLocationSetNodeImpl node;
 
     public VariableReferenceExpressionGraphImpl(PsiParser parser, Variable element, Graph graph, Set<HeapLocation> locations) {
         super(parser, element, graph, locations);
 
-        node = new LocationVariableExpressionNodeImpl(graph.getEntryNode(), new VariableNameImpl(element.getName()), locations, element);
+        node = new VariableReadLocationSetNodeImpl(graph.getEntryNode(), new VariableNameImpl(element.getName()), locations, element);
 
     }
 

@@ -7,7 +7,7 @@ import dk.au.cs.tapas.lattice.TemporaryVariableName;
  * Created by budde on 4/26/15.
  *
  */
-public interface UnaryOperationNode extends ExpressionNode {
+public interface UnaryOperationNode extends StackOperationNode {
 
     TemporaryVariableName getOperandName();
     UnaryOperator getOperator();

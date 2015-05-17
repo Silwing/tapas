@@ -7,8 +7,10 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public interface VariableExpressionNode extends Node {
+public interface ArrayAppendLocationSetNode extends LocationSetNode {
 
-    Set<HeapLocation> getTargetLocationSet();
+    Set<HeapLocation> getValueHeapLocationSet();
+
+
 
 }

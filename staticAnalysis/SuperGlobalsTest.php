@@ -23,4 +23,6 @@ function test(){
 
 test();
 
+var_dump($_POST,$_GET,$_SERVER,$_SESSION,$_REQUEST,$_ENV,$_COOKIE);
+
 //POST should be 1

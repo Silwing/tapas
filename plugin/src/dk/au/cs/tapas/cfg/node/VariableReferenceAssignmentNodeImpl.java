@@ -40,7 +40,7 @@ public class VariableReferenceAssignmentNodeImpl  extends NodeImpl implements Va
 
     @Override
     public String toString() {
-        return "assign_ref("+ variableName+
+        return "var_write(" + variableName +
                 ", " + valueLocationSet +
                 ", " + targetName +
                 ')';

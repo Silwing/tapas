@@ -46,7 +46,7 @@ public class ArrayWriteAssignmentNodeImpl extends NodeImpl implements ArrayWrite
 
 
     public String toString(){
-        return "array_write_assignment("+targetName+ ", " + variableLocations+ ", " + indexName+ ", " + valueName+ ")";
+        return "array_write(" + targetName + ", " + variableLocations + ", " + indexName + ", " + valueName + ")";
     }
 
 }

@@ -4,7 +4,7 @@ import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.UnaryExpression;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.UnaryOperator;
-import dk.au.cs.tapas.cfg.node.IncrementDecrementOperationExpressionNodeImpl;
+import dk.au.cs.tapas.cfg.node.IncrementDecrementOperationStackOperationNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.UnaryOperationNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
@@ -38,7 +38,7 @@ public class UnaryExpressionGraphImpl extends ExpressionGraphImpl<UnaryExpressio
         if(operationText.contains("++") || operationText.contains("--")){
 
             Set<HeapLocation> operandLocations = new HashSet<>();
-            operationNode = new IncrementDecrementOperationExpressionNodeImpl(graph.getEntryNode(), operandLocations, operator, name, element);
+            operationNode = new IncrementDecrementOperationStackOperationNodeImpl(graph.getEntryNode(), operandLocations, operator, name, element);
             operandGraph = parser.parseVariableExpression((PhpExpression) element.getValue(), g -> g, operandLocations).generate(new NodeGraphImpl(operationNode));
 
 
