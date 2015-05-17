@@ -19,5 +19,11 @@ public interface BooleanLatticeElement extends MiddleCandidateLatticeElement<Boo
     }
 
     BooleanLatticeElement negate();
+    BooleanLatticeElement equalOperation(BooleanLatticeElement other);
+    BooleanLatticeElement notEqual(BooleanLatticeElement other);
+    BooleanLatticeElement lessThan(BooleanLatticeElement other);
+    BooleanLatticeElement lessThanEqual(BooleanLatticeElement other);
+    BooleanLatticeElement greaterThan(BooleanLatticeElement other);
+    BooleanLatticeElement greaterThanEqual(BooleanLatticeElement other);
 
 }

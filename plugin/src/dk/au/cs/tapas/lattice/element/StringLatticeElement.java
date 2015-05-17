@@ -19,4 +19,10 @@ public interface StringLatticeElement extends MiddleCandidateLatticeElement<Stri
     }
 
     StringLatticeElement concat(StringLatticeElement other);
+    BooleanLatticeElement equalOperation(StringLatticeElement other);
+    BooleanLatticeElement notEqual(StringLatticeElement other);
+    BooleanLatticeElement lessThan(StringLatticeElement other);
+    BooleanLatticeElement lessThanEqual(StringLatticeElement other);
+    BooleanLatticeElement greaterThan(StringLatticeElement other);
+    BooleanLatticeElement greaterThanEqual(StringLatticeElement other);
 }

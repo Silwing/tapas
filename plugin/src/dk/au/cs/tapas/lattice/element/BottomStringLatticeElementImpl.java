@@ -53,6 +53,36 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
         return StringLatticeElement.top;
     }
 
+    @Override
+    public BooleanLatticeElement equalOperation(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.bottom;
     }

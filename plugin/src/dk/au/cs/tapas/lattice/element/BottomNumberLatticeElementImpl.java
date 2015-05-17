@@ -98,25 +98,37 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(NumberLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(NumberLatticeElement other) {
+        return BooleanLatticeElement.bottom;
+    }
+
+    @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        return BooleanLatticeElement.boolFalse;    }
+        return BooleanLatticeElement.bottom;    }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        return other.equals(this) ? BooleanLatticeElement.boolFalse : BooleanLatticeElement.boolTrue;    }
+        return BooleanLatticeElement.bottom;
+    }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        return other.equals(this) ? BooleanLatticeElement.boolTrue : greaterThan(other);
+        return BooleanLatticeElement.bottom;
     }
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
-        return other.equals(this) ? BooleanLatticeElement.boolTrue : lessThan(other);    }
+        return BooleanLatticeElement.bottom;
+    }
 
     @Override
     public NumberLatticeElement minus() {
-        return NumberLatticeElement.generateNumberLatticeElement(0);
+        return NumberLatticeElement.bottom;
     }
     @Override
     public IndexLatticeElement toArrayIndex() {

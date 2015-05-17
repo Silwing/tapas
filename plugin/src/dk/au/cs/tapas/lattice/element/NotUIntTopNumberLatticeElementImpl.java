@@ -128,29 +128,47 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(uIntTop)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(uIntTop)) return BooleanLatticeElement.boolTrue;
+
+        return null;
+    }
+
+    @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
 
         return BooleanLatticeElement.top;
     }

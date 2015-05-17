@@ -41,6 +41,53 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     public StringLatticeElement concat(StringLatticeElement other) {
         return top;
     }
+
+    @Override
+    public BooleanLatticeElement equalOperation(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(notUIntStringTop)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(notUIntStringTop)) return BooleanLatticeElement.boolTrue;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanEqual(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanEqual(StringLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        return BooleanLatticeElement.top;
+    }
+
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.top;
 

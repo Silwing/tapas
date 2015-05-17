@@ -145,29 +145,59 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolFalse;
+
+        return null;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolTrue;
+
+        return null;
+    }
+
+    @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return BooleanLatticeElement.boolTrue;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return BooleanLatticeElement.boolFalse;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return BooleanLatticeElement.boolTrue;
 
         return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof NotUIntNumberLatticeElement && ((NotUIntNumberLatticeElement) other).getNumber().doubleValue() < 0)
+            return BooleanLatticeElement.boolFalse;
 
         return BooleanLatticeElement.top;
     }
