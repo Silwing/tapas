@@ -2,14 +2,15 @@ package dk.au.cs.tapas.analysis;
 
 import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.graph.ArrayAppendAssignmentNode;
-import dk.au.cs.tapas.cfg.graph.ArrayAppendAssignmentNodeImpl;
 import dk.au.cs.tapas.cfg.graph.LibraryFunctionGraph;
 import dk.au.cs.tapas.cfg.graph.NumberConstantImpl;
 import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
 import dk.au.cs.tapas.lattice.element.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
