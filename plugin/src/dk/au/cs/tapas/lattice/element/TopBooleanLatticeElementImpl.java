@@ -65,6 +65,56 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        return top;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        return top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other.equals(boolFalse)) return boolFalse;
+
+        return top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanEqual(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other.equals(boolTrue)) return boolTrue;
+
+        return top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other.equals(boolTrue)) return boolFalse;
+
+        return top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanEqual(BooleanLatticeElement other) {
+        if(other.equals(bottom)) return bottom;
+
+        if(other.equals(boolFalse)) return boolTrue;
+
+        return top;
+    }
+
+    @Override
     public IndexLatticeElement toArrayIndex() {
         return IndexLatticeElement.generateIntegerIndex(toInteger());
     }

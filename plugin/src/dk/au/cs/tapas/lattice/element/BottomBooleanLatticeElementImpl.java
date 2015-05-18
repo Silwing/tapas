@@ -66,4 +66,34 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
     public BooleanLatticeElement negate() {
         return top;
     }
+
+    @Override
+    public BooleanLatticeElement equalOperation(BooleanLatticeElement other) {
+        return bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(BooleanLatticeElement other) {
+        return bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(BooleanLatticeElement other) {
+        return bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanEqual(BooleanLatticeElement other) {
+        return bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(BooleanLatticeElement other) {
+        return bottom;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanEqual(BooleanLatticeElement other) {
+        return bottom;
+    }
 }

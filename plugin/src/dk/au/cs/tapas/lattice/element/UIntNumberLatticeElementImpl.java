@@ -167,6 +167,32 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
+    public BooleanLatticeElement equalOperation(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof UIntNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(number == ((UIntNumberLatticeElement) other).getNumber());
+        }
+
+        if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolFalse;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(NumberLatticeElement other) {
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other instanceof UIntNumberLatticeElement) {
+            return BooleanLatticeElement.generateBooleanLatticeElement(number != ((UIntNumberLatticeElement) other).getNumber());
+        }
+
+        if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolTrue;
+
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
         if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
 

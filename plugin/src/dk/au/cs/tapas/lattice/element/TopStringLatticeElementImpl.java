@@ -50,6 +50,37 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
     public StringLatticeElement concat(StringLatticeElement other) {
         return this;
     }
+
+    @Override
+    public BooleanLatticeElement equalOperation(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement notEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThan(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement lessThanEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThan(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
+    @Override
+    public BooleanLatticeElement greaterThanEqual(StringLatticeElement other) {
+        return BooleanLatticeElement.top;
+    }
+
     public IntegerLatticeElement toInteger() {
         return IntegerLatticeElement.top;
 
