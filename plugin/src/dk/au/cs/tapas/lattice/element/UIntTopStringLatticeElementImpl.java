@@ -53,6 +53,6 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
 
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return IndexLatticeElement.generateIntegerIndex(toInteger());
+        return IndexLatticeElement.top;
     }
 }

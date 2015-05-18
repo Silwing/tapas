@@ -57,6 +57,6 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
     }
     @Override
     public IndexLatticeElement toArrayIndex() {
-        return IndexLatticeElement.generateStringLIndex(this);
+        return IndexLatticeElement.top;
     }
 }
