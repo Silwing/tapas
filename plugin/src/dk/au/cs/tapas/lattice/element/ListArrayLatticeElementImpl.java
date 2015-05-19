@@ -58,15 +58,15 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
             return true;
         }
 
+        if(other.isRecursive(otherAnalysis)) {
+            return true;
+        }
+
         if (!(other instanceof ListArrayLatticeElement)) {
             return false;
         }
 
-        boolean recursive1 = isRecursive(thisAnalysis), recursive2 = other.isRecursive(otherAnalysis);
-
-        return recursive2 || !recursive1 && getLocations().containedIn(thisAnalysis, ((ListArrayLatticeElement) other).getLocations(), thisAnalysis);
-
-
+        return !isRecursive(thisAnalysis) && getLocations().containedIn(thisAnalysis, ((ListArrayLatticeElement) other).getLocations(), otherAnalysis);
     }
 
     @Override
