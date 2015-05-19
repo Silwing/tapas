@@ -83,13 +83,14 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
             return true;
         }
 
+        if(other.isRecursive(otherAnalysis)) {
+            return true;
+        }
+
         if (!(other instanceof MapArrayLatticeElement)) {
             return false;
         }
-
-        boolean recursive1 = isRecursive(thisAnalysis), recursive2 = other.isRecursive(otherAnalysis);
-
-        return recursive2 || !recursive1 && getMap().containedIn(thisAnalysis, ((MapArrayLatticeElement) other).getMap(), thisAnalysis);
+        return !isRecursive(thisAnalysis) && getMap().containedIn(thisAnalysis, ((MapArrayLatticeElement) other).getMap(), thisAnalysis);
 
 
     }
