@@ -142,7 +142,7 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
 
         if(other.containedIn(uIntTop)) return BooleanLatticeElement.boolTrue;
 
-        return null;
+        return BooleanLatticeElement.top;
     }
 
     @Override

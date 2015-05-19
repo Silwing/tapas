@@ -155,17 +155,33 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement equalOperation(NumberLatticeElement other) {
-        return null;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(uIntTop)) return BooleanLatticeElement.boolFalse;
+
+        if(other instanceof NotUIntNumberLatticeElement)
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() == ((NotUIntNumberLatticeElement) other).getNumber().doubleValue());
+
+        return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement notEqual(NumberLatticeElement other) {
-        return null;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(other.containedIn(uIntTop)) return BooleanLatticeElement.boolTrue;
+
+        if(other instanceof NotUIntNumberLatticeElement)
+            return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() != ((NotUIntNumberLatticeElement) other).getNumber().doubleValue());
+
+        return BooleanLatticeElement.top;
     }
 
     @Override
     public BooleanLatticeElement greaterThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(getNumber().doubleValue() < 0 && other.containedIn(uIntTop)) return BooleanLatticeElement.boolFalse;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() > ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -176,7 +192,9 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement lessThan(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(getNumber().doubleValue() < 0 && other.containedIn(uIntTop)) return BooleanLatticeElement.boolTrue;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() < ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -187,7 +205,9 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement greaterThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolTrue;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(getNumber().doubleValue() < 0 && other.containedIn(uIntTop)) return BooleanLatticeElement.boolFalse;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() >= ((ValueNumberLatticeElement)other).getNumber().doubleValue());
@@ -198,7 +218,9 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
     @Override
     public BooleanLatticeElement lessThanOrEqual(NumberLatticeElement other) {
-        if(other.equals(bottom)) return BooleanLatticeElement.boolFalse;
+        if(other.equals(bottom)) return BooleanLatticeElement.bottom;
+
+        if(getNumber().doubleValue() < 0 && other.containedIn(uIntTop)) return BooleanLatticeElement.boolTrue;
 
         if(other instanceof ValueNumberLatticeElement) {
             return BooleanLatticeElement.generateBooleanLatticeElement(getNumber().doubleValue() <= ((ValueNumberLatticeElement)other).getNumber().doubleValue());

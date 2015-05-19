@@ -150,7 +150,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
         if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolFalse;
 
-        return null;
+        return BooleanLatticeElement.top;
     }
 
     @Override
@@ -159,7 +159,7 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
 
         if(other.containedIn(notUIntTop)) return BooleanLatticeElement.boolTrue;
 
-        return null;
+        return BooleanLatticeElement.top;
     }
 
     @Override
