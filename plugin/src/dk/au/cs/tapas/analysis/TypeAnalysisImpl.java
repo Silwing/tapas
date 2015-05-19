@@ -516,18 +516,18 @@ public class TypeAnalysisImpl implements Analysis {
         //Notice that PHP does not coerce when value not a number (inc,dec)
         switch (node.getOperation()) {
             case PRE_INCREMENT:
-                value = targetValue = new ValueLatticeElementImpl(locationValue.getNumber().increment());
+                value = targetValue = new ValueLatticeElementImpl(locationValue.toNumber().increment());
                 break;
             case POST_INCREMENT:
                 targetValue = locationValue;
-                value = new ValueLatticeElementImpl(locationValue.getNumber().increment());
+                value = new ValueLatticeElementImpl(locationValue.toNumber().increment());
                 break;
             case PRE_DECREMENT:
-                value = targetValue = new ValueLatticeElementImpl(locationValue.getNumber().decrement());
+                value = targetValue = new ValueLatticeElementImpl(locationValue.toNumber().decrement());
                 break;
             case POST_DECREMENT:
                 targetValue = locationValue;
-                value = new ValueLatticeElementImpl(locationValue.getNumber().decrement());
+                value = new ValueLatticeElementImpl(locationValue.toNumber().decrement());
                 break;
             default:
                 return latticeElement;
@@ -735,6 +735,7 @@ public class TypeAnalysisImpl implements Analysis {
                 target.addAll(list.getLocations().getLocations());
             } else if (!array.getArray().equals(ArrayLatticeElement.top)) {
                 //Initialize new array if empty or not array
+                //TODO fix this
                 ArrayLatticeElement arrayLattice;
                 HeapLocation location = new HeapLocationImpl();
 
