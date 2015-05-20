@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.VariableReadLocationSetNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.VariableNameImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +20,7 @@ public class VariableReferenceExpressionGraphImpl extends VariableVariableExpres
 
     private final VariableReadLocationSetNodeImpl node;
 
-    public VariableReferenceExpressionGraphImpl(PsiParser parser, Variable element, Graph graph, Set<HeapLocation> locations) {
+    public VariableReferenceExpressionGraphImpl(PsiParser parser, Variable element, Graph graph, TemporaryHeapVariableName locations) {
         super(parser, element, graph, locations);
 
         node = new VariableReadLocationSetNodeImpl(graph.getEntryNode(), new VariableNameImpl(element.getName()), locations, element);

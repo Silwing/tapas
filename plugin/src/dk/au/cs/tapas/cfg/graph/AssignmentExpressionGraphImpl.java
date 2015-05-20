@@ -8,10 +8,7 @@ import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.PsiParserImpl;
 import dk.au.cs.tapas.cfg.node.*;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
-import dk.au.cs.tapas.lattice.VariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -29,9 +26,9 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
 
     public AssignmentExpressionGraphImpl(PsiParser psiParser, AssignmentExpression element, Graph graph, TemporaryVariableName targetName) {
         super(psiParser, element, graph, targetName);
-        Set<HeapLocation> variableLocations = new HashSet<>();
+        TemporaryHeapVariableName variableLocations = new TemporaryHeapVariableNameImpl();
         PhpPsiElement variable = element.getVariable();
-        Set<HeapLocation> valueLocations = new HashSet<>();
+        TemporaryHeapVariableName valueLocations = new TemporaryHeapVariableNameImpl();
 
         if (isAlias(element.getFirstChild())) {
 
@@ -83,11 +80,11 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
 
     }
 
-    private Graph createValueGraph(Set<HeapLocation> valueLocations, Graph graph) {
+    private Graph createValueGraph(TemporaryHeapVariableName valueLocations, Graph graph) {
         return parser.parseReferenceExpression((PhpExpression) element.getValue(), g -> g, valueLocations).generate(graph);
     }
 
-    private Graph createValueGraph(Set<HeapLocation> valueLocations) {
+    private Graph createValueGraph(TemporaryHeapVariableName valueLocations) {
         return createValueGraph(valueLocations, new NodeGraphImpl(assignmentNode));
     }
 

@@ -1,11 +1,12 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.analysis.AnalysisAnnotator;
-import dk.au.cs.tapas.cfg.HeapLocationSetCallArgument;
+import dk.au.cs.tapas.cfg.TemporaryHeapVariableCallArgument;
 import dk.au.cs.tapas.cfg.TemporaryVariableCallArgument;
 import dk.au.cs.tapas.cfg.node.ResultNode;
 import dk.au.cs.tapas.lattice.Context;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.element.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +24,7 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
     @NotNull
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode node, @NotNull Context context, @NotNull AnalysisLatticeElement lattice, @NotNull AnalysisAnnotator annotator) {
-        Set<HeapLocation> argLocations = ((HeapLocationSetCallArgument) node.getCallNode().getCallArguments()[0]).getArgument();
+        Set<HeapLocation> argLocations = lattice.getHeapTempsValue(context, (TemporaryHeapVariableName) node.getCallNode().getCallArguments()[0].getArgument()).getLocations();
         TemporaryVariableName result = ((TemporaryVariableCallArgument) node.getCallArgument()).getArgument();
 
         ValueLatticeElement newVal = new ValueLatticeElementImpl();
@@ -43,6 +44,6 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
 
         }
 
-        return lattice.setStackValue(context, result, newVal);
+        return lattice.setTempsValue(context, result, newVal);
     }
 }

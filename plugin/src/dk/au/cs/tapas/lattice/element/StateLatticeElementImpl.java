@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.lattice.element;
 
 import dk.au.cs.tapas.lattice.LatticePrinter;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.VariableName;
 
@@ -12,25 +13,29 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     private final MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals;
     private final MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals;
     private final HeapMapLatticeElement heap;
-    private final MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack;
+    private final MapLatticeElement<TemporaryVariableName, ValueLatticeElement> temps;
+    private final MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> heapTemps;
 
     public StateLatticeElementImpl() {
         this(
                 new LocalsMapLatticeElementImpl(),
                 new GlobalsMapLatticeElementImpl(),
                 new HeapMapLatticeElementImpl(),
-                new StateMapLatticeElementImpl());
+                new TempsMapLatticeElementImpl(),
+                new HeapTempsLatticeElementImpl());
     }
 
     public StateLatticeElementImpl(
             MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals,
             MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals,
             HeapMapLatticeElement heap,
-            MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
+            MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack,
+            MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> heapTemps) {
         this.locals = locals;
         this.globals = globals;
         this.heap = heap;
-        this.stack = stack;
+        this.temps = stack;
+        this.heapTemps = heapTemps;
     }
 
     @Override
@@ -40,7 +45,7 @@ public class StateLatticeElementImpl implements StateLatticeElement {
 
     @Override
     public StateLatticeElement setLocals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> locals) {
-        return new StateLatticeElementImpl(locals, globals, heap, stack);
+        return new StateLatticeElementImpl(locals, globals, heap, temps, heapTemps);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class StateLatticeElementImpl implements StateLatticeElement {
 
     @Override
     public StateLatticeElement setGlobals(MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> globals) {
-        return new StateLatticeElementImpl(locals, globals, heap, stack);
+        return new StateLatticeElementImpl(locals, globals, heap, temps, heapTemps);
     }
 
     @Override
@@ -60,17 +65,27 @@ public class StateLatticeElementImpl implements StateLatticeElement {
 
     @Override
     public StateLatticeElement setHeap(HeapMapLatticeElement heap) {
-        return new StateLatticeElementImpl(locals, globals, heap, stack);
+        return new StateLatticeElementImpl(locals, globals, heap, temps, heapTemps);
     }
 
     @Override
-    public MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getStack() {
-        return stack;
+    public MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getTemps() {
+        return temps;
     }
 
     @Override
-    public StateLatticeElement setStack(MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
-        return new StateLatticeElementImpl(locals, globals, heap, stack);
+    public StateLatticeElement setTemps(MapLatticeElement<TemporaryVariableName, ValueLatticeElement> temps) {
+        return new StateLatticeElementImpl(locals, globals, heap, temps, heapTemps);
+    }
+
+    @Override
+    public MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> getHeapTemps() {
+        return heapTemps;
+    }
+
+    @Override
+    public StateLatticeElement setHeapTemps(MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> temps) {
+        return new StateLatticeElementImpl(locals, globals, heap, this.temps, temps);
     }
 
     @Override
@@ -79,7 +94,8 @@ public class StateLatticeElementImpl implements StateLatticeElement {
                 getLocals().meet(other.getLocals()),
                 getGlobals().meet(other.getGlobals()),
                 getHeap().meet(other.getHeap()),
-                getStack().meet(other.getStack()));
+                getTemps().meet(other.getTemps()),
+                getHeapTemps().meet(other.getHeapTemps()));
     }
 
     @Override
@@ -88,16 +104,18 @@ public class StateLatticeElementImpl implements StateLatticeElement {
                 getLocals().join(other.getLocals()),
                 getGlobals().join(other.getGlobals()),
                 getHeap().join(other.getHeap()),
-                getStack().join(other.getStack()));
+                getTemps().join(other.getTemps()),
+                getHeapTemps().join(other.getHeapTemps()));
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, StateLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(StateLatticeElement other) {
         return
-                getLocals().containedIn(thisAnalysis, other.getLocals(), otherAnalysis) &&
-                        getGlobals().containedIn(thisAnalysis, other.getGlobals(), otherAnalysis) &&
-                        //getHeap().containedIn(thisAnalysis, other.getHeap(), otherAnalysis) &&
-                        getStack().containedIn(thisAnalysis, other.getStack(), otherAnalysis);
+                getLocals().containedIn(other.getLocals()) &&
+                        getGlobals().containedIn(other.getGlobals()) &&
+                        getHeap().containedIn(other.getHeap()) &&
+                        getTemps().containedIn(other.getTemps()) &&
+                        getHeapTemps().containedIn(other.getHeapTemps());
     }
 
     @Override
@@ -105,8 +123,12 @@ public class StateLatticeElementImpl implements StateLatticeElement {
         printer.print("{");
         printer.startSection();
         printer.linebreak();
-        printer.print("stack -> ");
-        stack.print(printer);
+        printer.print("temps -> ");
+        temps.print(printer);
+        printer.print(",");
+        printer.linebreak();
+        printer.print("heapTemps -> ");
+        heapTemps.print(printer);
         printer.print(",");
         printer.linebreak();
         printer.print("locals -> ");
@@ -128,9 +150,10 @@ public class StateLatticeElementImpl implements StateLatticeElement {
     public boolean equals(Object other) {
         return other == this || (
                 other instanceof StateLatticeElement &&
-                        ((StateLatticeElement) other).getStack().equals(getStack()) &&
+                        ((StateLatticeElement) other).getTemps().equals(getTemps()) &&
                         ((StateLatticeElement) other).getHeap().equals(getHeap()) &&
                         ((StateLatticeElement) other).getGlobals().equals(getGlobals()) &&
+                        ((StateLatticeElement) other).getHeapTemps().equals(getHeapTemps()) &&
                         ((StateLatticeElement) other).getLocals().equals(getLocals()));
     }
 

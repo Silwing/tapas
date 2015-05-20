@@ -18,11 +18,6 @@ public class BottomIndexLatticeElementImpl implements IndexLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, IndexLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return true;
-    }
-
-    @Override
     public void print(LatticePrinter printer) {
         printer.print("⊥");
     }

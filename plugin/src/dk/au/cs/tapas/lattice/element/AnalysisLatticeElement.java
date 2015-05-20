@@ -1,9 +1,7 @@
 package dk.au.cs.tapas.lattice.element;
 
-import dk.au.cs.tapas.lattice.Context;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.VariableName;
+import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.lattice.*;
 
 import java.util.Set;
 
@@ -60,24 +58,43 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
 
     AnalysisLatticeElement setHeapValue(Context context, HeapLocation heapLocation, MapLatticeElement.Generator<HeapLocation, ValueLatticeElement> generator);
 
-    MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getStack(Context context);
+    MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getTemps(Context context);
 
-    ValueLatticeElement getStackValue(Context context, TemporaryVariableName name);
+    ValueLatticeElement getTempsValue(Context context, TemporaryVariableName name);
 
-    AnalysisLatticeElement setStack(Context context, MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack);
+    AnalysisLatticeElement setTemps(Context context, MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack);
 
-    AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value);
+    AnalysisLatticeElement setTempsValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value);
 
-    AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, MapLatticeElement.Generator<TemporaryVariableName, ValueLatticeElement> generator);
+    AnalysisLatticeElement setTempsValue(Context context, TemporaryVariableName variableName, MapLatticeElement.Generator<TemporaryVariableName, ValueLatticeElement> generator);
 
+    AnalysisLatticeElement joinTempsValue(Context context, TemporaryVariableName name, ValueLatticeElement value);
 
-    AnalysisLatticeElement joinStackValue(Context context, TemporaryVariableName name, ValueLatticeElement value);
+    MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> getHeapTemps(Context context);
+
+    HeapLocationPowerSetLatticeElement getHeapTempsValue(Context context, TemporaryHeapVariableName name);
+
+    AnalysisLatticeElement setHeapTemps(Context context, MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> stack);
+
+    AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, HeapLocationPowerSetLatticeElement value);
+
+    AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, HeapLocation location);
+
+    AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, MapLatticeElement.Generator<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> generator);
+
+    AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, HeapLocationPowerSetLatticeElement value);
+
+    AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, Set<HeapLocation> locationSet);
+
+    AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, HeapLocation location);
 
     AnalysisLatticeElement setLocalsValue(Context context, VariableName name, Set<HeapLocation> argument);
 
-    AnalysisLatticeElement setLocalsValue(Context context, VariableName name, ValueLatticeElement argument);
+    AnalysisLatticeElement setLocalsValue(Context context, Node node, VariableName name, ValueLatticeElement argument);
 
-    AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, ValueLatticeElement argument);
+    AnalysisLatticeElement setGlobalsValue(Context context, Node node, VariableName name, ValueLatticeElement argument);
 
     AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, Set<HeapLocation> locationSet);
+
+    AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName targetTempHeapName, Set<HeapLocation> locationSet);
 }

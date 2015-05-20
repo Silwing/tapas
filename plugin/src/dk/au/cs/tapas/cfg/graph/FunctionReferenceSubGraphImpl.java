@@ -27,7 +27,7 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
         CallArgument[] callArguments = new CallArgument[argumentsSize];
         for (int i = 0; i < argumentsSize; i++) {
             if (arguments.length > i && arguments[i]) {
-                callArguments[i] = new HeapLocationSetCallArgumentImpl();
+                callArguments[i] = new TemporaryHeapVariableCallArgumentImpl();
             } else {
                 callArguments[i] = new TemporaryVariableCallArgumentImpl();
             }
@@ -54,11 +54,11 @@ class FunctionReferenceSubGraphImpl extends GraphImpl{
             return g -> g;
         }
         CallArgument callArgument = callArguments[counter];
-        if (callArgument instanceof HeapLocationSetCallArgument) {
+        if (callArgument instanceof TemporaryHeapVariableCallArgument) {
             return parser.parseReferenceExpression(
                     (PhpExpression) parameter,
                     buildParameterGraph(parameter.getNextPsiSibling(), callArguments, counter + 1),
-                    ((HeapLocationSetCallArgument) callArgument).getArgument());
+                    ((TemporaryHeapVariableCallArgument) callArgument).getArgument());
         } else if (callArgument instanceof TemporaryVariableCallArgument) {
             return parser.parseExpression(
                     (PhpExpression) parameter,

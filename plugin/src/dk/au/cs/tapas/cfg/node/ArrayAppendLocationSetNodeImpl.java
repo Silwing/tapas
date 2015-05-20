@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 
 import java.util.Set;
 
@@ -9,10 +10,10 @@ import java.util.Set;
  * Created by budde on 4/27/15.
  */
 public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayAppendLocationSetNode {
-    private Set<HeapLocation> locations;
-    private Set<HeapLocation> valueHeapLocationSet;
+    private TemporaryHeapVariableName locations;
+    private TemporaryHeapVariableName valueHeapLocationSet;
 
-    public ArrayAppendLocationSetNodeImpl(Node successor, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> locations, PsiElement psiElement) {
+    public ArrayAppendLocationSetNodeImpl(Node successor, TemporaryHeapVariableName valueHeapLocationSet, TemporaryHeapVariableName locations, PsiElement psiElement) {
         super(successor, psiElement);
         this.valueHeapLocationSet = valueHeapLocationSet;
         this.locations = locations;
@@ -20,7 +21,7 @@ public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayApp
     }
 
     @Override
-    public Set<HeapLocation> getTargetLocationSet() {
+    public TemporaryHeapVariableName getTargetTempHeapName() {
         return locations;
     }
 
@@ -31,7 +32,7 @@ public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayApp
     }
 
     @Override
-    public Set<HeapLocation> getValueHeapLocationSet() {
+    public TemporaryHeapVariableName getValueTempHeapName() {
         return valueHeapLocationSet;
     }
 }

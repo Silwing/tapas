@@ -17,10 +17,6 @@ public class BottomIntegerLatticeElementImpl implements IntegerLatticeElement {
         return other;
     }
 
-    @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, IntegerLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return containedIn(other);
-    }
 
     @Override
     public void print(LatticePrinter printer) {

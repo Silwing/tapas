@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.analysis;
 
+import dk.au.cs.tapas.cfg.graph.Graph;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 
 /**
@@ -8,6 +9,6 @@ import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 public interface Analysis {
 
     AnalysisLatticeElement getEmptyLattice();
-    AnalysisLatticeElement getStartLattice();
+    AnalysisLatticeElement getStartLattice(Graph graph);
     AnalysisLatticeElement analyse(AnalysisTarget n, AnalysisLatticeElement l);
 }

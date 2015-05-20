@@ -3,14 +3,12 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.elements.PhpReturn;
-import dk.au.cs.tapas.cfg.HeapLocationSetCallArgumentImpl;
+import dk.au.cs.tapas.cfg.TemporaryHeapVariableCallArgumentImpl;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.TemporaryVariableCallArgumentImpl;
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -38,9 +36,9 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
         Graph exitNodeGraph = new NodeGraphImpl(functionExitNode);
         if(firstBorn != null) {
             if (currentFunctionGraph.isAliasReturn()) {
-                Set<HeapLocation> locationSet = new HashSet<>();
+                TemporaryHeapVariableName locationSet = new TemporaryHeapVariableNameImpl();
                 expressionGraph = parser.parseVariableExpression((PhpExpression) firstBorn, g -> g, locationSet).generate(exitNodeGraph);
-                functionExitNode.addCallArgument(new HeapLocationSetCallArgumentImpl(locationSet));
+                functionExitNode.addCallArgument(new TemporaryHeapVariableCallArgumentImpl(locationSet));
             } else {
                 TemporaryVariableName name = new TemporaryVariableNameImpl();
                 expressionGraph = parser.parseExpression((PhpExpression) firstBorn, g -> g, name).generate(exitNodeGraph);

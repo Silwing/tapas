@@ -78,19 +78,8 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        if (other.equals(top)) {
-            return true;
-        }
-
-        if(other.isRecursive(otherAnalysis)) {
-            return true;
-        }
-
-        if (!(other instanceof MapArrayLatticeElement)) {
-            return false;
-        }
-        return !isRecursive(thisAnalysis) && getMap().containedIn(thisAnalysis, ((MapArrayLatticeElement) other).getMap(), thisAnalysis);
+    public boolean containedIn(ArrayLatticeElement other) {
+        return other.equals(top) || other instanceof MapArrayLatticeElement && getMap().containedIn(((MapArrayLatticeElement) other).getMap());
 
 
     }

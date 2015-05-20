@@ -7,9 +7,7 @@ import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.ArrayAppendLocationSetNodeImpl;
 import dk.au.cs.tapas.cfg.node.ArrayReadLocationSetNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -23,10 +21,10 @@ class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
     private final Node endNode;
     private final Graph variableGraph;
 
-    public ArrayAccessExpressionSubGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, Set<HeapLocation> locations, ParserGenerator generator) {
+    public ArrayAccessExpressionSubGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, TemporaryHeapVariableName locations, ParserGenerator generator) {
         PhpPsiElement indexValue = element.getIndex().getValue();
         Graph nextGraph;
-        Set<HeapLocation> valueLocations = new HashSet<>();
+        TemporaryHeapVariableName valueLocations = new TemporaryHeapVariableNameImpl();
         if(indexValue == null){
             endNode = new ArrayAppendLocationSetNodeImpl(graph.getEntryNode(), valueLocations, locations, element);
             nextGraph = new NodeGraphImpl(endNode);
@@ -42,7 +40,7 @@ class ArrayAccessExpressionSubGraphImpl extends GraphImpl{
 
 
     public interface ParserGenerator{
-        PsiParser.GraphGenerator generate(PhpExpression expression, Set<HeapLocation> locations);
+        PsiParser.GraphGenerator generate(PhpExpression expression, TemporaryHeapVariableName locations);
     }
 
     @NotNull

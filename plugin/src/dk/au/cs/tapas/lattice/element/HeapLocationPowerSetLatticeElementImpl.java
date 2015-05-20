@@ -87,9 +87,8 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, HeapLocationPowerSetLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return thisAnalysis.getValue(getLocations(), LatticeElement::join).containedIn(thisAnalysis,
-                otherAnalysis.getValue(other.getLocations(), LatticeElement::join), otherAnalysis);
+    public boolean containedIn(HeapLocationPowerSetLatticeElement other) {
+        return other.getLocations().containsAll(getLocations());
     }
 
     @Override

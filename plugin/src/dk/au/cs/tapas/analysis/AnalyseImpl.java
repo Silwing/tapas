@@ -32,7 +32,7 @@ public class AnalyseImpl implements Analyse {
         this.graph = graph;
         this.analysis = analysisFunction.apply(new AnalysisAnnotatorImpl(annotations));
         AnalysisTarget entryNode = new AnalysisTargetImpl(graph.getEntryNode());
-        inLatticeMap.put(entryNode, analysis.getStartLattice());
+        inLatticeMap.put(entryNode, analysis.getStartLattice(graph));
         worklist.addAll(graph.getFlow(entryNode).stream().map(successorPair -> new PairImpl<>(entryNode, successorPair)).collect(Collectors.toList()));
         iterateWorklist();
         annotations.addAll(graph.getNodes().stream().filter(node -> !inLatticeMap.containsKey(new AnalysisTargetImpl(node)) && node.getElement() != null).map(node -> new WarningAnnotationImpl(node.getElement(), "Unreachable node")).collect(Collectors.toList()));

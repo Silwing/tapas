@@ -4,8 +4,6 @@ import dk.au.cs.tapas.lattice.Coercible;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
 
 /**
  * Created by budde on 4/20/15.
@@ -505,13 +503,13 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ValueLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(ValueLatticeElement other) {
         return
-                getArray().containedIn(thisAnalysis, other.getArray(), otherAnalysis) &&
-                        getString().containedIn(thisAnalysis, other.getString(), otherAnalysis) &&
-                        getNumber().containedIn(thisAnalysis, other.getNumber(), otherAnalysis) &&
-                        getBoolean().containedIn(thisAnalysis, other.getBoolean(), otherAnalysis) &&
-                        getNull().containedIn(thisAnalysis, other.getNull(), otherAnalysis);
+                getArray().containedIn(other.getArray()) &&
+                        getString().containedIn(other.getString()) &&
+                        getNumber().containedIn(other.getNumber()) &&
+                        getBoolean().containedIn(other.getBoolean()) &&
+                        getNull().containedIn(other.getNull());
     }
 
     @Override

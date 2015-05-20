@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 import java.util.Set;
@@ -12,9 +13,9 @@ import java.util.Set;
 public class ArrayAppendAssignmentNodeImpl extends NodeImpl implements ArrayAppendAssignmentNode {
     private final TemporaryVariableName targetName;
     private final TemporaryVariableName valueName;
-    private final Set<HeapLocation> variableLocations;
+    private final TemporaryHeapVariableName variableLocations;
 
-    public ArrayAppendAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, TemporaryVariableName valueName, Set<HeapLocation> variableLocations, PsiElement element) {
+    public ArrayAppendAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, TemporaryVariableName valueName, TemporaryHeapVariableName variableLocations, PsiElement element) {
         super(successor, element);
 
         this.targetName = targetName;
@@ -33,7 +34,7 @@ public class ArrayAppendAssignmentNodeImpl extends NodeImpl implements ArrayAppe
     }
 
     @Override
-    public Set<HeapLocation> getVariableLocationSet() {
+    public TemporaryHeapVariableName getVariableTempHeapName() {
         return variableLocations;
     }
 

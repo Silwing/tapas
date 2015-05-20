@@ -71,8 +71,8 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<HeapLocation, ValueLatticeElement> other, HeapMapLatticeElement otherAnalysis) {
-        return mapLatticeElement.containedIn(thisAnalysis, other, otherAnalysis);
+    public boolean containedIn(MapLatticeElement<HeapLocation, ValueLatticeElement> other) {
+        return mapLatticeElement.containedIn(other);
     }
 
     @Override

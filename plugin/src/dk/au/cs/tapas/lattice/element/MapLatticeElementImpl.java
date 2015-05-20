@@ -64,12 +64,11 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<K, V> other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(MapLatticeElement<K, V> other) {
         for (K key : jointDomain(this, other)) {
             if (!getValue(key).containedIn(
-                    thisAnalysis,
-                    other.getValue(key),
-                    otherAnalysis)) {
+                    other.getValue(key)
+            )) {
                 return false;
             }
         }

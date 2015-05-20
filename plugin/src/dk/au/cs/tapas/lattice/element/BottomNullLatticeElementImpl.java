@@ -19,7 +19,7 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, NullLatticeElement other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(NullLatticeElement other) {
         return true;
     }
 

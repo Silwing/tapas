@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg.graph;
 import com.jetbrains.php.lang.psi.elements.PhpExpression;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 
 import java.util.Set;
 
@@ -14,10 +15,10 @@ public abstract class ReferenceExpressionGraphImpl<T extends PhpExpression> exte
     protected final PsiParser parser;
     protected final T element;
     protected final Graph graph;
-    protected final Set<HeapLocation> locations;
+    protected final TemporaryHeapVariableName locations;
 
 
-    public ReferenceExpressionGraphImpl(PsiParser parser, T element, Graph graph, Set<HeapLocation> locations) {
+    public ReferenceExpressionGraphImpl(PsiParser parser, T element, Graph graph, TemporaryHeapVariableName locations) {
         super(graph);
         this.element = element;
         this.parser = parser;

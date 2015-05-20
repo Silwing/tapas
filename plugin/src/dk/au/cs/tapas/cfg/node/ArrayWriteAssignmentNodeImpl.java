@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 import java.util.Set;
@@ -13,9 +14,9 @@ public class ArrayWriteAssignmentNodeImpl extends NodeImpl implements ArrayWrite
     private TemporaryVariableName targetName;
     private TemporaryVariableName valueName;
     private TemporaryVariableName indexName;
-    private Set<HeapLocation> variableLocations;
+    private TemporaryHeapVariableName variableLocations;
 
-    public ArrayWriteAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, TemporaryVariableName valueName, TemporaryVariableName indexName, Set<HeapLocation> variableLocations, PhpPsiElement psiElement) {
+    public ArrayWriteAssignmentNodeImpl(Node successor, TemporaryVariableName targetName, TemporaryVariableName valueName, TemporaryVariableName indexName, TemporaryHeapVariableName variableLocations, PhpPsiElement psiElement) {
         super(successor, psiElement);
 
         this.targetName = targetName;
@@ -40,7 +41,7 @@ public class ArrayWriteAssignmentNodeImpl extends NodeImpl implements ArrayWrite
     }
 
     @Override
-    public Set<HeapLocation> getVariableLocationSet() {
+    public TemporaryHeapVariableName getVariableTempHeapName() {
         return variableLocations;
     }
 

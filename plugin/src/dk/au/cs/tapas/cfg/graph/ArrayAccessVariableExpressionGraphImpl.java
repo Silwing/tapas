@@ -4,6 +4,7 @@ import com.jetbrains.php.lang.psi.elements.ArrayAccessExpression;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -16,7 +17,7 @@ public class ArrayAccessVariableExpressionGraphImpl extends VariableExpressionGr
     public static PsiParser.VariableExpressionGraphGenerator<ArrayAccessExpression> generator = ArrayAccessVariableExpressionGraphImpl::new;
     private final Graph subGraph;
 
-    public ArrayAccessVariableExpressionGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, Set<HeapLocation> locations) {
+    public ArrayAccessVariableExpressionGraphImpl(PsiParser parser, ArrayAccessExpression element, Graph graph, TemporaryHeapVariableName locations) {
         super(parser, element, graph, locations);
         subGraph = new ArrayAccessExpressionSubGraphImpl(parser, element, graph, locations, (exp, loc) -> parser.parseVariableExpression(exp, g -> g, loc));
 

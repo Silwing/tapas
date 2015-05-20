@@ -53,20 +53,9 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, ArrayLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        if (other.equals(top)) {
-            return true;
-        }
+    public boolean containedIn(ArrayLatticeElement other) {
+        return other.equals(top) || other instanceof ListArrayLatticeElement && getLocations().containedIn(((ListArrayLatticeElement) other).getLocations());
 
-        if(other.isRecursive(otherAnalysis)) {
-            return true;
-        }
-
-        if (!(other instanceof ListArrayLatticeElement)) {
-            return false;
-        }
-
-        return !isRecursive(thisAnalysis) && getLocations().containedIn(thisAnalysis, ((ListArrayLatticeElement) other).getLocations(), otherAnalysis);
     }
 
     @Override

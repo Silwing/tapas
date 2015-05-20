@@ -18,11 +18,6 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, NumberLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return containedIn(other);
-    }
-
-    @Override
     public void print(LatticePrinter printer) {
         printer.print("⊤");
     }

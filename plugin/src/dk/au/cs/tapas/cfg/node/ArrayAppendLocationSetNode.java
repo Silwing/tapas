@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
  */
 public interface ArrayAppendLocationSetNode extends LocationSetNode {
 
-    Set<HeapLocation> getValueHeapLocationSet();
+    TemporaryHeapVariableName getValueTempHeapName();
 
 
 

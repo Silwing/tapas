@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ResultNodeImpl;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -17,9 +18,9 @@ public class FunctionReferenceExpressionGraphImpl extends ReferenceExpressionGra
 
     private final Graph subGraph;
 
-    public FunctionReferenceExpressionGraphImpl(PsiParser parser, FunctionReference element, Graph graph, Set<HeapLocation> locations) {
+    public FunctionReferenceExpressionGraphImpl(PsiParser parser, FunctionReference element, Graph graph, TemporaryHeapVariableName locations) {
         super(parser, element, graph, locations);
-        ResultNodeImpl endNode = new ResultNodeImpl(graph.getEntryNode(), new HeapLocationSetCallArgumentImpl(locations), element);
+        ResultNodeImpl endNode = new ResultNodeImpl(graph.getEntryNode(), new TemporaryHeapVariableCallArgumentImpl(locations), element);
         subGraph = new FunctionReferenceSubGraphImpl(parser, element, endNode);
     }
 

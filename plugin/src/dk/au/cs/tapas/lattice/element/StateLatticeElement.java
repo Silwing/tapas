@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 import dk.au.cs.tapas.lattice.VariableName;
 
@@ -22,9 +23,14 @@ public interface StateLatticeElement extends LatticeElement<StateLatticeElement>
 
     StateLatticeElement setHeap(HeapMapLatticeElement heap);
 
-    MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getStack();
+    MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getTemps();
 
-    StateLatticeElement setStack(MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack);
+    StateLatticeElement setTemps(MapLatticeElement<TemporaryVariableName, ValueLatticeElement> temps);
+
+
+    MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> getHeapTemps();
+
+    StateLatticeElement setHeapTemps(MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> temps);
 
 
 }

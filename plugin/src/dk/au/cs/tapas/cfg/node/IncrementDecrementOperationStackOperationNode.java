@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 
 import java.util.Set;
 
@@ -10,7 +11,7 @@ import java.util.Set;
  */
 public interface IncrementDecrementOperationStackOperationNode extends StackOperationNode {
 
-    Set<HeapLocation> getHeapLocationSet();
+    TemporaryHeapVariableName getValueTempHeapName();
 
     UnaryOperator getOperation();
 

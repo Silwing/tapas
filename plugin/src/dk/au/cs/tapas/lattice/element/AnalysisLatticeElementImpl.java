@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.*;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, MapLatticeElement<Context, StateLatticeElement> other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(MapLatticeElement<Context, StateLatticeElement> other) {
         throw new UnsupportedOperationException();
     }
 
@@ -149,33 +150,78 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getStack(Context context) {
-        return getValue(context).getStack();
+    public MapLatticeElement<TemporaryVariableName, ValueLatticeElement> getTemps(Context context) {
+        return getValue(context).getTemps();
     }
 
     @Override
-    public ValueLatticeElement getStackValue(Context context, TemporaryVariableName name) {
-        return getStack(context).getValue(name);
+    public ValueLatticeElement getTempsValue(Context context, TemporaryVariableName name) {
+        return getTemps(context).getValue(name);
     }
 
     @Override
-    public AnalysisLatticeElement setStack(Context context, MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
-        return addValue(context, c -> getValue(c).setStack(stack));
+    public AnalysisLatticeElement setTemps(Context context, MapLatticeElement<TemporaryVariableName, ValueLatticeElement> stack) {
+        return addValue(context, c -> getValue(c).setTemps(stack));
     }
 
     @Override
-    public AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value) {
-        return setStackValue(context, variableName, n -> value);
+    public AnalysisLatticeElement setTempsValue(Context context, TemporaryVariableName variableName, ValueLatticeElement value) {
+        return setTempsValue(context, variableName, n -> value);
     }
 
     @Override
-    public AnalysisLatticeElement setStackValue(Context context, TemporaryVariableName variableName, Generator<TemporaryVariableName, ValueLatticeElement> generator) {
-        return setStack(context, getStack(context).addValue(variableName, generator));
+    public AnalysisLatticeElement setTempsValue(Context context, TemporaryVariableName variableName, Generator<TemporaryVariableName, ValueLatticeElement> generator) {
+        return setTemps(context, getTemps(context).addValue(variableName, generator));
     }
 
     @Override
-    public AnalysisLatticeElement joinStackValue(Context context, TemporaryVariableName name, ValueLatticeElement value) {
-        return setStackValue(context, name, value.join(getStackValue(context, name)));
+    public AnalysisLatticeElement joinTempsValue(Context context, TemporaryVariableName name, ValueLatticeElement value) {
+        return setTempsValue(context, name, value.join(getTempsValue(context, name)));
+    }
+
+    @Override
+    public MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> getHeapTemps(Context context) {
+        return getValue(context).getHeapTemps();
+    }
+
+    @Override
+    public HeapLocationPowerSetLatticeElement getHeapTempsValue(Context context, TemporaryHeapVariableName name) {
+        return getValue(context).getHeapTemps().getValue(name);
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapTemps(Context context, MapLatticeElement<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> stack) {
+        return addValue(context, c -> getValue(c).setHeapTemps(stack));
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, HeapLocationPowerSetLatticeElement value) {
+        return setHeapTempsValue(context, variableName, v -> value);
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, HeapLocation location) {
+        return setHeapTempsValue(context, variableName, new HeapLocationPowerSetLatticeElementImpl(location));
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName variableName, Generator<TemporaryHeapVariableName, HeapLocationPowerSetLatticeElement> generator) {
+        return setHeapTemps(context, getHeapTemps(context).addValue(variableName, generator));
+    }
+
+    @Override
+    public AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, HeapLocationPowerSetLatticeElement value) {
+        return setHeapTempsValue(context, name, value.join(getHeapTempsValue(context, name)));
+    }
+
+    @Override
+    public AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, Set<HeapLocation> locationSet) {
+        return joinHeapTempsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(locationSet));
+    }
+
+    @Override
+    public AnalysisLatticeElement joinHeapTempsValue(Context context, TemporaryHeapVariableName name, HeapLocation location) {
+        return joinHeapTempsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(location));
     }
 
     @Override
@@ -184,16 +230,16 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public AnalysisLatticeElement setLocalsValue(Context context, VariableName name, ValueLatticeElement argument) {
-        HeapLocation newLocation = new HeapLocationImpl();
+    public AnalysisLatticeElement setLocalsValue(Context context, Node node, VariableName name, ValueLatticeElement argument) {
+        HeapLocation newLocation = new HeapLocationImpl(context, node);
         AnalysisLatticeElement resultLattice = setHeapValue(context, newLocation, argument);
         return resultLattice.setLocalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(newLocation));
 
     }
 
     @Override
-    public AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, ValueLatticeElement argument) {
-        HeapLocation newLocation = new HeapLocationImpl();
+    public AnalysisLatticeElement setGlobalsValue(Context context, Node node, VariableName name, ValueLatticeElement argument) {
+        HeapLocation newLocation = new HeapLocationImpl(context, node);
         AnalysisLatticeElement resultLattice = setHeapValue(context, newLocation, argument);
         return resultLattice.setGlobalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(newLocation));
 
@@ -202,6 +248,11 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     @Override
     public AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, Set<HeapLocation> locationSet) {
         return setGlobalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(locationSet));
+    }
+
+    @Override
+    public AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName targetTempHeapName, Set<HeapLocation> locationSet) {
+        return setHeapTempsValue(context, targetTempHeapName, new HeapLocationPowerSetLatticeElementImpl(locationSet));
     }
 
 
@@ -216,9 +267,8 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     public boolean containedIn(AnalysisLatticeElement other) {
         for (Context key : jointDomain(this, other)) {
             if (!getValue(key).containedIn(
-                    getHeap(key),
-                    other.getValue(key),
-                    other.getHeap(key))) {
+                    other.getValue(key)
+            )) {
                 return false;
             }
         }

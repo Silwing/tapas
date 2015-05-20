@@ -83,10 +83,10 @@ public class FinalGraphImpl implements Graph{
                     context.getLastCallNode().getLeft().getResultNode(),
                     context.getLastCallNode().getRight()));
         } else if(node instanceof IfNode){
-            if(!latticeElement.getStackValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
+            if(!latticeElement.getTempsValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
                 nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getFalseSuccessor()));
             }
-            if(!latticeElement.getStackValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolFalse)){
+            if(!latticeElement.getTempsValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolFalse)){
                 nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getTrueSuccessor()));
             }
 

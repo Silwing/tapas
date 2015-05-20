@@ -3,9 +3,7 @@ package dk.au.cs.tapas.cfg;
 import com.jetbrains.php.lang.psi.PhpFile;
 import com.jetbrains.php.lang.psi.elements.*;
 import dk.au.cs.tapas.cfg.graph.*;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -134,19 +132,19 @@ public class PsiParserImpl implements PsiParser {
         return (Graph g) -> generator.generate(stmGenerator.generate(this, statement, g));
     }
 
-    private GraphGenerator buildVariableExpressionGenerator(VariableExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, Set<HeapLocation> locations) {
+    private GraphGenerator buildVariableExpressionGenerator(VariableExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, TemporaryHeapVariableName locations) {
         return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
     }
 
-    private GraphGenerator buildReferenceExpressionGenerator(ReferenceExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, Set<HeapLocation> locations) {
+    private GraphGenerator buildReferenceExpressionGenerator(ReferenceExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, TemporaryHeapVariableName locations) {
         return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
     }
 
     public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator) {
-        return parseVariableExpression(target, generator, new HashSet<>());
+        return parseVariableExpression(target, generator, new TemporaryHeapVariableNameImpl());
     }
 
-    public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator, Set<HeapLocation> locations) {
+    public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator, TemporaryHeapVariableName locations) {
         if(target instanceof ArrayAccessExpression){
             return buildVariableExpressionGenerator(ArrayAccessVariableExpressionGraphImpl.generator, generator, target, locations);
         }
@@ -161,11 +159,11 @@ public class PsiParserImpl implements PsiParser {
 
     @Override
     public GraphGenerator parseReferenceExpression(PhpExpression target, GraphGenerator generator) {
-        return parseReferenceExpression(target, generator, new HashSet<>());
+        return parseReferenceExpression(target, generator, new TemporaryHeapVariableNameImpl());
     }
 
     @Override
-    public GraphGenerator parseReferenceExpression(PhpExpression element, GraphGenerator generator, Set<HeapLocation> locations) {
+    public GraphGenerator parseReferenceExpression(PhpExpression element, GraphGenerator generator, TemporaryHeapVariableName locations) {
         if(element instanceof FunctionReference){
             return buildReferenceExpressionGenerator(FunctionReferenceExpressionGraphImpl.generator, generator, element, locations);
         }

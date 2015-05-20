@@ -7,9 +7,7 @@ import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.cfg.node.IncrementDecrementOperationStackOperationNodeImpl;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.UnaryOperationNodeImpl;
-import dk.au.cs.tapas.lattice.HeapLocation;
-import dk.au.cs.tapas.lattice.TemporaryVariableName;
-import dk.au.cs.tapas.lattice.TemporaryVariableNameImpl;
+import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -37,7 +35,7 @@ public class UnaryExpressionGraphImpl extends ExpressionGraphImpl<UnaryExpressio
         UnaryOperator operator = UnaryOperator.fromString(operationText);
         if(operationText.contains("++") || operationText.contains("--")){
 
-            Set<HeapLocation> operandLocations = new HashSet<>();
+            TemporaryHeapVariableName operandLocations = new TemporaryHeapVariableNameImpl();
             operationNode = new IncrementDecrementOperationStackOperationNodeImpl(graph.getEntryNode(), operandLocations, operator, name, element);
             operandGraph = parser.parseVariableExpression((PhpExpression) element.getValue(), g -> g, operandLocations).generate(new NodeGraphImpl(operationNode));
 

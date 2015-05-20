@@ -15,7 +15,7 @@ public interface HeapLocationPowerSetLatticeElement extends LatticeElement<HeapL
 
 
     @Override
-    boolean containedIn(HeapMapLatticeElement thisAnalysis, HeapLocationPowerSetLatticeElement other, HeapMapLatticeElement otherAnalysis);
+    boolean containedIn(HeapLocationPowerSetLatticeElement other);
 
     HeapLocationPowerSetLatticeElement addLocation(HeapLocation value);
 

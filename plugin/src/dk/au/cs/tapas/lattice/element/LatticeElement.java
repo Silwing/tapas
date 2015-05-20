@@ -12,7 +12,7 @@ public interface LatticeElement<T extends LatticeElement> {
 
     T join(T other);
 
-    boolean containedIn(HeapMapLatticeElement thisAnalysis, T other, HeapMapLatticeElement otherAnalysis);
+    boolean containedIn(T other);
 
     void print(LatticePrinter printer);
 }

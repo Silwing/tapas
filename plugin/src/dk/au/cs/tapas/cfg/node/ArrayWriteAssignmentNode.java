@@ -1,6 +1,7 @@
 package dk.au.cs.tapas.cfg.node;
 
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ public interface ArrayWriteAssignmentNode extends AssignmentNode {
 
     TemporaryVariableName getIndexName() ;
 
-    Set<HeapLocation> getVariableLocationSet() ;
+    TemporaryHeapVariableName getVariableTempHeapName() ;
 
 
 }

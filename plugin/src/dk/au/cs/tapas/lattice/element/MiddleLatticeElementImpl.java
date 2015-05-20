@@ -14,7 +14,7 @@ public abstract class MiddleLatticeElementImpl<T extends MiddleCandidateLatticeE
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, T other, HeapMapLatticeElement otherAnalysis) {
+    public boolean containedIn(T other) {
         return containedIn(other);
     }
 

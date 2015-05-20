@@ -19,11 +19,6 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
     }
 
     @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, StringLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return containedIn(other);
-    }
-
-    @Override
     public boolean containedIn(StringLatticeElement other) {
         return true;
     }

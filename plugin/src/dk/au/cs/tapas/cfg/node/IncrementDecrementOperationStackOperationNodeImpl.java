@@ -3,6 +3,7 @@ package dk.au.cs.tapas.cfg.node;
 import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.cfg.UnaryOperator;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 import java.util.Set;
@@ -11,11 +12,11 @@ import java.util.Set;
  * Created by budde on 4/27/15.
  */
 public class IncrementDecrementOperationStackOperationNodeImpl extends NodeImpl implements IncrementDecrementOperationStackOperationNode {
-    private Set<HeapLocation> locationSet;
+    private TemporaryHeapVariableName locationSet;
     private UnaryOperator operation;
     private TemporaryVariableName targetName;
 
-    public IncrementDecrementOperationStackOperationNodeImpl(Node successor, Set<HeapLocation> locations, UnaryOperator operation, TemporaryVariableName targetName, PsiElement psiElement) {
+    public IncrementDecrementOperationStackOperationNodeImpl(Node successor, TemporaryHeapVariableName locations, UnaryOperator operation, TemporaryVariableName targetName, PsiElement psiElement) {
         super(successor, psiElement);
         locationSet = locations;
         this.operation = operation;
@@ -23,7 +24,7 @@ public class IncrementDecrementOperationStackOperationNodeImpl extends NodeImpl 
     }
 
     @Override
-    public Set<HeapLocation> getHeapLocationSet() {
+    public TemporaryHeapVariableName getValueTempHeapName() {
         return locationSet;
     }
 

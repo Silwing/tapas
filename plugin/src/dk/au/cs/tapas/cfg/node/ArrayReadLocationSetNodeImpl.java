@@ -2,6 +2,7 @@ package dk.au.cs.tapas.cfg.node;
 
 import com.intellij.psi.PsiElement;
 import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.TemporaryHeapVariableName;
 import dk.au.cs.tapas.lattice.TemporaryVariableName;
 
 import java.util.Set;
@@ -12,10 +13,10 @@ import java.util.Set;
 public class ArrayReadLocationSetNodeImpl extends NodeImpl implements ArrayReadLocationSetNode {
 
     private final TemporaryVariableName indexName;
-    private final Set<HeapLocation> locations;
-    private Set<HeapLocation> valueHeapLocationSet;
+    private final TemporaryHeapVariableName locations;
+    private TemporaryHeapVariableName valueHeapLocationSet;
 
-    public ArrayReadLocationSetNodeImpl(Node successor, TemporaryVariableName indexName, Set<HeapLocation> valueHeapLocationSet, Set<HeapLocation> targetLocations, PsiElement psiElement) {
+    public ArrayReadLocationSetNodeImpl(Node successor, TemporaryVariableName indexName, TemporaryHeapVariableName valueHeapLocationSet, TemporaryHeapVariableName targetLocations, PsiElement psiElement) {
         super(successor, psiElement);
         this.valueHeapLocationSet = valueHeapLocationSet;
         this.locations = targetLocations;
@@ -29,12 +30,12 @@ public class ArrayReadLocationSetNodeImpl extends NodeImpl implements ArrayReadL
     }
 
     @Override
-    public Set<HeapLocation> getValueHeapLocationSet() {
+    public TemporaryHeapVariableName getValueTempHeapName() {
         return valueHeapLocationSet;
     }
 
     @Override
-    public Set<HeapLocation> getTargetLocationSet() {
+    public TemporaryHeapVariableName getTargetTempHeapName() {
         return locations;
     }
 

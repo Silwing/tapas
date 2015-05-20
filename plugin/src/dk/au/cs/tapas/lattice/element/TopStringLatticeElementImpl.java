@@ -17,10 +17,6 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
         return this;
     }
 
-    @Override
-    public boolean containedIn(HeapMapLatticeElement thisAnalysis, StringLatticeElement other, HeapMapLatticeElement otherAnalysis) {
-        return containedIn(other);
-    }
 
     @Override
     public void print(LatticePrinter printer) {
