@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.*;
 
@@ -253,6 +254,12 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     @Override
     public AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName targetTempHeapName, Set<HeapLocation> locationSet) {
         return setHeapTempsValue(context, targetTempHeapName, new HeapLocationPowerSetLatticeElementImpl(locationSet));
+    }
+
+    @Override
+    public AnalysisLatticeElement setLocalsValue(Context context, CallNode node, Integer number, VariableName variableName, ValueLatticeElement value) {
+        HeapLocation newLocation = new HeapLocationImpl(context, node, number);
+        return setHeapValue(context, newLocation, value).setLocalsValue(context, variableName, new HeapLocationPowerSetLatticeElementImpl(newLocation));
     }
 
 

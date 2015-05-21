@@ -1,5 +1,6 @@
 package dk.au.cs.tapas.lattice.element;
 
+import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.*;
 
@@ -97,4 +98,6 @@ public interface AnalysisLatticeElement extends MapLatticeElement<Context, State
     AnalysisLatticeElement setGlobalsValue(Context context, VariableName name, Set<HeapLocation> locationSet);
 
     AnalysisLatticeElement setHeapTempsValue(Context context, TemporaryHeapVariableName targetTempHeapName, Set<HeapLocation> locationSet);
+
+    AnalysisLatticeElement setLocalsValue(Context newContext, CallNode node, Integer number, VariableName variableName, ValueLatticeElement value);
 }

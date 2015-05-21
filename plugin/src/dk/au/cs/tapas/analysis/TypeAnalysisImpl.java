@@ -428,18 +428,13 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyse(ResultNode resultNode, AnalysisLatticeElement resultLattice, AnalysisLatticeElement callLattice, Context context) {
         CallArgument argument = resultNode.getCallArgument();
-        final AnalysisLatticeElement inputLattice = resultLattice;
-
-        Set<HeapLocation> argumentSet = null;
-
-
+        AnalysisLatticeElement inputLattice = resultLattice;
         final Context exitNodeContext = context.addNode(resultNode.getCallNode());
 
         //Taking globals from prev. lattice and restoring locals from call lattice.
-        resultLattice = resultLattice.setHeap(context, resultLattice.getHeap(exitNodeContext)); //Setting the heap
-        resultLattice = resultLattice.setGlobals(context, resultLattice.getGlobals(exitNodeContext)); //Setting the globals
         resultLattice = resultLattice.setLocals(context, callLattice.getLocals(context)); //Setting the locals
         resultLattice = resultLattice.setTemps(context, callLattice.getTemps(context)); //Setting the stack
+        resultLattice = resultLattice.setHeapTemps(context, callLattice.getHeapTemps(context)); //Setting the stack
 
         if (resultNode.getExitNode().getCallArguments().length == 0) {
             // If void method, it returns null
@@ -469,7 +464,7 @@ public class TypeAnalysisImpl implements Analysis {
                 //If alias method and alias return, then parse locations
                 resultLattice = resultLattice.joinHeapTempsValue(context,
                         ((TemporaryHeapVariableCallArgument) argument).getArgument(),
-                        resultLattice.getHeapTempsValue(context, ((TemporaryHeapVariableCallArgument) exitArgument).getArgument()));
+                        inputLattice.getHeapTempsValue(context, ((TemporaryHeapVariableCallArgument) exitArgument).getArgument()));
                 //TODO set or join?
 
             } else if (argument instanceof TemporaryHeapVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
@@ -492,7 +487,7 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.joinTempsValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        inputLattice.getHeap(exitNodeContext).getValue(resultLattice.getHeapTempsValue(context, finalExit.getArgument()), LatticeElement::join));
+                        inputLattice.getHeap(exitNodeContext).getValue(inputLattice.getHeapTempsValue(context, finalExit.getArgument()), LatticeElement::join));
                 //TODO set or join?
 
 
@@ -590,7 +585,9 @@ public class TypeAnalysisImpl implements Analysis {
             } else if (callArgument instanceof TemporaryVariableCallArgument) {
                 lattice = lattice.setLocalsValue(
                         newContext,
-                        node, argumentNames[i],
+                        node,
+                        i,
+                        argumentNames[i],
                         lattice.getTempsValue(context, ((TemporaryVariableCallArgument) callArgument).getArgument()));
             }
 
@@ -764,7 +761,6 @@ public class TypeAnalysisImpl implements Analysis {
 
             } else if (!array.getArray().equals(ArrayLatticeElement.top)) {
                 //Initialize new array if empty or not array
-                //TODO fix this
                 ArrayLatticeElement arrayLattice;
                 HeapLocation location = new HeapLocationImpl(context, node);
 
@@ -773,6 +769,7 @@ public class TypeAnalysisImpl implements Analysis {
                 latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), location);
                 latticeElement = latticeElement.setHeapValue(context, loc, new ValueLatticeElementImpl(arrayLattice));
             }
+            //TODO what if top? Should return all HeapLocations
         }
 
         return latticeElement;

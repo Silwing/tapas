@@ -10,12 +10,17 @@ public class HeapLocationImpl implements HeapLocation {
 
     private final Context context;
     private final Node node;
+    private final Integer number;
 
 
     public HeapLocationImpl(Context context, Node node) {
+        this(context, node, 0);
+    }
+
+    public HeapLocationImpl(Context context, Node node, Integer number) {
         this.context = context;
         this.node = node;
-
+        this.number = number;
     }
 
     @Override
@@ -30,7 +35,7 @@ public class HeapLocationImpl implements HeapLocation {
 
         HeapLocationImpl that = (HeapLocationImpl) object;
 
-        return context.equals(that.context) && node.equals(that.node);
+        return context.equals(that.context) && node.equals(that.node) && number.equals(that.number);
 
     }
 
@@ -38,6 +43,22 @@ public class HeapLocationImpl implements HeapLocation {
     public int hashCode() {
         int result = context.hashCode();
         result = 31 * result + node.hashCode();
+        result = 31 * result + number.hashCode();
         return result;
+    }
+
+    @Override
+    public Node getNode() {
+        return node;
+    }
+
+    @Override
+    public Context getContext() {
+        return context;
+    }
+
+    @Override
+    public Integer getNumber() {
+        return number;
     }
 }
