@@ -35,18 +35,7 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
 
     @Override
     public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
-        if(key.equals(IndexLatticeElement.top)) {
-            Set<HeapLocation> locations = getMap().getValues().stream().map(HeapLocationPowerSetLatticeElement::getLocations).reduce(new HashSet<>(), (set, powerSet) -> {
-                set.addAll(powerSet);
-                return set;
-            });
-            return new HeapLocationPowerSetLatticeElementImpl(locations);
-        }
-        if(key.equals(IndexLatticeElement.bottom)) return new HeapLocationPowerSetLatticeElementImpl();
-
-        Set<HeapLocationPowerSetLatticeElement> locations = getMap().getDomain().stream().filter(index -> key.containedIn(index) || index.containedIn(key)).map(index -> getMap().getValue(index)).collect(Collectors.toSet());
-
-        return new HeapLocationPowerSetLatticeElementImpl(locations.toArray(new HeapLocationPowerSetLatticeElement[locations.size()]));
+        return map.getDomain().stream().filter(i -> i.containedIn(key) || key.containedIn(i)).map(map::getValue).reduce(new HeapLocationPowerSetLatticeElementImpl(), LatticeElement::join);
     }
 
     @Override

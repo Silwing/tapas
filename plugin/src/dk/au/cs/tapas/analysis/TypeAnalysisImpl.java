@@ -186,13 +186,38 @@ public class TypeAnalysisImpl implements Analysis {
             checkArrayAddValue(l.getHeap(context).getValue(((ListArrayLatticeElement) oldArray.getArray()).getLocations(), LatticeElement::join), newValue);
         }
 
-        HeapLocation location = new HeapLocationImpl(context,node);
+        HeapLocation location = new HeapLocationImpl(context, node);
         ArrayLatticeElement list = ArrayLatticeElement.generateList(location);
         ValueLatticeElement newTarget = new ValueLatticeElementImpl(list);
         return l.setHeapValue(context, location, newValue).setTempsValue(context, node.getTargetName(), oldArray.join(newTarget));
     }
 
     private AnalysisLatticeElement analyse(ArrayWriteAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
+
+        HeapLocation location = new HeapLocationImpl(context, node);
+        latticeElement = latticeElement
+                .setTempsValue(context,
+                        node.getTargetName(),
+                        latticeElement.getTempsValue(context, node.getValueName()))
+                .setHeapValue(
+                        context,
+                        location,
+                        latticeElement.getTempsValue(context, node.getValueName()));
+
+        for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()) {
+            latticeElement = latticeElement.setHeapValue(
+                    context,
+                    loc,
+                    writeArray(
+                            latticeElement.getHeapValue(context, loc),
+                            latticeElement.getTempsValue(context, node.getIndexName()),
+                            location)
+            );
+        }
+
+        return latticeElement;
+        //TODO add check
+        /*
         //Setting target
         latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), latticeElement.getTempsValue(context, node.getValueName()));
         //For each possible location
@@ -201,7 +226,7 @@ public class TypeAnalysisImpl implements Analysis {
 
         final AnalysisLatticeElement finalLatticeElement = latticeElement;
         //Only add write error if all arrays are lists
-        Set<HeapLocation> varSet = latticeElement.getHeapTempsValue(context,node.getVariableTempHeapName()).getLocations();
+        Set<HeapLocation> varSet = latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations();
         boolean addError = varSet
                 .stream()
                 .map(l -> finalLatticeElement.getHeapValue(context, l).getArray()).allMatch(a -> a instanceof ListArrayLatticeElement);
@@ -223,15 +248,39 @@ public class TypeAnalysisImpl implements Analysis {
 
         }
 
-        return latticeElement;
+        return latticeElement;*/
     }
 
     private AnalysisLatticeElement analyse(
             ArrayWriteReferenceAssignmentNode node,
             AnalysisLatticeElement latticeElement, Context context) {
 
+        //TODO add check
+        latticeElement = latticeElement.setTempsValue(
+                context,
+                node.getTargetName(),
+                latticeElement
+                        .getHeap(context)
+                        .getValue(
+                                latticeElement
+                                        .getHeapTempsValue(context, node.getValueTempHeapName())
+                                        .getLocations(),
+                                LatticeElement::join));
+
+        for(HeapLocation location : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()){
+            latticeElement = latticeElement.setHeapValue(context, location, writeArray(
+                    latticeElement.getHeapValue(context, location),
+                    latticeElement.getTempsValue(context, node.getWriteArgument()),
+                    latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations()
+            ));
+        }
+
+        return latticeElement;
+
+
+        /*
         Set<HeapLocation> valueLocations = latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations();
-        Set<HeapLocation> varLocations  = latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations();
+        Set<HeapLocation> varLocations = latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations();
         latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
         //For each possible location
         for (HeapLocation location : varLocations) {
@@ -250,7 +299,7 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
 
-        return latticeElement;
+        return latticeElement;*/
     }
 
 
@@ -311,22 +360,64 @@ public class TypeAnalysisImpl implements Analysis {
 
 
     private AnalysisLatticeElement analyse(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-        Set<HeapLocation> valueLocations = latticeElement.getHeapTempsValue(context,node.getValueTempHeapName()).getLocations();
-                latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
+        Set<HeapLocation> valueLocations = latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations();
+        latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
         latticeElement = updateVariable(node.getVariableName(), context, latticeElement, m -> new HeapLocationPowerSetLatticeElementImpl(valueLocations));
 
         return latticeElement;
     }
 
     private Set<IndexLatticeElement> generateArrayIndices(ValueLatticeElement element) {
-        Set<IndexLatticeElement> list = new HashSet<>();
-        list.add(element.getBoolean().toArrayIndex());
-        list.add(element.getNull().toArrayIndex());
-        list.add(element.getString().toArrayIndex());
-        list.add(element.getNumber().toArrayIndex());
-        return list;
+        Set<IndexLatticeElement> set = new HashSet<>();
+        set.add(element.getBoolean().toArrayIndex());
+        set.add(element.getNull().toArrayIndex());
+        set.add(element.getString().toArrayIndex());
+        set.add(element.getNumber().toArrayIndex());
+        return set;
     }
 
+    ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, HeapLocation location) {
+        Set<HeapLocation> set = new HashSet<>();
+        set.add(location);
+        return writeArray(value, key, set);
+
+    }
+
+    ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, Set<HeapLocation> locations) {
+        return writeArray(value, key, locations, true);
+    }
+
+    ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, HeapLocation location, boolean addError) {
+        Set<HeapLocation> set = new HashSet<>();
+        set.add(location);
+        return writeArray(value, key, set, addError);
+
+    }
+
+    ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, Set<HeapLocation> locations, boolean addError) {
+        Set<IndexLatticeElement> indices = generateArrayIndices(key);
+        IndexLatticeElement index = indices.stream().reduce(IndexLatticeElement.bottom, LatticeElement::join);
+        MapArrayLatticeElement map = ArrayLatticeElement.generateMap(index, locations);
+        ArrayLatticeElement array = value.getArray();
+
+        if (array.equals(ArrayLatticeElement.top)) {
+            return value.setArray(ArrayLatticeElement.top);
+        }
+
+        if (array instanceof ListArrayLatticeElement) {
+            if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement || i.equals(IndexLatticeElement.bottom))) {
+                if (addError) {
+                    annotator.error("Array write with string index on list");
+                }
+                return value.setArray(ArrayLatticeElement.generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations()).join(map));
+            }
+            return value.setArray(((ListArrayLatticeElement) array).addLocations(locations));
+        }
+
+        return value.setArray(map);
+    }
+
+/*
     ArrayLatticeElement writeArray(ArrayLatticeElement array, HeapLocation valueLocation, Collection<IndexLatticeElement> arrayIndices) {
         return writeArray(array, valueLocation, arrayIndices, true);
     }
@@ -344,38 +435,32 @@ public class TypeAnalysisImpl implements Analysis {
 
     ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, Collection<IndexLatticeElement> arrayIndices, boolean addError) {
 
-
+        IndexLatticeElement index = arrayIndices.stream().reduce(IndexLatticeElement.bottom, LatticeElement::join);
+        ArrayLatticeElement map = ArrayLatticeElement.generateMap(index, valueLocationSet);
         //If location is top array, do nothing
         if (array.equals(ArrayLatticeElement.top)) {
             return array;
         }
         if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
-            //For every possible index
-            for (IndexLatticeElement index : arrayIndices) {
-                //For monotonicity, we need to make every initializing write a map.
-                array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
+            return map;
 
-            }
-        } else if (array instanceof ListArrayLatticeElement) {
+        }
+        if (array instanceof ListArrayLatticeElement) {
             if (arrayIndices.stream().allMatch(i -> i instanceof StringIndexLatticeElement || i.equals(IndexLatticeElement.bottom))) {
                 if (addError) {
                     annotator.error("Array write with string index on list");
                 }
                 //Needs to be monotone, so will need to convert to map
-                array = ArrayLatticeElement
-                        .generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations());
-                return writeArray(array, valueLocationSet, arrayIndices);
+                return ArrayLatticeElement.generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations()).join(map);
             }
-            array = ((ListArrayLatticeElement) array).addLocations(valueLocationSet);
-
-        } else if (array instanceof MapArrayLatticeElement) {
-            for (IndexLatticeElement index : arrayIndices) {
-                array = array.join(ArrayLatticeElement.generateMap(index, valueLocationSet));
-            }
+            return ((ListArrayLatticeElement) array).addLocations(valueLocationSet);
 
         }
-        return array;
+
+        return array.join(map);
     }
+
+*/
 
     private AnalysisLatticeElement analyse(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement value = l.getTempsValue(c, n.getOperandName());
@@ -388,7 +473,6 @@ public class TypeAnalysisImpl implements Analysis {
 
         return l;
     }
-
 
     private AnalysisLatticeElement analyse(ShortCircuitBinaryOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
         ValueLatticeElement
@@ -448,9 +532,9 @@ public class TypeAnalysisImpl implements Analysis {
             return resultLattice;
         }
 
-        if(argument instanceof TemporaryHeapVariableCallArgument){
+        if (argument instanceof TemporaryHeapVariableCallArgument) {
             resultLattice = resultLattice.setHeapTempsValue(context, ((TemporaryHeapVariableCallArgument) argument).getArgument(), new HeapLocationPowerSetLatticeElementImpl());
-        } else if ( argument instanceof  TemporaryVariableCallArgument){
+        } else if (argument instanceof TemporaryVariableCallArgument) {
             resultLattice = resultLattice.setTempsValue(context, ((TemporaryVariableCallArgument) argument).getArgument(), new ValueLatticeElementImpl());
         }
 
@@ -459,6 +543,7 @@ public class TypeAnalysisImpl implements Analysis {
             //Clearing stack variable before iteration. Just in case
             resultLattice = resultLattice.setTempsValue(context, ((TemporaryVariableCallArgument) argument).getArgument(), new ValueLatticeElementImpl());
         }
+        int i = 0;
         for (CallArgument exitArgument : resultNode.getExitNode().getCallArguments()) {
             if (argument instanceof TemporaryHeapVariableCallArgument && exitArgument instanceof TemporaryHeapVariableCallArgument) {
                 //If alias method and alias return, then parse locations
@@ -469,7 +554,7 @@ public class TypeAnalysisImpl implements Analysis {
 
             } else if (argument instanceof TemporaryHeapVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
                 //If alias method and stack variable. return, then create location with stack value.
-                HeapLocation location = new HeapLocationImpl(context, resultNode);
+                HeapLocation location = new HeapLocationImpl(context, resultNode, i);
                 resultLattice = resultLattice.setHeapValue(
                         context,
                         location,
@@ -501,7 +586,7 @@ public class TypeAnalysisImpl implements Analysis {
                 //TODO set or join?
 
             }
-
+            i++;
         }
 
         return resultLattice;
@@ -532,7 +617,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyse(IncrementDecrementOperationStackOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
         ValueLatticeElement value, targetValue, locationValue = latticeElement.getHeap(context).getValue(
-                latticeElement.getHeapTempsValue(context,node.getValueTempHeapName()),
+                latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()),
                 LatticeElement::join);
         //Notice that PHP does not coerce when value not a number (inc,dec)
         switch (node.getOperation()) {
@@ -692,7 +777,23 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyse(ArrayWriteStackOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
+        HeapLocation location = new HeapLocationImpl(context, node);
+        return latticeElement
+                .setHeapValue(
+                        context,
+                        location,
+                        latticeElement.getTempsValue(context, node.getValueName()))
+                .setTempsValue(
+                        context,
+                        node.getTargetName(),
+                        writeArray(
+                                latticeElement.getTempsValue(context, node.getTargetName()),
+                                latticeElement.getTempsValue(context, node.getKeyName()),
+                                location));
 
+        //TODO add check
+
+    /*
         ValueLatticeElement
                 arrayValue = latticeElement.getTempsValue(context, node.getTargetName()),
                 entryValue = latticeElement.getTempsValue(context, node.getValueName()),
@@ -708,38 +809,71 @@ public class TypeAnalysisImpl implements Analysis {
 
         return latticeElement
                 .setTempsValue(context, node.getTargetName(), arrayValue.setArray(array)) //Update the new stack value
-                .setHeapValue(context, newLocation, entryValue); //Add the entry to the heap
+                .setHeapValue(context, newLocation, entryValue); //Add the entry to the heap*/
     }
 
-    private AnalysisLatticeElement analyse(ArrayReadStackOperationNode n, AnalysisLatticeElement latticeElement, Context context) {
-        ValueLatticeElement array = latticeElement.getTempsValue(context, n.getArrayName());
-        ValueLatticeElement value;
-        Set<IndexLatticeElement> indices = generateArrayIndices(latticeElement.getTempsValue(context, n.getIndexName()));
-        if (array.getArray() instanceof MapArrayLatticeElement) {
-            MapArrayLatticeElement map = (MapArrayLatticeElement) array.getArray();
-            Set<HeapLocation> locations = new HashSet<>();
-            for (IndexLatticeElement arrayIndex : indices) {
-                locations.addAll(map.getValue(arrayIndex).getLocations());
-            }
-            value = latticeElement.getHeap(context).getValue(locations, LatticeElement::join);
-        } else if (array.getArray() instanceof ListArrayLatticeElement) {
-            if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement || i.equals(IndexLatticeElement.bottom))) {
-                annotator.error("Array string access on list");
-            }
 
-            ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
-            value = latticeElement.getHeap(context).getValue(list.getLocations().getLocations(), LatticeElement::join);
-        } else if (array.getArray() instanceof EmptyArrayLatticeElement) {
-            value = new ValueLatticeElementImpl(NullLatticeElement.top);
-        } else {
-            value = ValueLatticeElement.top;
+    private Set<HeapLocation> readArray(ValueLatticeElement value, ValueLatticeElement key, MapLatticeElement<HeapLocation, ValueLatticeElement> heap) {
+        ArrayLatticeElement array = value.getArray();
+        if (array.equals(ArrayLatticeElement.top)) {
+            return heap.getDomain();
         }
-        latticeElement = latticeElement.setTempsValue(context, n.getTargetName(), value);
+        if (array instanceof ListArrayLatticeElement) {
+            return ((ListArrayLatticeElement) array).getLocations().getLocations();
+        }
+        if (array instanceof MapArrayLatticeElement) {
+            MapArrayLatticeElement map = (MapArrayLatticeElement) array;
+            return generateArrayIndices(key).stream().map(map::getValue).reduce(new HeapLocationPowerSetLatticeElementImpl(), LatticeElement::join).getLocations();
+        }
 
-        return latticeElement;
+        return new HashSet<>();
+
+    }
+
+    private AnalysisLatticeElement analyse(ArrayReadStackOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
+
+        Set<HeapLocation> locations = readArray(
+                latticeElement.getTempsValue(context, node.getArrayName()),
+                latticeElement.getTempsValue(context, node.getIndexName()),
+                latticeElement.getHeap(context));
+
+        ValueLatticeElement value = locations.isEmpty() ? new ValueLatticeElementImpl(NullLatticeElement.top) : latticeElement.getHeap(context).getValue(locations, LatticeElement::join);
+        return latticeElement.setTempsValue(context, node.getTargetName(), value);
+
     }
 
     private AnalysisLatticeElement analyse(ArrayReadLocationSetNode node, AnalysisLatticeElement latticeElement, Context context) {
+
+        HeapLocation location = new HeapLocationImpl(context, node);
+
+        Set<HeapLocation> targetSet = new HashSet<>();
+
+        for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations()) {
+            Set<HeapLocation> locations = readArray(
+                    latticeElement.getHeapValue(context, loc),
+                    latticeElement.getTempsValue(context, node.getIndexName()),
+                    latticeElement.getHeap(context));
+            if (locations.isEmpty()) {
+                latticeElement =
+                        latticeElement.setHeapValue(
+                                context,
+                                loc,
+                                writeArray(
+                                        latticeElement.getHeapValue(context, loc),
+                                        latticeElement.getTempsValue(context, node.getIndexName()),
+                                        location));
+                if (!targetSet.contains(location)) {
+                    targetSet.add(location);
+                    latticeElement.setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
+                }
+            } else {
+                targetSet.addAll(locations);
+            }
+        }
+        return latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), targetSet);
+
+        /*
+
         ValueLatticeElement indexValue = latticeElement.getTempsValue(context, node.getIndexName());
         Collection<IndexLatticeElement> indices = generateArrayIndices(indexValue);
         latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), new HeapLocationPowerSetLatticeElementImpl());
@@ -759,7 +893,7 @@ public class TypeAnalysisImpl implements Analysis {
                 ListArrayLatticeElement list = (ListArrayLatticeElement) array.getArray();
                 latticeElement = latticeElement.joinHeapTempsValue(context, node.getTargetTempHeapName(), list.getLocations());
 
-            } else if (!array.getArray().equals(ArrayLatticeElement.top)) {
+            } else if (array.getArray().equals(ArrayLatticeElement.top)) {
                 //Initialize new array if empty or not array
                 ArrayLatticeElement arrayLattice;
                 HeapLocation location = new HeapLocationImpl(context, node);
@@ -767,12 +901,19 @@ public class TypeAnalysisImpl implements Analysis {
                 arrayLattice = ArrayLatticeElement.generateMap(indexValue.toArrayIndex(), location);
 
                 latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), location);
+
+            } else {
+                //Initialize new array if empty or not array
+                HeapLocation location = new HeapLocationImpl(context, node);
+                ArrayLatticeElement arrayLattice = ArrayLatticeElement.generateMap(indexValue.toArrayIndex(), location);
+
+                latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), location);
                 latticeElement = latticeElement.setHeapValue(context, loc, new ValueLatticeElementImpl(arrayLattice));
             }
             //TODO what if top? Should return all HeapLocations
         }
 
-        return latticeElement;
+        return latticeElement;*/
     }
 
 

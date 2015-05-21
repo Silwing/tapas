@@ -6,10 +6,13 @@
  * Time: 22:01
  */
 
+$keyArray = [];
+$valueArray = [];
+
 function createInstance($string, $instance, $value)
 {
-    static $keyArray = [];
-    static $valueArray = [];
+    global $keyArray,$valueArray;
+
     if (!isset($keyArray[$string])) {
         $keyArray[$string] = [];
         $valueArray[$string] = [];
