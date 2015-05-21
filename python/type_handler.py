@@ -72,3 +72,6 @@ class TypeHandler(core.Handler):
         else:
             self.array_types[id] = type_int
             self.array_types_sum[id] = {type_int: 1}
+
+        if (self.array_types[id] == 3 or self.array_types[id] > 4) and id not in [17, 34, 96, 110, 112, 128, 182, 192, 373, 395, 403, 487, 585, 613, 614, 620, 624, 647, 660, 680]:
+            pass
