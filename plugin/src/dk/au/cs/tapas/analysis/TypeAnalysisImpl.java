@@ -8,7 +8,8 @@ import dk.au.cs.tapas.cfg.node.*;
 import dk.au.cs.tapas.lattice.*;
 import dk.au.cs.tapas.lattice.element.*;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -413,6 +414,11 @@ public class TypeAnalysisImpl implements Analysis {
             }
             return value.setArray(((ListArrayLatticeElement) array).addLocations(locations));
         }
+
+        if (array instanceof MapArrayLatticeElement) {
+            return value.setArray(array.join(map));
+        }
+
 
         return value.setArray(map);
     }
@@ -823,7 +829,8 @@ public class TypeAnalysisImpl implements Analysis {
         }
         if (array instanceof MapArrayLatticeElement) {
             MapArrayLatticeElement map = (MapArrayLatticeElement) array;
-            return generateArrayIndices(key).stream().map(map::getValue).reduce(new HeapLocationPowerSetLatticeElementImpl(), LatticeElement::join).getLocations();
+            //TODO write about reduction in paper
+            return map.getValue(generateArrayIndices(key).stream().reduce(IndexLatticeElement.bottom, LatticeElement::join)).getLocations();
         }
 
         return new HashSet<>();
