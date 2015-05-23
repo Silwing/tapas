@@ -50,6 +50,7 @@ public interface ArrayLatticeElement extends LatticeElement<ArrayLatticeElement>
         return generateMap(index, set);
     }
 
+
     static ArrayLatticeElement generateList(HeapLocation location) {
         Set<HeapLocation> set = new HashSet<>();
         set.add(location);

@@ -13,8 +13,13 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
 
     private final MapLatticeElement<Context, StateLatticeElement> mapLatticeElement;
 
+    public AnalysisLatticeElementImpl(Generator<Context, StateLatticeElement> generator) {
+        this(new MapLatticeElementImpl<>(generator));
+    }
+
+
     public AnalysisLatticeElementImpl() {
-        this(new MapLatticeElementImpl<>(context -> new StateLatticeElementImpl()));
+        this(context -> new StateLatticeElementImpl());
     }
 
     private AnalysisLatticeElementImpl(MapLatticeElement<Context, StateLatticeElement> mapLatticeElement) {
@@ -40,6 +45,7 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     public AnalysisLatticeElement addValue(Context key, Generator<Context, StateLatticeElement> generator) {
         return new AnalysisLatticeElementImpl(mapLatticeElement.addValue(key, generator));
     }
+
 
     @Override
     public AnalysisLatticeElement meet(MapLatticeElement<Context, StateLatticeElement> other) {

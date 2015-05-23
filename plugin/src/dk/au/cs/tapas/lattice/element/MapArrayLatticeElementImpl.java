@@ -3,9 +3,7 @@ package dk.au.cs.tapas.lattice.element;
 import dk.au.cs.tapas.lattice.HeapLocation;
 import dk.au.cs.tapas.lattice.LatticePrinter;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 /**
  * Created by budde on 4/20/15.
@@ -36,6 +34,11 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     @Override
     public HeapLocationPowerSetLatticeElement getValue(IndexLatticeElement key) {
         return map.getDomain().stream().filter(i -> i.containedIn(key) || key.containedIn(i)).map(map::getValue).reduce(new HeapLocationPowerSetLatticeElementImpl(), LatticeElement::join);
+    }
+
+    @Override
+    public MapArrayLatticeElement addValue(Predicate<IndexLatticeElement> test, MapLatticeElement.Generator<IndexLatticeElement, HeapLocationPowerSetLatticeElement> generator) {
+        return null;
     }
 
     @Override

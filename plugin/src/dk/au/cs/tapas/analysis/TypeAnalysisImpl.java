@@ -31,7 +31,7 @@ public class TypeAnalysisImpl implements Analysis {
 
     @Override
     public AnalysisLatticeElement getStartLattice(Graph graph) {
-        AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
+        AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl(c -> new StateLatticeElementImpl(new HeapMapLatticeElementImpl(v -> new ValueLatticeElementImpl(NullLatticeElement.top))));
         // TODO: init as maps
         int i = 0;
         for (VariableName name : VariableName.superGlobals) {
@@ -45,6 +45,7 @@ public class TypeAnalysisImpl implements Analysis {
     public AnalysisLatticeElement analyse(AnalysisTarget target, AnalysisLatticeElement latticeElement) {
         Node node = target.getNode();
         annotator.setNode(node);
+        latticeElement.print(new PrintStreamLatticePrinter(System.out));
         Context context = target.getContext().toContext();
         if (node instanceof VariableReadLocationSetNode) {
             return analyse((VariableReadLocationSetNode) node, latticeElement, context);
@@ -171,8 +172,9 @@ public class TypeAnalysisImpl implements Analysis {
         allCheckArray(latticeElement, context, node.getValueTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
         latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), new HeapLocationPowerSetLatticeElementImpl());
         //TODO should we clear?
+        HeapLocation newLoc = new HeapLocationImpl(context, node);
+        latticeElement = latticeElement.joinHeapValue(context, newLoc, new ValueLatticeElementImpl());
         for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations()) {
-            HeapLocation newLoc = new HeapLocationImpl(context, node);
             latticeElement = latticeElement.joinHeapTempsValue(context, node.getTargetTempHeapName(), new HeapLocationPowerSetLatticeElementImpl(newLoc));
             latticeElement = latticeElement.joinHeapValue(context, loc, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(newLoc)));
         }
@@ -371,12 +373,15 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private Set<IndexLatticeElement> generateArrayIndices(ValueLatticeElement element) {
-        Set<IndexLatticeElement> set = new HashSet<>();
-        set.add(element.getBoolean().toArrayIndex());
-        set.add(element.getNull().toArrayIndex());
-        set.add(element.getString().toArrayIndex());
-        set.add(element.getNumber().toArrayIndex());
-        return set;
+        Set<IndexLatticeElement> indexSet = new HashSet<>();
+        indexSet.add(element.getBoolean().toArrayIndex());
+        indexSet.add(element.getNull().toArrayIndex());
+        indexSet.add(element.getString().toArrayIndex());
+        indexSet.add(element.getNumber().toArrayIndex());
+
+        indexSet.removeIf(i1 -> indexSet.stream().anyMatch(i2 -> i1 != i2 && i1.containedIn(i2)));
+
+        return indexSet;
     }
 
     ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, HeapLocation location) {
@@ -399,8 +404,10 @@ public class TypeAnalysisImpl implements Analysis {
 
     ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, Set<HeapLocation> locations, boolean addError) {
         Set<IndexLatticeElement> indices = generateArrayIndices(key);
-        IndexLatticeElement index = indices.stream().reduce(IndexLatticeElement.bottom, LatticeElement::join);
-        MapArrayLatticeElement map = ArrayLatticeElement.generateMap(index, locations);
+        MapArrayLatticeElement map = ArrayLatticeElement.generateMap();
+        for (IndexLatticeElement i : indices) {
+            map = map.addValue(i, i1 -> new HeapLocationPowerSetLatticeElementImpl(locations));
+        }
         ArrayLatticeElement array = value.getArray();
 
         if (array.equals(ArrayLatticeElement.top)) {
@@ -408,7 +415,7 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         if (array instanceof ListArrayLatticeElement) {
-            if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement || i.equals(IndexLatticeElement.bottom))) {
+            if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement)) {
                 if (addError) {
                     annotator.error("Array write with string index on list");
                 }
@@ -832,7 +839,7 @@ public class TypeAnalysisImpl implements Analysis {
         if (array instanceof MapArrayLatticeElement) {
             MapArrayLatticeElement map = (MapArrayLatticeElement) array;
             //TODO write about reduction in paper
-            return map.getValue(generateArrayIndices(key).stream().reduce(IndexLatticeElement.bottom, LatticeElement::join)).getLocations();
+            return generateArrayIndices(key).stream().map(map::getValue).reduce(new HeapLocationPowerSetLatticeElementImpl(), LatticeElement::join).getLocations();
         }
 
         return new HashSet<>();

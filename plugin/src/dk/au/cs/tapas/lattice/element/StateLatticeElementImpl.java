@@ -38,6 +38,10 @@ public class StateLatticeElementImpl implements StateLatticeElement {
         this.heapTemps = heapTemps;
     }
 
+    public StateLatticeElementImpl(HeapMapLatticeElementImpl heap) {
+        this(new LocalsMapLatticeElementImpl(), new GlobalsMapLatticeElementImpl(), heap, new TempsMapLatticeElementImpl(), new HeapTempsLatticeElementImpl());
+    }
+
     @Override
     public MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> getLocals() {
         return locals;
