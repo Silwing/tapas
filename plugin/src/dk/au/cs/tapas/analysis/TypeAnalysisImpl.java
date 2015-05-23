@@ -33,8 +33,10 @@ public class TypeAnalysisImpl implements Analysis {
     public AnalysisLatticeElement getStartLattice(Graph graph) {
         AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl();
         // TODO: init as maps
+        int i = 0;
         for (VariableName name : VariableName.superGlobals) {
-            lattice = lattice.setGlobalsValue(new ContextImpl(), graph.getEntryNode(), name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
+            lattice = lattice.setGlobalsValue(new ContextImpl(), graph.getEntryNode(), i, name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
+            i++;
         }
         return lattice;
     }

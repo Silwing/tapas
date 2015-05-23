@@ -1,6 +1,5 @@
 package dk.au.cs.tapas.lattice.element;
 
-import dk.au.cs.tapas.cfg.node.CallNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.lattice.*;
 
@@ -257,10 +256,17 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     }
 
     @Override
-    public AnalysisLatticeElement setLocalsValue(Context context, CallNode node, Integer number, VariableName variableName, ValueLatticeElement value) {
+    public AnalysisLatticeElement setLocalsValue(Context context, Node node, Integer number, VariableName variableName, ValueLatticeElement value) {
         HeapLocation newLocation = new HeapLocationImpl(context, node, number);
         return setHeapValue(context, newLocation, value).setLocalsValue(context, variableName, new HeapLocationPowerSetLatticeElementImpl(newLocation));
     }
+
+    @Override
+    public AnalysisLatticeElement setGlobalsValue(ContextImpl context, Node node, Integer number, VariableName name, ValueLatticeElementImpl value) {
+        HeapLocation newLocation = new HeapLocationImpl(context, node, number);
+        return setHeapValue(context, newLocation, value).setGlobalsValue(context, name, new HeapLocationPowerSetLatticeElementImpl(newLocation));
+    }
+
 
 
     private Set<Context> jointDomain(MapLatticeElement<Context, StateLatticeElement> m1, MapLatticeElement<Context, StateLatticeElement> m2) {
