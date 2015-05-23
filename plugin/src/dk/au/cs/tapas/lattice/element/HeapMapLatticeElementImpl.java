@@ -15,7 +15,7 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
 
 
     public HeapMapLatticeElementImpl() {
-        this(new MapLatticeElementImpl<>(location -> new ValueLatticeElementImpl()));
+        this(new MapLatticeElementImpl<>(location -> new ValueLatticeElementImpl(NullLatticeElement.top)));
     }
 
     public HeapMapLatticeElementImpl(MapLatticeElement<HeapLocation, ValueLatticeElement> mapLatticeElement) {
