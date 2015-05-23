@@ -272,7 +272,7 @@ public class TypeAnalysisImpl implements Analysis {
                                         .getLocations(),
                                 LatticeElement::join));
 
-        for(HeapLocation location : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()){
+        for (HeapLocation location : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()) {
             latticeElement = latticeElement.setHeapValue(context, location, writeArray(
                     latticeElement.getHeapValue(context, location),
                     latticeElement.getTempsValue(context, node.getWriteArgument()),
@@ -428,8 +428,11 @@ public class TypeAnalysisImpl implements Analysis {
             return value.setArray(array.join(map));
         }
 
+        if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement)) {
+            return value.setArray(map);
+        }
+        return value.setArray(ArrayLatticeElement.generateList(locations));
 
-        return value.setArray(map);
     }
 
 /*
@@ -776,18 +779,11 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement updateLocations(AnalysisLatticeElement latticeElement, Context context, Set<HeapLocation> variableLocations, ValueLatticeElement value) {
-        if (variableLocations.size() == 1) {
-            //Hard update on single heap location
-            latticeElement = latticeElement.setHeapValue(
-                    context,
-                    variableLocations.iterator().next(),
-                    value);
-        } else {
-            //Soft update on multiple locations
-            for (HeapLocation location : variableLocations) {
-                latticeElement = latticeElement.joinHeapValue(context, location, value);
-            }
+        //Soft update on multiple locations
+        for (HeapLocation location : variableLocations) {
+            latticeElement = latticeElement.joinHeapValue(context, location, value);
         }
+
         return latticeElement;
     }
 
