@@ -365,11 +365,16 @@ public class TypeAnalysisImpl implements Analysis {
 
 
     private AnalysisLatticeElement analyse(VariableReferenceAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-        Set<HeapLocation> valueLocations = latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations();
-        latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(valueLocations, LatticeElement::join));
-        latticeElement = updateVariable(node.getVariableName(), context, latticeElement, m -> new HeapLocationPowerSetLatticeElementImpl(valueLocations));
 
-        return latticeElement;
+        if (context.isEmpty() || node.getVariableName().isSuperGlobal()) {
+            return latticeElement
+                    .setGlobalsValue(context, node.getVariableName(), latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()))
+                    .setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()), LatticeElement::join));
+        }
+
+        return latticeElement
+                .setLocalsValue(context, node.getVariableName(), latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()))
+                .setTempsValue(context, node.getTargetName(), latticeElement.getHeap(context).getValue(latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()), LatticeElement::join));
     }
 
     private Set<IndexLatticeElement> generateArrayIndices(ValueLatticeElement element) {
@@ -393,13 +398,6 @@ public class TypeAnalysisImpl implements Analysis {
 
     ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, Set<HeapLocation> locations) {
         return writeArray(value, key, locations, true);
-    }
-
-    ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, HeapLocation location, boolean addError) {
-        Set<HeapLocation> set = new HashSet<>();
-        set.add(location);
-        return writeArray(value, key, set, addError);
-
     }
 
     ValueLatticeElement writeArray(ValueLatticeElement value, ValueLatticeElement key, Set<HeapLocation> locations, boolean addError) {
@@ -610,10 +608,22 @@ public class TypeAnalysisImpl implements Analysis {
         return resultLattice;
     }
 
-    private AnalysisLatticeElement analyse(VariableReadNode n, AnalysisLatticeElement l, Context c) {
-        HeapLocationPowerSetLatticeElement locations = getVariableLocation(n.getVariableName(), c, l);
-        //Reading the joint value from heap to stack
-        return l.setTempsValue(c, n.getTargetName(), name -> l.getHeap(c).getValue(locations.getLocations(), LatticeElement::join));
+    private AnalysisLatticeElement analyse(VariableReadNode node, AnalysisLatticeElement latticeElement, Context context) {
+        MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope;
+        if (context.isEmpty() || node.getVariableName().isSuperGlobal()) {
+            scope = latticeElement.getGlobals(context);
+        } else {
+            scope = latticeElement.getLocals(context);
+        }
+        ValueLatticeElement value;
+        if (scope.getValue(node.getVariableName()).getLocations().isEmpty()) {
+            value = new ValueLatticeElementImpl(NullLatticeElement.top);
+        } else {
+            value = latticeElement.getHeap(context).getValue(scope.getValue(node.getVariableName()), LatticeElement::join);
+        }
+
+        return latticeElement.setTempsValue(context, node.getTargetName(), value);
+
     }
 
     private AnalysisLatticeElement analyse(ReadConstNode n, AnalysisLatticeElement l, Context c) {
@@ -657,8 +667,9 @@ public class TypeAnalysisImpl implements Analysis {
                 return latticeElement;
         }
 
-        latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), targetValue);
-        latticeElement = updateLocations(latticeElement, context, node.getValueTempHeapName(), value);
+        latticeElement = latticeElement
+                .setTempsValue(context, node.getTargetName(), targetValue)
+                .setHeap(context, updateLocations(latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()), latticeElement.getHeap(context), value));
         return latticeElement;
     }
 
@@ -762,29 +773,50 @@ public class TypeAnalysisImpl implements Analysis {
 
 
     private AnalysisLatticeElement analyse(VariableAssignmentNode node, AnalysisLatticeElement latticeElement, Context context) {
-        ValueLatticeElement value = latticeElement.getTempsValue(context, node.getValueName());
-        HeapLocationPowerSetLatticeElement variableLocations = getVariableLocation(node.getVariableName(), context, latticeElement);
 
-        latticeElement = updateLocations(latticeElement, context, variableLocations.getLocations(), value);
+        if (context.isEmpty() || node.getVariableName().isSuperGlobal()) {
+            Pair<MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement>, HeapMapLatticeElement> pair =
+                    writeVar(
+                            context,
+                            node,
+                            node.getVariableName(),
+                            latticeElement.getGlobals(context),
+                            latticeElement.getHeap(context),
+                            latticeElement.getTempsValue(context, node.getValueName()));
+            return latticeElement
+                    .setGlobals(context, pair.getLeft())
+                    .setHeap(context, pair.getRight())
+                    .setTempsValue(context, node.getTargetName(), latticeElement.getTempsValue(context, node.getValueName()));
 
-        //Remember to update target stack
-        latticeElement = latticeElement.setTempsValue(context, node.getTargetName(), value);
-
-
-        return latticeElement;
-    }
-
-    private AnalysisLatticeElement updateLocations(AnalysisLatticeElement latticeElement, Context context, TemporaryHeapVariableName variableName, ValueLatticeElement value) {
-        return updateLocations(latticeElement, context, latticeElement.getHeapTempsValue(context, variableName).getLocations(), value);
-    }
-
-    private AnalysisLatticeElement updateLocations(AnalysisLatticeElement latticeElement, Context context, Set<HeapLocation> variableLocations, ValueLatticeElement value) {
-        //Soft update on multiple locations
-        for (HeapLocation location : variableLocations) {
-            latticeElement = latticeElement.joinHeapValue(context, location, value);
         }
 
-        return latticeElement;
+        Pair<MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement>, HeapMapLatticeElement> pair =
+                writeVar(
+                        context,
+                        node,
+                        node.getVariableName(),
+                        latticeElement.getLocals(context),
+                        latticeElement.getHeap(context),
+                        latticeElement.getTempsValue(context, node.getValueName()));
+        return latticeElement
+                .setLocals(context, pair.getLeft())
+                .setHeap(context, pair.getRight())
+                .setTempsValue(context, node.getTargetName(), latticeElement.getTempsValue(context, node.getValueName()));
+
+    }
+
+    private HeapMapLatticeElement updateLocations(HeapLocationPowerSetLatticeElement variableLocations, HeapMapLatticeElement heap, ValueLatticeElement value) {
+        return updateLocations(variableLocations.getLocations(), heap, value);
+    }
+
+    private HeapMapLatticeElement updateLocations(Set<HeapLocation> variableLocations, HeapMapLatticeElement heap, ValueLatticeElement value) {
+        //Soft update on multiple locations
+        for (HeapLocation location : variableLocations) {
+            final HeapMapLatticeElement finalHeap = heap;
+            heap = heap.addValue(location, (l) -> finalHeap.getValue(l).join(value));
+        }
+
+        return heap;
     }
 
     private AnalysisLatticeElement analyse(ArrayWriteStackOperationNode node, AnalysisLatticeElement latticeElement, Context context) {
@@ -941,37 +973,44 @@ public class TypeAnalysisImpl implements Analysis {
     }
 
     private AnalysisLatticeElement analyse(VariableReadLocationSetNode node, AnalysisLatticeElement latticeElement, Context context) {
-        VariableName name = node.getVariableName();
-        Set<HeapLocation> newLocations = getVariableLocation(name, context, latticeElement).getLocations();
-        if (newLocations.isEmpty()) {
-            HeapLocation location = new HeapLocationImpl(context, node);
-            latticeElement = updateVariable(
-                    name,
-                    context,
-                    latticeElement,
-                    m -> m.addLocation(location))
-                    .setHeapValue(context, location, new ValueLatticeElementImpl(NullLatticeElement.top));
-            newLocations.add(location);
+        if (context.isEmpty() || node.getVariableName().isSuperGlobal()) {
+            MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope = initializeVariable(node, context, node.getVariableName(), latticeElement.getGlobals(context));
+            return latticeElement
+                    .setGlobals(context, scope)
+                    .setHeapTempsValue(context, node.getTargetTempHeapName(), scope.getValue(node.getVariableName()));
         }
+        MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope = initializeVariable(node, context, node.getVariableName(), latticeElement.getLocals(context));
+        return latticeElement
+                .setLocals(context, scope)
+                .setHeapTempsValue(context, node.getTargetTempHeapName(), scope.getValue(node.getVariableName()));
 
-        latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), newLocations);
-        return latticeElement;
     }
 
-    private AnalysisLatticeElement updateVariable(VariableName name, Context context, AnalysisLatticeElement latticeElement, Function<HeapLocationPowerSetLatticeElement, HeapLocationPowerSetLatticeElement> updater) {
-
-        if (name.isSuperGlobal() || context.isEmpty()) {
-            return latticeElement.setGlobalsValue(context, name, updater.apply(latticeElement.getGlobalsValue(context, name)));
+    private MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> initializeVariable(
+            VariableReadLocationSetNode node,
+            Context context,
+            VariableName variableName,
+            MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope) {
+        if (scope.getValue(variableName).getLocations().isEmpty()) {
+            return scope.addValue(variableName, v -> new HeapLocationPowerSetLatticeElementImpl(new HeapLocationImpl(context, node)));
         }
-        return latticeElement.setLocalsValue(context, name, updater.apply(latticeElement.getLocalsValue(context, name)));
+        return scope;
     }
 
-    private HeapLocationPowerSetLatticeElement getVariableLocation(VariableName name, Context context, AnalysisLatticeElement latticeElement) {
-        if (name.isSuperGlobal() || context.isEmpty()) {
-            return latticeElement.getGlobalsValue(context, name);
-        }
 
-        return latticeElement.getLocalsValue(context, name);
+    private Pair<MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement>, HeapMapLatticeElement> writeVar(
+            Context context,
+            Node node,
+            VariableName name,
+            MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope,
+            HeapMapLatticeElement heap,
+            ValueLatticeElement value) {
+        scope = scope.getValue(name).getLocations().isEmpty() ?
+                scope.addValue(name, n -> new HeapLocationPowerSetLatticeElementImpl(new HeapLocationImpl(context, node))) :
+                scope;
+        return new PairImpl<>(scope, updateLocations(scope.getValue(name), heap, value));
+
+
     }
 
     private interface Action {
