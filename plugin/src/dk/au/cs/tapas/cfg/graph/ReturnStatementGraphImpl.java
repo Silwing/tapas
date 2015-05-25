@@ -5,6 +5,7 @@ import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.Node;
 import dk.au.cs.tapas.cfg.node.ReadConstNodeImpl;
+import dk.au.cs.tapas.cfg.node.SkipNodeImpl;
 import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +50,7 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
             functionExitNode.addCallArgument(new TemporaryVariableCallArgumentImpl(name));
 
         }
-        exitNode = functionExitNode;
+        exitNode = new SkipNodeImpl(targetGraph.getEntryNode(), element);
 
     }
 

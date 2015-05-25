@@ -39,7 +39,7 @@ public class AnalyseAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         PhpFile psi = (PhpFile) e.getData(LangDataKeys.PSI_FILE);
         if (psi == null) {
-            Messages.showErrorDialog(e.getProject(), "Could not find a file to analyse. Please focus a PHP file to perform the analysis on.", "No file in focus");
+            Messages.showErrorDialog(e.getProject(), "Could not find a file to analyse. Please focus a PHP file to perform the analysis on.", "No File in Focus");
             return;
         }
 
