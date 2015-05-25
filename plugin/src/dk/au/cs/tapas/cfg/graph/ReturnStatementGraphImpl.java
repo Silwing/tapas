@@ -37,7 +37,7 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
         if(firstBorn != null) {
             if (currentFunctionGraph.isAliasReturn()) {
                 TemporaryHeapVariableName locationSet = new TemporaryHeapVariableNameImpl();
-                expressionGraph = parser.parseVariableExpression((PhpExpression) firstBorn, g -> g, locationSet).generate(exitNodeGraph);
+                expressionGraph = parser.parseReferenceExpression((PhpExpression) firstBorn, g -> g, locationSet).generate(exitNodeGraph);
                 functionExitNode.addCallArgument(new TemporaryHeapVariableCallArgumentImpl(locationSet));
             } else {
                 TemporaryVariableName name = new TemporaryVariableNameImpl();

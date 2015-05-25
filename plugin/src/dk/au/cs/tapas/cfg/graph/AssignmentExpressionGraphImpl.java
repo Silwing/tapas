@@ -43,7 +43,7 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
                     assignmentNode = new ArrayAppendReferenceAssignmentNodeImpl(graph.getEntryNode(), variableLocations, valueLocations, targetName, element);
                     nextGraph = createValueGraph(valueLocations);
                 }
-                variableGraph = psiParser.parseVariableExpression((PhpExpression) ((ArrayAccessExpression) variable).getValue(), g -> g, variableLocations).generate(nextGraph);
+                variableGraph = psiParser.parseReferenceExpression((PhpExpression) ((ArrayAccessExpression) variable).getValue(), g -> g, variableLocations).generate(nextGraph);
             } else {
                 assignmentNode = new VariableReferenceAssignmentNodeImpl(graph.getEntryNode(), new VariableNameImpl(variable.getName()), valueLocations, targetName, element);
                 variableGraph = createValueGraph(valueLocations);
@@ -63,15 +63,14 @@ public class AssignmentExpressionGraphImpl extends ExpressionGraphImpl<Assignmen
                     assignmentNode = new ArrayAppendAssignmentNodeImpl(graph.getEntryNode(), targetName, valueName, variableLocations, element);
                     nextGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
                 }
-                this.variableGraph = psiParser.parseVariableExpression(
+                this.variableGraph = psiParser.parseReferenceExpression(
                         (PhpExpression) ((ArrayAccessExpression) variable).getValue(),
                         g -> g,
                         variableLocations).generate(nextGraph);
 
             } else {
                 this.assignmentNode = new VariableAssignmentNodeImpl(graph.getEntryNode(), new VariableNameImpl(variable.getName()), valueName, targetName, element);
-                Graph valueGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
-                this.variableGraph = psiParser.parseVariableExpression((PhpExpression) variable, g -> g, variableLocations).generate(valueGraph);
+                this.variableGraph = psiParser.parseExpression((PhpExpression) element.getValue(), g -> g, valueName).generate(new NodeGraphImpl(assignmentNode));
             }
 
 

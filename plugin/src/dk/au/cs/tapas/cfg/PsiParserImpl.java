@@ -132,10 +132,6 @@ public class PsiParserImpl implements PsiParser {
         return (Graph g) -> generator.generate(stmGenerator.generate(this, statement, g));
     }
 
-    private GraphGenerator buildVariableExpressionGenerator(VariableExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, TemporaryHeapVariableName locations) {
-        return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
-    }
-
     private GraphGenerator buildReferenceExpressionGenerator(ReferenceExpressionGraphGenerator expGenerator, GraphGenerator generator, PhpExpression expression, TemporaryHeapVariableName locations) {
         return (Graph g) -> generator.generate(expGenerator.generate(this, expression, g, locations));
     }
@@ -146,11 +142,11 @@ public class PsiParserImpl implements PsiParser {
 
     public GraphGenerator parseVariableExpression(PhpExpression target, GraphGenerator generator, TemporaryHeapVariableName locations) {
         if(target instanceof ArrayAccessExpression){
-            return buildVariableExpressionGenerator(ArrayAccessVariableExpressionGraphImpl.generator, generator, target, locations);
+            return buildReferenceExpressionGenerator(ArrayAccessReferenceExpressionGraphImpl.generator, generator, target, locations);
         }
 
         if(target instanceof Variable){
-            return buildVariableExpressionGenerator(VariableVariableExpressionGraphImpl.generator, generator, target, locations);
+            return buildReferenceExpressionGenerator(VariableReferenceExpressionGraphImpl.generator, generator, target, locations);
         }
 
         return generator;
@@ -176,7 +172,7 @@ public class PsiParserImpl implements PsiParser {
             return buildReferenceExpressionGenerator(VariableReferenceExpressionGraphImpl.generator, generator, element, locations);
         }
 
-        return  parseVariableExpression(element, generator, locations);
+        return generator;
     }
 
     @Override

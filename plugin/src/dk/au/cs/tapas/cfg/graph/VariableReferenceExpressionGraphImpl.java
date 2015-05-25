@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * Created by budde on 4/27/15.
  */
-public class VariableReferenceExpressionGraphImpl extends VariableVariableExpressionGraphImpl {
+public class VariableReferenceExpressionGraphImpl extends ReferenceExpressionGraphImpl<Variable> {
 
     public static PsiParser.ReferenceExpressionGraphGenerator<Variable> generator = VariableReferenceExpressionGraphImpl::new;
 
