@@ -1,11 +1,10 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import com.jetbrains.php.lang.psi.elements.*;
-import dk.au.cs.tapas.cfg.TemporaryHeapVariableCallArgumentImpl;
-import dk.au.cs.tapas.cfg.PsiParser;
-import dk.au.cs.tapas.cfg.TemporaryVariableCallArgumentImpl;
+import dk.au.cs.tapas.cfg.*;
 import dk.au.cs.tapas.cfg.node.ExitNode;
 import dk.au.cs.tapas.cfg.node.Node;
+import dk.au.cs.tapas.cfg.node.ReadConstNodeImpl;
 import dk.au.cs.tapas.lattice.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +44,10 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
             entryNode = expressionGraph.getEntryNode();
 
         } else {
-            entryNode = functionExitNode;
+            TemporaryVariableName name = new TemporaryVariableNameImpl();
+            entryNode = new ReadConstNodeImpl(functionExitNode, new NullConstantImpl(), name, element);
+            functionExitNode.addCallArgument(new TemporaryVariableCallArgumentImpl(name));
+
         }
         exitNode = functionExitNode;
 
