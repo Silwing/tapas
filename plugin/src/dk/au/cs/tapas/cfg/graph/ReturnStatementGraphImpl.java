@@ -1,8 +1,6 @@
 package dk.au.cs.tapas.cfg.graph;
 
-import com.jetbrains.php.lang.psi.elements.PhpExpression;
-import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
-import com.jetbrains.php.lang.psi.elements.PhpReturn;
+import com.jetbrains.php.lang.psi.elements.*;
 import dk.au.cs.tapas.cfg.TemporaryHeapVariableCallArgumentImpl;
 import dk.au.cs.tapas.cfg.PsiParser;
 import dk.au.cs.tapas.cfg.TemporaryVariableCallArgumentImpl;
@@ -35,7 +33,7 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
         ExitNode functionExitNode = currentFunctionGraph.getExitNode();
         Graph exitNodeGraph = new NodeGraphImpl(functionExitNode);
         if(firstBorn != null) {
-            if (currentFunctionGraph.isAliasReturn()) {
+            if (currentFunctionGraph.isAliasReturn() && isReferenceable(firstBorn)) {
                 TemporaryHeapVariableName locationSet = new TemporaryHeapVariableNameImpl();
                 expressionGraph = parser.parseReferenceExpression((PhpExpression) firstBorn, g -> g, locationSet).generate(exitNodeGraph);
                 functionExitNode.addCallArgument(new TemporaryHeapVariableCallArgumentImpl(locationSet));
@@ -51,6 +49,10 @@ public class ReturnStatementGraphImpl extends StatementGraphImpl<PhpReturn>{
         }
         exitNode = functionExitNode;
 
+    }
+
+    private boolean isReferenceable(PhpPsiElement firstBorn) {
+        return firstBorn instanceof Variable || firstBorn instanceof FunctionReference || firstBorn instanceof ArrayAccessExpression;
     }
 
     @NotNull
