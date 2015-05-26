@@ -10,4 +10,5 @@ corpus/svn
 
 *.csv
 /out/
+plugin/out/
 *.iml
