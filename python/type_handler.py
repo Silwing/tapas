@@ -73,5 +73,7 @@ class TypeHandler(core.Handler):
             self.array_types[id] = type_int
             self.array_types_sum[id] = {type_int: 1}
 
-        if (self.array_types[id] == 3 or self.array_types[id] > 4) and id not in [17, 34, 96, 110, 112, 128, 182, 192, 373, 395, 403, 487, 585, 613, 614, 620, 624, 647, 660, 680]:
+        '''Joomla: [17, 34, 96, 99, 103, 110, 112, 113, 128, 181, 182, 192, 215, 373, 395, 403, 459, 487, 553, 585, 613, 614, 620, 624, 647, 660, 680, 709, 825, 831, 872, 950, 1193, 1203, 1207, 1213, 1217, 1231, 1236, 1237, 1239, 1603, 1632, 1773, 1774, 1898, 1913, 1929, 1931, 1961]
+        '''
+        if (self.array_types[id] == 3 or self.array_types[id] > 4) and line_type != "array_values" and id not in [43, 75, 125, 126, 133, 206, 243]:
             pass

@@ -1,0 +1,67 @@
+<?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Randi
+ * Date: 26-05-2015
+ * Time: 16:37
+ */
+
+function pivot($source, $key = null)
+{
+    $result = array();
+    $counter = array();
+
+    foreach ($source as $index => $value)
+    {
+        // Determine the name of the pivot key, and its value.
+        if (is_array($value))
+        {
+            // If the key does not exist, ignore it.
+            if (!isset($value[$key]))
+            {
+                continue;
+            }
+
+            $resultKey = $value[$key];
+            $resultValue = &$source[$index];
+        }
+        else
+        {
+            // Just a scalar value.
+            $resultKey = $value;
+            $resultValue = $index;
+        }
+
+        // The counter tracks how many times a key has been used.
+        if (empty($counter[$resultKey]))
+        {
+            // The first time around we just assign the value to the key.
+            $result[$resultKey] = $resultValue;
+            $counter[$resultKey] = 1;
+        }
+        elseif ($counter[$resultKey] == 1)
+        {
+            // If there is a second time, we convert the value into an array.
+            $result[$resultKey] = array(
+                $result[$resultKey],
+                $resultValue,
+            );
+            $counter[$resultKey]++;
+        }
+        else
+        {
+            // After the second time, no need to track any more. Just append to the existing array.
+            $result[$resultKey][] = $resultValue;
+        }
+    }
+
+    unset($counter);
+
+    return $result;
+}
+
+$simpleArr = [1,2,3,4,5,6,7,8,1,5,3,7,9,0,4,2,5,8,4,3,8,9];
+
+$result = pivot($simpleArr);
+
+var_dump($result);
