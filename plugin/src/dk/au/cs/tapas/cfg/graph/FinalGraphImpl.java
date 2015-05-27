@@ -82,7 +82,7 @@ public class FinalGraphImpl implements Graph{
                     context.popNode(),
                     context.getLastCallNode().getLeft().getResultNode(),
                     context.getLastCallNode().getRight()));
-        } else if(node instanceof IfNode){
+        } /*else if(node instanceof IfNode){
             if(!latticeElement.getTempsValue(context.toContext(), ((IfNode) node).getConditionName()).toBoolean().equals(BooleanLatticeElement.boolTrue)){
                 nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getFalseSuccessor()));
             }
@@ -90,7 +90,7 @@ public class FinalGraphImpl implements Graph{
                 nodes.add(new AnalysisTargetImpl(context, ((IfNode) node).getTrueSuccessor()));
             }
 
-        } else {
+        } */ else {
             for(Node successor: node.getSuccessors()){
                 nodes.add(new AnalysisTargetImpl(context, successor));
             }
