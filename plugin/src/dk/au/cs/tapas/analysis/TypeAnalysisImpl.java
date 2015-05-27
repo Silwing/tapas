@@ -45,7 +45,7 @@ public class TypeAnalysisImpl implements Analysis {
     public AnalysisLatticeElement analyse(AnalysisTarget target, AnalysisLatticeElement latticeElement) {
         Node node = target.getNode();
         annotator.setNode(node);
-        latticeElement.print(new PrintStreamLatticePrinter(System.out));
+        //latticeElement.print(new PrintStreamLatticePrinter(System.out));
         Context context = target.getContext().toContext();
         if (node instanceof VariableReadLocationSetNode) {
             return analyse((VariableReadLocationSetNode) node, latticeElement, context);

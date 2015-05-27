@@ -45,6 +45,8 @@ function isMinimumDay($day, $month, $year, $required, $minDay) {
 }
 
 $required = $_GET["required"];
+$valid = isMinimumDay(27, 5, 2015, $required, 6);
 $invalid = isMinimumDay(1, 3, 1991, $required, 5);
 $invalid2 = isMinimumDay(1, 13, 2015, $required, 5);
-$valid = isMinimumDay(27, 5, 2015, $required, 6);
+$invalid3 = isMinimumDay(1, 0, 1991, $required, 0);
+
