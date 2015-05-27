@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import csv
 from categorize_handler import CategorizeHandler
-from core import ArrayLibrary
+from core import ArrayLibrary, Finder
 from cyclic_handler import CyclicHandler
 from operation_id_handler import OperationIDHandler
 from type_handler import TypeHandler
@@ -27,7 +27,7 @@ def reduce_blacklist(list1, list2):
     return list1
 
 
-def run_maker(library_builder, file_builder, handler_builder):
+def run_maker(library_builder, finder_builder, file_builder, handler_builder):
     files = file_builder()
 
     if len(files) < 1:
@@ -47,7 +47,8 @@ def run_maker(library_builder, file_builder, handler_builder):
             size_counter = 0
             file_size = os.stat(clean_file).st_size
             library = library_builder()
-            handlers = handler_builder(library)
+            finder = finder_builder()
+            handlers = handler_builder(library, finder)
             for line in clean_file_object:
                 counter += 1
                 size_counter += len(line)
@@ -71,14 +72,14 @@ def run_maker(library_builder, file_builder, handler_builder):
                     writer.writerow(result)
 
 
-def build_handlers(library, args):
+def build_handlers(library, finder, args):
     handlers = []
     if len(args) >= 3 and ".csv" not in args[1]:
         arg = args[1]
         if "value" in arg:
             handlers.append(ValueHandler(library))
         if "type" in arg:
-            handlers.append(TypeHandler(library))
+            handlers.append(TypeHandler(library, finder))
         if "cyclic" in arg:
             handlers.append(CyclicHandler(library))
         if "operation" in arg:
@@ -107,5 +108,5 @@ def build_files(args):
 
 
 if __name__ == "__main__":
-    run_maker(ArrayLibrary, lambda: build_files(sys.argv), lambda lib: build_handlers(lib, sys.argv))
+    run_maker(ArrayLibrary, Finder, lambda: build_files(sys.argv), lambda lib, find: build_handlers(lib, find, sys.argv))
 

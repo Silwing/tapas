@@ -6,6 +6,15 @@ from abc import ABCMeta, abstractmethod
 def location_string(file_path, line_no, op_type):
     return "%s:%s:%s" % (file_path, str(line_no), op_type)
 
+class Finder:
+    def __init__(self):
+        self.corpusPath = 'C:/Users/Silwing/Programmering/Speciale/tapas-survey/corpus'
+
+    def getLines(self, file, lineno):
+        f = open(self.corpusPath+file)
+        lines = f.readlines()
+        return lines[lineno-2:lineno+1]
+
 
 class ArrayLibrary:
     def __init__(self, blacklist=None):
@@ -54,8 +63,9 @@ class ArrayLibrary:
 class Handler:
     __metaclass__ = ABCMeta
 
-    def __init__(self, library):
+    def __init__(self, library, finder=None):
         self.library = library
+        self.finder = finder
 
     @abstractmethod
     def get_blacklist(self):
