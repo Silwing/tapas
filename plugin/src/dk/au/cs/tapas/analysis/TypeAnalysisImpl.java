@@ -651,7 +651,7 @@ public class TypeAnalysisImpl implements Analysis {
             } else if (callArgument instanceof TemporaryVariableCallArgument) {
                 lattice = lattice.setLocalsValue(
                         newContext,
-                        node,
+                        node.getFunctionGraph().getEntryNode(),
                         i,
                         argumentNames[i],
                         lattice.getTempsValue(context, ((TemporaryVariableCallArgument) callArgument).getArgument()));

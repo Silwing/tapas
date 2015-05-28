@@ -6,31 +6,15 @@
  * Time: 16:37
  */
 
-function pivot($source, $key = null)
+function pivot($source)
 {
     $result = array();
     $counter = array();
 
     foreach ($source as $index => $value)
     {
-        // Determine the name of the pivot key, and its value.
-        if (is_array($value))
-        {
-            // If the key does not exist, ignore it.
-            if (!isset($value[$key]))
-            {
-                continue;
-            }
-
-            $resultKey = $value[$key];
-            $resultValue = &$source[$index];
-        }
-        else
-        {
-            // Just a scalar value.
             $resultKey = $value;
             $resultValue = $index;
-        }
 
         // The counter tracks how many times a key has been used.
         if (empty($counter[$resultKey]))
