@@ -276,7 +276,6 @@ public class TypeAnalysisImpl implements Analysis {
             }
             ValueLatticeElement v = state.getHeap().getValue(l);
             if(!v.getString().equals(StringLatticeElement.bottom)
-                    || !v.getNull().equals(NullLatticeElement.bottom)
                     || !v.getNumber().equals(NumberLatticeElement.bottom)
                     || !v.getBoolean().equals(BooleanLatticeElement.bottom)) {
                 annotator.warning("Target of write might be non-array");
