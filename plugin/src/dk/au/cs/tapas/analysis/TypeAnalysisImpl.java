@@ -370,7 +370,7 @@ public class TypeAnalysisImpl implements Analysis {
         ArrayLatticeElement array = value.getArray();
 
         if (array.equals(ArrayLatticeElement.top)) {
-            return value.setArray(ArrayLatticeElement.top);
+            return value;
         }
 
         if (array instanceof ListArrayLatticeElement) {
