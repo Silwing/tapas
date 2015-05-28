@@ -44,7 +44,7 @@ public class MapLatticeElementImpl<K, V extends LatticeElement<V>>  implements M
     public MapLatticeElement<K, V> addValue(final K key, final Generator<K, V> generator) {
         Set<K> domain = new HashSet<>(this.domain);
         domain.add(key);
-        return new MapLatticeElementImpl<>(domain, (K k) -> k.equals(key) ? generator.generate(k) : this.generator.generate(k));
+        return new MapLatticeElementImpl<>(domain, (K k) -> k.equals(key) ? generator.generate(k) : (cache.containsKey(k) ? cache.get(k) : this.generator.generate(k)));
     }
 
     @Override

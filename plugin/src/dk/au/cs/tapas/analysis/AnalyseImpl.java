@@ -29,6 +29,7 @@ public class AnalyseImpl implements Analyse {
     private final Set<Annotation> annotations = new HashSet<>();
 
     public AnalyseImpl(Graph graph, Function<AnalysisAnnotator, Analysis> analysisFunction) {
+        System.out.println("Starting analysis");
         this.graph = graph;
         this.analysis = analysisFunction.apply(new AnalysisAnnotatorImpl(annotations));
         AnalysisTarget entryNode = new AnalysisTargetImpl(graph.getEntryNode());
@@ -36,6 +37,7 @@ public class AnalyseImpl implements Analyse {
         worklist.addAll(graph.getFlow(entryNode).stream().map(successorPair -> new PairImpl<>(entryNode, successorPair)).collect(Collectors.toList()));
         iterateWorklist();
         annotations.addAll(graph.getNodes().stream().filter(node -> !inLatticeMap.containsKey(new AnalysisTargetImpl(node)) && node.getElement() != null).map(node -> new WarningAnnotationImpl(node.getElement(), "Unreachable node")).collect(Collectors.toList()));
+        System.out.println("Finished");
     }
 
     public AnalyseImpl(Graph graph) {
