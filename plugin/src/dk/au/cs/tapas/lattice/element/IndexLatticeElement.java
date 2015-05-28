@@ -17,7 +17,7 @@ public interface IndexLatticeElement extends LatticeElement<IndexLatticeElement>
             return bottom;
         }
         else {
-            return new IntegerIndexLatticeElementImpl((ValueIntegerLatticeElement) element);
+            return new IntegerIndexLatticeElementImpl( element);
         }
     }
 

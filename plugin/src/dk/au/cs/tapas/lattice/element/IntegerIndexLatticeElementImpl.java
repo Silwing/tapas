@@ -8,7 +8,7 @@ import dk.au.cs.tapas.lattice.LatticePrinter;
 public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElement {
     private final IntegerLatticeElement integer;
 
-    public IntegerIndexLatticeElementImpl(ValueIntegerLatticeElement element) {
+    public IntegerIndexLatticeElementImpl(IntegerLatticeElement element) {
         integer = element;
     }
 
