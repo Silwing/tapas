@@ -53,8 +53,16 @@ public class ArrayMergeLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl
                 resultVal = resultVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
             }
 
-            if(arrayVal.getArray() instanceof ListArrayLatticeElement && seenMap || arrayVal.getArray() instanceof MapArrayLatticeElement && seenList) {
-                annotator.warning("Merging maps and lists");
+            boolean isMap = arrayVal.getArray() instanceof MapArrayLatticeElement;
+            boolean isList = arrayVal.getArray() instanceof ListArrayLatticeElement;
+            if(isMap && !seenMap) {
+                seenMap = true;
+                if(seenList)
+                    annotator.error("Merging a list with a map");
+            } else if(isList && !seenList) {
+                seenList = true;
+                if(seenMap)
+                    annotator.error("Merging a map with a list");
             }
 
             resultVal = resultVal.join(new ValueLatticeElementImpl(arrayVal.getArray()));

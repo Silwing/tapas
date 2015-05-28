@@ -25,6 +25,7 @@ public class PsiParserImpl implements PsiParser {
         functionGraphSuppliers.put("\\count", CountLibraryFunctionGraphImpl::new);
         functionGraphSuppliers.put("\\array_merge", ArrayMergeLibraryFunctionGraphImpl::TwoArgsGraph);
         functionGraphSuppliers.put("\\checkdate", CheckdateLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\empty", EmptyLibraryFunctionGraphImpl::new);
     }
 
 

@@ -10,9 +10,6 @@
 function isValidDate($day, $month, $year) {
     $errors = [];
 
-    if($day == 0 || $month == 0 || $year == 0)
-        $errors["emptyDate"] = "One or more parts are empty.";
-
     if(!checkdate($month, $day, $year))
         $errors["invalidDate"] = "The given date is not valid";
 
@@ -24,9 +21,6 @@ function isValidDate($day, $month, $year) {
 
 function isMinimumDay($day, $month, $year, $required, $minDay) {
     $errors = [];
-
-    if(!$required && $day == 0 && $month == 0 && $year == 0)
-        return true;
 
     if($required && $day == 0 && $month == 0 && $year == 0)
         $errors[] = "The date is required";
