@@ -905,9 +905,17 @@ public class TypeAnalysisImpl implements Analysis {
             MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> scope,
             HeapMapLatticeElement heap,
             ValueLatticeElement value) {
-        scope = scope.getValue(name).getLocations().isEmpty() ?
-                scope.addValue(name, n -> new HeapLocationPowerSetLatticeElementImpl(new HeapLocationImpl(context, node))) :
-                scope;
+        HeapLocation location = new HeapLocationImpl(context, node);
+        if(scope.getValue(name).getLocations().isEmpty()){
+            return  new PairImpl<>(
+                    scope.addValue(
+                            name,
+                            n -> new HeapLocationPowerSetLatticeElementImpl(location)),
+                    heap.addValue(
+                            location,
+                            l -> value
+                    ));
+        }
         return new PairImpl<>(scope, updateLocations(scope.getValue(name), heap, value));
 
 
