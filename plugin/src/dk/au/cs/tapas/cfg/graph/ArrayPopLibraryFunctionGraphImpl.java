@@ -35,12 +35,7 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
             } else if (val.getArray() instanceof MapArrayLatticeElement) {
                 annotator.error("array_pop on map");
             }
-            if (!val.getNumber().equals(NumberLatticeElement.bottom)
-                    || !val.getString().equals(StringLatticeElement.bottom)
-                    || !val.getBoolean().equals(BooleanLatticeElement.bottom)
-                    || !val.getNull().equals(NullLatticeElement.bottom)) {
-                newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
-            }
+            newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
 
         }
 

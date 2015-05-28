@@ -25,6 +25,7 @@ public class VarDumpLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
         TemporaryVariableName input = ((TemporaryVariableCallArgument)resultNode.getCallNode().getCallArguments()[0]).getArgument();
         ValueLatticeElement inputVal = analysisLatticeElement.getTempsValue(context, input);
 
+        System.out.println(inputVal.getArray().getClass().getName());
         inputVal.print(new PrintStreamLatticePrinter(System.out));
 
         return analysisLatticeElement;
