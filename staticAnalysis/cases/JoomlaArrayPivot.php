@@ -11,8 +11,6 @@ function pivot($source)
     $result = array();
     $counter = array();
 
-    var_dump($counter);
-
     for ($i = 0; $i < count($source); $i++)
     {
         $resultKey = $source[$i];
