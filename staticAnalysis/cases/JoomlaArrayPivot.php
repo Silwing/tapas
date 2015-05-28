@@ -11,6 +11,8 @@ function pivot($source)
     $result = array();
     $counter = array();
 
+    var_dump($counter);
+
     for ($i = 0; $i < count($source); $i++)
     {
         $resultKey = $source[$i];
@@ -23,7 +25,7 @@ function pivot($source)
             $result[$resultKey] = $resultValue;
             $counter[$resultKey] = 1;
         }
-        elseif ($counter[$resultKey] == 1)
+        else if ($counter[$resultKey] == 1)
         {
             // If there is a second time, we convert the value into an array.
             $result[$resultKey] = array(
