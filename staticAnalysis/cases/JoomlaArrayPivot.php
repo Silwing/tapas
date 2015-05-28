@@ -36,7 +36,9 @@ function pivot($source)
         {
             // After the second time, no need to track any more. Just append to the existing array.
             $result[$resultKey][] = $resultValue;
+            var_dump($result[$resultKey]);
         }
+
     }
 
     return $result;
