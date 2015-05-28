@@ -829,7 +829,7 @@ public class TypeAnalysisImpl implements Analysis {
                 latticeElement.getTempsValue(context, node.getIndexName()),
                 latticeElement.getHeap(context));
 
-        ValueLatticeElement value = locations.isEmpty() ? new ValueLatticeElementImpl(NullLatticeElement.top) : latticeElement.getHeap(context).getValue(locations, LatticeElement::join);
+        ValueLatticeElement value = new ValueLatticeElementImpl(NullLatticeElement.top).join(latticeElement.getHeap(context).getValue(locations, LatticeElement::join));
         return latticeElement.setTempsValue(context, node.getTargetName(), value);
 
     }
@@ -890,7 +890,7 @@ public class TypeAnalysisImpl implements Analysis {
                 .setLocals(context, scope)
                 .setHeapTempsValue(context, node.getTargetTempHeapName(), scope.getValue(node.getVariableName()));
 
-    }
+    } 
 
     private MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement> initializeVariable(
             VariableReadLocationSetNode node,
