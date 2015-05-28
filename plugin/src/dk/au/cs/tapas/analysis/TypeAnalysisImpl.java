@@ -374,9 +374,9 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         if (array instanceof ListArrayLatticeElement) {
-            if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement)) {
+            if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
                 if (addError) {
-                    annotator.error("Array write with string index on list");
+                    annotator.error("Array write may be with string index on list");
                 }
                 return value.setArray(ArrayLatticeElement.generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations()).join(map));
             }
@@ -387,57 +387,13 @@ public class TypeAnalysisImpl implements Analysis {
             return value.setArray(array.join(map));
         }
 
-        if (indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement)) {
+        if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
             return value.setArray(map);
         }
         return value.setArray(ArrayLatticeElement.generateList(locations));
 
     }
 
-/*
-    ArrayLatticeElement writeArray(ArrayLatticeElement array, HeapLocation valueLocation, Collection<IndexLatticeElement> arrayIndices) {
-        return writeArray(array, valueLocation, arrayIndices, true);
-    }
-
-    ArrayLatticeElement writeArray(ArrayLatticeElement array, HeapLocation valueLocation, Collection<IndexLatticeElement> arrayIndices, boolean addError) {
-        Set<HeapLocation> set = new HashSet<>();
-        set.add(valueLocation);
-        return writeArray(array, set, arrayIndices, addError);
-    }
-
-
-    ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, Collection<IndexLatticeElement> arrayIndices) {
-        return writeArray(array, valueLocationSet, arrayIndices, true);
-    }
-
-    ArrayLatticeElement writeArray(ArrayLatticeElement array, Set<HeapLocation> valueLocationSet, Collection<IndexLatticeElement> arrayIndices, boolean addError) {
-
-        IndexLatticeElement index = arrayIndices.stream().reduce(IndexLatticeElement.bottom, LatticeElement::join);
-        ArrayLatticeElement map = ArrayLatticeElement.generateMap(index, valueLocationSet);
-        //If location is top array, do nothing
-        if (array.equals(ArrayLatticeElement.top)) {
-            return array;
-        }
-        if (array.equals(ArrayLatticeElement.bottom) || array.equals(ArrayLatticeElement.emptyArray)) {
-            return map;
-
-        }
-        if (array instanceof ListArrayLatticeElement) {
-            if (arrayIndices.stream().allMatch(i -> i instanceof StringIndexLatticeElement || i.equals(IndexLatticeElement.bottom))) {
-                if (addError) {
-                    annotator.error("Array write with string index on list");
-                }
-                //Needs to be monotone, so will need to convert to map
-                return ArrayLatticeElement.generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations()).join(map);
-            }
-            return ((ListArrayLatticeElement) array).addLocations(valueLocationSet);
-
-        }
-
-        return array.join(map);
-    }
-
-*/
 
     private AnalysisLatticeElement analyse(UnaryOperationNode n, AnalysisLatticeElement l, Context c) {
         ValueLatticeElement value = l.getTempsValue(c, n.getOperandName());
