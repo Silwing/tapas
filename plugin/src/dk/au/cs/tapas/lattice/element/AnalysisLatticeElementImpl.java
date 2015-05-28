@@ -305,4 +305,9 @@ public class AnalysisLatticeElementImpl implements AnalysisLatticeElement {
     public boolean equals(Object other) {
         return other instanceof AnalysisLatticeElement && mapLatticeElement.equals(other);
     }
+
+    @Override
+    public int hashCode() {
+        return mapLatticeElement.hashCode();
+    }
 }

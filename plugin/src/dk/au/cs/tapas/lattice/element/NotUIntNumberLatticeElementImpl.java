@@ -31,6 +31,11 @@ public class NotUIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
     }
 
     @Override
+    public int hashCode() {
+        return number.hashCode();
+    }
+
+    @Override
     public boolean containedIn(NumberLatticeElement other) {
         return other.equals(this) || notUIntTop.containedIn(other);
     }

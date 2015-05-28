@@ -16,7 +16,9 @@ public class TrueBooleanLatticeElement extends MiddleLatticeElementImpl<BooleanL
         return obj instanceof TrueBooleanLatticeElement;
     }
 
-
+    public int hashCode(){
+        return 791377415;
+    }
     @Override
     public void print(LatticePrinter printer) {
         printer.print("true");

@@ -27,6 +27,11 @@ public class TopIndexLatticeElementImpl implements IndexLatticeElement {
         return other instanceof TopIndexLatticeElementImpl;
     }
 
+
+    public int hashCode(){
+        return 884249792;
+    }
+
     @Override
     public boolean containedIn(IndexLatticeElement other) {
         return equals(other);

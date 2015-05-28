@@ -31,6 +31,10 @@ public class UIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl<Nu
         return object instanceof UIntTopNumberLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 367423988;
+    }
+
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;

@@ -25,7 +25,9 @@ public class TopNumberLatticeElementImpl implements NumberLatticeElement {
     public boolean equals(Object obj){
         return  obj instanceof TopNumberLatticeElementImpl;
     }
-
+    public int hashCode(){
+        return 517418381;
+    }
     @Override
     public boolean containedIn(NumberLatticeElement other) {
         return equals(other);

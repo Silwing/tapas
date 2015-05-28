@@ -32,6 +32,10 @@ public class EmptyArrayLatticeElementImpl implements EmptyArrayLatticeElement {
         return  other instanceof EmptyArrayLatticeElement;
     }
 
+    public int hashCode(){
+        return 313808274;
+    }
+
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.boolFalse;

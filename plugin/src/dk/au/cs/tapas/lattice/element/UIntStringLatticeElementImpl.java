@@ -31,6 +31,11 @@ public class UIntStringLatticeElementImpl extends MiddleLatticeElementImpl<Strin
     public boolean equals(Object object) {
         return object == this || (object instanceof UIntStringLatticeElementImpl && ((UIntStringLatticeElementImpl) object).getString().equals(getString()));
     }
+    @Override
+    public int hashCode() {
+        return string.hashCode();
+    }
+
 
     @Override
     public boolean containedIn(StringLatticeElement other) {

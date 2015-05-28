@@ -66,4 +66,8 @@ public class TopArrayLatticeElementImpl implements ArrayLatticeElement {
     public boolean isRecursive(HeapMapLatticeElement latticeElement, HeapLocation location) {
         return false;
     }
+
+    public int hashCode(){
+        return 892210645;
+    }
 }

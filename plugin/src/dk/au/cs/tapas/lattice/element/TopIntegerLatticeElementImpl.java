@@ -27,6 +27,9 @@ public class TopIntegerLatticeElementImpl implements IntegerLatticeElement {
         return object instanceof TopIntegerLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 280559761;
+    }
     @Override
     public boolean containedIn(IntegerLatticeElement other) {
         return equals(other);

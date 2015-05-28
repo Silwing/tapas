@@ -28,6 +28,11 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
     }
 
     @Override
+    public int hashCode() {
+        return number.hashCode();
+    }
+
+    @Override
     public Integer getNumber() {
         return number;
     }

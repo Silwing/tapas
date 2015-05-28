@@ -26,6 +26,9 @@ public class BottomBooleanLatticeElementImpl implements BooleanLatticeElement {
         return other instanceof BottomBooleanLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 422829502;
+    }
 
     @Override
     public boolean containedIn(BooleanLatticeElement other) {

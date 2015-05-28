@@ -34,4 +34,9 @@ public class ValueIntegerLatticeElementImpl extends MiddleLatticeElementImpl<Int
     public boolean equals(Object object){
         return object == this || ( object instanceof  ValueIntegerLatticeElement && ((ValueIntegerLatticeElement) object).getInteger().equals(getInteger()));
     }
+
+    @Override
+    public int hashCode() {
+        return integer.hashCode();
+    }
 }

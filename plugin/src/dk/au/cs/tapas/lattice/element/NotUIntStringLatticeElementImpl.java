@@ -33,6 +33,11 @@ public class NotUIntStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     }
 
     @Override
+    public int hashCode() {
+        return string.hashCode();
+    }
+
+    @Override
     public boolean containedIn(StringLatticeElement other) {
         return other.equals(this) || notUIntStringTop.containedIn(other);
     }

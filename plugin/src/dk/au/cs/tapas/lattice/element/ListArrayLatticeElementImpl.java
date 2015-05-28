@@ -89,6 +89,11 @@ public class ListArrayLatticeElementImpl implements ListArrayLatticeElement {
     }
 
     @Override
+    public int hashCode() {
+        return locations.hashCode();
+    }
+
+    @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;
     }

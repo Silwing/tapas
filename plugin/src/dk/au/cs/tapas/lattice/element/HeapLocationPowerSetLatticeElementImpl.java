@@ -100,5 +100,8 @@ public class HeapLocationPowerSetLatticeElementImpl implements HeapLocationPower
         return other == this || (other instanceof HeapLocationPowerSetLatticeElement && ((HeapLocationPowerSetLatticeElement) other).getLocations().equals(getLocations()));
     }
 
-
+    @Override
+    public int hashCode() {
+        return values.hashCode();
+    }
 }

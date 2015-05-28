@@ -550,4 +550,13 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
                 getBoolean().equals(((ValueLatticeElement) other).getBoolean()));
     }
 
+    @Override
+    public int hashCode() {
+        int result = array.hashCode();
+        result = 31 * result + string.hashCode();
+        result = 31 * result + number.hashCode();
+        result = 31 * result + bool.hashCode();
+        result = 31 * result + nullLatticeElement.hashCode();
+        return result;
+    }
 }

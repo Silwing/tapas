@@ -86,6 +86,11 @@ public class MapArrayLatticeElementImpl implements MapArrayLatticeElement {
     }
 
     @Override
+    public int hashCode() {
+        return map.hashCode();
+    }
+
+    @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;
     }

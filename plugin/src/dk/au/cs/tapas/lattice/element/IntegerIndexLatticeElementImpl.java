@@ -55,6 +55,12 @@ public class IntegerIndexLatticeElementImpl implements IntegerIndexLatticeElemen
         return other == this || (other instanceof IntegerIndexLatticeElement && ((IntegerIndexLatticeElement) other).getInteger().equals(getInteger()));
     }
 
+
+    @Override
+    public int hashCode() {
+        return integer.hashCode();
+    }
+
     @Override
     public boolean containedIn(IndexLatticeElement other) {
 

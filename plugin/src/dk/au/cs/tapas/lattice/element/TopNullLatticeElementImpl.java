@@ -31,6 +31,9 @@ public class TopNullLatticeElementImpl implements NullLatticeElement {
         return  obj instanceof TopNullLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 628825343;
+    }
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.boolFalse;

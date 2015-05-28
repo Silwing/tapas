@@ -47,6 +47,11 @@ public class StringIndexLatticeElementImpl implements StringIndexLatticeElement 
     }
 
     @Override
+    public int hashCode() {
+        return string.hashCode();
+    }
+
+    @Override
     public StringLatticeElement getString() {
         return string;
     }

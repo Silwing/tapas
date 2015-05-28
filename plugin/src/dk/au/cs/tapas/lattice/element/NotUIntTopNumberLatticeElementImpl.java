@@ -24,6 +24,10 @@ public class NotUIntTopNumberLatticeElementImpl extends MiddleLatticeElementImpl
         return object instanceof NotUIntTopNumberLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 463483099;
+    }
+
     @Override
     public boolean containedIn(NumberLatticeElement other) {
         return other.equals(top) || other.equals(this);

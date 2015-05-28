@@ -33,6 +33,10 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
         return obj instanceof BottomNullLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 522633506;
+    }
+
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.bottom;
@@ -56,4 +60,6 @@ public class BottomNullLatticeElementImpl implements NullLatticeElement{
     public StringLatticeElement toStringLattice() {
         return StringLatticeElement.bottom;
     }
+
+
 }

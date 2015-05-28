@@ -31,4 +31,7 @@ public class BottomIntegerLatticeElementImpl implements IntegerLatticeElement {
     public boolean containedIn(IntegerLatticeElement other) {
         return true;
     }
+    public int hashCode(){
+        return 575856698;
+    }
 }

@@ -33,6 +33,10 @@ public class BottomStringLatticeElementImpl implements StringLatticeElement{
         return other instanceof BottomStringLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 650023044;
+    }
+
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.bottom;

@@ -4,7 +4,9 @@ $monthNames = ["January", "February", "March", "April", "May", "June", "July", "
 $monthMap = [];
 
 for($i = 1; $i <= 12; $i++) {
+	var_dump($monthMap);
 	$monthMap[array_pop($monthNames)] = $i;
+	var_dump($monthMap);
 }
 
 $input = $_GET["monthName"];

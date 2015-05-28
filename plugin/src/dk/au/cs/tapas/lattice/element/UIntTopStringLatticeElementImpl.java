@@ -27,6 +27,11 @@ public class UIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl<St
     public boolean equals(Object object) {
         return object instanceof UIntTopStringLatticeElementImpl;
     }
+
+    public int hashCode(){
+        return  98634645;
+    }
+
     @Override
     public BooleanLatticeElement toBoolean() {
         return BooleanLatticeElement.top;

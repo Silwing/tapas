@@ -27,6 +27,10 @@ public class BottomIndexLatticeElementImpl implements IndexLatticeElement {
         return other instanceof BottomIndexLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 163224265;
+    }
+
     @Override
     public boolean containedIn(IndexLatticeElement other) {
         return true;

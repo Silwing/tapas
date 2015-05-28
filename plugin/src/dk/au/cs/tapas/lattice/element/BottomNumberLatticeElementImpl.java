@@ -28,6 +28,10 @@ public class BottomNumberLatticeElementImpl implements NumberLatticeElement {
         return obj instanceof BottomNumberLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 813021924;
+    }
+
     @Override
     public boolean containedIn(NumberLatticeElement other) {
         return true;

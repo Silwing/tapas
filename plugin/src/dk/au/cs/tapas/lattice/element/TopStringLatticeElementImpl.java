@@ -27,6 +27,10 @@ public class TopStringLatticeElementImpl implements StringLatticeElement {
         return  obj instanceof TopStringLatticeElementImpl;
     }
 
+    public int hashCode(){
+        return 721096509;
+    }
+
     @Override
     public boolean containedIn(StringLatticeElement other) {
         return equals(other);

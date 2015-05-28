@@ -22,9 +22,15 @@ public class NotUIntTopStringLatticeElementImpl extends MiddleLatticeElementImpl
         printer.print("NotUIntString");
     }
 
+
     public boolean equals(Object other) {
         return other instanceof NotUIntTopStringLatticeElementImpl;
     }
+
+    public int hashCode(){
+        return  82661507;
+    }
+
 
     @Override
     public boolean containedIn(StringLatticeElement other) {

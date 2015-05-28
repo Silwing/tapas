@@ -68,7 +68,21 @@ public class HeapMapLatticeElementImpl implements HeapMapLatticeElement {
         return new HeapMapLatticeElementImpl(mapLatticeElement.meet(other));
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
 
+        HeapMapLatticeElementImpl that = (HeapMapLatticeElementImpl) object;
+
+        return mapLatticeElement.equals(that.mapLatticeElement);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return mapLatticeElement.hashCode();
+    }
 
     @Override
     public HeapMapLatticeElement join(MapLatticeElement<HeapLocation, ValueLatticeElement> other) {

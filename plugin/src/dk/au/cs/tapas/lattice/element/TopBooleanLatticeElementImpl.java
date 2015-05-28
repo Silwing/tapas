@@ -32,7 +32,9 @@ public class TopBooleanLatticeElementImpl implements BooleanLatticeElement {
         return  obj instanceof TopBooleanLatticeElementImpl;
     }
 
-
+    public int hashCode(){
+        return 299706408;
+    }
     @Override
     public BooleanLatticeElement toBoolean() {
         return this;
