@@ -274,9 +274,15 @@ public class TypeAnalysisImpl implements Analysis {
             if (arrayValue.equals(ValueLatticeElement.top)) {
                 return;
             }
-            ArrayLatticeElement v = state.getHeap().getValue(l).getArray();
-            if (v instanceof ListArrayLatticeElement) {
-                ValueLatticeElement newValue = state.getHeap().getValue(((ListArrayLatticeElement) v).getLocations(), LatticeElement::join);
+            ValueLatticeElement v = state.getHeap().getValue(l);
+            if(!v.getString().equals(StringLatticeElement.bottom)
+                    || !v.getNull().equals(NullLatticeElement.bottom)
+                    || !v.getNumber().equals(NumberLatticeElement.bottom)
+                    || !v.getBoolean().equals(BooleanLatticeElement.bottom)) {
+                annotator.warning("Target of write might be non-array");
+            }
+            if (v.getArray() instanceof ListArrayLatticeElement) {
+                ValueLatticeElement newValue = state.getHeap().getValue(((ListArrayLatticeElement) v.getArray()).getLocations(), LatticeElement::join);
                 arrayValue = arrayValue.join(newValue);
             } else {
                 return;
