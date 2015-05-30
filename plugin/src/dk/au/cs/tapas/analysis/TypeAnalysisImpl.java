@@ -10,7 +10,6 @@ import dk.au.cs.tapas.lattice.element.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -136,6 +135,7 @@ public class TypeAnalysisImpl implements Analysis {
                 .setHeapValue(context, listLocation, listValue);
 
         allCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
+        anyCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.warning("Possible appending on map"));
         checkArrayAddValue(latticeElement.getValue(context), latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations(), listLocation);
 
         for (HeapLocation location : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()) {
@@ -157,6 +157,7 @@ public class TypeAnalysisImpl implements Analysis {
                                 LatticeElement::join));
 
         allCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
+        anyCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.warning("Possible appending on map"));
         checkArrayAddValue(latticeElement.getValue(context),
                 latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations(),
                 latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations());
@@ -169,11 +170,12 @@ public class TypeAnalysisImpl implements Analysis {
 
     private AnalysisLatticeElement analyse(ArrayAppendLocationSetNode node, AnalysisLatticeElement latticeElement, Context context) {
 
-        allCheckArray(latticeElement, context, node.getValueTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
+        allCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.error("Appending on map"));
+        anyCheckArray(latticeElement, context, node.getVariableTempHeapName(), a -> a instanceof MapArrayLatticeElement, () -> annotator.warning("Possible appending on map"));
         latticeElement = latticeElement.setHeapTempsValue(context, node.getTargetTempHeapName(), new HeapLocationPowerSetLatticeElementImpl());
         HeapLocation newLoc = new HeapLocationImpl(context, node);
         latticeElement = latticeElement.joinHeapValue(context, newLoc, new ValueLatticeElementImpl());
-        for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getValueTempHeapName()).getLocations()) {
+        for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()) {
             latticeElement = latticeElement.joinHeapTempsValue(context, node.getTargetTempHeapName(), new HeapLocationPowerSetLatticeElementImpl(newLoc));
             latticeElement = latticeElement.joinHeapValue(context, loc, new ValueLatticeElementImpl(ArrayLatticeElement.generateList(newLoc)));
         }
@@ -375,8 +377,10 @@ public class TypeAnalysisImpl implements Analysis {
 
         if (array instanceof ListArrayLatticeElement) {
             if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
-                if (addError) {
+                if(indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement) && addError){
                     annotator.error("Array write may be with string index on list");
+                } else if (addError) {
+                    annotator.warning("Array write may be with string index on list");
                 }
                 return value.setArray(ArrayLatticeElement.generateMap(IndexLatticeElement.top, ((ListArrayLatticeElement) array).getLocations().getLocations()).join(map));
             }
@@ -824,6 +828,14 @@ public class TypeAnalysisImpl implements Analysis {
 
     private void allCheckArray(AnalysisLatticeElement latticeElement, Context context, TemporaryHeapVariableName locationSet, Predicate<ArrayLatticeElement> predicate, Action consumer) {
         if (latticeElement.getHeapTempsValue(context, locationSet).getLocations().stream().map(l -> latticeElement.getHeapValue(context, l).getArray()).allMatch(predicate)) {
+            consumer.act();
+        }
+
+    }
+
+
+    private void anyCheckArray(AnalysisLatticeElement latticeElement, Context context, TemporaryHeapVariableName locationSet, Predicate<ArrayLatticeElement> predicate, Action consumer) {
+        if (latticeElement.getHeapTempsValue(context, locationSet).getLocations().stream().map(l -> latticeElement.getHeapValue(context, l).getArray()).anyMatch(predicate)) {
             consumer.act();
         }
 

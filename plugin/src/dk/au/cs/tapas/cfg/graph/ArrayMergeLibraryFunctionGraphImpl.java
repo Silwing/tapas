@@ -27,7 +27,7 @@ public class ArrayMergeLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
         TemporaryVariableName[] arrays = Arrays.stream(resultNode.getCallNode().getCallArguments()).map(TemporaryVariableCallArgument.class::cast).map(TemporaryVariableCallArgument::getArgument).toArray(TemporaryVariableName[]::new);
         TemporaryVariableName result = ((TemporaryVariableCallArgument) resultNode.getCallArgument()).getArgument();
-
+        //TODO what if result is passed by reference... You cannot assume that the result is a TemporaryVariable
         ValueLatticeElement resultVal = ValueLatticeElement.bottom;
         boolean seenMap = false, seenList = false;
         for(TemporaryVariableName array : arrays) {
@@ -57,12 +57,14 @@ public class ArrayMergeLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl
             boolean isList = arrayVal.getArray() instanceof ListArrayLatticeElement;
             if(isMap && !seenMap) {
                 seenMap = true;
-                if(seenList)
+                if(seenList) {
                     annotator.error("Merging a list with a map");
+                }
             } else if(isList && !seenList) {
                 seenList = true;
-                if(seenMap)
+                if(seenMap) {
                     annotator.error("Merging a map with a list");
+                }
             }
 
             resultVal = resultVal.join(new ValueLatticeElementImpl(arrayVal.getArray()));
