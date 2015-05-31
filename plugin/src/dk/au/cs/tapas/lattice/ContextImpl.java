@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ContextImpl implements Context{
     private final LinkedList<CallNode> nodes;
-    private static final int limit = 4;
+    private static final int limit = 2;
 
 
     public ContextImpl(List<CallNode> nodes) {
