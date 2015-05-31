@@ -8,7 +8,7 @@ def location_string(file_path, line_no, op_type):
 
 class Finder:
     def __init__(self):
-        self.corpusPath = 'C:/Users/Silwing/Programmering/Speciale/tapas-survey/corpus'
+        self.corpusPath = 'D:/Randi/Programmering/Speciale/tapas-survey/corpus'
 
     def getLines(self, file, lineno):
         f = open(self.corpusPath+file)
