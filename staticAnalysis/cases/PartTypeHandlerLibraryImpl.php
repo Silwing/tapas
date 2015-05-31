@@ -13,7 +13,7 @@ function createInstance($string, $instance, $value)
 {
     global $keyArray,$valueArray;
 
-    if (!isset($keyArray[$string])) {
+    if (!empty($keyArray[$string])) {
         $keyArray[$string] = [];
         $valueArray[$string] = [];
     } else if(($k = array_search($instance, $keyArray, true)) !== false){
