@@ -69,6 +69,7 @@ public class UIntNumberLatticeElementImpl extends MiddleLatticeElementImpl<Numbe
 
     @Override
     public NumberLatticeElement increment() {
+
         return NumberLatticeElement.generateNumberLatticeElement(number + 1);
     }
 

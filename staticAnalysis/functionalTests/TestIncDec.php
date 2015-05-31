@@ -8,7 +8,13 @@
 
 $a = 1;
 
-$z = $a++; //Should be 1
-$y = $a--; //Should be 2
-$x = ++$a; //Should be 2
-$v = --$a; //Should be 1
+
+var_dump($a);
+$z = $a++; //Should be UintTop
+var_dump($a);
+$y = $a--; //Should be top number due to weak update of heap
+var_dump($a);
+$x = ++$a; //Should be top number due to weak update of heap
+var_dump($a);
+$v = --$a; //Should be top number due to weak update of heap
+var_dump($a);
