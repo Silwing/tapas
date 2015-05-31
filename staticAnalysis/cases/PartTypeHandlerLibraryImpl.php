@@ -22,5 +22,4 @@ function createInstance($string, $instance, $value)
     $keyArray[] = $instance;
     return $valueArray[] = $value;
 }
-
 createInstance("test", "test2", "testValue");

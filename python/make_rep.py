@@ -83,7 +83,7 @@ def build_handlers(library, finder, args):
         if "cyclic" in arg:
             handlers.append(CyclicHandler(library))
         if "operation" in arg:
-            handlers.append(OperationHandler(library))
+            handlers.append(OperationHandler(library, finder))
         if "categorize" in arg:
             handlers.append(CategorizeHandler(library))
         if "opid" in arg:

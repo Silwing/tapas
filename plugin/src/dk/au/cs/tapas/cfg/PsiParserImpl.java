@@ -27,6 +27,10 @@ public class PsiParserImpl implements PsiParser {
         functionGraphSuppliers.put("\\checkdate", CheckdateLibraryFunctionGraphImpl::new);
         functionGraphSuppliers.put("\\empty", EmptyLibraryFunctionGraphImpl::new);
         functionGraphSuppliers.put("\\var_dump", VarDumpLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\opendir", SingleArgIdentityLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\closedir", SingleArgIdentityLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\is_dir", SingleArgIdentityLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\readdir", ReaddirLibraryFunctionGraphImpl::new);
     }
 
 
@@ -118,6 +122,9 @@ public class PsiParserImpl implements PsiParser {
         }
         if(element instanceof ArrayAccessExpression){
             return buildExpressionGenerator(ArrayAccessExpressionGraphImpl.generator, generator, element, name);
+        }
+        if(element instanceof ParenthesizedExpression){
+            return parseExpression((PhpExpression) ((ParenthesizedExpression) element).getArgument(), generator, name);
         }
 
 
