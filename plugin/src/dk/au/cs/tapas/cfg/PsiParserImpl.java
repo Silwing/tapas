@@ -123,6 +123,9 @@ public class PsiParserImpl implements PsiParser {
         if(element instanceof ArrayAccessExpression){
             return buildExpressionGenerator(ArrayAccessExpressionGraphImpl.generator, generator, element, name);
         }
+        if(element instanceof ParenthesizedExpression){
+            return parseExpression((PhpExpression) ((ParenthesizedExpression) element).getArgument(), generator, name);
+        }
 
 
         if(ConstExpressionGraphImpl.isConst(element)){
