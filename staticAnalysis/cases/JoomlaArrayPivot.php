@@ -17,7 +17,7 @@ function pivot($source)
         $resultValue = $i;
 
         // The counter tracks how many times a key has been used.
-        if (empty($counter[$resultKey]))
+        if (array_key_exists($resultKey, $counter))
         {
             // The first time around we just assign the value to the key.
             $result[$resultKey] = $resultValue;

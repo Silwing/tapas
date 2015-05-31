@@ -26,8 +26,7 @@ public class ArrayMergeLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
         TemporaryVariableName[] arrays = Arrays.stream(resultNode.getCallNode().getCallArguments()).map(TemporaryVariableCallArgument.class::cast).map(TemporaryVariableCallArgument::getArgument).toArray(TemporaryVariableName[]::new);
-        TemporaryVariableName result = ((TemporaryVariableCallArgument) resultNode.getCallArgument()).getArgument();
-        //TODO what if result is passed by reference... You cannot assume that the result is a TemporaryVariable
+
         ValueLatticeElement resultVal = ValueLatticeElement.bottom;
         boolean seenMap = false, seenList = false;
         for(TemporaryVariableName array : arrays) {
@@ -70,6 +69,6 @@ public class ArrayMergeLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl
             resultVal = resultVal.join(new ValueLatticeElementImpl(arrayVal.getArray()));
         }
 
-        return analysisLatticeElement.setTempsValue(context, result, resultVal);
+        return setResultValue(resultNode, context, resultVal, analysisLatticeElement);
     }
 }

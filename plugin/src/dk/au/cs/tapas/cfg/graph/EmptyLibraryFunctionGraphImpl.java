@@ -20,7 +20,6 @@ public class EmptyLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
         TemporaryVariableName input = ((TemporaryVariableCallArgument)resultNode.getCallNode().getCallArguments()[0]).getArgument();
-        TemporaryVariableName target = ((TemporaryVariableCallArgument)resultNode.getCallArgument()).getArgument();
 
         ValueLatticeElement resultVal = new ValueLatticeElementImpl();
         ValueLatticeElement inputVal = analysisLatticeElement.getTempsValue(context, input);
@@ -58,6 +57,6 @@ public class EmptyLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
             resultVal = resultVal.join(new ValueLatticeElementImpl(BooleanLatticeElement.boolTrue));
         }
 
-        return analysisLatticeElement.setTempsValue(context, target, resultVal);
+        return setResultValue(resultNode, context, resultVal, analysisLatticeElement);
     }
 }

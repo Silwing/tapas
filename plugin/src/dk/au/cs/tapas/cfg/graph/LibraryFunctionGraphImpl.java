@@ -1,9 +1,16 @@
 package dk.au.cs.tapas.cfg.graph;
 
 import dk.au.cs.tapas.analysis.AnalysisTarget;
+import dk.au.cs.tapas.cfg.CallArgument;
+import dk.au.cs.tapas.cfg.TemporaryHeapVariableCallArgument;
+import dk.au.cs.tapas.cfg.TemporaryVariableCallArgument;
 import dk.au.cs.tapas.cfg.node.*;
+import dk.au.cs.tapas.lattice.Context;
+import dk.au.cs.tapas.lattice.HeapLocation;
+import dk.au.cs.tapas.lattice.HeapLocationImpl;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.VariableName;
+import dk.au.cs.tapas.lattice.element.ValueLatticeElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -69,5 +76,16 @@ public abstract class LibraryFunctionGraphImpl implements LibraryFunctionGraph {
         set.add(entryNode);
         set.add(exitNode);
         return set;
+    }
+
+    protected AnalysisLatticeElement setResultValue(ResultNode resultNode, Context context, ValueLatticeElement resultVal, AnalysisLatticeElement analysisLatticeElm) {
+        if(resultNode.getCallArgument() instanceof TemporaryHeapVariableCallArgument) {
+            HeapLocation resultLoc = new HeapLocationImpl(context, resultNode);
+            return analysisLatticeElm.setHeapValue(context, resultLoc, resultVal).setHeapTempsValue(context, ((TemporaryHeapVariableCallArgument) resultNode.getCallArgument()).getArgument(), resultLoc);
+        } else if(resultNode.getCallArgument() instanceof TemporaryVariableCallArgument) {
+            return analysisLatticeElm.setTempsValue(context, ((TemporaryVariableCallArgument) resultNode.getCallArgument()).getArgument(), resultVal);
+        }
+
+        return analysisLatticeElm;
     }
 }

@@ -23,6 +23,6 @@ public class CheckdateLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl 
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
         // Simple naive implementation
-        return analysisLatticeElement.setTempsValue(context, ((TemporaryVariableCallArgument)resultNode.getCallArgument()).getArgument(), new ValueLatticeElementImpl(BooleanLatticeElement.top));
+        return setResultValue(resultNode, context, new ValueLatticeElementImpl(BooleanLatticeElement.top), analysisLatticeElement);
     }
 }
