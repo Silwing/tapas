@@ -25,7 +25,6 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode node, @NotNull Context context, @NotNull AnalysisLatticeElement lattice, @NotNull AnalysisAnnotator annotator) {
         Set<HeapLocation> argLocations = lattice.getHeapTempsValue(context, (TemporaryHeapVariableName) node.getCallNode().getCallArguments()[0].getArgument()).getLocations();
-        TemporaryVariableName result = ((TemporaryVariableCallArgument) node.getCallArgument()).getArgument();
 
         ValueLatticeElement newVal = new ValueLatticeElementImpl();
         for (HeapLocation loc : argLocations) {
@@ -39,6 +38,6 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
 
         }
 
-        return lattice.setTempsValue(context, result, newVal);
+        return setResultValue(node, context, newVal, lattice);
     }
 }

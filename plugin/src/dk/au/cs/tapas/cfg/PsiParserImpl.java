@@ -32,6 +32,7 @@ public class PsiParserImpl implements PsiParser {
         functionGraphSuppliers.put("\\is_dir", SingleArgTopResultLibraryFunctionGraphImpl::new);
         functionGraphSuppliers.put("\\readdir", ReaddirLibraryFunctionGraphImpl::new);
         functionGraphSuppliers.put("\\array_search", ArraySearchLibraryFunctionGraphImpl::new);
+        functionGraphSuppliers.put("\\array_key_exists", ArrayKeyExistsLibraryFunctionGraphImpl::new);
     }
 
 

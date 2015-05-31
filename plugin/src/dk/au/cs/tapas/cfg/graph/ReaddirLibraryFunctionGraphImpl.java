@@ -19,11 +19,9 @@ public class ReaddirLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
     @NotNull
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
-        TemporaryVariableName result = ((TemporaryVariableCallArgument)resultNode.getCallArgument()).getArgument();
-
         ValueLatticeElement value = new ValueLatticeElementImpl(BooleanLatticeElement.boolFalse);
         value = value.join(new ValueLatticeElementImpl(StringLatticeElement.top));
 
-        return analysisLatticeElement.setTempsValue(context, result, value);
+        return setResultValue(resultNode, context, value, analysisLatticeElement);
     }
 }

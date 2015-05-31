@@ -19,6 +19,6 @@ public class SingleArgTopResultLibraryFunctionGraphImpl extends LibraryFunctionG
     @NotNull
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
-        return analysisLatticeElement.setTempsValue(context, ((TemporaryVariableCallArgument)resultNode.getCallArgument()).getArgument(), ValueLatticeElement.top);
+        return setResultValue(resultNode, context, ValueLatticeElement.top, analysisLatticeElement);
     }
 }
