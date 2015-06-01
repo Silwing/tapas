@@ -38,8 +38,6 @@ $ac = null < -42;
 $ad = null > 0;
 $ae = 0 > null;
 $af = null < null;
-
-var_dump(null);
 $ag = [] > -1;
 $ah = [] < -1;
 $ai = ["hej"] > -1;
