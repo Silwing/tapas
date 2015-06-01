@@ -7,6 +7,8 @@
  */
 
 $a = !1; //Should be *false*
+var_dump($a);
 $b = !0; //Should be *true*
-
+var_dump($b);
 $c = !$a; //Should be *true*
+var_dump($c);

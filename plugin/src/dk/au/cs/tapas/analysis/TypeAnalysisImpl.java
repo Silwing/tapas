@@ -210,6 +210,7 @@ public class TypeAnalysisImpl implements Analysis {
                 .allMatch(a -> a instanceof ListArrayLatticeElement);
 
         checkArrayAddValue(latticeElement.getValue(context), varSet, location);
+        ValueLatticeElement key = latticeElement.getTempsValue(context, node.getIndexName());
         ValueLatticeElement value = latticeElement.getTempsValue(context, node.getValueName());
         latticeElement = latticeElement
                 .setTempsValue(context,
@@ -220,11 +221,10 @@ public class TypeAnalysisImpl implements Analysis {
                         location,
                         value);
 
-        final AnalysisLatticeElement finalLatticeElement1 = latticeElement;
-        if (latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations().stream()
-                .anyMatch(l -> finalLatticeElement1.getHeapValue(context, l).getArray() instanceof TopArrayLatticeElementImpl)) {
-            for (HeapLocation location1 : latticeElement.getHeap(context).getDomain()) {
-                latticeElement = latticeElement.joinHeapValue(context, location1, value);
+        HeapMapLatticeElement heap = latticeElement.getHeap(context);
+        for (HeapLocation loc : latticeElement.getHeapTempsValue(context, node.getVariableTempHeapName()).getLocations()) {
+            for (HeapLocation loc2 : readArray(heap.getValue(loc), key, heap)) {
+                latticeElement = latticeElement.joinHeapValue(context, loc2, value);
             }
         }
 
@@ -530,7 +530,7 @@ public class TypeAnalysisImpl implements Analysis {
                 resultLattice = resultLattice.joinTempsValue(
                         context,
                         ((TemporaryVariableCallArgument) argument).getArgument(),
-                        inputLattice.getHeap(exitNodeContext).getValue(inputLattice.getHeapTempsValue(context, finalExit.getArgument()), LatticeElement::join));
+                        inputLattice.getHeap(exitNodeContext).getValue(inputLattice.getHeapTempsValue(exitNodeContext, finalExit.getArgument()), LatticeElement::join));
 
 
             } else if (argument instanceof TemporaryVariableCallArgument && exitArgument instanceof TemporaryVariableCallArgument) {
