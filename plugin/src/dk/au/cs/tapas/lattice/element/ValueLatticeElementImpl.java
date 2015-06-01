@@ -201,8 +201,9 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
+        return BooleanLatticeElement.top;
 
-        throw new UnsupportedOperationException("Unsupported equal operation");
+//        throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     @Override
@@ -249,8 +250,9 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
+        return BooleanLatticeElement.top;
 
-        throw new UnsupportedOperationException("Unsupported equal operation");
+//        throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     @Override
@@ -297,8 +299,8 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
-
-        throw new UnsupportedOperationException("Unsupported equal operation");
+        return BooleanLatticeElement.top;
+//        throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     private BooleanLatticeElement relativeOp(ValueLatticeElement other, BiFunction<NumberLatticeElement, NumberLatticeElement, BooleanLatticeElement> function){
@@ -352,8 +354,9 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
+        return BooleanLatticeElement.top;
 
-        throw new UnsupportedOperationException("Unsupported equal operation");
+        //throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     @Override
@@ -395,8 +398,9 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
+        return BooleanLatticeElement.top;
 
-        throw new UnsupportedOperationException("Unsupported equal operation");
+//        throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     @Override
@@ -438,8 +442,9 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
             else
                 return BooleanLatticeElement.boolFalse; // Arrays are always greater than anything else, so false for equal
         }
+        return BooleanLatticeElement.top;
 
-        throw new UnsupportedOperationException("Unsupported equal operation");
+        //throw new UnsupportedOperationException("Unsupported equal operation");
     }
 
     @Override

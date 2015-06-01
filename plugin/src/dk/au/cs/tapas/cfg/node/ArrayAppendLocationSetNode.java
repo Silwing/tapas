@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface ArrayAppendLocationSetNode extends LocationSetNode {
 
-    TemporaryHeapVariableName getValueTempHeapName();
+    TemporaryHeapVariableName getVariableTempHeapName();
 
 
 

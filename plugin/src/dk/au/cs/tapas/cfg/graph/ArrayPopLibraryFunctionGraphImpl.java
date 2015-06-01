@@ -25,7 +25,6 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode node, @NotNull Context context, @NotNull AnalysisLatticeElement lattice, @NotNull AnalysisAnnotator annotator) {
         Set<HeapLocation> argLocations = lattice.getHeapTempsValue(context, (TemporaryHeapVariableName) node.getCallNode().getCallArguments()[0].getArgument()).getLocations();
-        TemporaryVariableName result = ((TemporaryVariableCallArgument) node.getCallArgument()).getArgument();
 
         ValueLatticeElement newVal = new ValueLatticeElementImpl();
         for (HeapLocation loc : argLocations) {
@@ -35,15 +34,10 @@ public class ArrayPopLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl{
             } else if (val.getArray() instanceof MapArrayLatticeElement) {
                 annotator.error("array_pop on map");
             }
-            if (!val.getNumber().equals(NumberLatticeElement.bottom)
-                    || !val.getString().equals(StringLatticeElement.bottom)
-                    || !val.getBoolean().equals(BooleanLatticeElement.bottom)
-                    || !val.getNull().equals(NullLatticeElement.bottom)) {
-                newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
-            }
+            newVal = newVal.join(new ValueLatticeElementImpl(NullLatticeElement.top));
 
         }
 
-        return lattice.setTempsValue(context, result, newVal);
+        return setResultValue(node, context, newVal, lattice);
     }
 }

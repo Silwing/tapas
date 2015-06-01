@@ -8,4 +8,6 @@
 
 $a = 1;
 
-$a = 2; //Should hard update
+$a = 2; //Should be weakly updated
+
+var_dump($a); //$a should be UIntNumber

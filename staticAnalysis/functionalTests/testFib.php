@@ -16,9 +16,9 @@ function fib($i){
 }
 
 
-/*
-
 $a = fib(1); //Should be 1
-$a = fib($n); //Should be 1*/
-$a = fib(10); //Should be top number
 
+$b = fib($n);
+
+$c = fib(10);
+var_dump($a);//Should be top number

@@ -9,4 +9,6 @@
 
 
 $a = true || 0; //Should be true
+var_dump($a);
 $b = true && $a; //Should be true
+var_dump($b);

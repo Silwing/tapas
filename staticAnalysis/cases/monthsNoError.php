@@ -8,7 +8,7 @@ for($i = 1; $i <= 12; $i++) {
 	$monthMap[array_pop($monthNames)] = $i;
 	var_dump($monthMap);
 }
-
+var_dump($monthMap);
 $input = $_GET["monthName"];
 
 echo $input . " is month number " . $monthMap[$input];

@@ -9,38 +9,25 @@
 
 function isValidDate($day, $month, $year) {
     $errors = [];
-
     if(!checkdate($month, $day, $year))
         $errors["invalidDate"] = "The given date is not valid";
 
-    if(count($errors) > 0)
-        return $errors;
-    else
-        return true;
+    return $errors;
 }
 
 function isMinimumDay($day, $month, $year, $required, $minDay) {
     $errors = [];
-
     if($required && $day == 0 && $month == 0 && $year == 0)
         $errors[] = "The date is required";
 
     $result = isValidDate($day, $month, $year);
-    if($result !== true)
-        $errors = array_merge($errors, $result);
+    $errors = array_merge($errors, $result);
 
     if($minDay > $day)
         $errors[] = "The day should at least be " . $minDay;
 
-    if(count($errors) > 0)
-        return $errors;
-    else
-        return true;
+    return $errors;
 }
-
-$required = $_GET["required"];
-$valid = isMinimumDay(27, 5, 2015, $required, 6);
-$invalid = isMinimumDay(1, 3, 1991, $required, 5);
-$invalid2 = isMinimumDay(1, 13, 2015, $required, 5);
-$invalid3 = isMinimumDay(1, 0, 1991, $required, 0);
+$valid = isMinimumDay(27, 5, 2015, true, 6);
+$invalid = isMinimumDay(1, 3, 1991, true, 5);
 

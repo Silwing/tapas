@@ -22,5 +22,5 @@ $b = 1;
 $a[] = &$a;
 
 doStuffWithFancyArray($a, 0);
-
+var_dump($a);
 $a[] = 4;

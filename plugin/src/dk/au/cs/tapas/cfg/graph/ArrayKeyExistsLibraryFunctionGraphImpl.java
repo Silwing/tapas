@@ -6,23 +6,20 @@ import dk.au.cs.tapas.cfg.node.ResultNode;
 import dk.au.cs.tapas.lattice.Context;
 import dk.au.cs.tapas.lattice.element.AnalysisLatticeElement;
 import dk.au.cs.tapas.lattice.element.BooleanLatticeElement;
-import dk.au.cs.tapas.lattice.element.ValueLatticeElement;
 import dk.au.cs.tapas.lattice.element.ValueLatticeElementImpl;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by Silwing on 27-05-2015.
+ * Created by Randi on 31-05-2015.
  */
-public class CheckdateLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
-
-    public CheckdateLibraryFunctionGraphImpl() {
-        super(new boolean[]{ false, false, false }, false);
+public class ArrayKeyExistsLibraryFunctionGraphImpl extends LibraryFunctionGraphImpl {
+    public ArrayKeyExistsLibraryFunctionGraphImpl() {
+        super(new boolean[]{ false, false }, false);
     }
 
     @NotNull
     @Override
     public AnalysisLatticeElement analyse(@NotNull ResultNode resultNode, @NotNull Context context, @NotNull AnalysisLatticeElement analysisLatticeElement, @NotNull AnalysisAnnotator annotator) {
-        // Simple naive implementation
         return setResultValue(resultNode, context, new ValueLatticeElementImpl(BooleanLatticeElement.top), analysisLatticeElement);
     }
 }

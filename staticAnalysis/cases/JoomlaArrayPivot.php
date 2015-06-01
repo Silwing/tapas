@@ -17,7 +17,7 @@ function pivot($source)
         $resultValue = $i;
 
         // The counter tracks how many times a key has been used.
-        if (empty($counter[$resultKey]))
+        if (array_key_exists($resultKey, $counter))
         {
             // The first time around we just assign the value to the key.
             $result[$resultKey] = $resultValue;
@@ -26,17 +26,13 @@ function pivot($source)
         else if ($counter[$resultKey] == 1)
         {
             // If there is a second time, we convert the value into an array.
-            $result[$resultKey] = array(
-                $result[$resultKey],
-                $resultValue,
-            );
+            $result[$resultKey] = [$result[$resultKey], $resultValue];
             $counter[$resultKey]++;
         }
         else
         {
             // After the second time, no need to track any more. Just append to the existing array.
             $result[$resultKey][] = $resultValue;
-            var_dump($result[$resultKey]);
         }
 
     }
@@ -45,7 +41,4 @@ function pivot($source)
 }
 
 $simpleArr = [1,2,3,4,5,6,7,8,1,5,3,7,9,0,4,2,5,8,4,3,8,9];
-
 $result = pivot($simpleArr);
-
-//var_dump($result);

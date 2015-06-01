@@ -32,7 +32,7 @@ public class ArrayAppendLocationSetNodeImpl extends NodeImpl implements ArrayApp
     }
 
     @Override
-    public TemporaryHeapVariableName getValueTempHeapName() {
+    public TemporaryHeapVariableName getVariableTempHeapName() {
         return valueHeapLocationSet;
     }
 }
