@@ -4,4 +4,4 @@ $c = $b = &$a;
 
 $a++;
 
-echo $c . " " . $b;
+var_dump( $c . " " . $b);

@@ -10,6 +10,8 @@ import dk.au.cs.tapas.lattice.element.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -31,12 +33,34 @@ public class TypeAnalysisImpl implements Analysis {
     @Override
     public AnalysisLatticeElement getStartLattice(Graph graph) {
         AnalysisLatticeElement lattice = new AnalysisLatticeElementImpl(c -> new StateLatticeElementImpl(new HeapMapLatticeElementImpl(v -> new ValueLatticeElementImpl(NullLatticeElement.top))));
-        // TODO: init as maps
-        int i = 0;
-        for (VariableName name : VariableName.superGlobals) {
-            lattice = lattice.setGlobalsValue(new ContextImpl(), graph.getEntryNode(), i, name, new ValueLatticeElementImpl(ArrayLatticeElement.top));
-            i++;
-        }
+        Context context = new ContextImpl();
+        Function<Integer, HeapLocation> generator = i -> new HeapLocationImpl(context, graph.getEntryNode(), i);
+        lattice = lattice.setGlobalsValue(context, VariableName.GLOBALS, new HeapLocationPowerSetLatticeElementImpl(generator.apply(0)));
+        lattice = lattice.setGlobalsValue(context, VariableName.SERVER, new HeapLocationPowerSetLatticeElementImpl(generator.apply(1)));
+        lattice = lattice.setGlobalsValue(context, VariableName.SESSION, new HeapLocationPowerSetLatticeElementImpl(generator.apply(2)));
+        lattice = lattice.setGlobalsValue(context, VariableName.ENV, new HeapLocationPowerSetLatticeElementImpl(generator.apply(3)));
+        lattice = lattice.setGlobalsValue(context, VariableName.COOKIE, new HeapLocationPowerSetLatticeElementImpl(generator.apply(4)));
+        lattice = lattice.setGlobalsValue(context, VariableName.POST, new HeapLocationPowerSetLatticeElementImpl(generator.apply(5)));
+        lattice = lattice.setGlobalsValue(context, VariableName.GET, new HeapLocationPowerSetLatticeElementImpl(generator.apply(6)));
+        lattice = lattice.setGlobalsValue(context, VariableName.REQUEST, new HeapLocationPowerSetLatticeElementImpl(generator.apply(7)));
+        lattice = lattice.setGlobalsValue(context, VariableName.FILES, new HeapLocationPowerSetLatticeElementImpl(generator.apply(8)));
+        lattice = lattice.setHeapValue(context, generator.apply(0), new ValueLatticeElementImpl(ArrayLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(1), new ValueLatticeElementImpl(ArrayLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(2), new ValueLatticeElementImpl(ArrayLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(3), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(9))));
+        lattice = lattice.setHeapValue(context, generator.apply(4), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(10))));
+        lattice = lattice.setHeapValue(context, generator.apply(5), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(11))));
+        lattice = lattice.setHeapValue(context, generator.apply(6), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(12))));
+        lattice = lattice.setHeapValue(context, generator.apply(7), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(13))));
+        lattice = lattice.setHeapValue(context, generator.apply(8), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(14))));
+        lattice = lattice.setHeapValue(context, generator.apply(9), new ValueLatticeElementImpl(StringLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(10), new ValueLatticeElementImpl(StringLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(11), new ValueLatticeElementImpl(ArrayLatticeElement.top, StringLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(12), new ValueLatticeElementImpl(ArrayLatticeElement.top, StringLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(13), new ValueLatticeElementImpl(ArrayLatticeElement.top, StringLatticeElement.top));
+        lattice = lattice.setHeapValue(context, generator.apply(14), new ValueLatticeElementImpl(ArrayLatticeElement.generateMap(IndexLatticeElement.top, generator.apply(15))));
+        lattice = lattice.setHeapValue(context, generator.apply(15), new ValueLatticeElementImpl(StringLatticeElement.top, NumberLatticeElement.top));
+
         return lattice;
     }
 
@@ -405,7 +429,7 @@ public class TypeAnalysisImpl implements Analysis {
         if (array instanceof ListArrayLatticeElement) {
             if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
                 if(indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement) && addError){
-                    annotator.error("Array write may be with string index on list");
+                    annotator.error("Array write is with string index on list");
                 } else if (addError) {
                     annotator.warning("Array write may be with string index on list");
                 }

@@ -96,6 +96,19 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
         );
     }
 
+    public ValueLatticeElementImpl(ArrayLatticeElement arrayLatticeElement, StringLatticeElement stringLatticeElement) {
+        this(
+                arrayLatticeElement,
+                stringLatticeElement,
+                NumberLatticeElement.bottom,
+                BooleanLatticeElement.bottom,
+                NullLatticeElement.bottom);
+    }
+
+    public ValueLatticeElementImpl(StringLatticeElement string, NumberLatticeElement number) {
+        this(ArrayLatticeElement.bottom, string, number, BooleanLatticeElement.bottom, NullLatticeElement.bottom);
+    }
+
     @Override
     public ArrayLatticeElement getArray() {
         return array;
