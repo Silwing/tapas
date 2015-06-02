@@ -367,6 +367,19 @@ public class TypeAnalysisImpl implements Analysis {
             return latticeElement;
         }
 
+        int i = -1;
+        for(VariableName name : node.getVariableNames()){
+            i++;
+            if(!latticeElement.getGlobalsValue(context, name).getLocations().isEmpty()){
+                continue;
+            }
+            latticeElement = latticeElement.setGlobalsValue(
+                    context,
+                    name,
+                    new HeapLocationPowerSetLatticeElementImpl(new HeapLocationImpl(context, node, i)));
+
+        }
+
         for (VariableName name : node.getVariableNames()) {
             latticeElement = latticeElement.setLocalsValue(context, name, latticeElement.getGlobalsValue(context, name));
         }

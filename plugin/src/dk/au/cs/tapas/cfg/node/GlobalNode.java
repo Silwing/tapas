@@ -5,7 +5,7 @@ import dk.au.cs.tapas.lattice.VariableName;
 /**
  * Created by budde on 5/7/15.
  */
-public interface GlobalNode {
+public interface GlobalNode extends Node{
 
     VariableName[] getVariableNames();
 
