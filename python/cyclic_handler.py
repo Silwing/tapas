@@ -10,12 +10,21 @@ class CyclicHandler(core.Handler):
     def get_blacklist(self):
         return {}
 
-    def __init__(self, library):
+    def __init__(self, library, finder):
         super(CyclicHandler, self).__init__(library)
         self.cyclic_id = {}
+        self.finder = finder
+        self.ignoreList = []
 
     def generate_result(self):
         return [[len(self.cyclic_id)]]
+
+    def ignore(self, lineno, file):
+        if [lineno, file] in self.ignoreList:
+            return True
+        else:
+            self.ignoreList.append([lineno, file])
+            return False
 
     def handle_line(self, line, current_line):
         if len(line) < 3:
@@ -48,3 +57,6 @@ class CyclicHandler(core.Handler):
 
         if type_int & 8:
             self.cyclic_id[id] = core.location_string(line_file, line_number, line_type)
+            if not self.ignore(line_number, line_file):
+                lines = self.finder.getLines(line_file, line_number)
+                pass

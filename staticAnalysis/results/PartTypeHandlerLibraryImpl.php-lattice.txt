@@ -1,0 +1,459 @@
+{
+	context[] -> {
+		temps -> {
+			t37 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t31 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t36 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t34 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t33 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			t38 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t32 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t35 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+		},
+		heapTemps -> {
+			
+		},
+		locals -> {
+			
+		},
+		globals -> {
+			_COOKIE -> l_34
+			_FILES -> l_37
+			_ENV -> l_38
+			GLOBALS -> l_39
+			_SERVER -> l_35
+			_REQUEST -> l_36
+			_GET -> l_32
+			valueArray -> l_422
+			_SESSION -> l_33
+			keyArray -> l_537
+			_POST -> l_31
+		},
+		heap -> {
+			l_34 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_537 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_35 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_32 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_33 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_38 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_39 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_36 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_37 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_422 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_31 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+		}
+	}
+	context[call(\createInstance, [t34, t35, t36])] -> {
+		temps -> {
+			t46 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t49 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t44 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t53 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t54 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t40 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t47 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t45 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t59 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> true,
+				null -> ?
+			}
+			t58 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t57 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t48 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t42 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t41 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t55 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> false,
+				null -> ?
+			}
+			t50 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			t39 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t43 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			t52 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+		},
+		heapTemps -> {
+			t25 -> l_537
+			t23 -> l_422
+			t19 -> l_422
+			t21 -> l_537
+		},
+		locals -> {
+			instance -> l_98
+			string -> l_97
+			valueArray -> l_422
+			k -> l_-318
+			value -> l_99
+			keyArray -> l_537
+		},
+		globals -> {
+			_COOKIE -> l_34
+			_FILES -> l_37
+			_ENV -> l_38
+			GLOBALS -> l_39
+			_SERVER -> l_35
+			_REQUEST -> l_36
+			_GET -> l_32
+			valueArray -> l_422
+			_SESSION -> l_33
+			keyArray -> l_537
+			_POST -> l_31
+		},
+		heap -> {
+			l_34 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_35 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_32 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_33 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_38 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_-831 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			l_39 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_36 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_37 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_-543 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			l_97 -> {
+				array -> ?,
+				string -> test,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_98 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_99 -> {
+				array -> ?,
+				string -> testValue,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_537 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_-49 -> {
+				array -> ?,
+				string -> test2,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			l_422 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+			l_-318 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			l_949 -> {
+				array -> [],
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> Null
+			}
+			l_31 -> {
+				array -> ?,
+				string -> ?,
+				number -> ?,
+				boolean -> ?,
+				null -> ?
+			}
+		}
+	}
+}

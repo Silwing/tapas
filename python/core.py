@@ -11,9 +11,12 @@ class Finder:
         self.corpusPath = 'D:/Randi/Programmering/Speciale/tapas-survey/corpus'
 
     def getLines(self, file, lineno):
-        f = open(self.corpusPath+file)
-        lines = f.readlines()
-        return lines[lineno-2:lineno+1]
+        try:
+            f = open(self.corpusPath+file)
+            lines = f.readlines()
+            return lines[lineno-2:lineno+1]
+        except:
+            return []
 
 
 class ArrayLibrary:
