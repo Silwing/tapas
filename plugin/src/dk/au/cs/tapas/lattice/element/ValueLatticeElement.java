@@ -43,6 +43,8 @@ public interface ValueLatticeElement extends LatticeElement<ValueLatticeElement>
 
     BooleanLatticeElement lessThanOrEqual(ValueLatticeElement other);
 
+    ValueLatticeElement decrement();
+
     ValueLatticeElement setArray(ArrayLatticeElement array);
 
 

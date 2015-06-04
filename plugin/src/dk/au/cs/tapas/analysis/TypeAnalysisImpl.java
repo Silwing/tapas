@@ -634,11 +634,11 @@ public class TypeAnalysisImpl implements Analysis {
                 value = new ValueLatticeElementImpl(locationValue.toNumber().increment());
                 break;
             case PRE_DECREMENT:
-                value = targetValue = new ValueLatticeElementImpl(locationValue.toNumber().decrement());
+                value = targetValue = locationValue.decrement();
                 break;
             case POST_DECREMENT:
                 targetValue = locationValue;
-                value = new ValueLatticeElementImpl(locationValue.toNumber().decrement());
+                value = locationValue.decrement();
                 break;
             default:
                 return latticeElement;

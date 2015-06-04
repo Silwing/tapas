@@ -109,6 +109,10 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
         this(ArrayLatticeElement.bottom, string, number, BooleanLatticeElement.bottom, NullLatticeElement.bottom);
     }
 
+    public ValueLatticeElementImpl(NumberLatticeElement number, NullLatticeElement aNull) {
+        this(ArrayLatticeElement.bottom, StringLatticeElement.bottom, number, BooleanLatticeElement.bottom, aNull);
+    }
+
     @Override
     public ArrayLatticeElement getArray() {
         return array;
@@ -458,6 +462,17 @@ public class ValueLatticeElementImpl implements ValueLatticeElement {
         return BooleanLatticeElement.top;
 
         //throw new UnsupportedOperationException("Unsupported equal operation");
+    }
+
+    @Override
+    public ValueLatticeElement decrement() {
+        return new ValueLatticeElementImpl(
+                getArray().toNumber()
+                        .join(getString().toNumber())
+                        .join(getNumber())
+                        .join(getBoolean().toNumber())
+                        .decrement(),
+                getNull());
     }
 
     @Override
