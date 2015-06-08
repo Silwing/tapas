@@ -440,7 +440,9 @@ public class TypeAnalysisImpl implements Analysis {
         }
 
         if (array instanceof ListArrayLatticeElement) {
-            if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
+
+
+            if (indices.stream().anyMatch(i -> !(i instanceof IntegerIndexLatticeElement))) {
                 if(indices.stream().allMatch(i -> i instanceof StringIndexLatticeElement) && addError){
                     annotator.error("Array write is with string index on list");
                 } else if (addError) {
@@ -455,7 +457,7 @@ public class TypeAnalysisImpl implements Analysis {
             return value.setArray(array.join(map));
         }
 
-        if (indices.stream().anyMatch(i -> i instanceof StringIndexLatticeElement)) {
+        if (indices.stream().anyMatch(i -> !(i instanceof IntegerIndexLatticeElement))) {
             return value.setArray(map);
         }
         return value.setArray(ArrayLatticeElement.generateList(locations));
@@ -790,6 +792,7 @@ public class TypeAnalysisImpl implements Analysis {
         //Soft update on multiple locations
         for (HeapLocation location : variableLocations) {
             final HeapMapLatticeElement finalHeap = heap;
+            ValueLatticeElement v = finalHeap.getValue(location).join(value);
             heap = heap.addValue(location, (l) -> finalHeap.getValue(l).join(value));
         }
 
@@ -940,7 +943,8 @@ public class TypeAnalysisImpl implements Analysis {
             ValueLatticeElement value) {
         HeapLocation location = new HeapLocationImpl(context, node);
         if(scope.getValue(name).getLocations().isEmpty()){
-            return  new PairImpl<>(
+
+            Pair<MapLatticeElement<VariableName, HeapLocationPowerSetLatticeElement>, HeapMapLatticeElement> pair = new PairImpl<>(
                     scope.addValue(
                             name,
                             n -> new HeapLocationPowerSetLatticeElementImpl(location)),
@@ -948,6 +952,9 @@ public class TypeAnalysisImpl implements Analysis {
                             location,
                             l -> value
                     ));
+            ValueLatticeElement v1 = heap.getValue(location);
+            ValueLatticeElement v2 = pair.getRight().getValue(location);
+            return pair;
         }
         return new PairImpl<>(scope, updateLocations(scope.getValue(name), heap, value));
 

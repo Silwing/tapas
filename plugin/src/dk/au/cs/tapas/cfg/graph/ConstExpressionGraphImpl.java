@@ -61,6 +61,7 @@ public class ConstExpressionGraphImpl extends ExpressionGraphImpl<PhpExpression>
             if (fqn == null) {
                 return null;
             }
+            fqn = fqn.toLowerCase();
             if (fqn.equals("\\true")) {
                 return new BooleanConstantImpl(true);
             }

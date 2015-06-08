@@ -288,6 +288,7 @@ public class PsiParserImpl implements PsiParser {
 
     @Override
     public Graph parseFile(PhpFile element) {
+        TemporaryVariableNameImpl.COUNTER = 0;
         GraphGenerator generator = StartGraphImpl::new;
         generator = parseElementNeighbourhood(element, generator);
         Graph g = generator.generate(new EndGraphImpl());

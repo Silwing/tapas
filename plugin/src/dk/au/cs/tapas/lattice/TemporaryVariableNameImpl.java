@@ -6,7 +6,7 @@ package dk.au.cs.tapas.lattice;
  */
 public class TemporaryVariableNameImpl implements TemporaryVariableName{
 
-    static private int COUNTER = 0;
+    public static int COUNTER = 0;
 
     private int number;
 
