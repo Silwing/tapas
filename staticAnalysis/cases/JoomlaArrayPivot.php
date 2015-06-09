@@ -27,7 +27,7 @@ function pivot($source)
         {
             // If there is a second time, we convert the value into an array.
             $result[$resultKey] = [$result[$resultKey], $resultValue];
-            $counter[$resultKey]++;
+            $counter[$resultKey] = $counter[$resultKey]+1;
         }
         else
         {

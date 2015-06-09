@@ -10,12 +10,11 @@ function directory_map($source_dir, $directory_depth = 0)
 {
     if ($fp = opendir($source_dir))
     {
-        $filedata	= [];
+        $filedata = [];
         $new_depth	= $directory_depth - 1;
         while (FALSE !== ($file = readdir($fp)))
         {
-            is_dir($source_dir.$file) && $file .= '/';
-
+            //is_dir($source_dir.$file) && $file .= '/';
             if (($directory_depth < 1 || $new_depth > 0) && is_dir($source_dir.$file))
             {
                 $filedata[$file] = directory_map($source_dir.$file, $new_depth);
@@ -31,4 +30,5 @@ function directory_map($source_dir, $directory_depth = 0)
 
     return FALSE;
 }
+
 $result = directory_map("testDir", 2);

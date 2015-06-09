@@ -348,6 +348,9 @@ public class TypeAnalysisImpl implements Analysis {
 
 
     private void checkArrayAddValue(ValueLatticeElement v1, ValueLatticeElement v2) {
+        if(v1.equals(ValueLatticeElement.bottom)){
+           return;
+        }
         if (
                 (v1.getArray().equals(ArrayLatticeElement.bottom) && !v2.getArray().equals(ArrayLatticeElement.bottom)) ||
                         (v1.getString().equals(StringLatticeElement.bottom) && !v2.getString().equals(StringLatticeElement.bottom)) ||
