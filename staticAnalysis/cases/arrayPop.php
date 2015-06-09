@@ -12,3 +12,4 @@ for($i = 0; $i < count($people); $i++) {
 array_pop($animalMap);
 $animalString = implode("", $animalMap);
 echo "The people have the following animals: " . $animalString;
+

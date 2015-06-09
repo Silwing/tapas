@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Silwing
- * Date: 27-05-2015
- * Time: 11:44
- * Inspired by Magento: /app/code/Magento/Customer/Model/Metadata/Form/Date.php:28 validateValue($value)
- */
 
 function isValidDate($day, $month, $year) {
     $errors = [];
@@ -30,4 +23,6 @@ function isMinimumDay($day, $month, $year, $required, $minDay) {
 }
 $valid = isMinimumDay(27, 5, 2015, true, 6);
 $invalid = isMinimumDay(1, 3, 1991, true, 5);
+
+
 

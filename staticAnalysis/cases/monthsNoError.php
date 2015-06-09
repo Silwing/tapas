@@ -9,3 +9,4 @@ for($i = 1; $i <= 12; $i++) {
 $input = $_GET["monthName"];
 
 echo $input . " is month number " . $monthMap[$input];
+
